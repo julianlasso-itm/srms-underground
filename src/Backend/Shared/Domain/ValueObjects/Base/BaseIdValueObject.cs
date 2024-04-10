@@ -1,8 +1,9 @@
-namespace Shared.Domain.ValueObjects;
+namespace Shared.Domain.ValueObjects.Base;
 
-public abstract class IdValueObject : StringValueObject
+public abstract class BaseIdValueObject : BaseStringValueObject
 {
-    protected IdValueObject(string value) : base(value) { }
+    protected BaseIdValueObject(string value)
+        : base(value) { }
 
     public override void Validate()
     {
@@ -13,7 +14,7 @@ public abstract class IdValueObject : StringValueObject
         }
     }
 
-    private bool IsUUIDValid(string value)
+    private static bool IsUUIDValid(string value)
     {
         return Guid.TryParse(value, out _);
     }

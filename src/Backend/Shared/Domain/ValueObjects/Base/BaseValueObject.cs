@@ -1,14 +1,13 @@
 namespace Shared.Domain.ValueObjects.Base;
 
-public abstract class BaseValueObject<TypeData> : BaseValueObjectErrorHandler
+public abstract class BaseValueObject<TData> : BaseValueObjectErrorHandler
 {
-    public TypeData Value { get; }
+    public TData Value { get; }
     protected string Name { get; set; }
 
-    protected BaseValueObject(TypeData value)
+    public BaseValueObject(TData value)
     {
         Value = value;
         Name = "Field name not set";
-        Validate();
     }
 }

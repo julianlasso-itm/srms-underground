@@ -1,10 +1,9 @@
-using Shared.Domain.ValueObjects.Base;
+namespace Shared.Domain.ValueObjects.Base;
 
-namespace Shared.Domain.ValueObjects;
-
-public abstract class BooleanValueObject : BaseValueObject<bool>
+public abstract class BaseBooleanValueObject : BaseValueObject<bool>
 {
-    protected BooleanValueObject(bool value) : base(value) { }
+    protected BaseBooleanValueObject(bool value)
+        : base(value) { }
 
     public override void Validate()
     {

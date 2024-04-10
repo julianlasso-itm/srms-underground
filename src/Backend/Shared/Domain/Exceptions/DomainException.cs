@@ -4,14 +4,17 @@ namespace Shared.Domain.Exceptions;
 
 public class DomainException : Exception
 {
-    public List<ErrorValueObject> DomainErrors { get; protected set; } = new List<ErrorValueObject>();
+    public List<ErrorValueObject> DomainErrors { get; protected set; } =
+        new List<ErrorValueObject>();
 
-    public DomainException(string message, List<ErrorValueObject> errors) : base(message)
+    public DomainException(string message, List<ErrorValueObject> errors)
+        : base(message)
     {
         DomainErrors = errors;
     }
 
-    public DomainException(string message, List<ErrorValueObject> errors, Exception innerException) : base(message, innerException)
+    public DomainException(string message, List<ErrorValueObject> errors, Exception innerException)
+        : base(message, innerException)
     {
         DomainErrors = errors;
     }

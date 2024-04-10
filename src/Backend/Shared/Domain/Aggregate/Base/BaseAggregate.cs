@@ -4,15 +4,15 @@ namespace Shared.Domain.Aggregate.Base;
 
 public abstract class BaseAggregate
 {
-    protected readonly IEvent _eventInterface;
+    protected readonly IEvent EventInterface;
 
     public BaseAggregate(IEvent eventInterface)
     {
-        _eventInterface = eventInterface;
+        EventInterface = eventInterface;
     }
 
-    protected void EmitEvent<TypeObject>(string eventName, TypeObject data)
+    protected void EmitEvent(string channel, string data)
     {
-        _eventInterface.Emit<TypeObject>(eventName, data);
+        EventInterface.Emit(channel, data);
     }
 }

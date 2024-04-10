@@ -1,6 +1,6 @@
 namespace Shared.Application.Interfaces;
 
-public interface IUseCase<Command, Response>
+public interface IUseCase<TCommand, TResponse>
 {
-    Task<Response> Handle(Command request);
+    Task<TResponse> Handle(TCommand request);
 }

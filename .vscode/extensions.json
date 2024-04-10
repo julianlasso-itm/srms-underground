@@ -1,0 +1,16 @@
+{
+  "recommendations": [
+    "adrianwilczynski.add-reference",
+    "adrianwilczynski.namespace",
+    "al3xcubed.annotation-lens-cubed",
+    "csharpier.csharpier-vscode",
+    "dotjoshjohnson.xml",
+    "formulahendry.code-runner",
+    "formulahendry.dotnet-test-explorer",
+    "ms-dotnettools.csdevkit",
+    "ms-dotnettools.csharp",
+    "ms-dotnettools.vscodeintellicode-csharp",
+    "patcx.vscode-nuget-gallery",
+    "zxh404.vscode-proto3",
+  ]
+}
