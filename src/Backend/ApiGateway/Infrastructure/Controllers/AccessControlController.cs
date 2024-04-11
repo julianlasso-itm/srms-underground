@@ -16,11 +16,19 @@ public class AccessControlController : BaseController
         _accessControlService = accessControlService;
     }
 
-    [HttpPost("register")]
+    [HttpPost("user/register")]
     public async Task<IActionResult> RegisterUserAsync([FromBody] RegisterUserRequest request)
     {
         return await HandleAsync(
             async () => Ok(await _accessControlService.RegisterUserAsync(request))
+        );
+    }
+
+    [HttpPost("role/register")]
+    public async Task<IActionResult> RegisterRoleAsync([FromBody] RegisterRoleRequest request)
+    {
+        return await HandleAsync(
+            async () => Ok(await _accessControlService.RegisterRoleAsync(request))
         );
     }
 }

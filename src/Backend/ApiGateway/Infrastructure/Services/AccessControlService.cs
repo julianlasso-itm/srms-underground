@@ -16,6 +16,14 @@ public class AccessControlService : BaseServices<IAccessControlServices>, IAcces
         CreateChannel(UrlMicroservice);
     }
 
+    public Task<RegisterRoleResponse> RegisterRoleAsync(
+        RegisterRoleRequest request,
+        CallContext context = default
+    )
+    {
+        return Client.RegisterRoleAsync(request, context);
+    }
+
     public Task<RegisterUserResponse> RegisterUserAsync(
         RegisterUserRequest request,
         CallContext context = default
