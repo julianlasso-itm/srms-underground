@@ -28,6 +28,33 @@ public class AccessControlServices : IAccessControlServices
         _roleRepository = roleRepository;
     }
 
+    public async Task<RegisterRoleResponse> RegisterRoleAsync(
+        RegisterRoleRequest request,
+        CallContext context = default
+    )
+    {
+        var app = new Application<User, Role>(_userRepository, _roleRepository)
+        {
+            AggregateRoot = new SecurityAggregateRoot(_registerUserEvent)
+        };
+
+        var newRoleCommand = new NewRoleCommand
+        {
+            Name = request.Name,
+            Description = request.Description
+        };
+
+        var data = await app.RegisterRole(newRoleCommand);
+        var response = new RegisterRoleResponse
+        {
+            RoleId = data.RoleId,
+            Name = data.Name,
+            Description = data.Description,
+            Disabled = data.Disabled,
+        };
+        return response;
+    }
+
     public async Task<RegisterUserResponse> RegisterUserAsync(
         RegisterUserRequest request,
         CallContext context = default

@@ -13,4 +13,10 @@ public interface IAccessControlServices
         RegisterUserRequest request,
         CallContext context = default
     );
+
+    [OperationContract]
+    Task<RegisterRoleResponse> RegisterRoleAsync(
+        RegisterRoleRequest request,
+        CallContext context = default
+    );
 }
