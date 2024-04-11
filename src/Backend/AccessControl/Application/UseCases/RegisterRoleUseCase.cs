@@ -23,9 +23,12 @@ public sealed class RegisterRoleUseCase<TEntity> : IUseCase<NewRoleCommand, Regi
 
     public async Task<RegisterRoleResponse> Handle(NewRoleCommand request)
     {
-        var role = _aggregateRoot.RegisterRole(
-            new Domain.Aggregates.Dto.RegisterRole { Name = request.Name, Description = request.Description, }
-        );
+        var dataRegisterRole = new Domain.Aggregates.Dto.RegisterRole
+        {
+            Name = request.Name,
+            Description = request.Description,
+        };
+        var role = _aggregateRoot.RegisterRole(dataRegisterRole);
 
         var response = new RegisterRoleResponse
         {
@@ -35,7 +38,8 @@ public sealed class RegisterRoleUseCase<TEntity> : IUseCase<NewRoleCommand, Regi
             Disabled = role.Disabled,
         };
 
-        _ = await _roleRepository.AddAsync(_roleRepository.MapToEntity(response));
+        var entity = _roleRepository.MapToEntity(response);
+        _ = await _roleRepository.AddAsync(entity);
         return response;
     }
 }
