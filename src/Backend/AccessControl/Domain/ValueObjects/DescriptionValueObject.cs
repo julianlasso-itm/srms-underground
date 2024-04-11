@@ -3,14 +3,14 @@ using Shared.Domain.ValueObjects.Base;
 
 namespace AccessControl.Domain.ValueObjects;
 
-public sealed class NameValueObject : BaseStringValueObject
+public sealed class DescriptionValueObject : BaseStringValueObject
 {
-    private const int MaxLength = 80;
+    private const int MaxLength = 1024;
 
-    public NameValueObject(string value)
+    public DescriptionValueObject(string value)
         : base(value)
     {
-        Name = "Name";
+        Name = "Description";
         Validate();
     }
 
