@@ -22,4 +22,14 @@ public sealed class SecurityAggregateRoot : BaseAggregate, ISecurityAggregateRoo
         );
         return result;
     }
+
+    public RegisterRoleResponse RegisterRole(RegisterRole registerData)
+    {
+        var result = RegisterRoleHelper.Execute(registerData);
+        EmitEvent(
+            $"{EventsConst.Prefix}.{EventsConst.EventRoleRegistered}",
+            JsonSerializer.Serialize(result)
+        );
+        return result;
+    }
 }
