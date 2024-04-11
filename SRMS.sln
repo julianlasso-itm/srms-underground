@@ -9,59 +9,64 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{E6BB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway", "ApiGateway", "{E429A8FE-C9A4-41B1-8275-B21ACAFB97CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway.Infrastructure", "src\Backend\ApiGateway\Infrastructure\ApiGateway.Infrastructure.csproj", "{6D661117-8711-4100-8D62-48265D8FF594}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateway.Infrastructure", "src\Backend\ApiGateway\Infrastructure\ApiGateway.Infrastructure.csproj", "{6D661117-8711-4100-8D62-48265D8FF594}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway.Infrastructure.Tests", "src\Backend\ApiGateway\Infrastructure.Tests\ApiGateway.Infrastructure.Tests.csproj", "{8F7FB483-1CA1-4D2E-9C9F-1243B166B7E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateway.Infrastructure.Tests", "src\Backend\ApiGateway\Infrastructure.Tests\ApiGateway.Infrastructure.Tests.csproj", "{8F7FB483-1CA1-4D2E-9C9F-1243B166B7E9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{5AD09FDA-77EE-42DE-9265-6AC03DE865DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Domain", "src\Backend\Shared\Domain\Shared.Domain.csproj", "{95F20A2F-F23D-4B00-8947-26A72AC9FC82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Domain", "src\Backend\Shared\Domain\Shared.Domain.csproj", "{95F20A2F-F23D-4B00-8947-26A72AC9FC82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Domain.Tests", "src\Backend\Shared\Domain.Tests\Shared.Domain.Tests.csproj", "{553014A3-5353-49C1-AB58-83B77E98AA59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Domain.Tests", "src\Backend\Shared\Domain.Tests\Shared.Domain.Tests.csproj", "{553014A3-5353-49C1-AB58-83B77E98AA59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Application", "src\Backend\Shared\Application\Shared.Application.csproj", "{860152AE-A145-4896-A44F-E1E483FB7E06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Application", "src\Backend\Shared\Application\Shared.Application.csproj", "{860152AE-A145-4896-A44F-E1E483FB7E06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Application.Tests", "src\Backend\Shared\Application.Tests\Shared.Application.Tests.csproj", "{635214D8-3F2C-4CE2-ADB4-C5028E131DEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Application.Tests", "src\Backend\Shared\Application.Tests\Shared.Application.Tests.csproj", "{635214D8-3F2C-4CE2-ADB4-C5028E131DEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Infrastructure", "src\Backend\Shared\Infrastructure\Shared.Infrastructure.csproj", "{95F2C4F7-D786-40B3-8724-67E59E11F4B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Infrastructure", "src\Backend\Shared\Infrastructure\Shared.Infrastructure.csproj", "{95F2C4F7-D786-40B3-8724-67E59E11F4B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Infrastructure.Tests", "src\Backend\Shared\Infrastructure.Tests\Shared.Infrastructure.Tests.csproj", "{324C9180-BA6A-4273-A80A-3391B91EA80F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Infrastructure.Tests", "src\Backend\Shared\Infrastructure.Tests\Shared.Infrastructure.Tests.csproj", "{324C9180-BA6A-4273-A80A-3391B91EA80F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AccessControl", "AccessControl", "{F06FF958-B52F-4BED-BC7E-AD2A4E576309}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessControl.Domain", "src\Backend\AccessControl\Domain\AccessControl.Domain.csproj", "{9D1780B0-1ED6-4BAE-B6D0-2042097FCC19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl.Domain", "src\Backend\AccessControl\Domain\AccessControl.Domain.csproj", "{9D1780B0-1ED6-4BAE-B6D0-2042097FCC19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessControl.Domain.Tests", "src\Backend\AccessControl\Domain.Tests\AccessControl.Domain.Tests.csproj", "{B7912B1C-C7A9-47D6-AC54-6527582DE3F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl.Domain.Tests", "src\Backend\AccessControl\Domain.Tests\AccessControl.Domain.Tests.csproj", "{B7912B1C-C7A9-47D6-AC54-6527582DE3F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessControl.Application", "src\Backend\AccessControl\Application\AccessControl.Application.csproj", "{45C9479E-2D1F-483E-9A71-F3B29EFC951E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl.Application", "src\Backend\AccessControl\Application\AccessControl.Application.csproj", "{45C9479E-2D1F-483E-9A71-F3B29EFC951E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessControl.Application.Tests", "src\Backend\AccessControl\Application.Tests\AccessControl.Application.Tests.csproj", "{FFEE01A7-F1E3-4075-84B4-8D15E31E3B33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl.Application.Tests", "src\Backend\AccessControl\Application.Tests\AccessControl.Application.Tests.csproj", "{FFEE01A7-F1E3-4075-84B4-8D15E31E3B33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessControl.Infrastructure", "src\Backend\AccessControl\Infrastructure\AccessControl.Infrastructure.csproj", "{1B83E3D1-E7CB-4999-83A9-D8FC80A84B96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl.Infrastructure", "src\Backend\AccessControl\Infrastructure\AccessControl.Infrastructure.csproj", "{1B83E3D1-E7CB-4999-83A9-D8FC80A84B96}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessControl.Infrastructure.Tests", "src\Backend\AccessControl\Infrastructure.Tests\AccessControl.Infrastructure.Tests.csproj", "{007490D3-8C07-4488-9141-F627E0A99F7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl.Infrastructure.Tests", "src\Backend\AccessControl\Infrastructure.Tests\AccessControl.Infrastructure.Tests.csproj", "{007490D3-8C07-4488-9141-F627E0A99F7F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assessments", "Assessments", "{EB714F04-043F-48EB-9238-0BE61E20C4D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assessments.Domain", "src\Backend\Assessments\Domain\Assessments.Domain.csproj", "{E3E9590A-A66A-44A5-9DF3-1AAD198EFC33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assessments.Domain", "src\Backend\Assessments\Domain\Assessments.Domain.csproj", "{E3E9590A-A66A-44A5-9DF3-1AAD198EFC33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assessments.Domain.Tests", "src\Backend\Assessments\Domain.Tests\Assessments.Domain.Tests.csproj", "{63DBEAF4-BC0F-4730-8950-1E1C45686DCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assessments.Domain.Tests", "src\Backend\Assessments\Domain.Tests\Assessments.Domain.Tests.csproj", "{63DBEAF4-BC0F-4730-8950-1E1C45686DCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assessments.Application", "src\Backend\Assessments\Application\Assessments.Application.csproj", "{BA40F9E2-7756-4C05-99D3-21EE51582E32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assessments.Application", "src\Backend\Assessments\Application\Assessments.Application.csproj", "{BA40F9E2-7756-4C05-99D3-21EE51582E32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assessments.Application.Tests", "src\Backend\Assessments\Application.Tests\Assessments.Application.Tests.csproj", "{239D009F-1D48-4F13-9469-932648988891}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assessments.Application.Tests", "src\Backend\Assessments\Application.Tests\Assessments.Application.Tests.csproj", "{239D009F-1D48-4F13-9469-932648988891}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assessments.Infrastructure", "src\Backend\Assessments\Infrastructure\Assessments.Infrastructure.csproj", "{369457E3-FD0B-47DE-AF6A-32AC0046621F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assessments.Infrastructure", "src\Backend\Assessments\Infrastructure\Assessments.Infrastructure.csproj", "{369457E3-FD0B-47DE-AF6A-32AC0046621F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assessments.Infrastructure.Tests", "src\Backend\Assessments\Infrastructure.Tests\Assessments.Infrastructure.Tests.csproj", "{4170B242-FBB2-468C-9F09-DE942511BBFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assessments.Infrastructure.Tests", "src\Backend\Assessments\Infrastructure.Tests\Assessments.Infrastructure.Tests.csproj", "{4170B242-FBB2-468C-9F09-DE942511BBFA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Profiles", "Profiles", "{389D0890-58B3-491B-9DD7-ACC9140CE2CD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Profiles.Application", "src\Backend\Profiles\Profiles.Application\Profiles.Application.csproj", "{663C49C8-F3E5-4E40-AFFA-7D1EAF703D04}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Profiles.Domain", "src\Backend\Profiles\Profiles.Domain\Profiles.Domain.csproj", "{5B5C8213-5961-4DB2-B038-BD1A0C0ECFAC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Profiles.Infraestructure", "src\Backend\Profiles\Profiles.Infraestructure\Profiles.Infraestructure.csproj", "{2AA3DC78-863C-4C8C-AF53-73ADA4561DDB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{6D661117-8711-4100-8D62-48265D8FF594}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -144,6 +149,21 @@ Global
 		{4170B242-FBB2-468C-9F09-DE942511BBFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4170B242-FBB2-468C-9F09-DE942511BBFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4170B242-FBB2-468C-9F09-DE942511BBFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{663C49C8-F3E5-4E40-AFFA-7D1EAF703D04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{663C49C8-F3E5-4E40-AFFA-7D1EAF703D04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{663C49C8-F3E5-4E40-AFFA-7D1EAF703D04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{663C49C8-F3E5-4E40-AFFA-7D1EAF703D04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B5C8213-5961-4DB2-B038-BD1A0C0ECFAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B5C8213-5961-4DB2-B038-BD1A0C0ECFAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B5C8213-5961-4DB2-B038-BD1A0C0ECFAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B5C8213-5961-4DB2-B038-BD1A0C0ECFAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AA3DC78-863C-4C8C-AF53-73ADA4561DDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AA3DC78-863C-4C8C-AF53-73ADA4561DDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AA3DC78-863C-4C8C-AF53-73ADA4561DDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AA3DC78-863C-4C8C-AF53-73ADA4561DDB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E6BB1596-9696-4D59-9F16-29EDB4CAC1A3} = {BCDBA371-0EB3-49B5-8AD5-F6F55ADB9129}
@@ -171,5 +191,12 @@ Global
 		{239D009F-1D48-4F13-9469-932648988891} = {EB714F04-043F-48EB-9238-0BE61E20C4D6}
 		{369457E3-FD0B-47DE-AF6A-32AC0046621F} = {EB714F04-043F-48EB-9238-0BE61E20C4D6}
 		{4170B242-FBB2-468C-9F09-DE942511BBFA} = {EB714F04-043F-48EB-9238-0BE61E20C4D6}
+		{389D0890-58B3-491B-9DD7-ACC9140CE2CD} = {E6BB1596-9696-4D59-9F16-29EDB4CAC1A3}
+		{663C49C8-F3E5-4E40-AFFA-7D1EAF703D04} = {389D0890-58B3-491B-9DD7-ACC9140CE2CD}
+		{5B5C8213-5961-4DB2-B038-BD1A0C0ECFAC} = {389D0890-58B3-491B-9DD7-ACC9140CE2CD}
+		{2AA3DC78-863C-4C8C-AF53-73ADA4561DDB} = {389D0890-58B3-491B-9DD7-ACC9140CE2CD}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CFA2192A-3F16-4BBA-AEF8-03CB67517BA7}
 	EndGlobalSection
 EndGlobal
