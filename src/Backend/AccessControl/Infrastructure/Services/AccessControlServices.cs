@@ -14,15 +14,18 @@ namespace AccessControl.Infrastructure.Services;
 public class AccessControlServices : IAccessControlServices
 {
     private readonly IUserRepository<User> _userRepository;
+    private readonly IRoleRepository<Role> _roleRepository;
     private readonly RegisterUserEvent _registerUserEvent;
 
     public AccessControlServices(
         IUserRepository<User> userRepository,
-        RegisterUserEvent registerUserEvent
+        RegisterUserEvent registerUserEvent,
+        IRoleRepository<Role> roleRepository
     )
     {
         _userRepository = userRepository;
         _registerUserEvent = registerUserEvent;
+        _roleRepository = roleRepository;
     }
 
     public async Task<RegisterUserResponse> RegisterUserAsync(
@@ -30,7 +33,7 @@ public class AccessControlServices : IAccessControlServices
         CallContext context = default
     )
     {
-        var app = new Application<User>(_userRepository)
+        var app = new Application<User, Role>(_userRepository, _roleRepository)
         {
             AggregateRoot = new SecurityAggregateRoot(_registerUserEvent)
         };
