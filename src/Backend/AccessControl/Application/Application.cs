@@ -6,16 +6,20 @@ using AccessControl.Domain.Aggregates.Interfaces;
 
 namespace AccessControl.Application;
 
-public class Application<TEntity>
-    where TEntity : class
+public class Application<TUserEntity, TRoleEntity>
+    where TUserEntity : class
+    where TRoleEntity : class
 {
     public ISecurityAggregateRoot? AggregateRoot { get; init; }
 
-    private RegisterUserUseCase<TEntity>? _registerUserUseCase;
-    private readonly IUserRepository<TEntity> _userRepository;
-    private readonly IRoleRepository<TEntity> _roleRepository;
+    private RegisterUserUseCase<TUserEntity>? _registerUserUseCase;
+    private readonly IUserRepository<TUserEntity> _userRepository;
+    private readonly IRoleRepository<TRoleEntity> _roleRepository;
 
-    public Application(IUserRepository<TEntity> userRepository, IRoleRepository<TEntity> roleRepository)
+    public Application(
+        IUserRepository<TUserEntity> userRepository,
+        IRoleRepository<TRoleEntity> roleRepository
+    )
     {
         _userRepository = userRepository;
         _roleRepository = roleRepository;
@@ -24,7 +28,10 @@ public class Application<TEntity>
     public Task<RegisterUserResponse> RegisterUser(NewUserCommand request)
     {
         ValidateAggregateRoot();
-        _registerUserUseCase ??= new RegisterUserUseCase<TEntity>(AggregateRoot!, _userRepository);
+        _registerUserUseCase ??= new RegisterUserUseCase<TUserEntity>(
+            AggregateRoot!,
+            _userRepository
+        );
         var response = _registerUserUseCase.Handle(request);
         return response;
     }
@@ -32,7 +39,7 @@ public class Application<TEntity>
     public Task<RegisterRoleResponse> RegisterRole(NewRoleCommand request)
     {
         ValidateAggregateRoot();
-        var useCase = new RegisterRoleUseCase<TEntity>(AggregateRoot!, _roleRepository);
+        var useCase = new RegisterRoleUseCase<TRoleEntity>(AggregateRoot!, _roleRepository);
         var response = useCase.Handle(request);
         return response;
     }
