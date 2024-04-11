@@ -19,6 +19,10 @@ public class Role
     [MaxLength(100)]
     public required string Name { get; set; }
 
+    [Column("rol_description")]
+    [MaxLength(1024)]
+    public string? Description { get; set; }
+
     [Required]
     [Column("rol_disabled")]
     public required bool Disabled { get; set; } = false;
@@ -26,7 +30,7 @@ public class Role
     [Required]
     [Column("rol_created_at")]
     [DataType(DataType.DateTime)]
-    public required DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     [Column("rol_updated_at")]
     [DataType(DataType.DateTime)]
