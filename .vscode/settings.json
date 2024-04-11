@@ -30,4 +30,18 @@
     "frontend",
     "testings",
   ],
+  "material-icon-theme.folders.associations": {
+    "Infrastructure": "cluster",
+    "Application": "app",
+    "Domain": "core",
+    "Properties": "config",
+    "Persistence": "database",
+    "Migrations": "update",
+    "ApiGateway": "connection",
+    "AccessControl": "guard",
+    "Profiles": "layout",
+    "Assessments": "messages",
+    "QueryBank": "rules",
+    "Analytics": "robot",
+  }
 }
