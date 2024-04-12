@@ -22,4 +22,10 @@ public class SecurityAggregateRoot : BaseAggregate, ISecurityAggregateRoot
         var result = RegisterRoleHelper.Execute(registerData);
         return result;
     }
+
+    public UpdateRoleResponse UpdateRole(UpdateRole updateData)
+    {
+        var result = UpdateRoleHelper.Execute(updateData);
+        return result;
+    }
 }

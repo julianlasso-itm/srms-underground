@@ -60,14 +60,14 @@ internal sealed class RoleEntity
         IsDisabled = new DisabledValueObject(true);
     }
 
-    public void UpdateName(RoleEntity role)
+    public void UpdateName(NameValueObject name)
     {
-        Name = role.Name;
+        Name = name;
     }
 
-    public void UpdateDescription(RoleEntity role)
+    public void UpdateDescription(DescriptionValueObject description)
     {
-        Description = role.Description;
+        Description = description;
     }
 
     public void AddCredentials(IEnumerable<CredentialEntity> credentials)
