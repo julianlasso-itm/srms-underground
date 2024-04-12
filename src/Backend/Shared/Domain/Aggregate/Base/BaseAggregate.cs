@@ -1,8 +1,9 @@
+using Shared.Domain.Aggregate.Interfaces;
 using Shared.Domain.Events.Interfaces;
 
 namespace Shared.Domain.Aggregate.Base;
 
-public abstract class BaseAggregate
+public abstract class BaseAggregate : IAggregate
 {
     protected readonly IEvent EventInterface;
 
