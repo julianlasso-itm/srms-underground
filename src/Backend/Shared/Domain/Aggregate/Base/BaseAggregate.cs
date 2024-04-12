@@ -11,7 +11,7 @@ public abstract class BaseAggregate
         EventInterface = eventInterface;
     }
 
-    protected void EmitEvent(string channel, string data)
+    public void EmitEvent(string channel, string data)
     {
         EventInterface.Emit(channel, data);
     }

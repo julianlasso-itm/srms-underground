@@ -16,15 +16,13 @@ internal abstract class RegisterRoleHelper : BaseHelper
         var role = new RoleEntity();
         role.Register(data.Name, data.Description);
 
-        var response = new RegisterRoleResponse
+        return new RegisterRoleResponse
         {
             RoleId = role.RoleId.Value,
             Name = role.Name.Value,
             Description = role.Description?.Value,
             Disabled = role.IsDisabled.Value,
         };
-
-        return response;
     }
 
     private static RoleStruct GetRoleStruct(RegisterRole registerData)
@@ -35,6 +33,6 @@ internal abstract class RegisterRoleHelper : BaseHelper
                 ? new DescriptionValueObject(registerData.Description)
                 : null;
 
-        return new RoleStruct { Name = name, Description = description, };
+        return new RoleStruct { Name = name, Description = description };
     }
 }

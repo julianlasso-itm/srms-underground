@@ -29,10 +29,6 @@ internal abstract class RegisterCredentialHelper : BaseHelper
     {
         var email = new EmailValueObject(registerData.Email);
         var password = new PasswordValueObject(registerData.Password);
-        return new CredentialStruct
-        {
-            Email = email,
-            Password = password,
-        };
+        return new CredentialStruct { Email = email, Password = password };
     }
 }
