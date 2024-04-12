@@ -9,9 +9,8 @@ namespace AccessControl.Application;
 public class Application<TEntity>
     where TEntity : class
 {
-    public ISecurityAggregateRoot? AggregateRoot { get; init; }
+    public required ISecurityAggregateRoot AggregateRoot { get; init; }
 
-    private RegisterUserUseCase<TEntity>? _registerUserUseCase;
     private readonly IUserRepository<TEntity>? _userRepository;
 
     public Application(IUserRepository<TEntity> userRepository)
@@ -22,8 +21,8 @@ public class Application<TEntity>
     public Task<RegisterUserResponse> RegisterUser(NewUserCommand request)
     {
         ValidateAggregateRoot();
-        _registerUserUseCase ??= new RegisterUserUseCase<TEntity>(AggregateRoot!, _userRepository!);
-        var response = _registerUserUseCase.Handle(request);
+        var useCase = new RegisterUserUseCase<TEntity>(AggregateRoot, _userRepository!);
+        var response = useCase.Handle(request);
         return response;
     }
 
