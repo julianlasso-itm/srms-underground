@@ -5,29 +5,29 @@ using AccessControl.Application.Responses;
 using AccessControl.Domain.Aggregates.Constants;
 using AccessControl.Domain.Aggregates.Dto;
 using AccessControl.Domain.Aggregates.Interfaces;
-using Shared.Application.Interfaces;
+using Shared.Application.Base;
 
 namespace AccessControl.Application.UseCases;
 
-public sealed class RegisterUserUseCase<TEntity> : IUseCase<NewUserCommand, RegisterUserResponse>
+public sealed class RegisterUserUseCase<TEntity>
+    : BaseUseCase<NewUserCommand, RegisterUserResponse, ISecurityAggregateRoot>
     where TEntity : class
 {
-    private readonly ISecurityAggregateRoot _aggregateRoot;
     private readonly IUserRepository<TEntity> _userRepository;
 
     public RegisterUserUseCase(
         ISecurityAggregateRoot aggregateRoot,
         IUserRepository<TEntity> userRepository
     )
+        : base(aggregateRoot)
     {
-        _aggregateRoot = aggregateRoot;
         _userRepository = userRepository;
     }
 
-    public async Task<RegisterUserResponse> Handle(NewUserCommand request)
+    public override async Task<RegisterUserResponse> Handle(NewUserCommand request)
     {
-        var user = _aggregateRoot.RegisterCredential(
-            new RegisterCredential { Email = request.Email, Password = request.Password, }
+        var user = AggregateRoot.RegisterCredential(
+            new RegisterCredential { Email = request.Email, Password = request.Password }
         );
 
         var response = new RegisterUserResponse
@@ -39,7 +39,7 @@ public sealed class RegisterUserUseCase<TEntity> : IUseCase<NewUserCommand, Regi
         };
 
         _ = await _userRepository.AddAsync(_userRepository.MapToEntity(response));
-        _aggregateRoot.EmitEvent(
+        EmitEvent(
             $"{EventsConst.Prefix}.{EventsConst.EventCredentialRegistered}",
             JsonSerializer.Serialize(response)
         );
