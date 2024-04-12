@@ -65,6 +65,11 @@ internal sealed class RoleEntity
         Name = role.Name;
     }
 
+    public void UpdateDescription(RoleEntity role)
+    {
+        Description = role.Description;
+    }
+
     public void AddCredentials(IEnumerable<CredentialEntity> credentials)
     {
         Credentials ??= new List<CredentialEntity>();
@@ -73,22 +78,20 @@ internal sealed class RoleEntity
 
     public void RemoveCredentials(IEnumerable<CredentialEntity> credentials)
     {
-        if (Credentials == null)
+        if (Credentials != null)
         {
-            return;
-        }
-        foreach (var credential in credentials)
-        {
-            Credentials.Remove(credential);
+            foreach (var credential in credentials)
+            {
+                Credentials.Remove(credential);
+            }
         }
     }
 
     public void RemoveAllCredentials()
     {
-        if (Credentials == null)
+        if (Credentials != null)
         {
-            return;
+            Credentials.Clear();
         }
-        Credentials.Clear();
     }
 }
