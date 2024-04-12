@@ -1,5 +1,3 @@
-using System.Text.Json;
-using AccessControl.Domain.Aggregates.Constants;
 using AccessControl.Domain.Aggregates.Dto;
 using AccessControl.Domain.Aggregates.Helpers;
 using AccessControl.Domain.Aggregates.Interfaces;
@@ -8,7 +6,7 @@ using Shared.Domain.Events.Interfaces;
 
 namespace AccessControl.Domain.Aggregates;
 
-public sealed class SecurityAggregateRoot : BaseAggregate, ISecurityAggregateRoot
+public class SecurityAggregateRoot : BaseAggregate, ISecurityAggregateRoot
 {
     public SecurityAggregateRoot(IEvent eventInterface)
         : base(eventInterface) { }
