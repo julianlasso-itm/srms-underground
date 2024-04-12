@@ -6,7 +6,7 @@ using Shared.Domain.Events.Interfaces;
 
 namespace AccessControl.Domain.Aggregates;
 
-public sealed class SecurityAggregateRoot : BaseAggregate, ISecurityAggregateRoot
+public class SecurityAggregateRoot : BaseAggregate, ISecurityAggregateRoot
 {
     public SecurityAggregateRoot(IEvent eventInterface)
         : base(eventInterface) { }
