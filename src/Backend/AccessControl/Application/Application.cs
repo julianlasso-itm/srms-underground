@@ -12,8 +12,8 @@ public class Application<TUserEntity, TRoleEntity>
 {
     public required ISecurityAggregateRoot AggregateRoot { get; init; }
 
-    private readonly RegisterUserUseCase<TEntity> _registerUserUseCase;
-    private readonly IUserRepository<TEntity> _userRepository;
+    private readonly IUserRepository<TUserEntity> _userRepository;
+    private readonly IRoleRepository<TRoleEntity> _roleRepository;
 
     public Application(
         IUserRepository<TUserEntity> userRepository,
@@ -27,8 +27,16 @@ public class Application<TUserEntity, TRoleEntity>
     public Task<RegisterUserResponse> RegisterUser(NewUserCommand request)
     {
         ValidateAggregateRoot();
-        var useCase = new RegisterUserUseCase<TEntity>(AggregateRoot, _userRepository);
-        var response = _registerUserUseCase.Handle(request);
+        var useCase = new RegisterUserUseCase<TUserEntity>(AggregateRoot, _userRepository);
+        var response = useCase.Handle(request);
+        return response;
+    }
+
+    public Task<RegisterRoleResponse> RegisterRole(NewRoleCommand request)
+    {
+        ValidateAggregateRoot();
+        var useCase = new RegisterRoleUseCase<TRoleEntity>(AggregateRoot, _roleRepository);
+        var response = useCase.Handle(request);
         return response;
     }
 
