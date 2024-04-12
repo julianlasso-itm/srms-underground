@@ -1,6 +1,8 @@
+using System.Text.Json;
 using AccessControl.Application.Commands;
 using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
+using AccessControl.Domain.Aggregates.Constants;
 using AccessControl.Domain.Aggregates.Dto;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Interfaces;
@@ -37,6 +39,10 @@ public sealed class RegisterUserUseCase<TEntity> : IUseCase<NewUserCommand, Regi
         };
 
         _ = await _userRepository.AddAsync(_userRepository.MapToEntity(response));
+        _aggregateRoot.EmitEvent(
+            $"{EventsConst.Prefix}.{EventsConst.EventCredentialRegistered}",
+            JsonSerializer.Serialize(response)
+        );
         return response;
     }
 }

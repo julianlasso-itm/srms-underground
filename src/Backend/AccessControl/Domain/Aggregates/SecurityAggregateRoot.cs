@@ -16,10 +16,6 @@ public sealed class SecurityAggregateRoot : BaseAggregate, ISecurityAggregateRoo
     public RegisterCredentialResponse RegisterCredential(RegisterCredential registerData)
     {
         var result = RegisterCredentialHelper.Execute(registerData);
-        EmitEvent(
-            $"{EventsConst.Prefix}.{EventsConst.EventCredentialRegistered}",
-            JsonSerializer.Serialize(result)
-        );
         return result;
     }
 }
