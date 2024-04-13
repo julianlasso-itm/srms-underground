@@ -19,6 +19,7 @@ public class RoleRepository : BaseRepository<Role>, IRoleRepository<Role>
             Name = entity.Name,
             Description = entity.Description,
             Disabled = entity.Disabled,
+            CreatedAt = DateTime.UtcNow
         };
         return AddAsync(role);
     }
@@ -29,6 +30,7 @@ public class RoleRepository : BaseRepository<Role>, IRoleRepository<Role>
         if (entity.Name != null) role.Name = entity.Name;
         if (entity.Description != null) role.Description = entity.Description;
         if (entity.Disabled != null) role.Disabled = (bool)entity.Disabled;
+        role.UpdatedAt = DateTime.UtcNow;
         return UpdateAsync(id, role);
     }
 }

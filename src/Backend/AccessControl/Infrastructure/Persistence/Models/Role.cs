@@ -25,12 +25,12 @@ public class Role
 
     [Required]
     [Column("rol_disabled")]
-    public bool Disabled { get; set; } = false;
+    public bool Disabled { get; set; }
 
-    [Required]
     [Column("rol_created_at")]
     [DataType(DataType.DateTime)]
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    [DisplayFormat(ConvertEmptyStringToNull = true)]
+    public DateTime? CreatedAt { get; set; }
 
     [Column("rol_updated_at")]
     [DataType(DataType.DateTime)]
