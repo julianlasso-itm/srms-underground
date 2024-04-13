@@ -31,4 +31,12 @@ public class AccessControlController : BaseController
             async () => Ok(await _accessControlService.RegisterRoleAsync(request))
         );
     }
+
+    [HttpPost("role/update")]
+    public async Task<IActionResult> UpdateRoleAsync([FromBody] UpdateRoleRequest request)
+    {
+        return await HandleAsync(
+            async () => Ok(await _accessControlService.UpdateRoleAsync(request))
+        );
+    }
 }
