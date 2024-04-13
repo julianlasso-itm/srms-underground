@@ -26,7 +26,7 @@ internal abstract class UpdateRoleHelper : BaseHelper, IHelper<UpdateRole, Updat
         {
             var description = new DescriptionValueObject(data.Description);
             role.UpdateDescription(description);
-            response.Description = role.Description.Value;
+            response.Description = role.Description?.Value;
         }
 
         if (data.Disable != null)
@@ -39,7 +39,7 @@ internal abstract class UpdateRoleHelper : BaseHelper, IHelper<UpdateRole, Updat
             {
                 role.Enable();
             }
-            response.Disabled = role.IsDisabled.Value;
+            response.Disabled = role.Disabled.Value;
         }
 
         return response;

@@ -22,7 +22,7 @@ internal abstract class RegisterRoleHelper : BaseHelper, IHelper<RegisterRole, R
             RoleId = role.RoleId.Value,
             Name = role.Name.Value,
             Description = role.Description?.Value,
-            Disabled = role.IsDisabled.Value,
+            Disabled = role.Disabled.Value,
         };
     }
 
