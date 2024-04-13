@@ -3,10 +3,11 @@ using AccessControl.Domain.Entities;
 using AccessControl.Domain.Entities.Structs;
 using AccessControl.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
+using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Helpers;
 
-internal abstract class UpdateRoleHelper : BaseHelper
+internal abstract class UpdateRoleHelper : BaseHelper, IHelper<UpdateRole, UpdateRoleResponse>
 {
     public static UpdateRoleResponse Execute(UpdateRole data)
     {
