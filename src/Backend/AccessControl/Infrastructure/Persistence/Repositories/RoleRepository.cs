@@ -11,15 +11,24 @@ public class RoleRepository : BaseRepository<Role>, IRoleRepository<Role>
     public RoleRepository(DbContext context)
         : base(context) { }
 
-    public Role MapToEntity(RegisterRoleResponse response)
+    public Task<Role> AddAsync(RegisterRoleResponse entity)
     {
-        var entity = new Role
+        var role = new Role
         {
-            RoleId = Guid.Parse(response.RoleId),
-            Name = response.Name,
-            Description = response.Description,
-            Disabled = response.Disabled,
+            RoleId = Guid.Parse(entity.RoleId),
+            Name = entity.Name,
+            Description = entity.Description,
+            Disabled = entity.Disabled,
         };
-        return entity;
+        return AddAsync(role);
+    }
+
+    public Task<Role> UpdateAsync(string id, UpdateRoleResponse entity)
+    {
+        var role = new Role { RoleId = Guid.Parse(entity.RoleId) };
+        if (entity.Name != null) role.Name = entity.Name;
+        if (entity.Description != null) role.Description = entity.Description;
+        if (entity.Disabled != null) role.Disabled = (bool)entity.Disabled;
+        return UpdateAsync(entity.RoleId, role);
     }
 }

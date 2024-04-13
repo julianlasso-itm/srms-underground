@@ -3,9 +3,9 @@ namespace Shared.Application.Interfaces;
 public interface IRepository<TEntity>
     where TEntity : class
 {
-    Task<TEntity> GetByIdAsync(Guid id);
-    Task<IEnumerable<TEntity>> GetAllAsync();
-    Task<TEntity> AddAsync(TEntity entity);
-    Task<TEntity> UpdateAsync(Guid id, TEntity entity);
-    Task<TEntity> DeleteAsync(Guid id);
+    public Task<TEntity> GetByIdAsync(string id);
+    public Task<IEnumerable<TEntity>> GetAllAsync();
+    public Task<TEntity> AddAsync(TEntity entity);
+    public Task<TEntity> UpdateAsync(string id, TEntity entity);
+    public Task<TEntity> DeleteAsync(string id);
 }

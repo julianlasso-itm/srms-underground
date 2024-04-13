@@ -1,6 +1,8 @@
-namespace AccessControl.Domain.Aggregates.Dto;
+using Shared.Application.Interfaces;
 
-public class UpdateRole
+namespace AccessControl.Application.Commands;
+
+public sealed class UpdateRoleCommand : ICommand
 {
     public required string RoleId { get; init; }
     public string? Name { get; init; }

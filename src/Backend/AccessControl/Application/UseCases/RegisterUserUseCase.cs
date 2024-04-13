@@ -38,7 +38,7 @@ public sealed class RegisterUserUseCase<TEntity>
             Disabled = user.Disabled,
         };
 
-        _ = await _userRepository.AddAsync(_userRepository.MapToEntity(response));
+        _ = await _userRepository.AddAsync(response);
         EmitEvent(
             $"{EventsConst.Prefix}.{EventsConst.EventCredentialRegistered}",
             JsonSerializer.Serialize(response)

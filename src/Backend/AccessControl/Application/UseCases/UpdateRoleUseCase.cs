@@ -8,13 +8,13 @@ using Shared.Application.Base;
 
 namespace AccessControl.Application.UseCases;
 
-public sealed class RegisterRoleUseCase<TEntity>
-    : BaseUseCase<NewRoleCommand, RegisterRoleResponse, ISecurityAggregateRoot>
+public sealed class UpdateRoleUseCase<TEntity>
+    : BaseUseCase<UpdateRoleCommand, UpdateRoleResponse, ISecurityAggregateRoot>
     where TEntity : class
 {
     private readonly IRoleRepository<TEntity> _roleRepository;
 
-    public RegisterRoleUseCase(
+    public UpdateRoleUseCase(
         ISecurityAggregateRoot aggregateRoot,
         IRoleRepository<TEntity> roleRepository
     )
@@ -23,16 +23,18 @@ public sealed class RegisterRoleUseCase<TEntity>
         _roleRepository = roleRepository;
     }
 
-    public override async Task<RegisterRoleResponse> Handle(NewRoleCommand request)
+    public override async Task<UpdateRoleResponse> Handle(UpdateRoleCommand request)
     {
-        var dataRegisterRole = new Domain.Aggregates.Dto.RegisterRole
+        var dataUpdateRole = new Domain.Aggregates.Dto.UpdateRole
         {
+            RoleId = request.RoleId,
             Name = request.Name,
             Description = request.Description,
+            Disable = request.Disable,
         };
-        var role = AggregateRoot.RegisterRole(dataRegisterRole);
+        var role = AggregateRoot.UpdateRole(dataUpdateRole);
 
-        var response = new RegisterRoleResponse
+        var response = new UpdateRoleResponse
         {
             RoleId = role.RoleId,
             Name = role.Name,
@@ -40,9 +42,9 @@ public sealed class RegisterRoleUseCase<TEntity>
             Disabled = role.Disabled,
         };
 
-        _ = await _roleRepository.AddAsync(response);
+        _ = await _roleRepository.UpdateAsync(role.RoleId, response);
         EmitEvent(
-            $"{EventsConst.Prefix}.{EventsConst.EventRoleRegistered}",
+            $"{EventsConst.Prefix}.{EventsConst.EventRoleUpdated}",
             JsonSerializer.Serialize(response)
         );
         return response;

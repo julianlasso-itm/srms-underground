@@ -6,5 +6,6 @@ namespace AccessControl.Application.Repositories;
 public interface IRoleRepository<TEntity> : IRepository<TEntity>
     where TEntity : class
 {
-    TEntity MapToEntity(RegisterRoleResponse response);
+    public Task<TEntity> AddAsync(RegisterRoleResponse entity);
+    public Task<TEntity> UpdateAsync(string id, UpdateRoleResponse entity);
 }

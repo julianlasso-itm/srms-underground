@@ -11,15 +11,15 @@ public class UserRepository : BaseRepository<User>, IUserRepository<User>
     public UserRepository(DbContext context)
         : base(context) { }
 
-    public User MapToEntity(RegisterUserResponse response)
+    public Task<User> AddAsync(RegisterUserResponse entity)
     {
-        var entity = new User
+        var user = new User
         {
-            UserId = Guid.Parse(response.UserId),
-            Email = response.Email,
-            Password = response.Password,
-            Disabled = response.Disabled,
+            UserId = Guid.Parse(entity.UserId),
+            Email = entity.Email,
+            Password = entity.Password,
+            Disabled = entity.Disabled,
         };
-        return entity;
+        return AddAsync(user);
     }
 }

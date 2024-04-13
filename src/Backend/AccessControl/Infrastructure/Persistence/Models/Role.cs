@@ -17,7 +17,7 @@ public class Role
     [Required]
     [Column("rol_name")]
     [MaxLength(100)]
-    public required string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
     [Column("rol_description")]
     [MaxLength(1024)]
@@ -25,7 +25,7 @@ public class Role
 
     [Required]
     [Column("rol_disabled")]
-    public required bool Disabled { get; set; } = false;
+    public bool Disabled { get; set; } = false;
 
     [Required]
     [Column("rol_created_at")]

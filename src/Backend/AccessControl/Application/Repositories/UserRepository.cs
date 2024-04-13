@@ -6,5 +6,6 @@ namespace AccessControl.Application.Repositories;
 public interface IUserRepository<TEntity> : IRepository<TEntity>
     where TEntity : class
 {
-    TEntity MapToEntity(RegisterUserResponse response);
+    public Task<TEntity> AddAsync(RegisterUserResponse entity);
+    // public Task<TEntity> UpdateAsync(string id, UpdateUserResponse entity);
 }
