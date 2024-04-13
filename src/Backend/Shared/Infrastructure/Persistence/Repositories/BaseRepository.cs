@@ -25,7 +25,7 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
         Context = context;
     }
 
-    public async Task<TEntity> GetByIdAsync(Guid id)
+    public async Task<TEntity> GetByIdAsync(string id)
     {
         var parameter = Expression.Parameter(typeof(TEntity), Entity);
 
@@ -248,7 +248,7 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
         return entity;
     }
 
-    public async Task<TEntity> DeleteAsync(Guid id)
+    public async Task<TEntity> DeleteAsync(string id)
     {
         var entity = await GetByIdAsync(id);
 
