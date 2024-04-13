@@ -28,6 +28,33 @@ public class AccessControlServices : IAccessControlServices
         _roleRepository = roleRepository;
     }
 
+    public async Task<RegisterUserResponse> RegisterUserAsync(
+        RegisterUserRequest request,
+        CallContext context = default
+    )
+    {
+        var app = new Application<User, Role>(_userRepository, _roleRepository)
+        {
+            AggregateRoot = new SecurityAggregateRoot(_registerUserEvent)
+        };
+
+        var newUserCommand = new NewUserCommand
+        {
+            Email = request.Email,
+            Password = request.Password,
+            Roles = new List<string>()
+        };
+
+        var data = await app.RegisterUser(newUserCommand);
+        var response = new RegisterUserResponse
+        {
+            UserId = data.UserId,
+            Email = data.Email,
+            Disabled = data.Disabled,
+        };
+        return response;
+    }
+
     public async Task<RegisterRoleResponse> RegisterRoleAsync(
         RegisterRoleRequest request,
         CallContext context = default
@@ -55,8 +82,8 @@ public class AccessControlServices : IAccessControlServices
         return response;
     }
 
-    public async Task<RegisterUserResponse> RegisterUserAsync(
-        RegisterUserRequest request,
+    public async Task<UpdateRoleResponse> UpdateRoleAsync(
+        UpdateRoleRequest request,
         CallContext context = default
     )
     {
@@ -65,18 +92,20 @@ public class AccessControlServices : IAccessControlServices
             AggregateRoot = new SecurityAggregateRoot(_registerUserEvent)
         };
 
-        var newUserCommand = new NewUserCommand
+        var updateRoleCommand = new UpdateRoleCommand
         {
-            Email = request.Email,
-            Password = request.Password,
-            Roles = new List<string>()
+            RoleId = request.RoleId,
+            Name = request.Name,
+            Description = request.Description,
+            Disable = request.Disable
         };
 
-        var data = await app.RegisterUser(newUserCommand);
-        var response = new RegisterUserResponse
+        var data = await app.UpdateRole(updateRoleCommand);
+        var response = new UpdateRoleResponse
         {
-            UserId = data.UserId,
-            Email = data.Email,
+            RoleId = data.RoleId,
+            Name = data.Name,
+            Description = data.Description,
             Disabled = data.Disabled,
         };
         return response;
