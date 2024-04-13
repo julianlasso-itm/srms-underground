@@ -26,7 +26,6 @@ public class Application<TUserEntity, TRoleEntity>
 
     public Task<RegisterUserResponse> RegisterUser(NewUserCommand request)
     {
-        ValidateAggregateRoot();
         var useCase = new RegisterUserUseCase<TUserEntity>(AggregateRoot, _userRepository);
         var response = useCase.Handle(request);
         return response;
@@ -34,17 +33,15 @@ public class Application<TUserEntity, TRoleEntity>
 
     public Task<RegisterRoleResponse> RegisterRole(NewRoleCommand request)
     {
-        ValidateAggregateRoot();
         var useCase = new RegisterRoleUseCase<TRoleEntity>(AggregateRoot, _roleRepository);
         var response = useCase.Handle(request);
         return response;
     }
 
-    private void ValidateAggregateRoot()
+    public Task<UpdateRoleResponse> UpdateRole(UpdateRoleCommand request)
     {
-        if (AggregateRoot == null)
-        {
-            throw new InvalidOperationException("AggregateRoot is not set.");
-        }
+        var useCase = new UpdateRoleUseCase<TRoleEntity>(AggregateRoot, _roleRepository);
+        var response = useCase.Handle(request);
+        return response;
     }
 }
