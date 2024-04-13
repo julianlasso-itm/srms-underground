@@ -1,4 +1,5 @@
 using Analytics.Domain.Aggregates.Dto;
+using Analytics.Domain.Aggregates.Helpers;
 using Analytics.Domain.Aggregates.Interfaces;
 using Shared.Domain.Aggregate.Base;
 using Shared.Domain.Events.Interfaces;
@@ -12,11 +13,11 @@ public class AggregateRoot : BaseAggregate, IAggregateRoot
 
     public RegisterLevelResponse RegisterLevel(RegisterLevel request)
     {
-        throw new NotImplementedException();
+        return RegisterLevelHelper.Execute(request);
     }
 
     public UpdateLevelResponse UpdateLevel(UpdateLevel request)
     {
-        throw new NotImplementedException();
+        return UpdateLevelHelper.Execute(request);
     }
 }
