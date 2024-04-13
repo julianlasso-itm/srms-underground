@@ -3,10 +3,11 @@ using AccessControl.Domain.Entities;
 using AccessControl.Domain.Entities.Structs;
 using AccessControl.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
+using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Helpers;
 
-internal abstract class RegisterRoleHelper : BaseHelper
+internal abstract class RegisterRoleHelper : BaseHelper, IHelper<RegisterRole, RegisterRoleResponse>
 {
     public static RegisterRoleResponse Execute(RegisterRole registerData)
     {
