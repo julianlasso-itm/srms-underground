@@ -7,5 +7,5 @@ public interface IRoleRepository<TEntity> : IRepository<TEntity>
     where TEntity : class
 {
     public Task<TEntity> AddAsync(RegisterRoleResponse entity);
-    public Task<TEntity> UpdateAsync(string id, UpdateRoleResponse entity);
+    public Task<TEntity> UpdateAsync(Guid id, UpdateRoleResponse entity);
 }

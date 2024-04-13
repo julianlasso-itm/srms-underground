@@ -16,7 +16,7 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
         _context = context;
     }
 
-    public async Task<TEntity> GetByIdAsync(string id)
+    public async Task<TEntity> GetByIdAsync(Guid id)
     {
         var entity = await _context.Set<TEntity>().FindAsync(id);
         return entity ?? throw new Exception($"Entity with id {id} not found");
@@ -51,7 +51,7 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
         }
     }
 
-    public async Task<TEntity> UpdateAsync(string id, TEntity entity)
+    public async Task<TEntity> UpdateAsync(Guid id, TEntity entity)
     {
         var entityToUpdate =
             await _context.Set<TEntity>().FindAsync(id)
@@ -61,7 +61,7 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
         return entityToUpdate;
     }
 
-    public async Task<TEntity> DeleteAsync(string id)
+    public async Task<TEntity> DeleteAsync(Guid id)
     {
         var entity =
             await _context.Set<TEntity>().FindAsync(id)

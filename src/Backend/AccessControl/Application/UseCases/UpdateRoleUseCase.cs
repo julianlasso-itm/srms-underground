@@ -42,7 +42,7 @@ public sealed class UpdateRoleUseCase<TEntity>
             Disabled = role.Disabled,
         };
 
-        _ = await _roleRepository.UpdateAsync(role.RoleId, response);
+        _ = await _roleRepository.UpdateAsync(Guid.Parse(role.RoleId), response);
         EmitEvent(
             $"{EventsConst.Prefix}.{EventsConst.EventRoleUpdated}",
             JsonSerializer.Serialize(response)

@@ -23,12 +23,12 @@ public class RoleRepository : BaseRepository<Role>, IRoleRepository<Role>
         return AddAsync(role);
     }
 
-    public Task<Role> UpdateAsync(string id, UpdateRoleResponse entity)
+    public Task<Role> UpdateAsync(Guid id, UpdateRoleResponse entity)
     {
-        var role = new Role { RoleId = Guid.Parse(entity.RoleId) };
+        var role = new Role { RoleId = id };
         if (entity.Name != null) role.Name = entity.Name;
         if (entity.Description != null) role.Description = entity.Description;
         if (entity.Disabled != null) role.Disabled = (bool)entity.Disabled;
-        return UpdateAsync(entity.RoleId, role);
+        return UpdateAsync(id, role);
     }
 }
