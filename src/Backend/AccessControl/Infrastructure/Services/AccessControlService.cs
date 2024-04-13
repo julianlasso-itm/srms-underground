@@ -1,9 +1,4 @@
-using AccessControl.Application;
 using AccessControl.Application.Commands;
-using AccessControl.Application.Repositories;
-using AccessControl.Domain.Aggregates;
-using AccessControl.Infrastructure.Events;
-using AccessControl.Infrastructure.Persistence.Models;
 using ProtoBuf.Grpc;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
@@ -11,21 +6,13 @@ using Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses;
 
 namespace AccessControl.Infrastructure.Services;
 
-public class AccessControlServices : IAccessControlServices
+public class AccessControlService : IAccessControlServices
 {
-    private readonly IUserRepository<User> _userRepository;
-    private readonly IRoleRepository<Role> _roleRepository;
-    private readonly RegisterUserEvent _registerUserEvent;
+    private readonly ApplicationService _applicationService;
 
-    public AccessControlServices(
-        IUserRepository<User> userRepository,
-        RegisterUserEvent registerUserEvent,
-        IRoleRepository<Role> roleRepository
-    )
+    public AccessControlService(ApplicationService applicationService)
     {
-        _userRepository = userRepository;
-        _registerUserEvent = registerUserEvent;
-        _roleRepository = roleRepository;
+        _applicationService = applicationService;
     }
 
     public async Task<RegisterUserResponse> RegisterUserAsync(
@@ -33,10 +20,7 @@ public class AccessControlServices : IAccessControlServices
         CallContext context = default
     )
     {
-        var app = new Application<User, Role>(_userRepository, _roleRepository)
-        {
-            AggregateRoot = new SecurityAggregateRoot(_registerUserEvent)
-        };
+        var app = _applicationService.GetApplication();
 
         var newUserCommand = new NewUserCommand
         {
@@ -60,10 +44,7 @@ public class AccessControlServices : IAccessControlServices
         CallContext context = default
     )
     {
-        var app = new Application<User, Role>(_userRepository, _roleRepository)
-        {
-            AggregateRoot = new SecurityAggregateRoot(_registerUserEvent)
-        };
+        var app = _applicationService.GetApplication();
 
         var newRoleCommand = new NewRoleCommand
         {
@@ -87,10 +68,7 @@ public class AccessControlServices : IAccessControlServices
         CallContext context = default
     )
     {
-        var app = new Application<User, Role>(_userRepository, _roleRepository)
-        {
-            AggregateRoot = new SecurityAggregateRoot(_registerUserEvent)
-        };
+        var app = _applicationService.GetApplication();
 
         var updateRoleCommand = new UpdateRoleCommand
         {

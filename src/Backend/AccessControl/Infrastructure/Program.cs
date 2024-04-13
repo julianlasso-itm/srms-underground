@@ -26,6 +26,7 @@ builder.Services.AddScoped<IRoleRepository<Role>, RoleRepository>(serviceProvide
     return new RoleRepository(dbContext);
 });
 builder.Services.AddScoped<RegisterUserEvent>();
+builder.Services.AddScoped<ApplicationService>();
 
 // Add services to the container.
 builder.Services.AddSingleton<ErrorHandlingInterceptor>();
@@ -38,7 +39,7 @@ builder.Services.AddCodeFirstGrpc(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-app.MapGrpcService<AccessControlServices>();
+app.MapGrpcService<AccessControlService>();
 app.MapGet(
     "/",
     () =>
