@@ -33,16 +33,4 @@ public class SecurityAggregateRoot : BaseAggregateRoot, ISecurityAggregateRoot
     {
         return DeleteRoleHelper.Execute(deleteData);
     }
-
-    public RegisterRoleResponse RegisterRole(RegisterRole registerData)
-    {
-        var result = RegisterRoleHelper.Execute(registerData);
-        return result;
-    }
-
-    public UpdateRoleResponse UpdateRole(UpdateRole updateData)
-    {
-        var result = UpdateRoleHelper.Execute(updateData);
-        return result;
-    }
 }
