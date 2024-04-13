@@ -1,11 +1,11 @@
 using Shared.Domain.ValueObjects;
 using Shared.Domain.ValueObjects.Base;
 
-namespace AccessControl.Domain.ValueObjects;
+namespace Analytics.Domain.ValueObjects;
 
-public sealed class NameValueObject : BaseStringValueObject
+public class NameValueObject : BaseStringValueObject
 {
-    private const int MaxLength = 80;
+    private const int MaxLength = 30;
 
     public NameValueObject(string value)
         : base(value)

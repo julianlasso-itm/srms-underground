@@ -6,22 +6,36 @@ using AccessControl.Domain.Aggregates.Interfaces;
 
 namespace AccessControl.Application;
 
-public class Application<TEntity>
-    where TEntity : class
+public class Application<TUserEntity, TRoleEntity>
+    where TUserEntity : class
+    where TRoleEntity : class
 {
     public required ISecurityAggregateRoot AggregateRoot { get; init; }
 
-    private readonly IUserRepository<TEntity>? _userRepository;
+    private readonly IUserRepository<TUserEntity> _userRepository;
+    private readonly IRoleRepository<TRoleEntity> _roleRepository;
 
-    public Application(IUserRepository<TEntity> userRepository)
+    public Application(
+        IUserRepository<TUserEntity> userRepository,
+        IRoleRepository<TRoleEntity> roleRepository
+    )
     {
         _userRepository = userRepository;
+        _roleRepository = roleRepository;
     }
 
     public Task<RegisterUserResponse> RegisterUser(NewUserCommand request)
     {
         ValidateAggregateRoot();
-        var useCase = new RegisterUserUseCase<TEntity>(AggregateRoot, _userRepository!);
+        var useCase = new RegisterUserUseCase<TUserEntity>(AggregateRoot, _userRepository);
+        var response = useCase.Handle(request);
+        return response;
+    }
+
+    public Task<RegisterRoleResponse> RegisterRole(NewRoleCommand request)
+    {
+        ValidateAggregateRoot();
+        var useCase = new RegisterRoleUseCase<TRoleEntity>(AggregateRoot, _roleRepository);
         var response = useCase.Handle(request);
         return response;
     }

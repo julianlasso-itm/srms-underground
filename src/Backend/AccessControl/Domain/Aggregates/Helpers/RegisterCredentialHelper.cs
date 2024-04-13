@@ -3,10 +3,13 @@ using AccessControl.Domain.Entities;
 using AccessControl.Domain.Entities.Structs;
 using AccessControl.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
+using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Helpers;
 
-internal abstract class RegisterCredentialHelper : BaseHelper
+internal abstract class RegisterCredentialHelper
+    : BaseHelper,
+        IHelper<RegisterCredential, RegisterCredentialResponse>
 {
     public static RegisterCredentialResponse Execute(RegisterCredential registerData)
     {
@@ -29,10 +32,6 @@ internal abstract class RegisterCredentialHelper : BaseHelper
     {
         var email = new EmailValueObject(registerData.Email);
         var password = new PasswordValueObject(registerData.Password);
-        return new CredentialStruct
-        {
-            Email = email,
-            Password = password,
-        };
+        return new CredentialStruct { Email = email, Password = password };
     }
 }

@@ -20,6 +20,11 @@ builder.Services.AddScoped<IUserRepository<User>, UserRepository>(serviceProvide
     var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
     return new UserRepository(dbContext);
 });
+builder.Services.AddScoped<IRoleRepository<Role>, RoleRepository>(serviceProvider =>
+{
+    var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
+    return new RoleRepository(dbContext);
+});
 builder.Services.AddScoped<RegisterUserEvent>();
 
 // Add services to the container.

@@ -27,7 +27,7 @@ public sealed class RegisterUserUseCase<TEntity>
     public override async Task<RegisterUserResponse> Handle(NewUserCommand request)
     {
         var user = AggregateRoot.RegisterCredential(
-            new RegisterCredential { Email = request.Email, Password = request.Password, }
+            new RegisterCredential { Email = request.Email, Password = request.Password }
         );
 
         var response = new RegisterUserResponse
@@ -38,7 +38,7 @@ public sealed class RegisterUserUseCase<TEntity>
             Disabled = user.Disabled,
         };
 
-        _ = await _userRepository.AddAsync(_userRepository.MapToEntity(response));
+        _ = await _userRepository.AddAsync(response);
         EmitEvent(
             $"{EventsConst.Prefix}.{EventsConst.EventCredentialRegistered}",
             JsonSerializer.Serialize(response)

@@ -7,6 +7,7 @@ internal sealed class RoleEntity
 {
     public RoleIdValueObject RoleId { get; private set; }
     public NameValueObject Name { get; private set; }
+    public DescriptionValueObject Description { get; private set; }
     public DisabledValueObject IsDisabled { get; private set; }
     public List<CredentialEntity> Credentials { get; private set; }
 
@@ -22,6 +23,10 @@ internal sealed class RoleEntity
         {
             Name = data.Name;
         }
+        if (data.Description != null)
+        {
+            Description = data.Description;
+        }
         if (data.Disabled != null)
         {
             IsDisabled = data.Disabled;
@@ -29,10 +34,18 @@ internal sealed class RoleEntity
         Credentials = data.Credentials ?? new List<CredentialEntity>();
     }
 
-    public void Register(NameValueObject name, List<CredentialEntity>? credentials = null)
+    public void Register(
+        NameValueObject name,
+        DescriptionValueObject? description,
+        List<CredentialEntity>? credentials = null
+    )
     {
         RoleId = new RoleIdValueObject(Guid.NewGuid().ToString());
         Name = name;
+        if (description != null)
+        {
+            Description = description;
+        }
         IsDisabled = new DisabledValueObject(false);
         Credentials = credentials ?? new List<CredentialEntity>();
     }
@@ -47,9 +60,14 @@ internal sealed class RoleEntity
         IsDisabled = new DisabledValueObject(true);
     }
 
-    public void Update(RoleEntity role)
+    public void UpdateName(NameValueObject name)
     {
-        Name = role.Name;
+        Name = name;
+    }
+
+    public void UpdateDescription(DescriptionValueObject description)
+    {
+        Description = description;
     }
 
     public void AddCredentials(IEnumerable<CredentialEntity> credentials)
@@ -60,22 +78,20 @@ internal sealed class RoleEntity
 
     public void RemoveCredentials(IEnumerable<CredentialEntity> credentials)
     {
-        if (Credentials == null)
+        if (Credentials != null)
         {
-            return;
-        }
-        foreach (var credential in credentials)
-        {
-            Credentials.Remove(credential);
+            foreach (var credential in credentials)
+            {
+                Credentials.Remove(credential);
+            }
         }
     }
 
     public void RemoveAllCredentials()
     {
-        if (Credentials == null)
+        if (Credentials != null)
         {
-            return;
+            Credentials.Clear();
         }
-        Credentials.Clear();
     }
 }

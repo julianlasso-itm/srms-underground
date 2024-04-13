@@ -16,4 +16,16 @@ public class SecurityAggregateRoot : BaseAggregate, ISecurityAggregateRoot
         var result = RegisterCredentialHelper.Execute(registerData);
         return result;
     }
+
+    public RegisterRoleResponse RegisterRole(RegisterRole registerData)
+    {
+        var result = RegisterRoleHelper.Execute(registerData);
+        return result;
+    }
+
+    public UpdateRoleResponse UpdateRole(UpdateRole updateData)
+    {
+        var result = UpdateRoleHelper.Execute(updateData);
+        return result;
+    }
 }
