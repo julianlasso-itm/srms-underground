@@ -19,4 +19,10 @@ public interface IAccessControlServices
         RegisterRoleRequest request,
         CallContext context = default
     );
+
+    [OperationContract]
+    Task<UpdateRoleResponse> UpdateRoleAsync(
+        UpdateRoleRequest request,
+        CallContext context = default
+    );
 }
