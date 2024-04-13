@@ -9,22 +9,23 @@ namespace Shared.Infrastructure.Persistence.Repositories;
 public abstract class BaseRepository<TEntity> : IRepository<TEntity>
     where TEntity : class
 {
-    protected readonly DbContext _context;
+    protected readonly DbContext Context;
+    protected DbSet<TEntity> DbSet => Context.Set<TEntity>();
 
     public BaseRepository(DbContext context)
     {
-        _context = context;
+        Context = context;
     }
 
     public async Task<TEntity> GetByIdAsync(Guid id)
     {
-        var entity = await _context.Set<TEntity>().FindAsync(id);
+        var entity = await DbSet.FindAsync(id);
         return entity ?? throw new Exception($"Entity with id {id} not found");
     }
 
     public async Task<IEnumerable<TEntity>> GetAllAsync()
     {
-        var entities = await _context.Set<TEntity>().ToListAsync();
+        var entities = await DbSet.ToListAsync();
         return entities;
     }
 
@@ -32,8 +33,8 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
     {
         try
         {
-            var entry = await _context.Set<TEntity>().AddAsync(entity);
-            await _context.SaveChangesAsync();
+            var entry = await DbSet.AddAsync(entity);
+            await Context.SaveChangesAsync();
             return entry.Entity;
         }
         catch (DbUpdateException exception)
@@ -51,20 +52,26 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
         }
     }
 
-    public async Task<TEntity> UpdateAsync(Guid id, TEntity entity)
+    public async Task<TEntity> UpdateAsync(Guid id, TEntity updatedEntity)
     {
-        var entityToUpdate =
-            await _context.Set<TEntity>().FindAsync(id)
-            ?? throw new Exception($"Entity with id {id} not found");
-        _context.Entry(entityToUpdate).CurrentValues.SetValues(entity);
-        await _context.SaveChangesAsync();
-        return entityToUpdate;
+        var entity = GetByIdAsync(id).Result;
+        var properties = entity.GetType().GetProperties();
+        foreach (var property in properties)
+        {
+            var value = property.GetValue(updatedEntity);
+            if (value != null)
+            {
+                entity.GetType().GetProperty(property.Name)?.SetValue(entity, value);
+            }
+        }
+        await Context.SaveChangesAsync();
+        return entity;
     }
 
     public async Task<TEntity> DeleteAsync(Guid id)
     {
         var entity =
-            await _context.Set<TEntity>().FindAsync(id)
+            await DbSet.FindAsync(id)
             ?? throw new Exception($"Entity with id {id} not found");
         entity.GetType().GetProperty("DeletedAt")?.SetValue(entity, DateTime.UtcNow);
         await UpdateAsync(id, entity);

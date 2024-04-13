@@ -17,7 +17,7 @@ public class Role
     [Required]
     [Column("rol_name")]
     [MaxLength(100)]
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; }
 
     [Column("rol_description")]
     [MaxLength(1024)]
