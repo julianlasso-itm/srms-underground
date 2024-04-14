@@ -39,4 +39,12 @@ public class AccessControlController : BaseController
             async () => Ok(await _accessControlService.UpdateRoleAsync(request))
         );
     }
+
+    [HttpPost("role/delete")]
+    public async Task<IActionResult> DeleteRoleAsync([FromBody] DeleteRoleRequest request)
+    {
+        return await HandleAsync(
+            async () => Ok(await _accessControlService.DeleteRoleAsync(request))
+        );
+    }
 }
