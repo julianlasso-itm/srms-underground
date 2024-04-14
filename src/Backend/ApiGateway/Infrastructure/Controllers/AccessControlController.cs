@@ -32,7 +32,7 @@ public class AccessControlController : BaseController
         );
     }
 
-    [HttpPost("role/update")]
+    [HttpPut("role/update")]
     public async Task<IActionResult> UpdateRoleAsync([FromBody] UpdateRoleRequest request)
     {
         return await HandleAsync(
@@ -40,11 +40,19 @@ public class AccessControlController : BaseController
         );
     }
 
-    [HttpPost("role/delete")]
+    [HttpDelete("role/delete")]
     public async Task<IActionResult> DeleteRoleAsync([FromBody] DeleteRoleRequest request)
     {
         return await HandleAsync(
             async () => Ok(await _accessControlService.DeleteRoleAsync(request))
+        );
+    }
+
+    [HttpGet("roles")]
+    public async Task<IActionResult> GetRolesAsync([FromQuery] GetRolesRequest request)
+    {
+        return await HandleAsync(
+            async () => Ok(await _accessControlService.GetRolesAsync(request))
         );
     }
 }
