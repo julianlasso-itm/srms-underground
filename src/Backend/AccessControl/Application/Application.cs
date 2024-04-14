@@ -44,4 +44,11 @@ public class Application<TUserEntity, TRoleEntity>
         var response = useCase.Handle(request);
         return response;
     }
+
+    public Task<DeleteRoleResponse> DeleteRole(DeleteRoleCommand request)
+    {
+        var useCase = new DeleteRoleUseCase<TRoleEntity>(AggregateRoot, _roleRepository);
+        var response = useCase.Handle(request);
+        return response;
+    }
 }
