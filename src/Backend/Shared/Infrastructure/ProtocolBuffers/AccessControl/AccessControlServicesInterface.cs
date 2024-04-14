@@ -31,4 +31,10 @@ public interface IAccessControlServices
         DeleteRoleRequest request,
         CallContext context = default
     );
+
+    [OperationContract]
+    Task<GetRolesResponse> GetRolesAsync(
+        GetRolesRequest request,
+        CallContext context = default
+    );
 }
