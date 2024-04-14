@@ -50,6 +50,11 @@ internal abstract class UpdateRoleHelper : BaseHelper, IHelper<UpdateRole, Updat
         return response;
     }
 
+    public static void Execute()
+    {
+        throw new NotImplementedException();
+    }
+
     private static RoleStruct GetRoleStruct(UpdateRole data)
     {
         var id = new RoleIdValueObject(data.RoleId);

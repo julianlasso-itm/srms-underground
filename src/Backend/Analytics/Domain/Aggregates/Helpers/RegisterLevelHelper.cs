@@ -28,6 +28,11 @@ internal abstract class RegisterLevelHelper
         };
     }
 
+    public static void Execute()
+    {
+        throw new NotImplementedException();
+    }
+
     private static LevelStruct GetLevelStruct(RegisterLevel data)
     {
         var name = new NameValueObject(data.Name);

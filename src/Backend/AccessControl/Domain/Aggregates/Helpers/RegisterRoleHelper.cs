@@ -26,6 +26,11 @@ internal abstract class RegisterRoleHelper : BaseHelper, IHelper<RegisterRole, R
         };
     }
 
+    public static void Execute()
+    {
+        throw new NotImplementedException();
+    }
+
     private static RoleStruct GetRoleStruct(RegisterRole registerData)
     {
         var name = new NameValueObject(registerData.Name);

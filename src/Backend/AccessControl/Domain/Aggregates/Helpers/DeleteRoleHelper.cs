@@ -15,6 +15,11 @@ internal abstract class DeleteRoleHelper : BaseHelper, IHelper<DeleteRole, Delet
         return data;
     }
 
+    public static void Execute()
+    {
+        throw new NotImplementedException();
+    }
+
     private static RoleStruct GetRoleStruct(DeleteRole data)
     {
         var id = new RoleIdValueObject(data.RoleId);

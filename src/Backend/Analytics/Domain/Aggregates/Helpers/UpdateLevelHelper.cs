@@ -41,6 +41,11 @@ internal abstract class UpdateLevelHelper : BaseHelper, IHelper<UpdateLevel, Upd
         };
     }
 
+    public static void Execute()
+    {
+        throw new NotImplementedException();
+    }
+
     private static LevelStruct GetLevelStruct(UpdateLevel data)
     {
         var response = new LevelStruct();
