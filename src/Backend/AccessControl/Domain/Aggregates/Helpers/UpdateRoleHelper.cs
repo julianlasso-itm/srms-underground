@@ -4,6 +4,8 @@ using AccessControl.Domain.Entities.Structs;
 using AccessControl.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
+using Shared.Domain.Exceptions;
+using Shared.Domain.ValueObjects;
 
 namespace AccessControl.Domain.Aggregates.Helpers;
 
@@ -42,6 +44,8 @@ internal abstract class UpdateRoleHelper : BaseHelper, IHelper<UpdateRole, Updat
             response.Disabled = role.Disabled.Value;
         }
 
+        ValidateAmountDataToBeUpdated(response);
+
         return response;
     }
 
@@ -49,5 +53,17 @@ internal abstract class UpdateRoleHelper : BaseHelper, IHelper<UpdateRole, Updat
     {
         var id = new RoleIdValueObject(data.RoleId);
         return new RoleStruct { RoleId = id };
+    }
+
+    private static void ValidateAmountDataToBeUpdated(UpdateRoleResponse response)
+    {
+        var count = response.GetType().GetProperties().Count(x => x.GetValue(response) != null);
+        if (count == 1)
+        {
+            throw new DomainException(
+                "No data to update",
+                [new ErrorValueObject("No fields to update", "No fields to update")]
+            );
+        }
     }
 }
