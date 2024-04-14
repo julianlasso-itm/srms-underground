@@ -88,4 +88,24 @@ public class AccessControlService : IAccessControlServices
         };
         return response;
     }
+
+    public async Task<DeleteRoleResponse> DeleteRoleAsync(
+        DeleteRoleRequest request,
+        CallContext context = default
+    )
+    {
+        var app = _applicationService.GetApplication();
+
+        var deleteRoleCommand = new DeleteRoleCommand
+        {
+            RoleId = request.RoleId
+        };
+
+        var data = await app.DeleteRole(deleteRoleCommand);
+        var response = new DeleteRoleResponse
+        {
+            RoleId = data.RoleId,
+        };
+        return response;
+    }
 }
