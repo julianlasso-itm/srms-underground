@@ -51,4 +51,11 @@ public class Application<TUserEntity, TRoleEntity>
         var response = useCase.Handle(request);
         return response;
     }
+
+    public Task<GetRolesResponse<TRoleEntity>> GetRoles(GetRolesCommand request)
+    {
+        var useCase = new GetRolesUseCase<TRoleEntity>(AggregateRoot, _roleRepository);
+        var response = useCase.Handle(request);
+        return response;
+    }
 }
