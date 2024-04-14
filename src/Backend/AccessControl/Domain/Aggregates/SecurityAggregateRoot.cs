@@ -30,4 +30,9 @@ public class SecurityAggregateRoot : BaseAggregate, ISecurityAggregateRoot
     {
         return DeleteRoleHelper.Execute(deleteData);
     }
+
+    public void GetRoles()
+    {
+        GetRolesHelper.Execute();
+    }
 }
