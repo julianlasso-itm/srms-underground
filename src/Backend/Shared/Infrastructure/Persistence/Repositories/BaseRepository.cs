@@ -54,7 +54,7 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
 
     public async Task<TEntity> UpdateAsync(Guid id, TEntity updatedEntity)
     {
-        var entity = GetByIdAsync(id).Result;
+        var entity = await GetByIdAsync(id);
         var properties = entity.GetType().GetProperties();
         foreach (var property in properties)
         {
@@ -70,11 +70,16 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
 
     public async Task<TEntity> DeleteAsync(Guid id)
     {
-        var entity =
-            await DbSet.FindAsync(id)
-            ?? throw new Exception($"Entity with id {id} not found");
+        var entity = await GetByIdAsync(id);
+        DbSet.Remove(entity);
+        return entity;
+    }
+
+    public async Task<TEntity> SoftDeleteAsync(Guid id)
+    {
+        var entity = await GetByIdAsync(id);
         entity.GetType().GetProperty("DeletedAt")?.SetValue(entity, DateTime.UtcNow);
-        await UpdateAsync(id, entity);
+        await Context.SaveChangesAsync();
         return entity;
     }
 }
