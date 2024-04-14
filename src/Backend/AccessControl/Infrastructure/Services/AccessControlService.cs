@@ -96,16 +96,42 @@ public class AccessControlService : IAccessControlServices
     {
         var app = _applicationService.GetApplication();
 
-        var deleteRoleCommand = new DeleteRoleCommand
-        {
-            RoleId = request.RoleId
-        };
+        var deleteRoleCommand = new DeleteRoleCommand { RoleId = request.RoleId };
 
         var data = await app.DeleteRole(deleteRoleCommand);
-        var response = new DeleteRoleResponse
+        var response = new DeleteRoleResponse { RoleId = data.RoleId, };
+        return response;
+    }
+
+    public async Task<GetRolesResponse> GetRolesAsync(
+        GetRolesRequest request,
+        CallContext context = default
+    )
+    {
+        var app = _applicationService.GetApplication();
+
+        var getRolesCommand = new GetRolesCommand
         {
-            RoleId = data.RoleId,
+            Page = request.Page,
+            Limit = request.Limit,
+            Sort = request.Sort,
+            Order = request.Order
         };
+
+        var data = await app.GetRoles(getRolesCommand);
+        var response = new GetRolesResponse
+        {
+            Roles = data
+                .Roles.Select(role => new Role
+                {
+                    RoleId = role.RoleId.ToString(),
+                    Name = role.Name,
+                    Description = role.Description,
+                    Disabled = role.Disabled
+                })
+                .ToList()
+        };
+
         return response;
     }
 }
