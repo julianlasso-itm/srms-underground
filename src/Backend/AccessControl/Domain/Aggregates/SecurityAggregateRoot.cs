@@ -25,4 +25,9 @@ public class SecurityAggregateRoot : BaseAggregate, ISecurityAggregateRoot
     {
         return UpdateRoleHelper.Execute(updateData);
     }
+
+    public DeleteRole DeleteRole(DeleteRole deleteData)
+    {
+        return DeleteRoleHelper.Execute(deleteData);
+    }
 }
