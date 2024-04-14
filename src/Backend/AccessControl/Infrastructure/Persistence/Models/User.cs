@@ -17,21 +17,22 @@ public class User
     [Required]
     [Column("usr_email")]
     [MaxLength(500)]
-    public required string Email { get; set; }
+    public string Email { get; set; }
 
     [Required]
     [Column("usr_password")]
     [MaxLength(128)]
-    public required string Password { get; set; }
+    public string Password { get; set; }
 
     [Required]
     [Column("usr_disabled")]
-    public required bool Disabled { get; set; } = false;
+    public bool Disabled { get; set; } = false;
 
     [Required]
     [Column("usr_created_at")]
     [DataType(DataType.DateTime)]
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    [DisplayFormat(ConvertEmptyStringToNull = true)]
+    public DateTime? CreatedAt { get; set; }
 
     [Column("usr_updated_at")]
     [DataType(DataType.DateTime)]
