@@ -23,9 +23,17 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
         return entity ?? throw new Exception($"Entity with id {id} not found");
     }
 
-    public async Task<IEnumerable<TEntity>> GetAllAsync()
+    public async Task<IEnumerable<TEntity>> GetWithPaginationAsync(
+        int page,
+        int limit,
+        string? sort,
+        string? order
+    )
     {
-        var entities = await DbSet.ToListAsync();
+        var entities = await DbSet
+            .Skip((page - 1) * limit)
+            .Take(limit)
+            .ToListAsync();
         return entities;
     }
 
