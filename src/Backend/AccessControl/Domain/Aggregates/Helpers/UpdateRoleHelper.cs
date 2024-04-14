@@ -44,6 +44,7 @@ internal abstract class UpdateRoleHelper : BaseHelper, IHelper<UpdateRole, Updat
             response.Disabled = role.Disabled.Value;
         }
 
+        ValidateStructureFields(role);
         ValidateAmountDataToBeUpdated(response);
 
         return response;
