@@ -25,4 +25,10 @@ public interface IAccessControlServices
         UpdateRoleRequest request,
         CallContext context = default
     );
+
+    [OperationContract]
+    Task<DeleteRoleResponse> DeleteRoleAsync(
+        DeleteRoleRequest request,
+        CallContext context = default
+    );
 }
