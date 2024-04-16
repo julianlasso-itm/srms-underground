@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore;
 namespace AccessControl.Infrastructure.Persistence.Models;
 
 [Index(nameof(Name), IsUnique = true)]
-[Index(nameof(RoleId), nameof(DeletedAt), IsUnique = true)]
+[Index(nameof(Id), nameof(DeletedAt), IsUnique = true)]
 [Table("tbl_role")]
 public class Role
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.None)]
     [Column("rol_role_id")]
-    public Guid RoleId { get; set; }
+    public Guid Id { get; set; }
 
     [Required]
     [Column("rol_name")]

@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using System.Net;
 using System.Text.Json;
 using Grpc.Core;
@@ -19,8 +20,37 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
 
     public async Task<TEntity> GetByIdAsync(Guid id)
     {
-        var entity = await DbSet.FindAsync(id);
-        return entity ?? throw new Exception($"Entity with id {id} not found");
+        // Usar reflexión para determinar si la entidad tiene la propiedad DeletedAt
+        var propertyInfo = typeof(TEntity).GetProperty("DeletedAt");
+        if (propertyInfo != null && propertyInfo.PropertyType == typeof(DateTime?))
+        {
+            // Añadir un filtro dinámicamente si la propiedad existe
+            var parameter = Expression.Parameter(typeof(TEntity), "e");
+            var property = Expression.Property(parameter, "DeletedAt");
+            var nullConstant = Expression.Constant(null, typeof(DateTime?));
+            var equalsNull = Expression.Equal(property, nullConstant);
+
+            // Crear una expresión para el ID
+            var idPropertyInfo = typeof(TEntity).GetProperty("Id");
+            var idProperty = Expression.Property(parameter, idPropertyInfo!);
+            var idValue = Expression.Constant(id);
+            var idEquals = Expression.Equal(idProperty, idValue);
+
+            // Combinar ambas expresiones
+            var andExpression = Expression.AndAlso(idEquals, equalsNull);
+            var lambda = Expression.Lambda<Func<TEntity, bool>>(andExpression, parameter);
+
+            // Ejecutar la consulta
+            var entity = await DbSet.FirstOrDefaultAsync(lambda);
+            return entity
+                ?? throw new Exception($"Entity with id {id} not found");
+        }
+        else
+        {
+            // Si no existe la propiedad, buscar solo por ID
+            var entity = await DbSet.FindAsync(id);
+            return entity ?? throw new Exception($"Entity with id {id} not found");
+        }
     }
 
     public async Task<IEnumerable<TEntity>> GetWithPaginationAsync(
@@ -30,10 +60,37 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
         string? order
     )
     {
-        var entities = await DbSet
-            .Skip((page - 1) * limit)
-            .Take(limit)
-            .ToListAsync();
+        // Usar expresiones para construir la condición de DeletedAt si es aplicable
+        var query = DbSet.AsQueryable();
+
+        var propertyInfo = typeof(TEntity).GetProperty("DeletedAt");
+        if (propertyInfo != null && propertyInfo.PropertyType == typeof(DateTime?))
+        {
+            var parameter = Expression.Parameter(typeof(TEntity), "e");
+            var property = Expression.Property(parameter, "DeletedAt");
+            var nullConstant = Expression.Constant(null, typeof(DateTime?));
+            var equalsNull = Expression.Equal(property, nullConstant);
+            var lambda = Expression.Lambda<Func<TEntity, bool>>(equalsNull, parameter);
+            query = query.Where(lambda);
+        }
+
+        // Aplicar paginación
+        query = query.Skip((page - 1) * limit).Take(limit);
+
+        // Opcional: Agregar ordenamiento si es necesario
+        if (!string.IsNullOrEmpty(sort))
+        {
+            var param = Expression.Parameter(typeof(TEntity), "e");
+            var sortExpression = Expression.Property(param, sort);
+            var lambda = Expression.Lambda<Func<TEntity, object>>(
+                Expression.Convert(sortExpression, typeof(object)),
+                param
+            );
+
+            query = order == "desc" ? query.OrderByDescending(lambda) : query.OrderBy(lambda);
+        }
+
+        var entities = await query.ToListAsync();
         return entities;
     }
 
@@ -54,7 +111,7 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
                     Message = exception.Message,
                     Errors = exception.InnerException?.Message,
                 },
-                new JsonSerializerOptions { WriteIndented = true, }
+                options: new JsonSerializerOptions { WriteIndented = true, }
             );
             throw new RpcException(new Status(StatusCode.AlreadyExists, message));
         }
