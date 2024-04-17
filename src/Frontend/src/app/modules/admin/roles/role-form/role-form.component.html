@@ -1,17 +1,34 @@
-<form id="frmRole">
+<form id="frmRole" [formGroup]="frmRole()">
   @if (id() != null) {
-    <input name="id" type="text" class="hidden" [value]="id()">
+  <input name="id" type="text" class="hidden" formControlName="id">
   }
   <p>
     <mat-form-field class="width-100">
       <mat-label>Nombre</mat-label>
-      <input matInput placeholder="Nombre del rol">
+      <input matInput type="text" formControlName="name" placeholder="Nombre del rol">
+      @if (frmRole().get('name')?.errors?.['required']) {
+        <mat-error>El nombre es requerido</mat-error>
+      }
+      @if (frmRole().get('name')?.errors?.['maxlength']) {
+        <mat-error>El nombre debe tener un máximo de 50 caracteres</mat-error>
+      }
     </mat-form-field>
   </p>
   <p>
     <mat-form-field class="width-100">
       <mat-label>Descripción</mat-label>
-      <textarea matInput placeholder="Descripción del rol"></textarea>
+      <textarea matInput type="text" formControlName="description" placeholder="Descripción del rol"></textarea>
+      @if (frmRole().get('description')?.errors?.['maxlength']) {
+        <mat-error>La descripción debe tener un máximo de 1024 caracteres</mat-error>
+      }
     </mat-form-field>
   </p>
+  @if (id() != null) {
+    @if (frmRole().get('id')?.errors?.['required']) {
+      <mat-error>El id es requerido</mat-error>
+    }
+    @if (frmRole().get('id')?.errors?.['pattern']) {
+      <mat-error>El id debe tener un valor válido</mat-error>
+    }
+  }
 </form>
