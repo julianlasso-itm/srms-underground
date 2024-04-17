@@ -11,7 +11,7 @@ public class UserPerRole
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.None)]
     [Column("upr_id")]
-    public Guid Id { get; set; }
+    public Guid UserPerRoleId { get; set; }
 
     [Required]
     [Column("upr_user_id")]

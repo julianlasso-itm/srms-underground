@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using System.Net;
+using System.Reflection;
 using System.Text.Json;
 using Grpc.Core;
 using Microsoft.EntityFrameworkCore;
@@ -20,37 +21,42 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
 
     public async Task<TEntity> GetByIdAsync(Guid id)
     {
-        // Usar reflexión para determinar si la entidad tiene la propiedad DeletedAt
+        var parameter = Expression.Parameter(typeof(TEntity), "e");
+
+        // Find the ID property ending with "Id"
+        var idPropertyInfo =
+            FindIdProperty()
+            ?? throw new InvalidOperationException(
+                "No property ending in 'Id' found for the TEntity type."
+            );
+
+        // Create an expression for the ID
+        var idProperty = Expression.Property(parameter, idPropertyInfo);
+        var idValue = Expression.Constant(id, idPropertyInfo.PropertyType);
+        var idEquals = Expression.Equal(idProperty, idValue);
+
+        // Use reflection to determine if the entity has the DeletedAt property.
         var propertyInfo = typeof(TEntity).GetProperty("DeletedAt");
+        Expression<Func<TEntity, bool>>? lambda;
         if (propertyInfo != null && propertyInfo.PropertyType == typeof(DateTime?))
         {
-            // Añadir un filtro dinámicamente si la propiedad existe
-            var parameter = Expression.Parameter(typeof(TEntity), "e");
-            var property = Expression.Property(parameter, "DeletedAt");
+            var deletedAtProperty = Expression.Property(parameter, "DeletedAt");
             var nullConstant = Expression.Constant(null, typeof(DateTime?));
-            var equalsNull = Expression.Equal(property, nullConstant);
+            var equalsNull = Expression.Equal(deletedAtProperty, nullConstant);
 
-            // Crear una expresión para el ID
-            var idPropertyInfo = typeof(TEntity).GetProperty("Id");
-            var idProperty = Expression.Property(parameter, idPropertyInfo!);
-            var idValue = Expression.Constant(id);
-            var idEquals = Expression.Equal(idProperty, idValue);
-
-            // Combinar ambas expresiones
+            // Combining both expressions
             var andExpression = Expression.AndAlso(idEquals, equalsNull);
-            var lambda = Expression.Lambda<Func<TEntity, bool>>(andExpression, parameter);
-
-            // Ejecutar la consulta
-            var entity = await DbSet.FirstOrDefaultAsync(lambda);
-            return entity
-                ?? throw new Exception($"Entity with id {id} not found");
+            lambda = Expression.Lambda<Func<TEntity, bool>>(andExpression, parameter);
         }
         else
         {
-            // Si no existe la propiedad, buscar solo por ID
-            var entity = await DbSet.FindAsync(id);
-            return entity ?? throw new Exception($"Entity with id {id} not found");
+            // If the DeletedAt property does not exist, use only the ID condition
+            lambda = Expression.Lambda<Func<TEntity, bool>>(idEquals, parameter);
         }
+
+        // Execute the query
+        var entity = await DbSet.FirstOrDefaultAsync(lambda);
+        return entity ?? throw new Exception($"Entity with id {id} not found");
     }
 
     public async Task<IEnumerable<TEntity>> GetWithPaginationAsync(
@@ -60,7 +66,7 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
         string? order
     )
     {
-        // Usar expresiones para construir la condición de DeletedAt si es aplicable
+        // Use expressions to build the DeletedAt condition if applicable
         var query = DbSet.AsQueryable();
 
         var propertyInfo = typeof(TEntity).GetProperty("DeletedAt");
@@ -74,10 +80,10 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
             query = query.Where(lambda);
         }
 
-        // Aplicar paginación
+        // Apply pagination
         query = query.Skip((page - 1) * limit).Take(limit);
 
-        // Opcional: Agregar ordenamiento si es necesario
+        // Optional: Add sorting if necessary
         if (!string.IsNullOrEmpty(sort))
         {
             var param = Expression.Parameter(typeof(TEntity), "e");
@@ -146,5 +152,11 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
         entity.GetType().GetProperty("DeletedAt")?.SetValue(entity, DateTime.UtcNow);
         await Context.SaveChangesAsync();
         return entity;
+    }
+
+    private static PropertyInfo? FindIdProperty()
+    {
+        // Search for the first property whose name ends with "Id".
+        return typeof(TEntity).GetProperties().FirstOrDefault(p => p.Name.EndsWith("Id"));
     }
 }

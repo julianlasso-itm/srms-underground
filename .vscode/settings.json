@@ -44,5 +44,6 @@
     "QueryBank": "rules",
     "Analytics": "robot",
     "ProtocolBuffers": "proto",
-  }
+  },
+  "CodeGPT.apiKey": "CodeGPT Plus Beta"
 }
