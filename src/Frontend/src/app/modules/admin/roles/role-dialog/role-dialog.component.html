@@ -6,11 +6,12 @@
   }
 </h2>
 <mat-dialog-content>
-  <srms-role-form [id]="signal(data().id ?? null)"></srms-role-form>
+  <srms-role-form [id]="signal(data().id ?? null)" (frmRole)="roleForm($event)"></srms-role-form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-flat-button class="min-width-110" (click)="onCancelClick()">Cancelar</button>
-  <button mat-flat-button color="primary" class="min-width-110">
+  <button mat-flat-button color="primary" class="min-width-110" type="submit" form="frmRole"
+    [disabled]="!formRole().valid">
     @if (data().formType == formType().CREATE) {
       Crear
     } @else if (data().formType == formType().EDIT) {
