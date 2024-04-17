@@ -53,27 +53,17 @@ export class RoleComponent {
   constructor(public dialog: MatDialog) {}
 
   openDialogNew(): void {
-    const dialogRef = this.dialog.open(RoleDialogComponent, {
+    this.dialog.open(RoleDialogComponent, {
       data: signal({ formType: FormType.CREATE }),
       width: '400px',
     });
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('The dialog was closed');
-    //   this.animal = result;
-    // });
   }
 
   openDialogEdit(id: string): void {
-    const dialogRef = this.dialog.open(RoleDialogComponent, {
+    this.dialog.open(RoleDialogComponent, {
       data: signal({ formType: FormType.EDIT, id }),
       width: '400px',
     });
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('The dialog was closed');
-    //   this.animal = result;
-    // });
   }
 
   openDialogDelete(id: string): void {
