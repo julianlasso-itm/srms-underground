@@ -1,6 +1,6 @@
-<form id="frmRole" [formGroup]="frmRole()">
-  @if (id() != null) {
-  <input name="id" type="text" class="hidden" formControlName="id">
+<form id="frmRole" [formGroup]="frmRole()" (submit)="onSubmit()">
+  @if (role()?.roleId != null) {
+    <input type="text" class="hidden" formControlName="roleId">
   }
   <p>
     <mat-form-field class="width-100">
@@ -17,13 +17,23 @@
   <p>
     <mat-form-field class="width-100">
       <mat-label>Descripción</mat-label>
-      <textarea matInput type="text" formControlName="description" placeholder="Descripción del rol"></textarea>
+      <textarea matInput type="text" formControlName="description"
+        placeholder="Descripción del rol"></textarea>
       @if (frmRole().get('description')?.errors?.['maxlength']) {
         <mat-error>La descripción debe tener un máximo de 1024 caracteres</mat-error>
       }
     </mat-form-field>
   </p>
-  @if (id() != null) {
+  @if (role()?.roleId != null) {
+    <p>
+      <mat-slide-toggle formControlName="disabled" [checked]="frmRole().get('disabled')?.value">
+        @if (frmRole().get('disabled')?.value) {
+        <span class="color-red">Habilitado</span>
+        } @else {
+        <span class="color-green">Deshabilitado</span>
+        }
+      </mat-slide-toggle>
+    </p>
     @if (frmRole().get('id')?.errors?.['required']) {
       <mat-error>El id es requerido</mat-error>
     }

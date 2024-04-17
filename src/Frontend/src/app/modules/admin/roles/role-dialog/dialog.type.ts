@@ -1,6 +1,8 @@
+import type { IRole } from '../role/role.interface';
+
 export interface DialogType {
   formType: FormType;
-  id?: string;
+  role?: IRole;
 }
 
 export enum FormType {

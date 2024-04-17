@@ -1,4 +1,4 @@
-import { Component, Inject, signal, Signal, type Output } from '@angular/core';
+import { Component, Inject, signal, Signal } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogModule,

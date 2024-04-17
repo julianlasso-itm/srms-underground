@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, OnInit, Signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -10,47 +10,54 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RoleDialogComponent } from '../role-dialog/role-dialog.component';
 import { FormType } from '../role-dialog/dialog.type';
 import { DeleteDialogComponent } from '../../../shared/components/delete-dialog/delete-dialog.component';
+import { IRole, type IRoles } from './role.interface';
+import { HttpService } from '../../../shared/services/http.service';
+import { Constant } from '../../../shared/constants/constants';
+import { HttpClientModule } from '@angular/common/http';
+import type { IPagination } from '../../../shared/interfaces/pagination.interface';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  description: number;
-  id: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', description: 1.0079, id: 'H' },
-  { position: 2, name: 'Helium', description: 4.0026, id: 'He' },
-  { position: 3, name: 'Lithium', description: 6.941, id: 'Li' },
-  { position: 4, name: 'Beryllium', description: 9.0122, id: 'Be' },
-  { position: 5, name: 'Boron', description: 10.811, id: 'B' },
-  { position: 6, name: 'Carbon', description: 12.0107, id: 'C' },
-  { position: 7, name: 'Nitrogen', description: 14.0067, id: 'N' },
-  { position: 8, name: 'Oxygen', description: 15.9994, id: 'O' },
-  { position: 9, name: 'Fluorine', description: 18.9984, id: 'F' },
-  { position: 10, name: 'Neon', description: 20.1797, id: 'Ne' },
-];
+const URL = `${Constant.URL_BASE}${Constant.URL_GET_ROLES}`;
 
 @Component({
   selector: 'srms-role-component',
   standalone: true,
   imports: [
-    MatTableModule,
-    MatPaginatorModule,
+    HttpClientModule,
     MatButtonModule,
-    MatIconModule,
-    MatTooltipModule,
     MatFormFieldModule,
+    MatIconModule,
     MatInputModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatTooltipModule,
   ],
+  providers: [HttpService],
   templateUrl: './role.component.html',
   styleUrl: './role.component.scss',
 })
-export class RoleComponent {
-  displayedColumns: string[] = ['position', 'name', 'description', 'id'];
-  dataSource = ELEMENT_DATA;
+export class RoleComponent implements OnInit {
+  readonly displayedColumns: string[];
+  dataSource = signal<IRole[]>([]);
 
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog,
+    public readonly httpService: HttpService
+  ) {
+    this.displayedColumns = ['position', 'name', 'description', 'disabled', 'actions'];
+  }
+
+  ngOnInit(): void {
+    const pagination: IPagination = {
+      Page: 1,
+      Limit: 10,
+    };
+    const params = `Page=${encodeURIComponent(pagination.Page)}&Limit=${encodeURIComponent(pagination.Limit)}`;
+    this.httpService.get<IRoles>(`${URL}?${params}`).subscribe({
+      next: (data) => this.dataSource.update(() => data.roles),
+      complete: () => console.log('Roles loaded'),
+      error: (error) => console.error(error),
+    });
+  }
 
   openDialogNew(): void {
     this.dialog.open(RoleDialogComponent, {
@@ -59,9 +66,9 @@ export class RoleComponent {
     });
   }
 
-  openDialogEdit(id: string): void {
+  openDialogEdit(role: IRole): void {
     this.dialog.open(RoleDialogComponent, {
-      data: signal({ formType: FormType.EDIT, id }),
+      data: signal({ formType: FormType.EDIT, role }),
       width: '450px',
     });
   }
