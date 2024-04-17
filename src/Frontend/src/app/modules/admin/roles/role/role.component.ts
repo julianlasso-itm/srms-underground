@@ -55,20 +55,20 @@ export class RoleComponent {
   openDialogNew(): void {
     this.dialog.open(RoleDialogComponent, {
       data: signal({ formType: FormType.CREATE }),
-      width: '400px',
+      width: '450px',
     });
   }
 
   openDialogEdit(id: string): void {
     this.dialog.open(RoleDialogComponent, {
       data: signal({ formType: FormType.EDIT, id }),
-      width: '400px',
+      width: '450px',
     });
   }
 
   openDialogDelete(id: string): void {
     this.dialog.open(DeleteDialogComponent, {
-      data: { url: 'roles', id},
+      data: { url: 'roles', id },
       width: '400px',
       autoFocus: false,
     });
