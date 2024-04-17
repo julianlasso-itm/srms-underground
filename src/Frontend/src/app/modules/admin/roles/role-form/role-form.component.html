@@ -1,0 +1,17 @@
+<form id="frmRole">
+  @if (id() != null) {
+    <input name="id" type="text" class="hidden" [value]="id()">
+  }
+  <p>
+    <mat-form-field class="width-100">
+      <mat-label>Nombre</mat-label>
+      <input matInput placeholder="Nombre del rol">
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field class="width-100">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput placeholder="Descripción del rol"></textarea>
+    </mat-form-field>
+  </p>
+</form>

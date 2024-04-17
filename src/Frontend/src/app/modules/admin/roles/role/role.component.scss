@@ -1,0 +1,25 @@
+table {
+  width: 100%;
+  border: 1px solid #ccc;
+}
+
+.element-row:hover {
+  background: whitesmoke;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+}
+
+.space-full {
+  width: 100%;
+}
+
+h3 {
+  width: 100%;
+}
+
+.width-100 {
+  width: 100%;
+}

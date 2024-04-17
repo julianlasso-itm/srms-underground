@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>
+  @if (data().formType == formType().CREATE) {
+    Nuevo rol
+  } @else if (data().formType == formType().EDIT) {
+    Editar rol
+  }
+</h2>
+<mat-dialog-content>
+  <srms-role-form [id]="signal(data().id ?? null)"></srms-role-form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-flat-button class="min-width-110" (click)="onCancelClick()">Cancelar</button>
+  <button mat-flat-button color="primary" class="min-width-110">
+    @if (data().formType == formType().CREATE) {
+      Crear
+    } @else if (data().formType == formType().EDIT) {
+      Actualizar
+    }
+  </button>
+</mat-dialog-actions>
