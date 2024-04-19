@@ -159,4 +159,25 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
         // Search for the first property whose name ends with "Id".
         return typeof(TEntity).GetProperties().FirstOrDefault(p => p.Name.EndsWith("Id"));
     }
+
+    public Task<int> GetCountAsync()
+    {
+        var query = DbSet.AsQueryable();
+
+        // Use reflection to determine if the entity has the property 'DeletedAt'.
+        var propertyInfo = typeof(TEntity).GetProperty("DeletedAt");
+        if (propertyInfo != null && propertyInfo.PropertyType == typeof(DateTime?))
+        {
+            var parameter = Expression.Parameter(typeof(TEntity), "entity");
+            var deletedAtProperty = Expression.Property(parameter, "DeletedAt");
+            var nullConstant = Expression.Constant(null, typeof(DateTime?));
+            var equalsNull = Expression.Equal(deletedAtProperty, nullConstant);
+            var lambda = Expression.Lambda<Func<TEntity, bool>>(equalsNull, parameter);
+
+            query = query.Where(lambda);
+        }
+
+        // Return the count of the filtered elements
+        return query.CountAsync();
+    }
 }

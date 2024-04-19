@@ -4,6 +4,7 @@ public interface IRepository<TEntity>
     where TEntity : class
 {
     public Task<TEntity> GetByIdAsync(Guid id);
+    public Task<int> GetCountAsync();
     public Task<IEnumerable<TEntity>> GetWithPaginationAsync(
         int page,
         int limit,
