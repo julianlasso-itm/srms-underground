@@ -8,12 +8,12 @@ public class UpdateRoleRequest
     [DataMember(Order = 1)]
     public required string RoleId { get; set; }
 
-    [DataMember(Order = 2)]
+    [DataMember(Order = 2, IsRequired = false)]
     public string? Name { get; set; }
 
-    [DataMember(Order = 3)]
+    [DataMember(Order = 3, IsRequired = false)]
     public string? Description { get; set; }
 
-    [DataMember(Order = 4)]
+    [DataMember(Order = 4, IsRequired = false)]
     public bool? Disable { get; set; }
 }
