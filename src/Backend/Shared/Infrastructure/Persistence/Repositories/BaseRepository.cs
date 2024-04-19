@@ -62,11 +62,10 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
     public async Task<IEnumerable<TEntity>> GetWithPaginationAsync(
         int page,
         int limit,
-        string? sort,
-        string? order
+        string sort = "CreatedAt",
+        string order = "asc"
     )
     {
-        // Use expressions to build the DeletedAt condition if applicable
         var query = DbSet.AsQueryable();
 
         var propertyInfo = typeof(TEntity).GetProperty("DeletedAt");
@@ -80,21 +79,22 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
             query = query.Where(lambda);
         }
 
-        // Apply pagination
+        // Prepare for sorting
+        sort ??= "CreatedAt";
+        var param = Expression.Parameter(typeof(TEntity), "e");
+        var sortExpression = Expression.Property(param, sort);
+        var lambdaSort = Expression.Lambda<Func<TEntity, object>>(
+            Expression.Convert(sortExpression, typeof(object)),
+            param
+        );
+
+        // Apply sorting before pagination
+        query = order.Equals("desc", StringComparison.CurrentCultureIgnoreCase)
+            ? query.OrderByDescending(lambdaSort)
+            : query.OrderBy(lambdaSort);
+
+        // Apply pagination after sorting
         query = query.Skip((page - 1) * limit).Take(limit);
-
-        // Optional: Add sorting if necessary
-        if (!string.IsNullOrEmpty(sort))
-        {
-            var param = Expression.Parameter(typeof(TEntity), "e");
-            var sortExpression = Expression.Property(param, sort);
-            var lambda = Expression.Lambda<Func<TEntity, object>>(
-                Expression.Convert(sortExpression, typeof(object)),
-                param
-            );
-
-            query = order == "desc" ? query.OrderByDescending(lambda) : query.OrderBy(lambda);
-        }
 
         var entities = await query.ToListAsync();
         return entities;
