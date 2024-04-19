@@ -5,8 +5,8 @@ namespace Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
 [DataContract]
 public class UpdateRoleRequest
 {
-    [DataMember(Order = 1)]
-    public required string RoleId { get; set; }
+    [DataMember(Order = 1, IsRequired = false)]
+    public string? RoleId { get; set; }
 
     [DataMember(Order = 2, IsRequired = false)]
     public string? Name { get; set; }

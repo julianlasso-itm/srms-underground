@@ -24,7 +24,7 @@ public class AccessControlController : BaseController
         );
     }
 
-    [HttpPost("role/register")]
+    [HttpPost("role")]
     public async Task<IActionResult> RegisterRoleAsync([FromBody] RegisterRoleRequest request)
     {
         return await HandleAsync(
@@ -32,9 +32,13 @@ public class AccessControlController : BaseController
         );
     }
 
-    [HttpPut("role/update")]
-    public async Task<IActionResult> UpdateRoleAsync([FromBody] UpdateRoleRequest request)
+    [HttpPut("role/{id}")]
+    public async Task<IActionResult> UpdateRoleAsync(
+        string id,
+        [FromBody] UpdateRoleRequest request
+    )
     {
+        request.RoleId = id;
         return await HandleAsync(
             async () => Ok(await _accessControlService.UpdateRoleAsync(request))
         );
