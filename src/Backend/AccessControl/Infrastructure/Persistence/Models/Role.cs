@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AccessControl.Infrastructure.Persistence.Models;
 
-[Index(nameof(Name), IsUnique = true)]
+[Index(nameof(Name), nameof(DeletedAt), IsUnique = true)]
 [Index(nameof(RoleId), nameof(DeletedAt), IsUnique = true)]
 [Table("tbl_role")]
 public class Role
