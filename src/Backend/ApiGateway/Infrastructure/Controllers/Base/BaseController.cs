@@ -35,8 +35,8 @@ public abstract class BaseController : Controller
             Console.WriteLine("Request:");
             foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(request))
             {
-                string name = descriptor.Name;
-                object? value = descriptor.GetValue(request);
+                var name = descriptor.Name;
+                var value = descriptor.GetValue(request);
                 Console.WriteLine("{0}={1}", name, value);
             }
             Console.WriteLine("==================================");
