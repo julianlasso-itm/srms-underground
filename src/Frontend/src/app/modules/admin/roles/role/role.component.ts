@@ -1,4 +1,4 @@
-import { Component, signal, OnInit, Signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -7,14 +7,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { RoleDialogComponent } from '../role-dialog/role-dialog.component';
-import { FormType } from '../role-dialog/dialog.type';
 import { DeleteDialogComponent } from '../../../shared/components/delete-dialog/delete-dialog.component';
-import { IRole, type IRoles } from './role.interface';
-import { HttpService } from '../../../shared/services/http.service';
 import { Constant } from '../../../shared/constants/constants';
-import { HttpClientModule } from '@angular/common/http';
-import type { IPagination } from '../../../shared/interfaces/pagination.interface';
+import { IPagination } from '../../../shared/interfaces/pagination.interface';
+import { HttpService } from '../../../shared/services/http.service';
+import { ReloadDataService } from '../../../shared/services/reload-data.service';
+import { SharedModule } from '../../../shared/shared.module';
+import { FormType } from '../role-dialog/dialog.type';
+import { RoleDialogComponent } from '../role-dialog/role-dialog.component';
+import { IRole, IRoles } from './role.interface';
 
 const URL = `${Constant.URL_BASE}${Constant.URL_GET_ROLES}`;
 
@@ -22,7 +23,6 @@ const URL = `${Constant.URL_BASE}${Constant.URL_GET_ROLES}`;
   selector: 'srms-role-component',
   standalone: true,
   imports: [
-    HttpClientModule,
     MatButtonModule,
     MatFormFieldModule,
     MatIconModule,
@@ -30,8 +30,8 @@ const URL = `${Constant.URL_BASE}${Constant.URL_GET_ROLES}`;
     MatPaginatorModule,
     MatTableModule,
     MatTooltipModule,
+    SharedModule,
   ],
-  providers: [HttpService],
   templateUrl: './role.component.html',
   styleUrl: './role.component.scss',
 })
@@ -41,21 +41,22 @@ export class RoleComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    public readonly httpService: HttpService
+    public httpService: HttpService,
+    public reloadDataService: ReloadDataService
   ) {
-    this.displayedColumns = ['position', 'name', 'description', 'disabled', 'actions'];
+    this.displayedColumns = [
+      'position',
+      'name',
+      'description',
+      'disabled',
+      'actions',
+    ];
   }
 
   ngOnInit(): void {
-    const pagination: IPagination = {
-      Page: 1,
-      Limit: 10,
-    };
-    const params = `Page=${encodeURIComponent(pagination.Page)}&Limit=${encodeURIComponent(pagination.Limit)}`;
-    this.httpService.get<IRoles>(`${URL}?${params}`).subscribe({
-      next: (data) => this.dataSource.update(() => data.roles),
-      complete: () => console.log('Roles loaded'),
-      error: (error) => console.error(error),
+    this.getRoles();
+    this.reloadDataService.changeData.subscribe((data) => {
+        this.getRoles();
     });
   }
 
@@ -78,6 +79,24 @@ export class RoleComponent implements OnInit {
       data: { url: 'roles', id },
       width: '400px',
       autoFocus: false,
+    });
+  }
+
+  private getRoles(): void {
+    const pagination: IPagination = {
+      Page: 1,
+      Limit: 10,
+    };
+    const params = `Page=${encodeURIComponent(
+      pagination.Page
+    )}&Limit=${encodeURIComponent(pagination.Limit)}`;
+    this.httpService.get<IRoles>(`${URL}?${params}`).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.dataSource.update(() => data.roles);
+      },
+      complete: () => console.log('Roles loaded'),
+      error: (error) => console.error(error),
     });
   }
 }
