@@ -7,4 +7,5 @@ export interface IRole {
 
 export interface IRoles {
   roles: IRole[];
+  total: number;
 }

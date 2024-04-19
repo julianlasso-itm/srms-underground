@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -21,6 +21,7 @@ import { IRole, IRoles } from './role.interface';
 
 const URL_GET_ROLES = `${Constant.URL_BASE}${Constant.URL_GET_ROLES}`;
 const URL_ROLE = `${Constant.URL_BASE}${Constant.URL_ROLE}`;
+const MIN_LENGTH = 5;
 
 @Component({
   selector: 'srms-role-component',
@@ -42,7 +43,11 @@ const URL_ROLE = `${Constant.URL_BASE}${Constant.URL_ROLE}`;
 export class RoleComponent implements OnInit {
   readonly displayedColumns: string[];
   dataSource = signal<IRole[]>([]);
+  totalRecords = signal(0);
+  pageSize = signal(MIN_LENGTH);
   loading: boolean;
+
+  private pageIndex: number;
 
   constructor(
     public dialog: MatDialog,
@@ -57,6 +62,7 @@ export class RoleComponent implements OnInit {
       'actions',
     ];
     this.loading = false;
+    this.pageIndex = 0;
   }
 
   ngOnInit(): void {
@@ -91,8 +97,8 @@ export class RoleComponent implements OnInit {
   private getRoles(): void {
     this.loading = true;
     const pagination: IPagination = {
-      Page: 1,
-      Limit: 10,
+      Page: this.pageIndex + 1,
+      Limit: this.pageSize(),
     };
     const params = new HttpParams()
       .set('Page', pagination.Page)
@@ -102,8 +108,10 @@ export class RoleComponent implements OnInit {
         console.log(data);
         if (data.roles !== null) {
           this.dataSource.update(() => data.roles);
+          this.totalRecords.update(() => data.total);
         } else {
           this.dataSource.update(() => []);
+          this.totalRecords.update(() => 0);
         }
       },
       complete: () => {
@@ -115,5 +123,12 @@ export class RoleComponent implements OnInit {
         console.error(error);
       },
     });
+  }
+
+  handlePageEvent(paginator: PageEvent) {
+    console.log(paginator);
+    this.pageIndex = paginator.pageIndex;
+    this.pageSize.update(() => paginator.pageSize);
+    this.getRoles();
   }
 }
