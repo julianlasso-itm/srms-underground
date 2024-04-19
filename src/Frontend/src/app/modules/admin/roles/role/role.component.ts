@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DeleteDialogComponent } from '../../../shared/components/delete-dialog/delete-dialog.component';
@@ -30,6 +31,7 @@ const URL_ROLE = `${Constant.URL_BASE}${Constant.URL_ROLE}`;
     MatIconModule,
     MatInputModule,
     MatPaginatorModule,
+    MatProgressBarModule,
     MatTableModule,
     MatTooltipModule,
     SharedModule,
@@ -40,6 +42,7 @@ const URL_ROLE = `${Constant.URL_BASE}${Constant.URL_ROLE}`;
 export class RoleComponent implements OnInit {
   readonly displayedColumns: string[];
   dataSource = signal<IRole[]>([]);
+  loading: boolean;
 
   constructor(
     public dialog: MatDialog,
@@ -53,6 +56,7 @@ export class RoleComponent implements OnInit {
       'disabled',
       'actions',
     ];
+    this.loading = false;
   }
 
   ngOnInit(): void {
@@ -85,6 +89,7 @@ export class RoleComponent implements OnInit {
   }
 
   private getRoles(): void {
+    this.loading = true;
     const pagination: IPagination = {
       Page: 1,
       Limit: 10,
@@ -101,8 +106,14 @@ export class RoleComponent implements OnInit {
           this.dataSource.update(() => []);
         }
       },
-      complete: () => console.log('Roles loaded'),
-      error: (error) => console.error(error),
+      complete: () => {
+        this.loading = false;
+        console.log('Roles loaded');
+      },
+      error: (error) => {
+        this.loading = false;
+        console.error(error);
+      },
     });
   }
 }

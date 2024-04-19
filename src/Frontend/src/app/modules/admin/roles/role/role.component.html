@@ -1,67 +1,66 @@
-<div class="title">
-  <h3><mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-user-shield"></mat-icon> Gestión de roles</h3>
-  <button mat-flat-button color="primary" (click)="openDialogNew()">
-    Agregar
-  </button>
-</div>
-
-@if (dataSource().length === 0) {
-<div class="no-data">
-  <mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-exclamation-triangle"></mat-icon>
-  <p>No se encontraron roles</p>
-</div>
+@if (loading === true) {
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 } @else {
-<mat-form-field class="width-100">
-  <mat-label>Filtro</mat-label>
-  <input matInput>
-</mat-form-field>
+  <div class="title">
+    <h3><mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-user-shield"></mat-icon> Gestión de roles</h3>
+    <button mat-flat-button color="primary" (click)="openDialogNew()">
+      Agregar
+    </button>
+  </div>
+}
 
-<table mat-table [dataSource]="dataSource()" class="mat-elevation-z0" aria-label="Table with role data">
+@if (dataSource().length !== 0) {
+  <mat-form-field class="width-100">
+    <mat-label>Filtro</mat-label>
+    <input matInput>
+  </mat-form-field>
 
-  <!-- Position Column -->
-  <ng-container matColumnDef="position">
-    <th mat-header-cell *matHeaderCellDef> No. </th>
-    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-  </ng-container>
+  <table mat-table [dataSource]="dataSource()" class="mat-elevation-z0" aria-label="Table with role data">
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef> Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-  </ng-container>
+    <!-- Position Column -->
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+    </ng-container>
 
-  <!-- Description Column -->
-  <ng-container matColumnDef="description">
-    <th mat-header-cell *matHeaderCellDef> Description </th>
-    <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-  </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
 
-  <!-- Disabled Column -->
-  <ng-container matColumnDef="disabled">
-    <th mat-header-cell *matHeaderCellDef> Disabled </th>
-    <td mat-cell *matCellDef="let element"> {{element.disabled}} </td>
-  </ng-container>
+    <!-- Description Column -->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Description </th>
+      <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+    </ng-container>
 
-  <!-- Actions Column -->
-  <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef> Acciones </th>
-    <td mat-cell *matCellDef="let element">
-      <button mat-icon-button color="primary" aria-label="Edit" (click)="openDialogEdit(element)"
-        matTooltip="Editar" matTooltipPosition="left">
-        <mat-icon>edit</mat-icon>
-      </button>
-      <a mat-icon-button color="warn" aria-label="Delete" (click)="openDialogDelete(element.roleId)"
-        matTooltip="Eliminar" matTooltipPosition="right">
-        <mat-icon>delete</mat-icon>
-      </a>
-    </td>
-  </ng-container>
+    <!-- Disabled Column -->
+    <ng-container matColumnDef="disabled">
+      <th mat-header-cell *matHeaderCellDef> Disabled </th>
+      <td mat-cell *matCellDef="let element"> {{element.disabled}} </td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="element-row"></tr>
-</table>
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button color="primary" aria-label="Edit" (click)="openDialogEdit(element)"
+          matTooltip="Editar" matTooltipPosition="left">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <a mat-icon-button color="warn" aria-label="Delete" (click)="openDialogDelete(element.roleId)"
+          matTooltip="Eliminar" matTooltipPosition="right">
+          <mat-icon>delete</mat-icon>
+        </a>
+      </td>
+    </ng-container>
 
-<mat-paginator [length]="100" [pageSize]="10" [showFirstLastButtons]="true" [pageSizeOptions]="[5, 10, 25, 100]"
-  aria-label="Select page">
-</mat-paginator>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="element-row"></tr>
+  </table>
+
+  <mat-paginator [length]="100" [pageSize]="10" [showFirstLastButtons]="true" [pageSizeOptions]="[5, 10, 25, 100]"
+    aria-label="Select page">
+  </mat-paginator>
 }
