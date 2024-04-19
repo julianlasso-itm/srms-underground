@@ -11,6 +11,8 @@ public abstract class BasePaginator : ICommand
     [Range(1, int.MaxValue, ErrorMessage = "Limit must be greater than 0")]
     public int Limit { get; init; }
 
+    [MinLength(1, ErrorMessage = "Filter must be a string")]
+    public string? Filter { get; init; }
 
     [RegularExpression(@"^[a-zA-Z]+(?:\s[a-zA-Z]+)*$", ErrorMessage = "Sort must be a string")]
     public string? Sort { get; init; }

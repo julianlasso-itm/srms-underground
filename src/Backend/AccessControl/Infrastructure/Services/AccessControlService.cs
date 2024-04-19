@@ -114,6 +114,7 @@ public class AccessControlService : IAccessControlServices
         {
             Page = request.Page,
             Limit = request.Limit,
+            Filter = request.Filter,
             Sort = request.Sort,
             Order = request.Order
         };
