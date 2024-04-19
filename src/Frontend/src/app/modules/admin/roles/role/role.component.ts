@@ -18,8 +18,8 @@ import { RoleDialogComponent } from '../role-dialog/role-dialog.component';
 import { IRole, IRoles } from './role.interface';
 import { HttpParams } from '@angular/common/http';
 
-const URL_GET = `${Constant.URL_BASE}${Constant.URL_GET_ROLES}`;
-const URL_DELETE = `${Constant.URL_BASE}${Constant.URL_DELETE_ROLE}`;
+const URL_GET_ROLES = `${Constant.URL_BASE}${Constant.URL_GET_ROLES}`;
+const URL_ROLE = `${Constant.URL_BASE}${Constant.URL_ROLE}`;
 
 @Component({
   selector: 'srms-role-component',
@@ -78,7 +78,7 @@ export class RoleComponent implements OnInit {
 
   openDialogDelete(id: string): void {
     this.dialog.open(DeleteDialogComponent, {
-      data: { url: URL_DELETE, id },
+      data: { url: URL_ROLE, id },
       width: '400px',
       autoFocus: false,
     });
@@ -90,7 +90,7 @@ export class RoleComponent implements OnInit {
       Limit: 10,
     };
     const params = new HttpParams().set('Page', pagination.Page).set('Limit', pagination.Limit);
-    this.httpService.get<IRoles>(URL_GET, params).subscribe({
+    this.httpService.get<IRoles>(URL_GET_ROLES, params).subscribe({
       next: (data) => {
         console.log(data);
         if (data.roles !== null) {

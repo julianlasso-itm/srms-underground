@@ -23,10 +23,8 @@ import { HttpService } from '../../../shared/services/http.service';
 import { ReloadDataService } from '../../../shared/services/reload-data.service';
 import { SharedModule } from '../../../shared/shared.module';
 import { IRole } from '../role/role.interface';
-import { HttpHeaders } from '@angular/common/http';
 
-const URL_POST = `${Constant.URL_BASE}${Constant.URL_POST_ROLE}`;
-const URL_PUT = `${Constant.URL_BASE}${Constant.URL_PUT_ROLE}`;
+const URL_ROLE = `${Constant.URL_BASE}${Constant.URL_ROLE}`;
 
 @Component({
   selector: 'srms-role-form',
@@ -99,7 +97,7 @@ export class RoleFormComponent implements OnInit {
     if (body.description === '') {
       delete body.description;
     }
-    this.httpService.post(URL_POST, body).subscribe({
+    this.httpService.post(URL_ROLE, body).subscribe({
       next: (response) => {
         console.log(response);
         this.reloadDataService.reload();
@@ -120,9 +118,11 @@ export class RoleFormComponent implements OnInit {
     }
     body.disable = !body.disabled;
     delete body.disabled;
-    const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
 
-    this.httpService.put(URL_PUT, body, undefined, headers).subscribe({
+    const url = `${URL_ROLE}/${this.role()?.roleId}`;
+    delete body.roleId;
+
+    this.httpService.put(url, body).subscribe({
       next: (response) => {
         console.log(response);
         this.reloadDataService.reload();
