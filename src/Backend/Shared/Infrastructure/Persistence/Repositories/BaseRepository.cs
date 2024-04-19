@@ -63,13 +63,15 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
         int page,
         int limit,
         string sort = "CreatedAt",
-        string order = "asc"
+        string order = "asc",
+        string? filter = null
     )
     {
         var query = DbSet.AsQueryable();
 
-        var propertyInfo = typeof(TEntity).GetProperty("DeletedAt");
-        if (propertyInfo != null && propertyInfo.PropertyType == typeof(DateTime?))
+        // Filter DeletedAt if applicable using reflection
+        var deletedPropertyInfo = typeof(TEntity).GetProperty("DeletedAt");
+        if (deletedPropertyInfo != null && deletedPropertyInfo.PropertyType == typeof(DateTime?))
         {
             var parameter = Expression.Parameter(typeof(TEntity), "e");
             var property = Expression.Property(parameter, "DeletedAt");
@@ -79,19 +81,53 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
             query = query.Where(lambda);
         }
 
-        // Prepare for sorting
+        // General filtering
+        if (!string.IsNullOrEmpty(filter))
+        {
+            var param = Expression.Parameter(typeof(TEntity), "e");
+            Expression? filterExpression = null;
+            foreach (
+                var prop in typeof(TEntity)
+                    .GetProperties()
+                    .Where(p => p.PropertyType == typeof(string) && !p.Name.EndsWith("Id"))
+            )
+            {
+                var propAccess = Expression.Property(param, prop);
+                var ignoreCase = Expression.Call(
+                    typeof(DbFunctionsExtensions),
+                    "Like",
+                    Type.EmptyTypes,
+                    Expression.Constant(EF.Functions),
+                    propAccess,
+                    Expression.Constant($"%{filter}%")
+                );
+
+                filterExpression =
+                    filterExpression == null
+                        ? ignoreCase
+                        : Expression.OrElse(filterExpression, ignoreCase);
+            }
+            if (filterExpression != null)
+            {
+                var lambda = Expression.Lambda<Func<TEntity, bool>>(filterExpression, param);
+                query = query.Where(lambda);
+            }
+        }
+
+        // Preparing for the ordinance
         sort ??= "CreatedAt";
-        var param = Expression.Parameter(typeof(TEntity), "e");
-        var sortExpression = Expression.Property(param, sort);
+        var sortParam = Expression.Parameter(typeof(TEntity), "e");
+        var sortExpression = Expression.Property(sortParam, sort);
         var lambdaSort = Expression.Lambda<Func<TEntity, object>>(
             Expression.Convert(sortExpression, typeof(object)),
-            param
+            sortParam
         );
 
         // Apply sorting before pagination
-        query = order.Equals("desc", StringComparison.CurrentCultureIgnoreCase)
-            ? query.OrderByDescending(lambdaSort)
-            : query.OrderBy(lambdaSort);
+        query =
+            order.ToLower() == "desc"
+                ? query.OrderByDescending(lambdaSort)
+                : query.OrderBy(lambdaSort);
 
         // Apply pagination after sorting
         query = query.Skip((page - 1) * limit).Take(limit);
@@ -160,11 +196,11 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
         return typeof(TEntity).GetProperties().FirstOrDefault(p => p.Name.EndsWith("Id"));
     }
 
-    public Task<int> GetCountAsync()
+    public Task<int> GetCountAsync(string? filter = null)
     {
         var query = DbSet.AsQueryable();
 
-        // Use reflection to determine if the entity has the property 'DeletedAt'.
+        // Filter DeletedAt if applicable
         var propertyInfo = typeof(TEntity).GetProperty("DeletedAt");
         if (propertyInfo != null && propertyInfo.PropertyType == typeof(DateTime?))
         {
@@ -175,6 +211,40 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
             var lambda = Expression.Lambda<Func<TEntity, bool>>(equalsNull, parameter);
 
             query = query.Where(lambda);
+        }
+
+        // Apply text filter if provided
+        if (!string.IsNullOrEmpty(filter))
+        {
+            var param = Expression.Parameter(typeof(TEntity), "e");
+            Expression? filterExpression = null;
+            foreach (
+                var prop in typeof(TEntity)
+                    .GetProperties()
+                    .Where(p => p.PropertyType == typeof(string) && !p.Name.EndsWith("Id"))
+            )
+            {
+                var propAccess = Expression.Property(param, prop);
+                var likeExpression = Expression.Call(
+                    typeof(DbFunctionsExtensions),
+                    "Like",
+                    Type.EmptyTypes,
+                    Expression.Constant(EF.Functions),
+                    propAccess,
+                    Expression.Constant($"%{filter}%")
+                );
+
+                filterExpression =
+                    filterExpression == null
+                        ? likeExpression
+                        : Expression.OrElse(filterExpression, likeExpression);
+            }
+
+            if (filterExpression != null)
+            {
+                var lambda = Expression.Lambda<Func<TEntity, bool>>(filterExpression, param);
+                query = query.Where(lambda);
+            }
         }
 
         // Return the count of the filtered elements
