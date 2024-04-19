@@ -7,6 +7,9 @@ public class GetRolesResponse
 {
     [DataMember(Order = 1)]
     public required IEnumerable<Role> Roles { get; set; }
+
+    [DataMember(Order = 2)]
+    public required int Total { get; set; }
 }
 
 [DataContract]

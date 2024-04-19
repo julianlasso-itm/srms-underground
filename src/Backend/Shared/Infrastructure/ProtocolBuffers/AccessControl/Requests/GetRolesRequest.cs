@@ -12,8 +12,11 @@ public class GetRolesRequest
     public int Limit { get; set; }
 
     [DataMember(Order = 3, IsRequired = false)]
-    public string? Sort { get; set; }
+    public string? Filter { get; set; }
 
     [DataMember(Order = 4, IsRequired = false)]
+    public string? Sort { get; set; }
+
+    [DataMember(Order = 5, IsRequired = false)]
     public string? Order { get; set; } = "asc";
 }

@@ -30,7 +30,8 @@ public sealed class GetRolesUseCase<TEntity>
             request.Sort,
             request.Order
         );
-        var response = new GetRolesResponse<TEntity> { Roles = data, };
+        var count = await _roleRepository.GetCountAsync();
+        var response = new GetRolesResponse<TEntity> { Roles = data, Total = count };
         return response;
     }
 }

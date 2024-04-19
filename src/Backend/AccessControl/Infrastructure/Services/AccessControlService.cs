@@ -72,7 +72,7 @@ public class AccessControlService : IAccessControlServices
 
         var updateRoleCommand = new UpdateRoleCommand
         {
-            RoleId = request.RoleId,
+            RoleId = request.RoleId!,
             Name = request.Name,
             Description = request.Description,
             Disable = request.Disable
@@ -129,7 +129,8 @@ public class AccessControlService : IAccessControlServices
                     Description = role.Description,
                     Disabled = role.Disabled
                 })
-                .ToList()
+                .ToList(),
+            Total = data.Total
         };
 
         return response;
