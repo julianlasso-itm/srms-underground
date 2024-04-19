@@ -1,12 +1,13 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
+  EventEmitter,
   Input,
+  OnInit,
   Output,
   Signal,
   computed,
   signal,
-  EventEmitter,
-  OnInit,
 } from '@angular/core';
 import {
   FormControl,
@@ -17,16 +18,26 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { Constant } from '../../../shared/constants/constants';
+import { HttpService } from '../../../shared/services/http.service';
+import { ReloadDataService } from '../../../shared/services/reload-data.service';
+import { SharedModule } from '../../../shared/shared.module';
 import { IRole } from '../role/role.interface';
+import { HttpHeaders } from '@angular/common/http';
+
+const URL_POST = `${Constant.URL_BASE}${Constant.URL_POST_ROLE}`;
+const URL_PUT = `${Constant.URL_BASE}${Constant.URL_PUT_ROLE}`;
 
 @Component({
   selector: 'srms-role-form',
   standalone: true,
   imports: [
+    CommonModule,
     MatFormFieldModule,
     MatInputModule,
     MatSlideToggleModule,
     ReactiveFormsModule,
+    SharedModule,
   ],
   templateUrl: './role-form.component.html',
   styleUrl: './role-form.component.scss',
@@ -38,7 +49,10 @@ export class RoleFormComponent implements OnInit {
   private regexp =
     '^[0-9A-Za-z]{8}-[0-9A-Za-z]{4}-4[0-9A-Za-z]{3}-[89ABab][0-9A-Za-z]{3}-[0-9A-Za-z]{12}$';
 
-  constructor() {
+  constructor(
+    public httpService: HttpService,
+    public reloadDataService: ReloadDataService
+  ) {
     this.frmRole = signal(
       new FormGroup({
         name: new FormControl('', [
@@ -64,13 +78,61 @@ export class RoleFormComponent implements OnInit {
       this.frmRole().get('description')?.setValue(this.role()?.description);
       this.frmRole().setControl(
         'disabled',
-        new FormControl<boolean>(!this.role()?.disabled || false) // cuando se guarde, se debe de invertir el valor
+        new FormControl<boolean>(!this.role()?.disabled || false)
       );
     }
     this.form.emit(computed(() => this.frmRole()));
   }
 
   onSubmit(): void {
-    console.log(this.frmRole().value);
+    if (this.frmRole().valid) {
+      if (this.role()?.roleId === undefined) {
+        this.createRole();
+      } else {
+        this.updateRole();
+      }
+    }
+  }
+
+  private createRole(): void {
+    const body = this.frmRole().value;
+    if (body.description === '') {
+      delete body.description;
+    }
+    this.httpService.post(URL_POST, body).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.reloadDataService.reload();
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {
+        console.log('complete');
+      },
+    });
+  }
+
+  private updateRole(): void {
+    const body = this.frmRole().value;
+    if (body.description === '') {
+      body.description = null;
+    }
+    body.disable = !body.disabled;
+    delete body.disabled;
+    const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
+
+    this.httpService.put(URL_PUT, body, undefined, headers).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.reloadDataService.reload();
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {
+        console.log('complete');
+      },
+    });
   }
 }

@@ -1,39 +1,48 @@
-import { Component, Inject, signal, Signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, Inject, OnInit, Signal, signal } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { DialogType, FormType } from './dialog.type';
-import { RoleFormComponent } from '../role-form/role-form.component';
-import { MatButtonModule } from '@angular/material/button';
 import { HttpService } from '../../../shared/services/http.service';
-import { HttpClientModule } from '@angular/common/http';
-import { FormGroup } from '@angular/forms';
+import { ReloadDataService } from '../../../shared/services/reload-data.service';
+import { SharedModule } from '../../../shared/shared.module';
+import { RoleFormComponent } from '../role-form/role-form.component';
+import { DialogType, FormType } from './dialog.type';
 
 @Component({
   selector: 'srms-role-dialog',
   standalone: true,
   imports: [
+    CommonModule,
     MatButtonModule,
     MatDialogModule,
     RoleFormComponent,
-    HttpClientModule,
+    SharedModule,
   ],
   providers: [HttpService],
   templateUrl: './role-dialog.component.html',
   styleUrl: './role-dialog.component.scss',
 })
-export class RoleDialogComponent {
+export class RoleDialogComponent implements OnInit {
   signal = signal;
   formType = signal(FormType);
   formRole!: Signal<FormGroup>;
 
   constructor(
-    public readonly dialogRef: MatDialogRef<RoleDialogComponent>,
+    public dialogRef: MatDialogRef<RoleDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Signal<DialogType>,
-    public readonly httpService: HttpService
+    public reloadDataService: ReloadDataService
   ) {}
+
+  ngOnInit(): void {
+    this.reloadDataService.changeData.subscribe((data) => {
+      this.dialogRef.close();
+    });
+  }
 
   onCancelClick(): void {
     this.dialogRef.close();
