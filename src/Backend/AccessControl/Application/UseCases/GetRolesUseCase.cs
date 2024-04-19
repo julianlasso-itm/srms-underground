@@ -27,8 +27,8 @@ public sealed class GetRolesUseCase<TEntity>
         var data = await _roleRepository.GetWithPaginationAsync(
             request.Page,
             request.Limit,
-            request.Sort,
-            request.Order
+            request.Sort!,
+            request.Order!
         );
         var count = await _roleRepository.GetCountAsync();
         var response = new GetRolesResponse<TEntity> { Roles = data, Total = count };
