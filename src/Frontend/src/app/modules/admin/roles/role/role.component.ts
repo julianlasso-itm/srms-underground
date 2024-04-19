@@ -16,8 +16,10 @@ import { SharedModule } from '../../../shared/shared.module';
 import { FormType } from '../role-dialog/dialog.type';
 import { RoleDialogComponent } from '../role-dialog/role-dialog.component';
 import { IRole, IRoles } from './role.interface';
+import { HttpParams } from '@angular/common/http';
 
-const URL = `${Constant.URL_BASE}${Constant.URL_GET_ROLES}`;
+const URL_GET = `${Constant.URL_BASE}${Constant.URL_GET_ROLES}`;
+const URL_DELETE = `${Constant.URL_BASE}${Constant.URL_DELETE_ROLE}`;
 
 @Component({
   selector: 'srms-role-component',
@@ -76,7 +78,7 @@ export class RoleComponent implements OnInit {
 
   openDialogDelete(id: string): void {
     this.dialog.open(DeleteDialogComponent, {
-      data: { url: 'roles', id },
+      data: { url: URL_DELETE, id },
       width: '400px',
       autoFocus: false,
     });
@@ -87,13 +89,15 @@ export class RoleComponent implements OnInit {
       Page: 1,
       Limit: 10,
     };
-    const params = `Page=${encodeURIComponent(
-      pagination.Page
-    )}&Limit=${encodeURIComponent(pagination.Limit)}`;
-    this.httpService.get<IRoles>(`${URL}?${params}`).subscribe({
+    const params = new HttpParams().set('Page', pagination.Page).set('Limit', pagination.Limit);
+    this.httpService.get<IRoles>(URL_GET, params).subscribe({
       next: (data) => {
         console.log(data);
-        this.dataSource.update(() => data.roles);
+        if (data.roles !== null) {
+          this.dataSource.update(() => data.roles);
+        } else {
+          this.dataSource.update(() => []);
+        }
       },
       complete: () => console.log('Roles loaded'),
       error: (error) => console.error(error),
