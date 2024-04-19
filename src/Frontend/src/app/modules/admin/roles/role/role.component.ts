@@ -1,5 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -27,6 +28,7 @@ const MIN_LENGTH = 5;
   selector: 'srms-role-component',
   standalone: true,
   imports: [
+    FormsModule,
     MatButtonModule,
     MatFormFieldModule,
     MatIconModule,
@@ -47,6 +49,8 @@ export class RoleComponent implements OnInit {
   pageSize = signal(MIN_LENGTH);
   loading: boolean;
   loadingTable: boolean;
+  filter = signal('');
+  loadingFromFilter = signal(false);
 
   private pageIndex: number;
 
@@ -102,9 +106,16 @@ export class RoleComponent implements OnInit {
       Page: this.pageIndex + 1,
       Limit: this.pageSize(),
     };
-    const params = new HttpParams()
-      .set('Page', pagination.Page)
-      .set('Limit', pagination.Limit);
+    let params = new HttpParams()
+      .append('Page', pagination.Page.toString())
+      .append('Limit', pagination.Limit.toString());
+    if (this.filter().length > 0) {
+      params = new HttpParams().appendAll({
+        Page: pagination.Page.toString(),
+        Limit: pagination.Limit.toString(),
+        Filter: this.filter(),
+      });
+    }
     this.httpService.get<IRoles>(URL_GET_ROLES, params).subscribe({
       next: (data) => {
         console.log(data);
@@ -118,19 +129,26 @@ export class RoleComponent implements OnInit {
       },
       complete: () => {
         this.tableLoadingFalse(loadingTable);
+        this.loadingFromFilter.update(() => false);
         console.log('Roles loaded');
       },
       error: (error) => {
         this.tableLoadingFalse(loadingTable);
+        this.loadingFromFilter.update(() => false);
         console.error(error);
       },
     });
   }
 
   handlePageEvent(paginator: PageEvent) {
-    console.log(paginator);
     this.pageIndex = paginator.pageIndex;
     this.pageSize.update(() => paginator.pageSize);
+    this.getRoles(true);
+  }
+
+  filterData(filter: string): void {
+    this.filter.update(() => filter);
+    this.loadingFromFilter.update(() => true);
     this.getRoles(true);
   }
 
