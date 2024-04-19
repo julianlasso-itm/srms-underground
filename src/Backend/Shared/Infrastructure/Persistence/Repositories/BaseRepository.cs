@@ -59,6 +59,61 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
         return entity ?? throw new Exception($"Entity with id {id} not found");
     }
 
+    public Task<int> GetCountAsync(string? filter = null)
+    {
+        var query = DbSet.AsQueryable();
+
+        // Filter DeletedAt if applicable
+        var propertyInfo = typeof(TEntity).GetProperty("DeletedAt");
+        if (propertyInfo != null && propertyInfo.PropertyType == typeof(DateTime?))
+        {
+            var parameter = Expression.Parameter(typeof(TEntity), "entity");
+            var deletedAtProperty = Expression.Property(parameter, "DeletedAt");
+            var nullConstant = Expression.Constant(null, typeof(DateTime?));
+            var equalsNull = Expression.Equal(deletedAtProperty, nullConstant);
+            var lambda = Expression.Lambda<Func<TEntity, bool>>(equalsNull, parameter);
+
+            query = query.Where(lambda);
+        }
+
+        // Apply text filter if provided
+        if (!string.IsNullOrEmpty(filter))
+        {
+            var param = Expression.Parameter(typeof(TEntity), "e");
+            Expression? filterExpression = null;
+            foreach (
+                var prop in typeof(TEntity)
+                    .GetProperties()
+                    .Where(p => p.PropertyType == typeof(string) && !p.Name.EndsWith("Id"))
+            )
+            {
+                var propAccess = Expression.Property(param, prop);
+                var likeExpression = Expression.Call(
+                    typeof(DbFunctionsExtensions),
+                    "Like",
+                    Type.EmptyTypes,
+                    Expression.Constant(EF.Functions),
+                    propAccess,
+                    Expression.Constant($"%{filter}%")
+                );
+
+                filterExpression =
+                    filterExpression == null
+                        ? likeExpression
+                        : Expression.OrElse(filterExpression, likeExpression);
+            }
+
+            if (filterExpression != null)
+            {
+                var lambda = Expression.Lambda<Func<TEntity, bool>>(filterExpression, param);
+                query = query.Where(lambda);
+            }
+        }
+
+        // Return the count of the filtered elements
+        return query.CountAsync();
+    }
+
     public async Task<IEnumerable<TEntity>> GetWithPaginationAsync(
         int page,
         int limit,
@@ -194,60 +249,5 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
     {
         // Search for the first property whose name ends with "Id".
         return typeof(TEntity).GetProperties().FirstOrDefault(p => p.Name.EndsWith("Id"));
-    }
-
-    public Task<int> GetCountAsync(string? filter = null)
-    {
-        var query = DbSet.AsQueryable();
-
-        // Filter DeletedAt if applicable
-        var propertyInfo = typeof(TEntity).GetProperty("DeletedAt");
-        if (propertyInfo != null && propertyInfo.PropertyType == typeof(DateTime?))
-        {
-            var parameter = Expression.Parameter(typeof(TEntity), "entity");
-            var deletedAtProperty = Expression.Property(parameter, "DeletedAt");
-            var nullConstant = Expression.Constant(null, typeof(DateTime?));
-            var equalsNull = Expression.Equal(deletedAtProperty, nullConstant);
-            var lambda = Expression.Lambda<Func<TEntity, bool>>(equalsNull, parameter);
-
-            query = query.Where(lambda);
-        }
-
-        // Apply text filter if provided
-        if (!string.IsNullOrEmpty(filter))
-        {
-            var param = Expression.Parameter(typeof(TEntity), "e");
-            Expression? filterExpression = null;
-            foreach (
-                var prop in typeof(TEntity)
-                    .GetProperties()
-                    .Where(p => p.PropertyType == typeof(string) && !p.Name.EndsWith("Id"))
-            )
-            {
-                var propAccess = Expression.Property(param, prop);
-                var likeExpression = Expression.Call(
-                    typeof(DbFunctionsExtensions),
-                    "Like",
-                    Type.EmptyTypes,
-                    Expression.Constant(EF.Functions),
-                    propAccess,
-                    Expression.Constant($"%{filter}%")
-                );
-
-                filterExpression =
-                    filterExpression == null
-                        ? likeExpression
-                        : Expression.OrElse(filterExpression, likeExpression);
-            }
-
-            if (filterExpression != null)
-            {
-                var lambda = Expression.Lambda<Func<TEntity, bool>>(filterExpression, param);
-                query = query.Where(lambda);
-            }
-        }
-
-        // Return the count of the filtered elements
-        return query.CountAsync();
     }
 }
