@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -16,7 +17,6 @@ import { SharedModule } from '../../../shared/shared.module';
 import { FormType } from '../role-dialog/dialog.type';
 import { RoleDialogComponent } from '../role-dialog/role-dialog.component';
 import { IRole, IRoles } from './role.interface';
-import { HttpParams } from '@angular/common/http';
 
 const URL_GET_ROLES = `${Constant.URL_BASE}${Constant.URL_GET_ROLES}`;
 const URL_ROLE = `${Constant.URL_BASE}${Constant.URL_ROLE}`;
@@ -58,7 +58,7 @@ export class RoleComponent implements OnInit {
   ngOnInit(): void {
     this.getRoles();
     this.reloadDataService.changeData.subscribe((data) => {
-        this.getRoles();
+      this.getRoles();
     });
   }
 
@@ -89,7 +89,9 @@ export class RoleComponent implements OnInit {
       Page: 1,
       Limit: 10,
     };
-    const params = new HttpParams().set('Page', pagination.Page).set('Limit', pagination.Limit);
+    const params = new HttpParams()
+      .set('Page', pagination.Page)
+      .set('Limit', pagination.Limit);
     this.httpService.get<IRoles>(URL_GET_ROLES, params).subscribe({
       next: (data) => {
         console.log(data);
