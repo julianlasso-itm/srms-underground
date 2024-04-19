@@ -8,8 +8,8 @@ public interface IRepository<TEntity>
     public Task<IEnumerable<TEntity>> GetWithPaginationAsync(
         int page,
         int limit,
-        string? sort,
-        string? order
+        string sort = "CreatedAt",
+        string order = "asc"
     );
     public Task<TEntity> AddAsync(TEntity entity);
     public Task<TEntity> UpdateAsync(Guid id, TEntity entity);
