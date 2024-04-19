@@ -46,6 +46,7 @@ export class RoleComponent implements OnInit {
   totalRecords = signal(0);
   pageSize = signal(MIN_LENGTH);
   loading: boolean;
+  loadingTable: boolean;
 
   private pageIndex: number;
 
@@ -62,6 +63,7 @@ export class RoleComponent implements OnInit {
       'actions',
     ];
     this.loading = false;
+    this.loadingTable = false;
     this.pageIndex = 0;
   }
 
@@ -94,8 +96,8 @@ export class RoleComponent implements OnInit {
     });
   }
 
-  private getRoles(): void {
-    this.loading = true;
+  private getRoles(loadingTable: boolean = false): void {
+    this.tableLoadingTrue(loadingTable);
     const pagination: IPagination = {
       Page: this.pageIndex + 1,
       Limit: this.pageSize(),
@@ -115,11 +117,11 @@ export class RoleComponent implements OnInit {
         }
       },
       complete: () => {
-        this.loading = false;
+        this.tableLoadingFalse(loadingTable);
         console.log('Roles loaded');
       },
       error: (error) => {
-        this.loading = false;
+        this.tableLoadingFalse(loadingTable);
         console.error(error);
       },
     });
@@ -129,6 +131,22 @@ export class RoleComponent implements OnInit {
     console.log(paginator);
     this.pageIndex = paginator.pageIndex;
     this.pageSize.update(() => paginator.pageSize);
-    this.getRoles();
+    this.getRoles(true);
+  }
+
+  private tableLoadingTrue(loadingTable: boolean): void {
+    if (loadingTable) {
+      this.loadingTable = true;
+    } else {
+      this.loading = true;
+    }
+  }
+
+  private tableLoadingFalse(loadingTable: boolean): void {
+    if (loadingTable) {
+      this.loadingTable = false;
+    } else {
+      this.loading = false;
+    }
   }
 }

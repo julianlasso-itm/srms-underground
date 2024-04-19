@@ -12,7 +12,12 @@
 @if (dataSource().length !== 0) {
   <mat-form-field class="width-100">
     <mat-label>Filtro</mat-label>
-    <input matInput>
+    <input matInput [disabled]="loadingTable">
+    @if (loadingTable) {
+      <div class="loading-table">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
+    }
   </mat-form-field>
 
   <table mat-table [dataSource]="dataSource()" class="mat-elevation-z0" aria-label="Table with role data">
