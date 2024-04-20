@@ -7,9 +7,11 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Helpers;
 
-internal abstract class RegisterRoleHelper : BaseHelper, IHelper<RegisterRole, RegisterRoleResponse>
+internal abstract class RegisterRoleHelper
+    : BaseHelper,
+        IHelper<RegisterRoleRequest, RegisterRoleResponse>
 {
-    public static RegisterRoleResponse Execute(RegisterRole registerData)
+    public static RegisterRoleResponse Execute(RegisterRoleRequest registerData)
     {
         var data = GetRoleStruct(registerData);
         ValidateStructureFields(data);
@@ -26,7 +28,7 @@ internal abstract class RegisterRoleHelper : BaseHelper, IHelper<RegisterRole, R
         };
     }
 
-    private static RoleStruct GetRoleStruct(RegisterRole registerData)
+    private static RoleStruct GetRoleStruct(RegisterRoleRequest registerData)
     {
         var name = new NameValueObject(registerData.Name);
         var description =

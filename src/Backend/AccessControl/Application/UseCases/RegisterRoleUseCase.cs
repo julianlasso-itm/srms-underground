@@ -34,9 +34,9 @@ public sealed class RegisterRoleUseCase<TEntity>
         return response;
     }
 
-    private Domain.Aggregates.Dto.RegisterRole MapToRequestForDomain(NewRoleCommand request)
+    private Domain.Aggregates.Dto.RegisterRoleRequest MapToRequestForDomain(NewRoleCommand request)
     {
-        return new Domain.Aggregates.Dto.RegisterRole
+        return new Domain.Aggregates.Dto.RegisterRoleRequest
         {
             Name = request.Name,
             Description = request.Description,
