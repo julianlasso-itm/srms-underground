@@ -3,7 +3,8 @@ using AccessControl.Application.Commands;
 using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
 using AccessControl.Domain.Aggregates.Constants;
-using AccessControl.Domain.Aggregates.Dto;
+using AccessControl.Domain.Aggregates.Dto.Request;
+using AccessControl.Domain.Aggregates.Dto.Response;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 
@@ -35,16 +36,16 @@ public sealed class RegisterUserUseCase<TEntity>
         return response;
     }
 
-    private RegisterCredentialRequest MapToRequestForDomain(NewUserCommand request)
+    private RegisterCredentialDomainRequest MapToRequestForDomain(NewUserCommand request)
     {
-        return new RegisterCredentialRequest
+        return new RegisterCredentialDomainRequest
         {
             Email = request.Email,
             Password = request.Password,
         };
     }
 
-    private RegisterUserResponse MapToResponse(RegisterCredentialResponse user)
+    private RegisterUserResponse MapToResponse(RegisterCredentialDomainResponse user)
     {
         return new RegisterUserResponse
         {

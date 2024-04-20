@@ -1,6 +1,6 @@
-namespace AccessControl.Domain.Aggregates.Dto;
+namespace AccessControl.Domain.Aggregates.Dto.Request;
 
-public class RegisterRoleRequest
+public class RegisterRoleDomainRequest
 {
     public required string Name { get; init; }
     public string? Description { get; init; }

@@ -3,6 +3,8 @@ using AccessControl.Application.Commands;
 using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
 using AccessControl.Domain.Aggregates.Constants;
+using AccessControl.Domain.Aggregates.Dto.Request;
+using AccessControl.Domain.Aggregates.Dto.Response;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 
@@ -34,16 +36,16 @@ public sealed class RegisterRoleUseCase<TEntity>
         return response;
     }
 
-    private Domain.Aggregates.Dto.RegisterRoleRequest MapToRequestForDomain(NewRoleCommand request)
+    private RegisterRoleDomainRequest MapToRequestForDomain(NewRoleCommand request)
     {
-        return new Domain.Aggregates.Dto.RegisterRoleRequest
+        return new RegisterRoleDomainRequest
         {
             Name = request.Name,
             Description = request.Description,
         };
     }
 
-    private RegisterRoleResponse MapToResponse(Domain.Aggregates.Dto.RegisterRoleResponse role)
+    private RegisterRoleResponse MapToResponse(RegisterRoleDomainResponse role)
     {
         return new RegisterRoleResponse
         {

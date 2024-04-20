@@ -1,6 +1,6 @@
-namespace AccessControl.Domain.Aggregates.Dto;
+namespace AccessControl.Domain.Aggregates.Dto.Response;
 
-public class RegisterRoleResponse
+public class RegisterRoleDomainResponse
 {
     public required string RoleId { get; init; }
     public required string Name { get; init; }

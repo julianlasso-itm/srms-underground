@@ -1,4 +1,5 @@
-using AccessControl.Domain.Aggregates.Dto;
+using AccessControl.Domain.Aggregates.Dto.Request;
+using AccessControl.Domain.Aggregates.Dto.Response;
 using AccessControl.Domain.Aggregates.Helpers;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Domain.Aggregate.Base;
@@ -11,22 +12,24 @@ public class SecurityAggregateRoot : BaseAggregate, ISecurityAggregateRoot
     public SecurityAggregateRoot(IEvent eventInterface)
         : base(eventInterface) { }
 
-    public RegisterCredentialResponse RegisterCredential(RegisterCredentialRequest registerData)
+    public RegisterCredentialDomainResponse RegisterCredential(
+        RegisterCredentialDomainRequest registerData
+    )
     {
         return RegisterCredentialHelper.Execute(registerData);
     }
 
-    public RegisterRoleResponse RegisterRole(RegisterRoleRequest registerData)
+    public RegisterRoleDomainResponse RegisterRole(RegisterRoleDomainRequest registerData)
     {
         return RegisterRoleHelper.Execute(registerData);
     }
 
-    public UpdateRoleResponse UpdateRole(UpdateRoleRequest updateData)
+    public UpdateRoleDomainResponse UpdateRole(UpdateRoleDomainRequest updateData)
     {
         return UpdateRoleHelper.Execute(updateData);
     }
 
-    public DeleteRoleResponse DeleteRole(DeleteRoleRequest deleteData)
+    public DeleteRoleDomainResponse DeleteRole(DeleteRoleDomainRequest deleteData)
     {
         return DeleteRoleHelper.Execute(deleteData);
     }

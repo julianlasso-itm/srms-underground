@@ -1,12 +1,15 @@
-using AccessControl.Domain.Aggregates.Dto;
+using AccessControl.Domain.Aggregates.Dto.Request;
+using AccessControl.Domain.Aggregates.Dto.Response;
 using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Interfaces;
 
 public interface ISecurityAggregateRoot : IAggregate
 {
-    public RegisterCredentialResponse RegisterCredential(RegisterCredentialRequest registerData);
-    public RegisterRoleResponse RegisterRole(RegisterRoleRequest registerData);
-    public UpdateRoleResponse UpdateRole(UpdateRoleRequest updateData);
-    public DeleteRoleResponse DeleteRole(DeleteRoleRequest deleteData);
+    public RegisterCredentialDomainResponse RegisterCredential(
+        RegisterCredentialDomainRequest registerData
+    );
+    public RegisterRoleDomainResponse RegisterRole(RegisterRoleDomainRequest registerData);
+    public UpdateRoleDomainResponse UpdateRole(UpdateRoleDomainRequest updateData);
+    public DeleteRoleDomainResponse DeleteRole(DeleteRoleDomainRequest deleteData);
 }

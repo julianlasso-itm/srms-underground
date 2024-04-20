@@ -1,6 +1,6 @@
-namespace AccessControl.Domain.Aggregates.Dto;
+namespace AccessControl.Domain.Aggregates.Dto.Request;
 
-public class RegisterCredentialRequest
+public class RegisterCredentialDomainRequest
 {
     public required string Email { get; init; }
     public required string Password { get; init; }

@@ -1,4 +1,5 @@
-using AccessControl.Domain.Aggregates.Dto;
+using AccessControl.Domain.Aggregates.Dto.Request;
+using AccessControl.Domain.Aggregates.Dto.Response;
 using AccessControl.Domain.Entities;
 using AccessControl.Domain.Entities.Structs;
 using AccessControl.Domain.ValueObjects;
@@ -11,13 +12,13 @@ namespace AccessControl.Domain.Aggregates.Helpers;
 
 internal abstract class UpdateRoleHelper
     : BaseHelper,
-        IHelper<UpdateRoleRequest, UpdateRoleResponse>
+        IHelper<UpdateRoleDomainRequest, UpdateRoleDomainResponse>
 {
-    public static UpdateRoleResponse Execute(UpdateRoleRequest data)
+    public static UpdateRoleDomainResponse Execute(UpdateRoleDomainRequest data)
     {
         var @struct = GetRoleStruct(data);
         var role = new RoleEntity(@struct);
-        var response = new UpdateRoleResponse { RoleId = role.RoleId.Value };
+        var response = new UpdateRoleDomainResponse { RoleId = role.RoleId.Value };
 
         if (data.Name != null)
         {
@@ -52,13 +53,13 @@ internal abstract class UpdateRoleHelper
         return response;
     }
 
-    private static RoleStruct GetRoleStruct(UpdateRoleRequest data)
+    private static RoleStruct GetRoleStruct(UpdateRoleDomainRequest data)
     {
         var id = new RoleIdValueObject(data.RoleId);
         return new RoleStruct { RoleId = id };
     }
 
-    private static void ValidateAmountDataToBeUpdated(UpdateRoleResponse response)
+    private static void ValidateAmountDataToBeUpdated(UpdateRoleDomainResponse response)
     {
         var count = response.GetType().GetProperties().Count(x => x.GetValue(response) != null);
         if (count == 1)

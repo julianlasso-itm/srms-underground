@@ -1,6 +1,6 @@
-namespace AccessControl.Domain.Aggregates.Dto;
+namespace AccessControl.Domain.Aggregates.Dto.Response;
 
-public class RegisterCredentialResponse
+public class RegisterCredentialDomainResponse
 {
     public required string CredentialId { get; init; }
     public required string Email { get; init; }

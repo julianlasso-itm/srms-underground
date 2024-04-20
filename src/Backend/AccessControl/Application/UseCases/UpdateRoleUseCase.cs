@@ -3,6 +3,8 @@ using AccessControl.Application.Commands;
 using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
 using AccessControl.Domain.Aggregates.Constants;
+using AccessControl.Domain.Aggregates.Dto.Request;
+using AccessControl.Domain.Aggregates.Dto.Response;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 
@@ -34,9 +36,9 @@ public sealed class UpdateRoleUseCase<TEntity>
         return response;
     }
 
-    private Domain.Aggregates.Dto.UpdateRoleRequest MapToRequestForDomain(UpdateRoleCommand request)
+    private UpdateRoleDomainRequest MapToRequestForDomain(UpdateRoleCommand request)
     {
-        return new Domain.Aggregates.Dto.UpdateRoleRequest
+        return new UpdateRoleDomainRequest
         {
             RoleId = request.RoleId,
             Name = request.Name,
@@ -45,7 +47,7 @@ public sealed class UpdateRoleUseCase<TEntity>
         };
     }
 
-    private UpdateRoleResponse MapToResponse(Domain.Aggregates.Dto.UpdateRoleResponse role)
+    private UpdateRoleResponse MapToResponse(UpdateRoleDomainResponse role)
     {
         return new UpdateRoleResponse
         {
