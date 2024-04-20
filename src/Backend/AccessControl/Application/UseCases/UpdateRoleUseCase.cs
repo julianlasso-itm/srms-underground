@@ -13,6 +13,7 @@ public sealed class UpdateRoleUseCase<TEntity>
     where TEntity : class
 {
     private readonly IRoleRepository<TEntity> _roleRepository;
+    private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventRoleUpdated}";
 
     public UpdateRoleUseCase(
         ISecurityAggregateRoot aggregateRoot,
@@ -25,28 +26,38 @@ public sealed class UpdateRoleUseCase<TEntity>
 
     public override async Task<UpdateRoleResponse> Handle(UpdateRoleCommand request)
     {
-        var dataUpdateRole = new Domain.Aggregates.Dto.UpdateRole
+        var dataUpdateRole = MapToRequestForDomain(request);
+        var role = AggregateRoot.UpdateRole(dataUpdateRole);
+        var response = MapToResponse(role);
+        _ = await Persist(response);
+        EmitEvent(Channel, JsonSerializer.Serialize(response));
+        return response;
+    }
+
+    private Domain.Aggregates.Dto.UpdateRole MapToRequestForDomain(UpdateRoleCommand request)
+    {
+        return new Domain.Aggregates.Dto.UpdateRole
         {
             RoleId = request.RoleId,
             Name = request.Name,
             Description = request.Description,
             Disable = request.Disable,
         };
-        var role = AggregateRoot.UpdateRole(dataUpdateRole);
+    }
 
-        var response = new UpdateRoleResponse
+    private UpdateRoleResponse MapToResponse(Domain.Aggregates.Dto.UpdateRoleResponse role)
+    {
+        return new UpdateRoleResponse
         {
             RoleId = role.RoleId,
             Name = role.Name,
             Description = role.Description,
             Disabled = role.Disabled,
         };
+    }
 
-        _ = await _roleRepository.UpdateAsync(Guid.Parse(role.RoleId), response);
-        EmitEvent(
-            $"{EventsConst.Prefix}.{EventsConst.EventRoleUpdated}",
-            JsonSerializer.Serialize(response)
-        );
-        return response;
+    private async Task<TEntity> Persist(UpdateRoleResponse response)
+    {
+        return await _roleRepository.UpdateAsync(Guid.Parse(response.RoleId), response);
     }
 }

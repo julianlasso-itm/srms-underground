@@ -23,16 +23,31 @@ public sealed class GetRolesUseCase<TEntity>
 
     public override async Task<GetRolesResponse<TEntity>> Handle(GetRolesCommand request)
     {
-        AggregateRoot.GetRoles();
-        var data = await _roleRepository.GetWithPaginationAsync(
+        // AggregateRoot.GetRoles();
+        var data = await QueryRoles(request);
+        var count = await QueryRolesCount(request);
+        var response = MapToResponse(data, count);
+        return response;
+    }
+
+    private async Task<IEnumerable<TEntity>> QueryRoles(GetRolesCommand request)
+    {
+        return await _roleRepository.GetWithPaginationAsync(
             request.Page,
             request.Limit,
             request.Sort!,
             request.Order!,
             request.Filter
         );
-        var count = await _roleRepository.GetCountAsync(request.Filter);
-        var response = new GetRolesResponse<TEntity> { Roles = data, Total = count };
-        return response;
+    }
+
+    private async Task<int> QueryRolesCount(GetRolesCommand request)
+    {
+        return await _roleRepository.GetCountAsync(request.Filter);
+    }
+
+    private GetRolesResponse<TEntity> MapToResponse(IEnumerable<TEntity> roles, int total)
+    {
+        return new GetRolesResponse<TEntity> { Roles = roles, Total = total };
     }
 }

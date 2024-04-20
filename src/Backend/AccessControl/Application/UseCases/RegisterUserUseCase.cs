@@ -14,6 +14,7 @@ public sealed class RegisterUserUseCase<TEntity>
     where TEntity : class
 {
     private readonly IUserRepository<TEntity> _userRepository;
+    private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventCredentialRegistered}";
 
     public RegisterUserUseCase(
         ISecurityAggregateRoot aggregateRoot,
@@ -26,23 +27,32 @@ public sealed class RegisterUserUseCase<TEntity>
 
     public override async Task<RegisterUserResponse> Handle(NewUserCommand request)
     {
-        var user = AggregateRoot.RegisterCredential(
-            new RegisterCredential { Email = request.Email, Password = request.Password }
-        );
+        var newUser = MapToRequestForDomain(request);
+        var user = AggregateRoot.RegisterCredential(newUser);
+        var response = MapToResponse(user);
+        _ = await Persist(response);
+        EmitEvent(Channel, JsonSerializer.Serialize(response));
+        return response;
+    }
 
-        var response = new RegisterUserResponse
+    private RegisterCredential MapToRequestForDomain(NewUserCommand request)
+    {
+        return new RegisterCredential { Email = request.Email, Password = request.Password, };
+    }
+
+    private RegisterUserResponse MapToResponse(RegisterCredentialResponse user)
+    {
+        return new RegisterUserResponse
         {
             UserId = user.CredentialId,
             Email = user.Email,
             Password = user.Password,
             Disabled = user.Disabled,
         };
+    }
 
-        _ = await _userRepository.AddAsync(response);
-        EmitEvent(
-            $"{EventsConst.Prefix}.{EventsConst.EventCredentialRegistered}",
-            JsonSerializer.Serialize(response)
-        );
-        return response;
+    private async Task<TEntity> Persist(RegisterUserResponse response)
+    {
+        return await _userRepository.AddAsync(response);
     }
 }

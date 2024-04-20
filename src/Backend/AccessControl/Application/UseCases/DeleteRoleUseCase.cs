@@ -14,6 +14,7 @@ public sealed class DeleteRoleUseCase<TEntity>
     where TEntity : class
 {
     private readonly IRoleRepository<TEntity> _roleRepository;
+    private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventRoleDeleted}";
 
     public DeleteRoleUseCase(
         ISecurityAggregateRoot aggregateRoot,
@@ -26,16 +27,26 @@ public sealed class DeleteRoleUseCase<TEntity>
 
     public override async Task<DeleteRoleResponse> Handle(DeleteRoleCommand request)
     {
-        var dataDeleteRole = new DeleteRole { RoleId = request.RoleId, };
+        var dataDeleteRole = MapToRequestForDomain(request);
         var role = AggregateRoot.DeleteRole(dataDeleteRole);
-
-        var response = new DeleteRoleResponse { RoleId = role.RoleId };
-
-        _ = await _roleRepository.SoftDeleteAsync(Guid.Parse(role.RoleId));
-        EmitEvent(
-            $"{EventsConst.Prefix}.{EventsConst.EventRoleDeleted}",
-            JsonSerializer.Serialize(response)
-        );
+        var response = MapToResponse(role);
+        _ = await Persist(response);
+        EmitEvent(Channel, JsonSerializer.Serialize(response));
         return response;
+    }
+
+    private DeleteRole MapToRequestForDomain(DeleteRoleCommand request)
+    {
+        return new DeleteRole { RoleId = request.RoleId, };
+    }
+
+    private DeleteRoleResponse MapToResponse(DeleteRole role)
+    {
+        return new DeleteRoleResponse { RoleId = role.RoleId, };
+    }
+
+    private async Task<TEntity> Persist(DeleteRoleResponse response)
+    {
+        return await _roleRepository.SoftDeleteAsync(Guid.Parse(response.RoleId));
     }
 }

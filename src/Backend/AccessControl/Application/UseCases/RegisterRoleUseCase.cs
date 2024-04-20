@@ -13,6 +13,7 @@ public sealed class RegisterRoleUseCase<TEntity>
     where TEntity : class
 {
     private readonly IRoleRepository<TEntity> _roleRepository;
+    private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventRoleRegistered}";
 
     public RegisterRoleUseCase(
         ISecurityAggregateRoot aggregateRoot,
@@ -25,26 +26,36 @@ public sealed class RegisterRoleUseCase<TEntity>
 
     public override async Task<RegisterRoleResponse> Handle(NewRoleCommand request)
     {
-        var dataRegisterRole = new Domain.Aggregates.Dto.RegisterRole
+        var newRole = MapToRequestForDomain(request);
+        var role = AggregateRoot.RegisterRole(newRole);
+        var response = MapToResponse(role);
+        _ = await Persist(response);
+        EmitEvent(Channel, JsonSerializer.Serialize(response));
+        return response;
+    }
+
+    private Domain.Aggregates.Dto.RegisterRole MapToRequestForDomain(NewRoleCommand request)
+    {
+        return new Domain.Aggregates.Dto.RegisterRole
         {
             Name = request.Name,
             Description = request.Description,
         };
-        var role = AggregateRoot.RegisterRole(dataRegisterRole);
+    }
 
-        var response = new RegisterRoleResponse
+    private RegisterRoleResponse MapToResponse(Domain.Aggregates.Dto.RegisterRoleResponse role)
+    {
+        return new RegisterRoleResponse
         {
             RoleId = role.RoleId,
             Name = role.Name,
             Description = role.Description,
             Disabled = role.Disabled,
         };
+    }
 
-        _ = await _roleRepository.AddAsync(response);
-        EmitEvent(
-            $"{EventsConst.Prefix}.{EventsConst.EventRoleRegistered}",
-            JsonSerializer.Serialize(response)
-        );
-        return response;
+    private async Task<TEntity> Persist(RegisterRoleResponse response)
+    {
+        return await _roleRepository.AddAsync(response);
     }
 }
