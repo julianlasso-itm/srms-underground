@@ -7,6 +7,6 @@ public interface ISecurityAggregateRoot : IAggregate
 {
     public RegisterCredentialResponse RegisterCredential(RegisterCredentialRequest registerData);
     public RegisterRoleResponse RegisterRole(RegisterRoleRequest registerData);
-    public UpdateRoleResponse UpdateRole(UpdateRole updateData);
-    public DeleteRole DeleteRole(DeleteRole deleteData);
+    public UpdateRoleResponse UpdateRole(UpdateRoleRequest updateData);
+    public DeleteRoleResponse DeleteRole(DeleteRoleRequest deleteData);
 }

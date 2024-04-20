@@ -1,6 +1,6 @@
 namespace AccessControl.Domain.Aggregates.Dto;
 
-public class DeleteRole
+public class DeleteRoleResponse
 {
     public required string RoleId { get; init; }
 }

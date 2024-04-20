@@ -21,12 +21,12 @@ public class SecurityAggregateRoot : BaseAggregate, ISecurityAggregateRoot
         return RegisterRoleHelper.Execute(registerData);
     }
 
-    public UpdateRoleResponse UpdateRole(UpdateRole updateData)
+    public UpdateRoleResponse UpdateRole(UpdateRoleRequest updateData)
     {
         return UpdateRoleHelper.Execute(updateData);
     }
 
-    public DeleteRole DeleteRole(DeleteRole deleteData)
+    public DeleteRoleResponse DeleteRole(DeleteRoleRequest deleteData)
     {
         return DeleteRoleHelper.Execute(deleteData);
     }

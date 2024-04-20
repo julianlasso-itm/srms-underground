@@ -9,9 +9,11 @@ using Shared.Domain.ValueObjects;
 
 namespace AccessControl.Domain.Aggregates.Helpers;
 
-internal abstract class UpdateRoleHelper : BaseHelper, IHelper<UpdateRole, UpdateRoleResponse>
+internal abstract class UpdateRoleHelper
+    : BaseHelper,
+        IHelper<UpdateRoleRequest, UpdateRoleResponse>
 {
-    public static UpdateRoleResponse Execute(UpdateRole data)
+    public static UpdateRoleResponse Execute(UpdateRoleRequest data)
     {
         var @struct = GetRoleStruct(data);
         var role = new RoleEntity(@struct);
@@ -50,7 +52,7 @@ internal abstract class UpdateRoleHelper : BaseHelper, IHelper<UpdateRole, Updat
         return response;
     }
 
-    private static RoleStruct GetRoleStruct(UpdateRole data)
+    private static RoleStruct GetRoleStruct(UpdateRoleRequest data)
     {
         var id = new RoleIdValueObject(data.RoleId);
         return new RoleStruct { RoleId = id };

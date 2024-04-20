@@ -3,7 +3,6 @@ using AccessControl.Application.Commands;
 using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
 using AccessControl.Domain.Aggregates.Constants;
-using AccessControl.Domain.Aggregates.Dto;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 
@@ -35,14 +34,14 @@ public sealed class DeleteRoleUseCase<TEntity>
         return response;
     }
 
-    private DeleteRole MapToRequestForDomain(DeleteRoleCommand request)
+    private Domain.Aggregates.Dto.DeleteRoleRequest MapToRequestForDomain(DeleteRoleCommand request)
     {
-        return new DeleteRole { RoleId = request.RoleId, };
+        return new Domain.Aggregates.Dto.DeleteRoleRequest { RoleId = request.RoleId };
     }
 
-    private DeleteRoleResponse MapToResponse(DeleteRole role)
+    private DeleteRoleResponse MapToResponse(Domain.Aggregates.Dto.DeleteRoleResponse role)
     {
-        return new DeleteRoleResponse { RoleId = role.RoleId, };
+        return new DeleteRoleResponse { RoleId = role.RoleId };
     }
 
     private async Task<TEntity> Persist(DeleteRoleResponse response)

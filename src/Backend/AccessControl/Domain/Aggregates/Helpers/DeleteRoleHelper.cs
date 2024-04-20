@@ -6,16 +6,18 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Helpers;
 
-internal abstract class DeleteRoleHelper : BaseHelper, IHelper<DeleteRole, DeleteRole>
+internal abstract class DeleteRoleHelper
+    : BaseHelper,
+        IHelper<DeleteRoleRequest, DeleteRoleResponse>
 {
-    public static DeleteRole Execute(DeleteRole data)
+    public static DeleteRoleResponse Execute(DeleteRoleRequest data)
     {
         var @struct = GetRoleStruct(data);
         ValidateStructureFields(@struct);
-        return data;
+        return new DeleteRoleResponse { RoleId = @struct.RoleId.Value };
     }
 
-    private static RoleStruct GetRoleStruct(DeleteRole data)
+    private static RoleStruct GetRoleStruct(DeleteRoleRequest data)
     {
         var id = new RoleIdValueObject(data.RoleId);
         return new RoleStruct { RoleId = id };

@@ -1,6 +1,6 @@
 namespace AccessControl.Domain.Aggregates.Dto;
 
-public class UpdateRole
+public class UpdateRoleRequest
 {
     public required string RoleId { get; init; }
     public string? Name { get; init; }

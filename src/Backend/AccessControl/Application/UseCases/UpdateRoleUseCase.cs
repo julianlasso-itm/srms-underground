@@ -34,9 +34,9 @@ public sealed class UpdateRoleUseCase<TEntity>
         return response;
     }
 
-    private Domain.Aggregates.Dto.UpdateRole MapToRequestForDomain(UpdateRoleCommand request)
+    private Domain.Aggregates.Dto.UpdateRoleRequest MapToRequestForDomain(UpdateRoleCommand request)
     {
-        return new Domain.Aggregates.Dto.UpdateRole
+        return new Domain.Aggregates.Dto.UpdateRoleRequest
         {
             RoleId = request.RoleId,
             Name = request.Name,
