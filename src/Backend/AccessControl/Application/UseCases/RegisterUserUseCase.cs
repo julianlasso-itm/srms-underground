@@ -35,9 +35,13 @@ public sealed class RegisterUserUseCase<TEntity>
         return response;
     }
 
-    private RegisterCredential MapToRequestForDomain(NewUserCommand request)
+    private RegisterCredentialRequest MapToRequestForDomain(NewUserCommand request)
     {
-        return new RegisterCredential { Email = request.Email, Password = request.Password, };
+        return new RegisterCredentialRequest
+        {
+            Email = request.Email,
+            Password = request.Password,
+        };
     }
 
     private RegisterUserResponse MapToResponse(RegisterCredentialResponse user)

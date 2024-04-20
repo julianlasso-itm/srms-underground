@@ -9,9 +9,9 @@ namespace AccessControl.Domain.Aggregates.Helpers;
 
 internal abstract class RegisterCredentialHelper
     : BaseHelper,
-        IHelper<RegisterCredential, RegisterCredentialResponse>
+        IHelper<RegisterCredentialRequest, RegisterCredentialResponse>
 {
-    public static RegisterCredentialResponse Execute(RegisterCredential registerData)
+    public static RegisterCredentialResponse Execute(RegisterCredentialRequest registerData)
     {
         var data = GetCredentialStruct(registerData);
         ValidateStructureFields(data);
@@ -28,7 +28,7 @@ internal abstract class RegisterCredentialHelper
         };
     }
 
-    private static CredentialStruct GetCredentialStruct(RegisterCredential registerData)
+    private static CredentialStruct GetCredentialStruct(RegisterCredentialRequest registerData)
     {
         var email = new EmailValueObject(registerData.Email);
         var password = new PasswordValueObject(registerData.Password);
