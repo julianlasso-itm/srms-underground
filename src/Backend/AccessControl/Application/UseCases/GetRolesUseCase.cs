@@ -23,7 +23,6 @@ public sealed class GetRolesUseCase<TEntity>
 
     public override async Task<GetRolesResponse<TEntity>> Handle(GetRolesCommand request)
     {
-        // AggregateRoot.GetRoles();
         var data = await QueryRoles(request);
         var count = await QueryRolesCount(request);
         var response = MapToResponse(data, count);

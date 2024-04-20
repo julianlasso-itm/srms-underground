@@ -28,11 +28,6 @@ internal abstract class RegisterCredentialHelper
         };
     }
 
-    public static void Execute()
-    {
-        throw new NotImplementedException();
-    }
-
     private static CredentialStruct GetCredentialStruct(RegisterCredential registerData)
     {
         var email = new EmailValueObject(registerData.Email);
