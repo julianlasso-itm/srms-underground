@@ -1,5 +1,5 @@
-using AccessControl.Domain.Aggregates.Dto.Request;
-using AccessControl.Domain.Aggregates.Dto.Response;
+using AccessControl.Domain.Aggregates.Dto.Requests;
+using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Entities.Structs;
 using AccessControl.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;

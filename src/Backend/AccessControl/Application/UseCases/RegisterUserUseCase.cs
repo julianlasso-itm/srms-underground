@@ -3,8 +3,8 @@ using AccessControl.Application.Commands;
 using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
 using AccessControl.Domain.Aggregates.Constants;
-using AccessControl.Domain.Aggregates.Dto.Request;
-using AccessControl.Domain.Aggregates.Dto.Response;
+using AccessControl.Domain.Aggregates.Dto.Requests;
+using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 

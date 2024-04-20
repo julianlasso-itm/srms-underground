@@ -1,4 +1,4 @@
-namespace AccessControl.Domain.Aggregates.Dto.Response;
+namespace AccessControl.Domain.Aggregates.Dto.Responses;
 
 public class RegisterRoleDomainResponse
 {

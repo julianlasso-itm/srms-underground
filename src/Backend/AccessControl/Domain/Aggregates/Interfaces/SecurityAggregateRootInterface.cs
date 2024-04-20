@@ -1,5 +1,5 @@
-using AccessControl.Domain.Aggregates.Dto.Request;
-using AccessControl.Domain.Aggregates.Dto.Response;
+using AccessControl.Domain.Aggregates.Dto.Requests;
+using AccessControl.Domain.Aggregates.Dto.Responses;
 using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Interfaces;
