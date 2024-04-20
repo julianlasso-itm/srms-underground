@@ -11,7 +11,7 @@ public class UserRepository : BaseRepository<User>, IUserRepository<User>
     public UserRepository(DbContext context)
         : base(context) { }
 
-    public Task<User> AddAsync(RegisterUserResponse entity)
+    public Task<User> AddAsync(RegisterUserApplicationResponse entity)
     {
         var user = new User
         {

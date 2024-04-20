@@ -24,31 +24,31 @@ public class Application<TUserEntity, TRoleEntity>
         _roleRepository = roleRepository;
     }
 
-    public Task<RegisterUserResponse> RegisterUser(NewUserCommand request)
+    public Task<RegisterUserApplicationResponse> RegisterUser(NewUserCommand request)
     {
         var useCase = new RegisterUserUseCase<TUserEntity>(AggregateRoot, _userRepository);
         return useCase.Handle(request);
     }
 
-    public Task<RegisterRoleResponse> RegisterRole(NewRoleCommand request)
+    public Task<RegisterRoleApplicationResponse> RegisterRole(NewRoleCommand request)
     {
         var useCase = new RegisterRoleUseCase<TRoleEntity>(AggregateRoot, _roleRepository);
         return useCase.Handle(request);
     }
 
-    public Task<UpdateRoleResponse> UpdateRole(UpdateRoleCommand request)
+    public Task<UpdateRoleApplicationResponse> UpdateRole(UpdateRoleCommand request)
     {
         var useCase = new UpdateRoleUseCase<TRoleEntity>(AggregateRoot, _roleRepository);
         return useCase.Handle(request);
     }
 
-    public Task<DeleteRoleResponse> DeleteRole(DeleteRoleCommand request)
+    public Task<DeleteRoleApplicationResponse> DeleteRole(DeleteRoleCommand request)
     {
         var useCase = new DeleteRoleUseCase<TRoleEntity>(AggregateRoot, _roleRepository);
         return useCase.Handle(request);
     }
 
-    public Task<GetRolesResponse<TRoleEntity>> GetRoles(GetRolesCommand request)
+    public Task<GetRolesApplicationResponse<TRoleEntity>> GetRoles(GetRolesCommand request)
     {
         var useCase = new GetRolesUseCase<TRoleEntity>(AggregateRoot, _roleRepository);
         return useCase.Handle(request);

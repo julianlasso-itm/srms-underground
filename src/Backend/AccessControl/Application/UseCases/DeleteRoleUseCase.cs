@@ -11,7 +11,7 @@ using Shared.Application.Base;
 namespace AccessControl.Application.UseCases;
 
 public sealed class DeleteRoleUseCase<TEntity>
-    : BaseUseCase<DeleteRoleCommand, DeleteRoleResponse, ISecurityAggregateRoot>
+    : BaseUseCase<DeleteRoleCommand, DeleteRoleApplicationResponse, ISecurityAggregateRoot>
     where TEntity : class
 {
     private readonly IRoleRepository<TEntity> _roleRepository;
@@ -26,7 +26,7 @@ public sealed class DeleteRoleUseCase<TEntity>
         _roleRepository = roleRepository;
     }
 
-    public override async Task<DeleteRoleResponse> Handle(DeleteRoleCommand request)
+    public override async Task<DeleteRoleApplicationResponse> Handle(DeleteRoleCommand request)
     {
         var dataDeleteRole = MapToRequestForDomain(request);
         var role = AggregateRoot.DeleteRole(dataDeleteRole);
@@ -41,12 +41,12 @@ public sealed class DeleteRoleUseCase<TEntity>
         return new DeleteRoleDomainRequest { RoleId = request.RoleId };
     }
 
-    private DeleteRoleResponse MapToResponse(DeleteRoleDomainResponse role)
+    private DeleteRoleApplicationResponse MapToResponse(DeleteRoleDomainResponse role)
     {
-        return new DeleteRoleResponse { RoleId = role.RoleId };
+        return new DeleteRoleApplicationResponse { RoleId = role.RoleId };
     }
 
-    private async Task<TEntity> Persist(DeleteRoleResponse response)
+    private async Task<TEntity> Persist(DeleteRoleApplicationResponse response)
     {
         return await _roleRepository.SoftDeleteAsync(Guid.Parse(response.RoleId));
     }

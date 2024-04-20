@@ -11,7 +11,7 @@ using Shared.Application.Base;
 namespace AccessControl.Application.UseCases;
 
 public sealed class UpdateRoleUseCase<TEntity>
-    : BaseUseCase<UpdateRoleCommand, UpdateRoleResponse, ISecurityAggregateRoot>
+    : BaseUseCase<UpdateRoleCommand, UpdateRoleApplicationResponse, ISecurityAggregateRoot>
     where TEntity : class
 {
     private readonly IRoleRepository<TEntity> _roleRepository;
@@ -26,7 +26,7 @@ public sealed class UpdateRoleUseCase<TEntity>
         _roleRepository = roleRepository;
     }
 
-    public override async Task<UpdateRoleResponse> Handle(UpdateRoleCommand request)
+    public override async Task<UpdateRoleApplicationResponse> Handle(UpdateRoleCommand request)
     {
         var dataUpdateRole = MapToRequestForDomain(request);
         var role = AggregateRoot.UpdateRole(dataUpdateRole);
@@ -47,9 +47,9 @@ public sealed class UpdateRoleUseCase<TEntity>
         };
     }
 
-    private UpdateRoleResponse MapToResponse(UpdateRoleDomainResponse role)
+    private UpdateRoleApplicationResponse MapToResponse(UpdateRoleDomainResponse role)
     {
-        return new UpdateRoleResponse
+        return new UpdateRoleApplicationResponse
         {
             RoleId = role.RoleId,
             Name = role.Name,
@@ -58,7 +58,7 @@ public sealed class UpdateRoleUseCase<TEntity>
         };
     }
 
-    private async Task<TEntity> Persist(UpdateRoleResponse response)
+    private async Task<TEntity> Persist(UpdateRoleApplicationResponse response)
     {
         return await _roleRepository.UpdateAsync(Guid.Parse(response.RoleId), response);
     }

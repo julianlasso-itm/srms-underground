@@ -7,7 +7,7 @@ using Shared.Application.Base;
 namespace AccessControl.Application.UseCases;
 
 public sealed class GetRolesUseCase<TEntity>
-    : BaseUseCase<GetRolesCommand, GetRolesResponse<TEntity>, ISecurityAggregateRoot>
+    : BaseUseCase<GetRolesCommand, GetRolesApplicationResponse<TEntity>, ISecurityAggregateRoot>
     where TEntity : class
 {
     private readonly IRoleRepository<TEntity> _roleRepository;
@@ -21,7 +21,7 @@ public sealed class GetRolesUseCase<TEntity>
         _roleRepository = roleRepository;
     }
 
-    public override async Task<GetRolesResponse<TEntity>> Handle(GetRolesCommand request)
+    public override async Task<GetRolesApplicationResponse<TEntity>> Handle(GetRolesCommand request)
     {
         var data = await QueryRoles(request);
         var count = await QueryRolesCount(request);
@@ -45,8 +45,11 @@ public sealed class GetRolesUseCase<TEntity>
         return await _roleRepository.GetCountAsync(request.Filter);
     }
 
-    private GetRolesResponse<TEntity> MapToResponse(IEnumerable<TEntity> roles, int total)
+    private GetRolesApplicationResponse<TEntity> MapToResponse(
+        IEnumerable<TEntity> roles,
+        int total
+    )
     {
-        return new GetRolesResponse<TEntity> { Roles = roles, Total = total };
+        return new GetRolesApplicationResponse<TEntity> { Roles = roles, Total = total };
     }
 }

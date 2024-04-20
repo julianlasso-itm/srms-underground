@@ -11,7 +11,7 @@ public class RoleRepository : BaseRepository<Role>, IRoleRepository<Role>
     public RoleRepository(DbContext context)
         : base(context) { }
 
-    public Task<Role> AddAsync(RegisterRoleResponse entity)
+    public Task<Role> AddAsync(RegisterRoleApplicationResponse entity)
     {
         var role = new Role
         {
@@ -24,12 +24,21 @@ public class RoleRepository : BaseRepository<Role>, IRoleRepository<Role>
         return AddAsync(role);
     }
 
-    public Task<Role> UpdateAsync(Guid id, UpdateRoleResponse entity)
+    public Task<Role> UpdateAsync(Guid id, UpdateRoleApplicationResponse entity)
     {
         var role = new Role { RoleId = id };
-        if (entity.Name != null) role.Name = entity.Name;
-        if (entity.Description != null) role.Description = entity.Description;
-        if (entity.Disabled != null) role.Disabled = (bool)entity.Disabled;
+        if (entity.Name != null)
+        {
+            role.Name = entity.Name;
+        }
+        if (entity.Description != null)
+        {
+            role.Description = entity.Description;
+        }
+        if (entity.Disabled != null)
+        {
+            role.Disabled = (bool)entity.Disabled;
+        }
         role.UpdatedAt = DateTime.UtcNow;
         return UpdateAsync(id, role);
     }

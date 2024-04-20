@@ -1,6 +1,6 @@
 namespace AccessControl.Application.Responses;
 
-public sealed class RegisterRoleResponse
+public sealed class RegisterRoleApplicationResponse
 {
     public required string RoleId { get; init; }
     public required string Name { get; init; }
