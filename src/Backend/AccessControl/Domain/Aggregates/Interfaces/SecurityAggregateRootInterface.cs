@@ -4,7 +4,7 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Interfaces;
 
-public interface ISecurityAggregateRoot : IAggregate
+public interface ISecurityAggregateRoot : IAggregateRoot
 {
     public RegisterCredentialDomainResponse RegisterCredential(
         RegisterCredentialDomainRequest registerData
