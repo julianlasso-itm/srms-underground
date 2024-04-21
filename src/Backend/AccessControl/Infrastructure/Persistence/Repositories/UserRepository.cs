@@ -6,14 +6,14 @@ using Shared.Infrastructure.Persistence.Repositories;
 
 namespace AccessControl.Infrastructure.Persistence.Repositories;
 
-public class UserRepository : BaseRepository<User>, IUserRepository<User>
+public class UserRepository : BaseRepository<UserModel>, IUserRepository<UserModel>
 {
     public UserRepository(DbContext context)
         : base(context) { }
 
-    public Task<User> AddAsync(RegisterUserApplicationResponse entity)
+    public Task<UserModel> AddAsync(RegisterUserApplicationResponse entity)
     {
-        var user = new User
+        var user = new UserModel
         {
             UserId = Guid.Parse(entity.UserId),
             Email = entity.Email,

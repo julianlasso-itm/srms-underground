@@ -15,12 +15,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-builder.Services.AddScoped<IUserRepository<User>, UserRepository>(serviceProvider =>
+builder.Services.AddScoped<IUserRepository<UserModel>, UserRepository>(serviceProvider =>
 {
     var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
     return new UserRepository(dbContext);
 });
-builder.Services.AddScoped<IRoleRepository<Role>, RoleRepository>(serviceProvider =>
+builder.Services.AddScoped<IRoleRepository<RoleModel>, RoleRepository>(serviceProvider =>
 {
     var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
     return new RoleRepository(dbContext);

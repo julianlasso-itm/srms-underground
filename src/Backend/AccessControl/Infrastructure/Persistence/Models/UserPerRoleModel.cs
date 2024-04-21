@@ -6,7 +6,7 @@ namespace AccessControl.Infrastructure.Persistence.Models;
 
 [Index(nameof(UserId), nameof(RoleId), IsUnique = true)]
 [Table("tbl_user_per_role")]
-public class UserPerRole
+public class UserPerRoleModel
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -21,6 +21,6 @@ public class UserPerRole
     [Column("upr_role_id")]
     public Guid RoleId { get; set; }
 
-    public required User User { get; set; }
-    public required Role Role { get; set; }
+    public required UserModel User { get; set; }
+    public required RoleModel Role { get; set; }
 }

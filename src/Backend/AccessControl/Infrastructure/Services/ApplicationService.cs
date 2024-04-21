@@ -8,21 +8,21 @@ namespace AccessControl.Infrastructure.Services;
 
 public class ApplicationService
 {
-    private readonly Application<User, Role> _application;
+    private readonly Application<UserModel, RoleModel> _application;
 
     public ApplicationService(
-        IUserRepository<User> userRepository,
+        IUserRepository<UserModel> userRepository,
         RegisterUserEvent registerUserEvent,
-        IRoleRepository<Role> roleRepository
+        IRoleRepository<RoleModel> roleRepository
     )
     {
-        _application = new Application<User, Role>(userRepository, roleRepository)
+        _application = new Application<UserModel, RoleModel>(userRepository, roleRepository)
         {
             AggregateRoot = new SecurityAggregateRoot(registerUserEvent)
         };
     }
 
-    public Application<User, Role> GetApplication()
+    public Application<UserModel, RoleModel> GetApplication()
     {
         return _application;
     }
