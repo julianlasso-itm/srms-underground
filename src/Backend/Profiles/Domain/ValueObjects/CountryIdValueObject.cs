@@ -1,6 +1,6 @@
 using Shared.Domain.ValueObjects.Base;
 
-namespace AccessControl.Domain.ValueObjects;
+namespace Profiles.Domain.ValueObjects;
 
 public sealed class CountryIdValueObject : BaseIdValueObject
 {
