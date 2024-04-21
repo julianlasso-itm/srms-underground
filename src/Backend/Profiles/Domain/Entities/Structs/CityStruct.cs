@@ -8,5 +8,4 @@ internal struct CityStruct
     public ProvinceIdValueObject ProvinceId { get; set; }
     public NameValueObject Name { get; set; }
     public DisabledValueObject Disabled { get; set; }
-    public ProvinceStruct Province { get; set; }
 }
