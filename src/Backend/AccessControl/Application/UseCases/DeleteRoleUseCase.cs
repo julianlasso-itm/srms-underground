@@ -48,6 +48,6 @@ public sealed class DeleteRoleUseCase<TEntity>
 
     private async Task<TEntity> Persist(DeleteRoleApplicationResponse response)
     {
-        return await _roleRepository.SoftDeleteAsync(Guid.Parse(response.RoleId));
+        return await _roleRepository.DeleteAsync(Guid.Parse(response.RoleId));
     }
 }
