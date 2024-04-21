@@ -6,10 +6,12 @@ namespace Shared.Application.Base;
 public abstract class BasePaginator : ICommand
 {
     [Range(1, int.MaxValue, ErrorMessage = "Page must be greater than 0")]
-    public int Page { get; init; }
+    [Required(ErrorMessage = "Page is required")]
+    public required int Page { get; init; }
 
     [Range(1, int.MaxValue, ErrorMessage = "Limit must be greater than 0")]
-    public int Limit { get; init; }
+    [Required(ErrorMessage = "Limit is required")]
+    public required int Limit { get; init; }
 
     [MinLength(1, ErrorMessage = "Filter must be a string")]
     public string? Filter { get; init; }
