@@ -5,8 +5,8 @@ using Shared.Infrastructure.Persistence.Models;
 
 namespace AccessControl.Infrastructure.Persistence.Models;
 
-[Index(nameof(Email), IsUnique = true)]
-[Index(nameof(UserId), nameof(DeletedAt), IsUnique = true)]
+[Index(nameof(Email), nameof(DeletedAt), IsUnique = true)]
+[Index(nameof(Email), nameof(Password))]
 [Table("tbl_user")]
 public class UserModel : AuditableEntity
 {
@@ -28,22 +28,6 @@ public class UserModel : AuditableEntity
     [Required]
     [Column("usr_disabled")]
     public bool Disabled { get; set; } = false;
-
-    [Required]
-    [Column("usr_created_at")]
-    [DataType(DataType.DateTime)]
-    [DisplayFormat(ConvertEmptyStringToNull = true)]
-    public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
-
-    [Column("usr_updated_at")]
-    [DataType(DataType.DateTime)]
-    [DisplayFormat(ConvertEmptyStringToNull = true)]
-    public DateTime? UpdatedAt { get; set; }
-
-    [Column("usr_deleted_at")]
-    [DataType(DataType.DateTime)]
-    [DisplayFormat(ConvertEmptyStringToNull = true)]
-    public DateTime? DeletedAt { get; set; }
 
     public ICollection<UserPerRoleModel> UserPerRoles { get; set; } = new List<UserPerRoleModel>();
 }
