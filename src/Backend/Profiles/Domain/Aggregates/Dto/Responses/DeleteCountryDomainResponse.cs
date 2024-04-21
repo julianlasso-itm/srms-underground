@@ -2,5 +2,5 @@ namespace Profiles.Domain.Aggregates.Dto.Responses;
 
 public class DeleteCountryDomainResponse
 {
-    public string CountryId { get; set; }
+    public string CountryId { get; init; }
 }
