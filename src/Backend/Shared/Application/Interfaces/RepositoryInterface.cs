@@ -15,5 +15,4 @@ public interface IRepository<TEntity>
     public Task<TEntity> AddAsync(TEntity entity);
     public Task<TEntity> UpdateAsync(Guid id, TEntity entity);
     public Task<TEntity> DeleteAsync(Guid id);
-    public Task<TEntity> SoftDeleteAsync(Guid id);
 }
