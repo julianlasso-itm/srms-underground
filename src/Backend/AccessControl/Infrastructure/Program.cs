@@ -1,5 +1,5 @@
 using AccessControl.Application.Repositories;
-using AccessControl.Infrastructure.Events;
+using AccessControl.Infrastructure.Messaging.Events;
 using AccessControl.Infrastructure.Persistence;
 using AccessControl.Infrastructure.Persistence.Models;
 using AccessControl.Infrastructure.Persistence.Repositories;

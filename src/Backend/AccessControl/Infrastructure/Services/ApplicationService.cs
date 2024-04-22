@@ -1,7 +1,7 @@
 using AccessControl.Application;
 using AccessControl.Application.Repositories;
 using AccessControl.Domain.Aggregates;
-using AccessControl.Infrastructure.Events;
+using AccessControl.Infrastructure.Messaging.Events;
 using AccessControl.Infrastructure.Persistence.Models;
 
 namespace AccessControl.Infrastructure.Services;

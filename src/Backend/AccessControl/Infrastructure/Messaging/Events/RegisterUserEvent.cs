@@ -1,6 +1,6 @@
 using Shared.Infrastructure.Events.Base;
 
-namespace AccessControl.Infrastructure.Events;
+namespace AccessControl.Infrastructure.Messaging.Events;
 
 public class RegisterUserEvent : BaseEvent
 {
