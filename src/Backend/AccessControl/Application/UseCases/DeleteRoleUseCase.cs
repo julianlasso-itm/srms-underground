@@ -31,7 +31,7 @@ public sealed class DeleteRoleUseCase<TEntity>
         var dataDeleteRole = MapToRequestForDomain(request);
         var role = AggregateRoot.DeleteRole(dataDeleteRole);
         var response = MapToResponse(role);
-        _ = await Persist(response);
+        _ = await Persistence(response);
         EmitEvent(Channel, JsonSerializer.Serialize(response));
         return response;
     }
@@ -46,7 +46,7 @@ public sealed class DeleteRoleUseCase<TEntity>
         return new DeleteRoleApplicationResponse { RoleId = role.RoleId };
     }
 
-    private async Task<TEntity> Persist(DeleteRoleApplicationResponse response)
+    private async Task<TEntity> Persistence(DeleteRoleApplicationResponse response)
     {
         return await _roleRepository.DeleteAsync(Guid.Parse(response.RoleId));
     }

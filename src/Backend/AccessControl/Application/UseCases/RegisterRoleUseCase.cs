@@ -31,7 +31,7 @@ public sealed class RegisterRoleUseCase<TEntity>
         var newRole = MapToRequestForDomain(request);
         var role = AggregateRoot.RegisterRole(newRole);
         var response = MapToResponse(role);
-        _ = await Persist(response);
+        _ = await Persistence(response);
         EmitEvent(Channel, JsonSerializer.Serialize(response));
         return response;
     }
@@ -56,7 +56,7 @@ public sealed class RegisterRoleUseCase<TEntity>
         };
     }
 
-    private async Task<TEntity> Persist(RegisterRoleApplicationResponse response)
+    private async Task<TEntity> Persistence(RegisterRoleApplicationResponse response)
     {
         return await _roleRepository.AddAsync(response);
     }

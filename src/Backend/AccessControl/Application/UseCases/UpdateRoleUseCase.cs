@@ -31,7 +31,7 @@ public sealed class UpdateRoleUseCase<TEntity>
         var dataUpdateRole = MapToRequestForDomain(request);
         var role = AggregateRoot.UpdateRole(dataUpdateRole);
         var response = MapToResponse(role);
-        _ = await Persist(response);
+        _ = await Persistence(response);
         EmitEvent(Channel, JsonSerializer.Serialize(response));
         return response;
     }
@@ -58,7 +58,7 @@ public sealed class UpdateRoleUseCase<TEntity>
         };
     }
 
-    private async Task<TEntity> Persist(UpdateRoleApplicationResponse response)
+    private async Task<TEntity> Persistence(UpdateRoleApplicationResponse response)
     {
         return await _roleRepository.UpdateAsync(Guid.Parse(response.RoleId), response);
     }

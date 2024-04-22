@@ -31,7 +31,7 @@ public sealed class RegisterUserUseCase<TEntity>
         var newUser = MapToRequestForDomain(request);
         var user = AggregateRoot.RegisterCredential(newUser);
         var response = MapToResponse(user);
-        _ = await Persist(response);
+        _ = await Persistence(response);
         EmitEvent(Channel, JsonSerializer.Serialize(response));
         return response;
     }
@@ -56,7 +56,7 @@ public sealed class RegisterUserUseCase<TEntity>
         };
     }
 
-    private async Task<TEntity> Persist(RegisterUserApplicationResponse response)
+    private async Task<TEntity> Persistence(RegisterUserApplicationResponse response)
     {
         return await _userRepository.AddAsync(response);
     }
