@@ -1,4 +1,12 @@
+using Analytics.Infrastructure.Messaging.Subscribers;
+using StackExchange.Redis;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<IConnectionMultiplexer>(
+    ConnectionMultiplexer.Connect("localhost:6379")
+);
+builder.Services.AddHostedService<AccessControlSubscriber>();
 
 // Add services to the container.
 builder.Services.AddGrpc();
