@@ -12,13 +12,13 @@ internal abstract class RegisterRoleHelper
     : BaseHelper,
         IHelper<RegisterRoleDomainRequest, RegisterRoleDomainResponse>
 {
-    public static RegisterRoleDomainResponse Execute(RegisterRoleDomainRequest registerData)
+    public static RegisterRoleDomainResponse Execute(RegisterRoleDomainRequest request)
     {
-        var data = GetRoleStruct(registerData);
-        ValidateStructureFields(data);
+        var @struct = GetRoleStruct(request);
+        ValidateStructureFields(@struct);
 
         var role = new RoleEntity();
-        role.Register(data.Name, data.Description);
+        role.Register(@struct.Name, @struct.Description);
 
         return new RegisterRoleDomainResponse
         {
@@ -29,13 +29,11 @@ internal abstract class RegisterRoleHelper
         };
     }
 
-    private static RoleStruct GetRoleStruct(RegisterRoleDomainRequest registerData)
+    private static RoleStruct GetRoleStruct(RegisterRoleDomainRequest request)
     {
-        var name = new NameValueObject(registerData.Name);
+        var name = new NameValueObject(request.Name);
         var description =
-            registerData.Description != null
-                ? new DescriptionValueObject(registerData.Description)
-                : null;
+            request.Description != null ? new DescriptionValueObject(request.Description) : null;
 
         return new RoleStruct { Name = name, Description = description };
     }

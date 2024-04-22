@@ -11,7 +11,7 @@ using Shared.Application.Base;
 namespace AccessControl.Application.UseCases;
 
 public sealed class RegisterRoleUseCase<TEntity>
-    : BaseUseCase<NewRoleCommand, RegisterRoleApplicationResponse, ISecurityAggregateRoot>
+    : BaseUseCase<RegisterRoleCommand, RegisterRoleApplicationResponse, ISecurityAggregateRoot>
     where TEntity : class
 {
     private readonly IRoleRepository<TEntity> _roleRepository;
@@ -26,7 +26,7 @@ public sealed class RegisterRoleUseCase<TEntity>
         _roleRepository = roleRepository;
     }
 
-    public override async Task<RegisterRoleApplicationResponse> Handle(NewRoleCommand request)
+    public override async Task<RegisterRoleApplicationResponse> Handle(RegisterRoleCommand request)
     {
         var newRole = MapToRequestForDomain(request);
         var role = AggregateRoot.RegisterRole(newRole);
@@ -36,7 +36,7 @@ public sealed class RegisterRoleUseCase<TEntity>
         return response;
     }
 
-    private RegisterRoleDomainRequest MapToRequestForDomain(NewRoleCommand request)
+    private RegisterRoleDomainRequest MapToRequestForDomain(RegisterRoleCommand request)
     {
         return new RegisterRoleDomainRequest
         {

@@ -24,13 +24,13 @@ public class Application<TUserEntity, TRoleEntity>
         _roleRepository = roleRepository;
     }
 
-    public Task<RegisterUserApplicationResponse> RegisterUser(NewUserCommand request)
+    public Task<RegisterUserApplicationResponse> RegisterUser(RegisterUserCommand request)
     {
         var useCase = new RegisterUserUseCase<TUserEntity>(AggregateRoot, _userRepository);
         return useCase.Handle(request);
     }
 
-    public Task<RegisterRoleApplicationResponse> RegisterRole(NewRoleCommand request)
+    public Task<RegisterRoleApplicationResponse> RegisterRole(RegisterRoleCommand request)
     {
         var useCase = new RegisterRoleUseCase<TRoleEntity>(AggregateRoot, _roleRepository);
         return useCase.Handle(request);

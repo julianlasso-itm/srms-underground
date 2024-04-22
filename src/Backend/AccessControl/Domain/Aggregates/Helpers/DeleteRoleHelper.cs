@@ -11,16 +11,16 @@ internal abstract class DeleteRoleHelper
     : BaseHelper,
         IHelper<DeleteRoleDomainRequest, DeleteRoleDomainResponse>
 {
-    public static DeleteRoleDomainResponse Execute(DeleteRoleDomainRequest data)
+    public static DeleteRoleDomainResponse Execute(DeleteRoleDomainRequest request)
     {
-        var @struct = GetRoleStruct(data);
+        var @struct = GetRoleStruct(request);
         ValidateStructureFields(@struct);
         return new DeleteRoleDomainResponse { RoleId = @struct.RoleId.Value };
     }
 
-    private static RoleStruct GetRoleStruct(DeleteRoleDomainRequest data)
+    private static RoleStruct GetRoleStruct(DeleteRoleDomainRequest request)
     {
-        var id = new RoleIdValueObject(data.RoleId);
+        var id = new RoleIdValueObject(request.RoleId);
         return new RoleStruct { RoleId = id };
     }
 }

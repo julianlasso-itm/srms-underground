@@ -11,7 +11,7 @@ using Shared.Application.Base;
 namespace AccessControl.Application.UseCases;
 
 public sealed class RegisterUserUseCase<TEntity>
-    : BaseUseCase<NewUserCommand, RegisterUserApplicationResponse, ISecurityAggregateRoot>
+    : BaseUseCase<RegisterUserCommand, RegisterUserApplicationResponse, ISecurityAggregateRoot>
     where TEntity : class
 {
     private readonly IUserRepository<TEntity> _userRepository;
@@ -26,7 +26,7 @@ public sealed class RegisterUserUseCase<TEntity>
         _userRepository = userRepository;
     }
 
-    public override async Task<RegisterUserApplicationResponse> Handle(NewUserCommand request)
+    public override async Task<RegisterUserApplicationResponse> Handle(RegisterUserCommand request)
     {
         var newUser = MapToRequestForDomain(request);
         var user = AggregateRoot.RegisterCredential(newUser);
@@ -36,7 +36,7 @@ public sealed class RegisterUserUseCase<TEntity>
         return response;
     }
 
-    private RegisterCredentialDomainRequest MapToRequestForDomain(NewUserCommand request)
+    private RegisterCredentialDomainRequest MapToRequestForDomain(RegisterUserCommand request)
     {
         return new RegisterCredentialDomainRequest
         {

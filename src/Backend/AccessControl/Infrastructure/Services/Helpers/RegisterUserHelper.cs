@@ -11,9 +11,7 @@ internal static class RegisterUserHelper
 {
     private static Application<UserModel, RoleModel> s_application;
 
-    public static void SetApplication(
-        Application<UserModel, RoleModel> application
-    )
+    public static void SetApplication(Application<UserModel, RoleModel> application)
     {
         s_application = application;
     }
@@ -25,9 +23,9 @@ internal static class RegisterUserHelper
         return MapToRegisterUserResponse(data);
     }
 
-    private static NewUserCommand MapToNewUserCommand(RegisterUserRequest request)
+    private static RegisterUserCommand MapToNewUserCommand(RegisterUserRequest request)
     {
-        return new NewUserCommand
+        return new RegisterUserCommand
         {
             Email = request.Email,
             Password = request.Password,

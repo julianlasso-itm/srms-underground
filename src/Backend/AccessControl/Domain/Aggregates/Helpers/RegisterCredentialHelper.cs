@@ -12,15 +12,13 @@ internal abstract class RegisterCredentialHelper
     : BaseHelper,
         IHelper<RegisterCredentialDomainRequest, RegisterCredentialDomainResponse>
 {
-    public static RegisterCredentialDomainResponse Execute(
-        RegisterCredentialDomainRequest registerData
-    )
+    public static RegisterCredentialDomainResponse Execute(RegisterCredentialDomainRequest request)
     {
-        var data = GetCredentialStruct(registerData);
-        ValidateStructureFields(data);
+        var @struct = GetCredentialStruct(request);
+        ValidateStructureFields(@struct);
 
         var credential = new CredentialEntity();
-        credential.Register(data.Email, data.Password);
+        credential.Register(@struct.Email, @struct.Password);
 
         return new RegisterCredentialDomainResponse
         {
@@ -31,12 +29,10 @@ internal abstract class RegisterCredentialHelper
         };
     }
 
-    private static CredentialStruct GetCredentialStruct(
-        RegisterCredentialDomainRequest registerData
-    )
+    private static CredentialStruct GetCredentialStruct(RegisterCredentialDomainRequest request)
     {
-        var email = new EmailValueObject(registerData.Email);
-        var password = new PasswordValueObject(registerData.Password);
+        var email = new EmailValueObject(request.Email);
+        var password = new PasswordValueObject(request.Password);
         return new CredentialStruct { Email = email, Password = password };
     }
 }

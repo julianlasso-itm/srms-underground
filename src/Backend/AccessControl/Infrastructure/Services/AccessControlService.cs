@@ -49,7 +49,7 @@ public class AccessControlService : IAccessControlServices
     {
         var app = _applicationService.GetApplication();
 
-        var newRoleCommand = new NewRoleCommand
+        var newRoleCommand = new RegisterRoleCommand
         {
             Name = request.Name,
             Description = request.Description
