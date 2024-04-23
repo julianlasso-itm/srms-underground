@@ -23,23 +23,6 @@ public class AccessControlService : IAccessControlServices
     {
         RegisterUserHelper.SetApplication(_applicationService.GetApplication());
         return await RegisterUserHelper.RegisterUserAsync(request);
-        // var app = _applicationService.GetApplication();
-
-        // var newUserCommand = new NewUserCommand
-        // {
-        //     Email = request.Email,
-        //     Password = request.Password,
-        //     Roles = new List<string>()
-        // };
-
-        // var data = await app.RegisterUser(newUserCommand);
-        // var response = new RegisterUserResponse
-        // {
-        //     UserId = data.UserId,
-        //     Email = data.Email,
-        //     Disabled = data.Disabled,
-        // };
-        // return response;
     }
 
     public async Task<RegisterRoleResponse> RegisterRoleAsync(
