@@ -223,7 +223,7 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
     {
         var entity = await GetByIdAsync(id);
 
-        var updatedAtProperty = entity.GetType().GetProperty("UpdatedAt");
+        var updatedAtProperty = entity.GetType().GetProperty(UpdatedAt);
         if (updatedAtProperty != null && updatedAtProperty.PropertyType == typeof(DateTime?))
         {
             updatedAtProperty.SetValue(entity, DateTime.UtcNow);
