@@ -41,6 +41,11 @@ namespace AccessControl.Infrastructure.Migrations
                         .HasColumnType("character varying(1024)")
                         .HasColumnName("rol_description");
 
+                    b.Property<string>("Description")
+                        .HasMaxLength(1024)
+                        .HasColumnType("character varying(1024)")
+                        .HasColumnName("rol_description");
+
                     b.Property<bool>("Disabled")
                         .HasColumnType("boolean")
                         .HasColumnName("rol_disabled");
