@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Net;
 using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,23 @@ public abstract class BaseController : Controller
         catch (Exception exception)
         {
             return HandleException(exception);
+        }
+    }
+
+    [NonAction]
+    protected void DebugRequest<T>(T request)
+    {
+        if (request != null)
+        {
+            Console.WriteLine("==================================");
+            Console.WriteLine("Request:");
+            foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(request))
+            {
+                var name = descriptor.Name;
+                var value = descriptor.GetValue(request);
+                Console.WriteLine("{0}={1}", name, value);
+            }
+            Console.WriteLine("==================================");
         }
     }
 

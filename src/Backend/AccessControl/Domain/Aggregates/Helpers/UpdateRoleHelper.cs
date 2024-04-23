@@ -1,19 +1,24 @@
-using AccessControl.Domain.Aggregates.Dto;
+using AccessControl.Domain.Aggregates.Dto.Requests;
+using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Entities;
 using AccessControl.Domain.Entities.Structs;
 using AccessControl.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
+using Shared.Domain.Exceptions;
+using Shared.Domain.ValueObjects;
 
 namespace AccessControl.Domain.Aggregates.Helpers;
 
-internal abstract class UpdateRoleHelper : BaseHelper, IHelper<UpdateRole, UpdateRoleResponse>
+internal abstract class UpdateRoleHelper
+    : BaseHelper,
+        IHelper<UpdateRoleDomainRequest, UpdateRoleDomainResponse>
 {
-    public static UpdateRoleResponse Execute(UpdateRole data)
+    public static UpdateRoleDomainResponse Execute(UpdateRoleDomainRequest data)
     {
         var @struct = GetRoleStruct(data);
         var role = new RoleEntity(@struct);
-        var response = new UpdateRoleResponse { RoleId = role.RoleId.Value };
+        var response = new UpdateRoleDomainResponse { RoleId = role.RoleId.Value };
 
         if (data.Name != null)
         {
@@ -26,7 +31,7 @@ internal abstract class UpdateRoleHelper : BaseHelper, IHelper<UpdateRole, Updat
         {
             var description = new DescriptionValueObject(data.Description);
             role.UpdateDescription(description);
-            response.Description = role.Description.Value;
+            response.Description = role.Description?.Value;
         }
 
         if (data.Disable != null)
@@ -39,15 +44,30 @@ internal abstract class UpdateRoleHelper : BaseHelper, IHelper<UpdateRole, Updat
             {
                 role.Enable();
             }
-            response.Disabled = role.IsDisabled.Value;
+            response.Disabled = role.Disabled.Value;
         }
+
+        ValidateStructureFields(role);
+        ValidateAmountDataToBeUpdated(response);
 
         return response;
     }
 
-    private static RoleStruct GetRoleStruct(UpdateRole data)
+    private static RoleStruct GetRoleStruct(UpdateRoleDomainRequest data)
     {
         var id = new RoleIdValueObject(data.RoleId);
         return new RoleStruct { RoleId = id };
+    }
+
+    private static void ValidateAmountDataToBeUpdated(UpdateRoleDomainResponse response)
+    {
+        var count = response.GetType().GetProperties().Count(x => x.GetValue(response) != null);
+        if (count == 1)
+        {
+            throw new DomainException(
+                "No data to update",
+                [new ErrorValueObject("No fields to update", "No fields to update")]
+            );
+        }
     }
 }

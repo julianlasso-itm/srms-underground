@@ -31,4 +31,28 @@ public class AccessControlService : BaseServices<IAccessControlServices>, IAcces
     {
         return Client.RegisterUserAsync(request, context);
     }
+
+    public Task<UpdateRoleResponse> UpdateRoleAsync(
+        UpdateRoleRequest request,
+        CallContext context = default
+    )
+    {
+        return Client.UpdateRoleAsync(request, context);
+    }
+
+    public Task<DeleteRoleResponse> DeleteRoleAsync(
+        DeleteRoleRequest request,
+        CallContext context = default
+    )
+    {
+        return Client.DeleteRoleAsync(request, context);
+    }
+
+    public Task<GetRolesResponse> GetRolesAsync(
+        GetRolesRequest request,
+        CallContext context = default
+    )
+    {
+        return Client.GetRolesAsync(request, context);
+    }
 }

@@ -1,4 +1,5 @@
-using AccessControl.Domain.Aggregates.Dto;
+using AccessControl.Domain.Aggregates.Dto.Requests;
+using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Entities;
 using AccessControl.Domain.Entities.Structs;
 using AccessControl.Domain.ValueObjects;
@@ -7,32 +8,32 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Helpers;
 
-internal abstract class RegisterRoleHelper : BaseHelper, IHelper<RegisterRole, RegisterRoleResponse>
+internal abstract class RegisterRoleHelper
+    : BaseHelper,
+        IHelper<RegisterRoleDomainRequest, RegisterRoleDomainResponse>
 {
-    public static RegisterRoleResponse Execute(RegisterRole registerData)
+    public static RegisterRoleDomainResponse Execute(RegisterRoleDomainRequest request)
     {
-        var data = GetRoleStruct(registerData);
-        ValidateStructureFields(data);
+        var @struct = GetRoleStruct(request);
+        ValidateStructureFields(@struct);
 
         var role = new RoleEntity();
-        role.Register(data.Name, data.Description);
+        role.Register(@struct.Name, @struct.Description);
 
-        return new RegisterRoleResponse
+        return new RegisterRoleDomainResponse
         {
             RoleId = role.RoleId.Value,
             Name = role.Name.Value,
             Description = role.Description?.Value,
-            Disabled = role.IsDisabled.Value,
+            Disabled = role.Disabled.Value,
         };
     }
 
-    private static RoleStruct GetRoleStruct(RegisterRole registerData)
+    private static RoleStruct GetRoleStruct(RegisterRoleDomainRequest request)
     {
-        var name = new NameValueObject(registerData.Name);
+        var name = new NameValueObject(request.Name);
         var description =
-            registerData.Description != null
-                ? new DescriptionValueObject(registerData.Description)
-                : null;
+            request.Description != null ? new DescriptionValueObject(request.Description) : null;
 
         return new RoleStruct { Name = name, Description = description };
     }

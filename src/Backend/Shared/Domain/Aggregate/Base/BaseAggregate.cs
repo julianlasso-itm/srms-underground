@@ -3,11 +3,11 @@ using Shared.Domain.Events.Interfaces;
 
 namespace Shared.Domain.Aggregate.Base;
 
-public abstract class BaseAggregate : IAggregate
+public abstract class BaseAggregateRoot : IAggregateRoot
 {
     protected readonly IEvent EventInterface;
 
-    public BaseAggregate(IEvent eventInterface)
+    public BaseAggregateRoot(IEvent eventInterface)
     {
         EventInterface = eventInterface;
     }

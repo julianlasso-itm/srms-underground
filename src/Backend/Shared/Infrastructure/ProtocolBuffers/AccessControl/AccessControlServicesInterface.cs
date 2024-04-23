@@ -19,4 +19,22 @@ public interface IAccessControlServices
         RegisterRoleRequest request,
         CallContext context = default
     );
+
+    [OperationContract]
+    Task<UpdateRoleResponse> UpdateRoleAsync(
+        UpdateRoleRequest request,
+        CallContext context = default
+    );
+
+    [OperationContract]
+    Task<DeleteRoleResponse> DeleteRoleAsync(
+        DeleteRoleRequest request,
+        CallContext context = default
+    );
+
+    [OperationContract]
+    Task<GetRolesResponse> GetRolesAsync(
+        GetRolesRequest request,
+        CallContext context = default
+    );
 }

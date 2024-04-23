@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="header">
+    <mat-toolbar color="primary">
+      <span>Skills Ranking and Monitoring System - SRMS</span>
+    </mat-toolbar>
+  </div>
+  <div class="sub-container">
+    <div class="menu">
+      <mat-card>
+        <mat-card-content>
+          <mat-list>
+            <a mat-list-item routerLink="./admin/roles" routerLinkActive="is-activated">
+              <mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-user-shield"></mat-icon>
+              Gestión de roles (seguridad)
+            </a>
+            <mat-list-item>
+              <mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-user"></mat-icon>
+              Also the title
+            </mat-list-item>
+            <mat-list-item>
+              <mat-icon matListItemIcon fontSet="fa-regular" fontIcon="fa-thumbs-up"></mat-icon>
+              Also the title
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="main">
+      <mat-card>
+        <mat-card-content>
+          <div class="niam">
+            <router-outlet />
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

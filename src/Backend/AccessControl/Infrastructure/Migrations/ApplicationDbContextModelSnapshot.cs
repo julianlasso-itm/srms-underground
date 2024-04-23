@@ -22,7 +22,7 @@ namespace AccessControl.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("AccessControl.Infrastructure.Persistence.Models.Role", b =>
+            modelBuilder.Entity("AccessControl.Infrastructure.Persistence.Models.RoleModel", b =>
                 {
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uuid")
@@ -30,11 +30,11 @@ namespace AccessControl.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("rol_created_at");
+                        .HasColumnName("created_at");
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("rol_deleted_at");
+                        .HasColumnName("deleted_at");
 
                     b.Property<string>("Description")
                         .HasMaxLength(1024)
@@ -53,20 +53,17 @@ namespace AccessControl.Infrastructure.Migrations
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("rol_updated_at");
+                        .HasColumnName("updated_at");
 
                     b.HasKey("RoleId");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.HasIndex("RoleId", "DeletedAt")
+                    b.HasIndex("Name", "DeletedAt")
                         .IsUnique();
 
                     b.ToTable("tbl_role");
                 });
 
-            modelBuilder.Entity("AccessControl.Infrastructure.Persistence.Models.User", b =>
+            modelBuilder.Entity("AccessControl.Infrastructure.Persistence.Models.UserModel", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid")
@@ -74,11 +71,11 @@ namespace AccessControl.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("usr_created_at");
+                        .HasColumnName("created_at");
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("usr_deleted_at");
+                        .HasColumnName("deleted_at");
 
                     b.Property<bool>("Disabled")
                         .HasColumnType("boolean")
@@ -98,20 +95,19 @@ namespace AccessControl.Infrastructure.Migrations
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("usr_updated_at");
+                        .HasColumnName("updated_at");
 
                     b.HasKey("UserId");
 
-                    b.HasIndex("Email")
+                    b.HasIndex("Email", "DeletedAt")
                         .IsUnique();
 
-                    b.HasIndex("UserId", "DeletedAt")
-                        .IsUnique();
+                    b.HasIndex("Email", "Password");
 
                     b.ToTable("tbl_user");
                 });
 
-            modelBuilder.Entity("AccessControl.Infrastructure.Persistence.Models.UserPerRole", b =>
+            modelBuilder.Entity("AccessControl.Infrastructure.Persistence.Models.UserPerRoleModel", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid")
@@ -121,33 +117,29 @@ namespace AccessControl.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("upr_role_id");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("upr_created_at");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("upr_deleted_at");
+                    b.Property<Guid>("UserPerRoleId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("upr_id");
 
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
 
-                    b.HasIndex("UserId", "RoleId", "DeletedAt")
+                    b.HasIndex("UserId", "RoleId")
                         .IsUnique();
 
                     b.ToTable("tbl_user_per_role");
                 });
 
-            modelBuilder.Entity("AccessControl.Infrastructure.Persistence.Models.UserPerRole", b =>
+            modelBuilder.Entity("AccessControl.Infrastructure.Persistence.Models.UserPerRoleModel", b =>
                 {
-                    b.HasOne("AccessControl.Infrastructure.Persistence.Models.Role", "Role")
+                    b.HasOne("AccessControl.Infrastructure.Persistence.Models.RoleModel", "Role")
                         .WithMany("UserPerRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("AccessControl.Infrastructure.Persistence.Models.User", "User")
+                    b.HasOne("AccessControl.Infrastructure.Persistence.Models.UserModel", "User")
                         .WithMany("UserPerRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -158,12 +150,12 @@ namespace AccessControl.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("AccessControl.Infrastructure.Persistence.Models.Role", b =>
+            modelBuilder.Entity("AccessControl.Infrastructure.Persistence.Models.RoleModel", b =>
                 {
                     b.Navigation("UserPerRoles");
                 });
 
-            modelBuilder.Entity("AccessControl.Infrastructure.Persistence.Models.User", b =>
+            modelBuilder.Entity("AccessControl.Infrastructure.Persistence.Models.UserModel", b =>
                 {
                     b.Navigation("UserPerRoles");
                 });

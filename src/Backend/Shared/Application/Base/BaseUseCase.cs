@@ -2,12 +2,12 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace Shared.Application.Base;
 
-public abstract class BaseUseCase<TCommand, TResponse, TAggregate>
-    where TAggregate : IAggregate
+public abstract class BaseUseCase<TCommand, TResponse, TAggregateRoot>
+    where TAggregateRoot : IAggregateRoot
 {
-    protected readonly TAggregate AggregateRoot;
+    protected readonly TAggregateRoot AggregateRoot;
 
-    protected BaseUseCase(TAggregate aggregateRoot)
+    protected BaseUseCase(TAggregateRoot aggregateRoot)
     {
         AggregateRoot = aggregateRoot;
     }

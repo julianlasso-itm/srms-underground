@@ -24,27 +24,33 @@ public class Application<TUserEntity, TRoleEntity>
         _roleRepository = roleRepository;
     }
 
-    public Task<RegisterUserResponse> RegisterUser(NewUserCommand request)
+    public Task<RegisterUserApplicationResponse> RegisterUser(RegisterUserCommand request)
     {
-        ValidateAggregateRoot();
         var useCase = new RegisterUserUseCase<TUserEntity>(AggregateRoot, _userRepository);
-        var response = useCase.Handle(request);
-        return response;
+        return useCase.Handle(request);
     }
 
-    public Task<RegisterRoleResponse> RegisterRole(NewRoleCommand request)
+    public Task<RegisterRoleApplicationResponse> RegisterRole(RegisterRoleCommand request)
     {
-        ValidateAggregateRoot();
         var useCase = new RegisterRoleUseCase<TRoleEntity>(AggregateRoot, _roleRepository);
-        var response = useCase.Handle(request);
-        return response;
+        return useCase.Handle(request);
     }
 
-    private void ValidateAggregateRoot()
+    public Task<UpdateRoleApplicationResponse> UpdateRole(UpdateRoleCommand request)
     {
-        if (AggregateRoot == null)
-        {
-            throw new InvalidOperationException("AggregateRoot is not set.");
-        }
+        var useCase = new UpdateRoleUseCase<TRoleEntity>(AggregateRoot, _roleRepository);
+        return useCase.Handle(request);
+    }
+
+    public Task<DeleteRoleApplicationResponse> DeleteRole(DeleteRoleCommand request)
+    {
+        var useCase = new DeleteRoleUseCase<TRoleEntity>(AggregateRoot, _roleRepository);
+        return useCase.Handle(request);
+    }
+
+    public Task<GetRolesApplicationResponse<TRoleEntity>> GetRoles(GetRolesCommand request)
+    {
+        var useCase = new GetRolesUseCase<TRoleEntity>(AggregateRoot, _roleRepository);
+        return useCase.Handle(request);
     }
 }

@@ -15,22 +15,10 @@ internal sealed class CredentialEntity
 
     public CredentialEntity(CredentialStruct data)
     {
-        if (data.CredentialId != null)
-        {
-            CredentialId = data.CredentialId;
-        }
-        if (data.Email != null)
-        {
-            Email = data.Email;
-        }
-        if (data.Password != null)
-        {
-            Password = data.Password;
-        }
-        if (data.Disabled != null)
-        {
-            Disabled = data.Disabled;
-        }
+        CredentialId = data.CredentialId;
+        Email = data.Email;
+        Password = data.Password;
+        Disabled = data.Disabled;
         Roles = data.Roles ?? new List<RoleEntity>();
     }
 

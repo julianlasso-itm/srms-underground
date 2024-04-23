@@ -8,7 +8,7 @@ public abstract class BaseBooleanValueObject : BaseValueObject<bool>
     public override void Validate()
     {
         Errors = new List<ErrorValueObject>();
-        if (Value == default)
+        if (!(Value == false || Value == true))
         {
             AddError(new ErrorValueObject(Name, $"{Name} is required"));
         }

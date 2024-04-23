@@ -44,5 +44,9 @@
     "QueryBank": "rules",
     "Analytics": "robot",
     "ProtocolBuffers": "proto",
-  }
+  },
+  "CodeGPT.apiKey": "Ollama",
+  "CodeGPT.Autocomplete.provider": "Ollama - llama3:8b-instruct",
+  "CodeGPT.Autocomplete.maxTokens": 500,
+  "CodeGPT.Autocomplete.enabled": false
 }

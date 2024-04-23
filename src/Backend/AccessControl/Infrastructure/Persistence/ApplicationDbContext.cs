@@ -5,25 +5,25 @@ namespace AccessControl.Infrastructure.Persistence;
 
 public class ApplicationDbContext : DbContext
 {
-    public DbSet<User> User { get; set; }
-    public DbSet<Role> Role { get; set; }
-    public DbSet<UserPerRole> UserPerRoles { get; set; }
+    public DbSet<UserModel> User { get; set; }
+    public DbSet<RoleModel> Role { get; set; }
+    public DbSet<UserPerRoleModel> UserPerRoles { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<UserPerRole>().HasKey(upr => new { upr.UserId, upr.RoleId });
+        modelBuilder.Entity<UserPerRoleModel>().HasKey(upr => new { upr.UserId, upr.RoleId });
 
         modelBuilder
-            .Entity<UserPerRole>()
+            .Entity<UserPerRoleModel>()
             .HasOne(upr => upr.User)
             .WithMany(u => u.UserPerRoles)
             .HasForeignKey(upr => upr.UserId);
 
         modelBuilder
-            .Entity<UserPerRole>()
+            .Entity<UserPerRoleModel>()
             .HasOne(upr => upr.Role)
             .WithMany(r => r.UserPerRoles)
             .HasForeignKey(upr => upr.RoleId);

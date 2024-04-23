@@ -7,30 +7,18 @@ internal sealed class RoleEntity
 {
     public RoleIdValueObject RoleId { get; private set; }
     public NameValueObject Name { get; private set; }
-    public DescriptionValueObject Description { get; private set; }
-    public DisabledValueObject IsDisabled { get; private set; }
+    public DescriptionValueObject? Description { get; private set; }
+    public DisabledValueObject Disabled { get; private set; }
     public List<CredentialEntity> Credentials { get; private set; }
 
     public RoleEntity() { }
 
     public RoleEntity(RoleStruct data)
     {
-        if (data.RoleId != null)
-        {
-            RoleId = data.RoleId;
-        }
-        if (data.Name != null)
-        {
-            Name = data.Name;
-        }
-        if (data.Description != null)
-        {
-            Description = data.Description;
-        }
-        if (data.Disabled != null)
-        {
-            IsDisabled = data.Disabled;
-        }
+        RoleId = data.RoleId;
+        Name = data.Name;
+        Description = data.Description;
+        Disabled = data.Disabled;
         Credentials = data.Credentials ?? new List<CredentialEntity>();
     }
 
@@ -46,18 +34,18 @@ internal sealed class RoleEntity
         {
             Description = description;
         }
-        IsDisabled = new DisabledValueObject(false);
+        Disabled = new DisabledValueObject(false);
         Credentials = credentials ?? new List<CredentialEntity>();
     }
 
     public void Enable()
     {
-        IsDisabled = new DisabledValueObject(false);
+        Disabled = new DisabledValueObject(false);
     }
 
     public void Disable()
     {
-        IsDisabled = new DisabledValueObject(true);
+        Disabled = new DisabledValueObject(true);
     }
 
     public void UpdateName(NameValueObject name)

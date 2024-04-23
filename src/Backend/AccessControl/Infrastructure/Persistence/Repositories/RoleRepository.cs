@@ -6,29 +6,39 @@ using Shared.Infrastructure.Persistence.Repositories;
 
 namespace AccessControl.Infrastructure.Persistence.Repositories;
 
-public class RoleRepository : BaseRepository<Role>, IRoleRepository<Role>
+public class RoleRepository : BaseRepository<RoleModel>, IRoleRepository<RoleModel>
 {
     public RoleRepository(DbContext context)
         : base(context) { }
 
-    public Task<Role> AddAsync(RegisterRoleResponse entity)
+    public Task<RoleModel> AddAsync(RegisterRoleApplicationResponse entity)
     {
-        var role = new Role
+        var role = new RoleModel
         {
             RoleId = Guid.Parse(entity.RoleId),
             Name = entity.Name,
             Description = entity.Description,
             Disabled = entity.Disabled,
+            CreatedAt = DateTime.UtcNow
         };
         return AddAsync(role);
     }
 
-    public Task<Role> UpdateAsync(string id, UpdateRoleResponse entity)
+    public Task<RoleModel> UpdateAsync(Guid id, UpdateRoleApplicationResponse entity)
     {
-        var role = new Role { RoleId = Guid.Parse(entity.RoleId) };
-        if (entity.Name != null) role.Name = entity.Name;
-        if (entity.Description != null) role.Description = entity.Description;
-        if (entity.Disabled != null) role.Disabled = (bool)entity.Disabled;
-        return UpdateAsync(entity.RoleId, role);
+        var role = new RoleModel { RoleId = id };
+        if (entity.Name != null)
+        {
+            role.Name = entity.Name;
+        }
+        if (entity.Description != null)
+        {
+            role.Description = entity.Description;
+        }
+        if (entity.Disabled != null)
+        {
+            role.Disabled = (bool)entity.Disabled;
+        }
+        return UpdateAsync(id, role);
     }
 }

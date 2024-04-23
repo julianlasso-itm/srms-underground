@@ -16,7 +16,12 @@
       "request": "launch",
       "projectPath": "${workspaceFolder}/src/Backend/AccessControl/Infrastructure/AccessControl.Infrastructure.csproj",
     },
-
+    {
+      "name": "C#: Analytics Debug",
+      "type": "dotnet",
+      "request": "launch",
+      "projectPath": "${workspaceFolder}/src/Backend/Analytics/Infrastructure/Analytics.Infrastructure.csproj",
+    },
   ],
   "compounds": [
     {
@@ -24,6 +29,7 @@
       "configurations": [
         "C#: ApiGateway Debug",
         "C#: AccessControl Debug",
+        "C#: Analytics Debug",
       ]
     }
   ]

@@ -6,7 +6,7 @@ using Shared.Domain.Events.Interfaces;
 
 namespace Analytics.Domain.Aggregates;
 
-public class AggregateRoot : BaseAggregate, IAggregateRoot
+public class AggregateRoot : BaseAggregateRoot, IAggregateRoot
 {
     public AggregateRoot(IEvent eventInterface)
         : base(eventInterface) { }
