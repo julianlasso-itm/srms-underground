@@ -11,7 +11,7 @@ namespace AccessControl.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
+                migrationBuilder.CreateTable(
                 name: "tbl_role",
                 columns: table => new
                 {
