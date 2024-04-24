@@ -27,7 +27,7 @@ public class UserModel : AuditableEntity
 
     [Required]
     [Column("usr_disabled")]
-    public bool Disabled { get; set; } = false;
+    public bool Disabled { get; set; }
 
     public ICollection<UserPerRoleModel> UserPerRoles { get; set; } = new List<UserPerRoleModel>();
 }
