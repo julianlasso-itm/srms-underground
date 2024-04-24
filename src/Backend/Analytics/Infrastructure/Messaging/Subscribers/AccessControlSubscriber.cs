@@ -5,20 +5,29 @@ namespace Analytics.Infrastructure.Messaging.Subscribers;
 public class AccessControlSubscriber : BackgroundService
 {
     private readonly IConnectionMultiplexer _connectionMultiplexer;
+    private readonly ISubscriber _subscriber;
 
     public AccessControlSubscriber(IConnectionMultiplexer connectionMultiplexer)
     {
         _connectionMultiplexer = connectionMultiplexer;
+        _subscriber = _connectionMultiplexer.GetSubscriber();
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        var subscriber = _connectionMultiplexer.GetSubscriber();
-        await subscriber.SubscribeAsync(
+        await _subscriber.SubscribeAsync(
             "AccessControl.RoleRegistered",
             (channel, message) =>
             {
-                Console.WriteLine($"Mensaje recibido: {message}");
+                Console.WriteLine($"Mensaje recibido (RoleRegistered): {message}");
+            }
+        );
+
+        await _subscriber.SubscribeAsync(
+            "AccessControl.RoleUpdated",
+            (channel, message) =>
+            {
+                Console.WriteLine($"Mensaje recibido (RoleUpdated): {message}");
             }
         );
 
