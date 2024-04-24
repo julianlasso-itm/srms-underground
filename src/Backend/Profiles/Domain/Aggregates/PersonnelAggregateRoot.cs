@@ -1,3 +1,6 @@
+﻿using Profiles.Domain.Aggregates.Dto.Requests;
+using Profiles.Domain.Aggregates.Dto.Responses;
+using Profiles.Domain.Aggregates.Helpers;
 using Profiles.Domain.Aggregates.Interfaces;
 using Shared.Domain.Aggregate.Base;
 using Shared.Domain.Events.Interfaces;
@@ -10,4 +13,9 @@ public class PersonnelAggregateRoot : BaseAggregateRoot, IPersonnelAggregateRoot
 
     public PersonnelAggregateRoot(IEvent eventInterface)
         : base(eventInterface) { }
+
+    public RegisterSkillDomainResponse RegisterSkill(RegisterSkillDomainRequest skillData)
+    {
+        return RegisterSkillHelper.Execute(skillData);
+    }
 }
