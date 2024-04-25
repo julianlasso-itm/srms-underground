@@ -65,7 +65,7 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
         return entity ?? throw new Exception($"Entity with id {id} not found");
     }
 
-    public Task<int> GetCountAsync(string? filter = null)
+    public Task<int> GetCountAsync(string? filter = null, string? filterBy = null)
     {
         var query = DbSet.AsQueryable();
 
@@ -87,26 +87,52 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
         {
             var param = Expression.Parameter(typeof(TEntity), Entity);
             Expression? filterExpression = null;
-            foreach (
-                var prop in typeof(TEntity)
-                    .GetProperties()
-                    .Where(p => p.PropertyType == typeof(string) && !p.Name.EndsWith(Id))
-            )
-            {
-                var propAccess = Expression.Property(param, prop);
-                var likeExpression = Expression.Call(
-                    typeof(DbFunctionsExtensions),
-                    "Like",
-                    Type.EmptyTypes,
-                    Expression.Constant(EF.Functions),
-                    propAccess,
-                    Expression.Constant($"%{filter}%")
-                );
 
-                filterExpression =
-                    filterExpression == null
-                        ? likeExpression
-                        : Expression.OrElse(filterExpression, likeExpression);
+            if (!string.IsNullOrEmpty(filterBy))
+            {
+                var prop = typeof(TEntity).GetProperty(filterBy);
+                if (
+                    prop != null
+                    && prop.PropertyType == typeof(string)
+                    && !prop.Name.EndsWith(Id)
+                )
+                {
+                    var propAccess = Expression.Property(param, prop);
+                    var likeExpression = Expression.Call(
+                        typeof(DbFunctionsExtensions),
+                        "Like",
+                        Type.EmptyTypes,
+                        Expression.Constant(EF.Functions),
+                        propAccess,
+                        Expression.Constant($"%{filter}%")
+                    );
+                    filterExpression = likeExpression;
+                }
+            }
+            else
+            {
+                // Apply filter to all eligible string fields
+                foreach (
+                    var prop in typeof(TEntity)
+                        .GetProperties()
+                        .Where(p => p.PropertyType == typeof(string) && !p.Name.EndsWith(Id))
+                )
+                {
+                    var propAccess = Expression.Property(param, prop);
+                    var likeExpression = Expression.Call(
+                        typeof(DbFunctionsExtensions),
+                        "Like",
+                        Type.EmptyTypes,
+                        Expression.Constant(EF.Functions),
+                        propAccess,
+                        Expression.Constant($"%{filter}%")
+                    );
+
+                    filterExpression =
+                        filterExpression == null
+                            ? likeExpression
+                            : Expression.OrElse(filterExpression, likeExpression);
+                }
             }
 
             if (filterExpression != null)
@@ -125,7 +151,8 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
         int limit,
         string sort = CreatedAt,
         string order = "asc",
-        string? filter = null
+        string? filter = null,
+        string? filterBy = null
     )
     {
         var query = DbSet.AsQueryable();
@@ -142,32 +169,56 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
             query = query.Where(lambda);
         }
 
-        // General filtering
+        // General or specific filtering
         if (!string.IsNullOrEmpty(filter))
         {
             var param = Expression.Parameter(typeof(TEntity), Entity);
             Expression? filterExpression = null;
-            foreach (
-                var prop in typeof(TEntity)
-                    .GetProperties()
-                    .Where(p => p.PropertyType == typeof(string) && !p.Name.EndsWith(Id))
-            )
-            {
-                var propAccess = Expression.Property(param, prop);
-                var ignoreCase = Expression.Call(
-                    typeof(DbFunctionsExtensions),
-                    "Like",
-                    Type.EmptyTypes,
-                    Expression.Constant(EF.Functions),
-                    propAccess,
-                    Expression.Constant($"%{filter}%")
-                );
 
-                filterExpression =
-                    filterExpression == null
-                        ? ignoreCase
-                        : Expression.OrElse(filterExpression, ignoreCase);
+            if (!string.IsNullOrEmpty(filterBy))
+            {
+                // Apply filter to a specific field if filterBy is defined
+                var prop = typeof(TEntity).GetProperty(filterBy);
+                if (prop != null && prop.PropertyType == typeof(string) && !prop.Name.EndsWith(Id))
+                {
+                    var propAccess = Expression.Property(param, prop);
+                    var likeExpression = Expression.Call(
+                        typeof(DbFunctionsExtensions),
+                        "Like",
+                        Type.EmptyTypes,
+                        Expression.Constant(EF.Functions),
+                        propAccess,
+                        Expression.Constant($"%{filter}%")
+                    );
+                    filterExpression = likeExpression;
+                }
             }
+            else
+            {
+                // Apply filter to all eligible string fields
+                foreach (
+                    var prop in typeof(TEntity)
+                        .GetProperties()
+                        .Where(p => p.PropertyType == typeof(string) && !p.Name.EndsWith(Id))
+                )
+                {
+                    var propAccess = Expression.Property(param, prop);
+                    var likeExpression = Expression.Call(
+                        typeof(DbFunctionsExtensions),
+                        "Like",
+                        Type.EmptyTypes,
+                        Expression.Constant(EF.Functions),
+                        propAccess,
+                        Expression.Constant($"%{filter}%")
+                    );
+
+                    filterExpression =
+                        filterExpression == null
+                            ? likeExpression
+                            : Expression.OrElse(filterExpression, likeExpression);
+                }
+            }
+
             if (filterExpression != null)
             {
                 var lambda = Expression.Lambda<Func<TEntity, bool>>(filterExpression, param);
