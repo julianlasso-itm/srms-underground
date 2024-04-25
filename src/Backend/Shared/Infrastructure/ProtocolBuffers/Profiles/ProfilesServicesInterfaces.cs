@@ -34,7 +34,7 @@ public interface IProfilesServices
 
     [OperationContract]
     Task<GetProvincesResponse> GetProvincesAsync(
-        GetProvincesResponse request,
+        GetProvincesRequest request,
         CallContext context = default
     );
 
