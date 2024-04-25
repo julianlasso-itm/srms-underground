@@ -15,8 +15,11 @@ public class GetCitiesRequest
     public string? Filter { get; set; }
 
     [DataMember(Order = 4, IsRequired = false)]
-    public string? Sort { get; set; }
+    public string? FilterBy { get; set; }
 
     [DataMember(Order = 5, IsRequired = false)]
+    public string? Sort { get; set; }
+
+    [DataMember(Order = 6, IsRequired = false)]
     public string? Order { get; set; } = "asc";
 }
