@@ -16,22 +16,22 @@ public class AccessControlSubscriber : BackgroundService
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         await _subscriber.SubscribeAsync(
-            "AccessControl.RoleRegistered",
+            new RedisChannel("AccessControl.RoleRegistered", RedisChannel.PatternMode.Literal),
             (channel, message) =>
             {
-                Console.WriteLine($"Mensaje recibido (RoleRegistered): {message}");
+                Console.WriteLine($"Message received (RoleRegistered): {message}");
             }
         );
 
         await _subscriber.SubscribeAsync(
-            "AccessControl.RoleUpdated",
+            new RedisChannel("AccessControl.RoleUpdated", RedisChannel.PatternMode.Literal),
             (channel, message) =>
             {
-                Console.WriteLine($"Mensaje recibido (RoleUpdated): {message}");
+                Console.WriteLine($"Message received (RoleUpdated): {message}");
             }
         );
 
-        // Mantener el servicio en ejecución
+        // Keep the service running
         while (!stoppingToken.IsCancellationRequested)
         {
             await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
