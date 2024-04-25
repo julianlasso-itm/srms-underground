@@ -11,7 +11,11 @@ using Shared.Application.Base;
 namespace Profiles.Application.UseCases;
 
 public sealed class RegisterCountryUseCase<TEntity>
-    : BaseUseCase<RegisterCountryCommand, RegisterCountryApplicationResponse, IPersonnelAggregateRoot>
+    : BaseUseCase<
+        RegisterCountryCommand,
+        RegisterCountryApplicationResponse,
+        IPersonnelAggregateRoot
+    >
     where TEntity : class
 {
     private readonly ICountryRepository<TEntity> _countryRepository;
@@ -26,23 +30,21 @@ public sealed class RegisterCountryUseCase<TEntity>
         _countryRepository = countryRepository;
     }
 
-    public override async Task<RegisterCountryApplicationResponse> Handle(RegisterCountryCommand request)
+    public override async Task<RegisterCountryApplicationResponse> Handle(
+        RegisterCountryCommand request
+    )
     {
-        throw new NotImplementedException();
-        // var newCountry = MapToRequestForDomain(request);
-        // var country = AggregateRoot.RegisterCountry(newCountry);
-        // var response = MapToResponse(country);
-        // _ = await Persistence(response);
-        // EmitEvent(Channel, JsonSerializer.Serialize(response));
-        // return response;
+        var newCountry = MapToRequestForDomain(request);
+        var country = AggregateRoot.RegisterCountry(newCountry);
+        var response = MapToResponse(country);
+        _ = await Persistence(response);
+        EmitEvent(Channel, JsonSerializer.Serialize(response));
+        return response;
     }
 
     private RegisterCountryDomainRequest MapToRequestForDomain(RegisterCountryCommand request)
     {
-        return new RegisterCountryDomainRequest
-        {
-            Name = request.Name,
-        };
+        return new RegisterCountryDomainRequest { Name = request.Name };
     }
 
     private RegisterCountryApplicationResponse MapToResponse(RegisterCountryDomainResponse country)
