@@ -82,7 +82,7 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
             query = query.Where(lambda);
         }
 
-        // Apply text filter if provided
+        // Apply text or UUID filter if provided
         if (!string.IsNullOrEmpty(filter))
         {
             var param = Expression.Parameter(typeof(TEntity), Entity);
@@ -91,7 +91,19 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
             if (!string.IsNullOrEmpty(filterBy))
             {
                 var prop = typeof(TEntity).GetProperty(filterBy);
-                if (
+                if (prop != null && prop.PropertyType == typeof(Guid)) // Specific handling for UUID fields
+                {
+                    if (Guid.TryParse(filter, out Guid filterGuid))
+                    {
+                        var propAccess = Expression.Property(param, prop);
+                        var exactExpression = Expression.Equal(
+                            propAccess,
+                            Expression.Constant(filterGuid)
+                        );
+                        filterExpression = exactExpression;
+                    }
+                }
+                else if (
                     prop != null
                     && prop.PropertyType == typeof(string)
                     && !prop.Name.EndsWith(Id)
@@ -177,9 +189,24 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
 
             if (!string.IsNullOrEmpty(filterBy))
             {
-                // Apply filter to a specific field if filterBy is defined
                 var prop = typeof(TEntity).GetProperty(filterBy);
-                if (prop != null && prop.PropertyType == typeof(string) && !prop.Name.EndsWith(Id))
+                if (prop != null && prop.PropertyType == typeof(Guid)) // Specific handling for UUID fields
+                {
+                    if (Guid.TryParse(filter, out Guid filterGuid))
+                    {
+                        var propAccess = Expression.Property(param, prop);
+                        var exactExpression = Expression.Equal(
+                            propAccess,
+                            Expression.Constant(filterGuid)
+                        );
+                        filterExpression = exactExpression;
+                    }
+                }
+                else if (
+                    prop != null
+                    && prop.PropertyType == typeof(string)
+                    && !prop.Name.EndsWith(Id)
+                )
                 {
                     var propAccess = Expression.Property(param, prop);
                     var likeExpression = Expression.Call(
