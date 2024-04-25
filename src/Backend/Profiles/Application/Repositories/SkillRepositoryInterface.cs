@@ -14,7 +14,8 @@ namespace Profiles.Application.Repositories
     {
 
         public Task<TEntity> AddAsync(RegisterSkillApplicationResponse entity);
-        //public Task<TEntity> UpdateAsync(Guid id, UpdateCountryApplicationResponse entity);
+
+        public Task<TEntity> UpdateAsync(Guid id, UpdateSkillApplicationResponse entity);
 
     }
 }

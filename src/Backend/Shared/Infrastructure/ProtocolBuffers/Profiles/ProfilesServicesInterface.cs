@@ -7,8 +7,6 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using ProtoBuf.Grpc;
-using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
-using Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
 
@@ -18,6 +16,15 @@ namespace Shared.Infrastructure.ProtocolBuffers.Profiles
     public interface IProfilesServices
     {
         [OperationContract]
+        Task<DeleteSkillResponse> DeleteSkillAsync(DeleteSkillRequest request);
+
+        [OperationContract]
+        Task<GetSkillsResponse> GetSkillAsync(GetSkillsRequest request);
+
+        [OperationContract]
         Task<RegisterSkillResponse> RegisterSkillAsync(RegisterSkillRequest request, CallContext context = default);
+
+        [OperationContract]
+        Task<UpdateSkillResponse> UpdateSkillRoleAsync(UpdateSkillRequest request);
     }
 }

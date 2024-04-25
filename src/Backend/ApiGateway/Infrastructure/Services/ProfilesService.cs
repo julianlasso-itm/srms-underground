@@ -20,5 +20,20 @@ namespace ApiGateway.Infrastructure.Services
         {
            return Client.RegisterSkillAsync(request);
         }
+
+        public Task<DeleteSkillResponse> DeleteSkillAsync(DeleteSkillRequest request)
+        {
+            return Client.DeleteSkillAsync(request);
+        }
+
+        public Task<GetSkillsResponse> GetSkillAsync(GetSkillsRequest request)
+        {
+            return Client.GetSkillAsync(request);
+        }
+
+        public Task<UpdateSkillResponse> UpdateSkillRoleAsync(UpdateSkillRequest request)
+        {
+            return Client.UpdateSkillRoleAsync(request);
+        }
     }
 }

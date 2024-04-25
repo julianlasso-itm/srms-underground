@@ -11,11 +11,12 @@ namespace Profiles.Domain.ValueObjects
 {
     public class SkillIdValueObject : BaseIdValueObject
     {
+        private object _skillId;
 
         public SkillIdValueObject(string value): base(value)
         {
             Name = "SkillId";
             Validate();
-        }
+        }        
     }
 }
