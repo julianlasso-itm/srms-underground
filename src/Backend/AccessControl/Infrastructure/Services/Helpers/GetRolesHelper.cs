@@ -23,6 +23,7 @@ internal class GetRolesHelper : BaseHelperServiceInfrastructure
             Page = request.Page,
             Limit = request.Limit,
             Filter = request.Filter,
+            FilterBy = request.FilterBy,
             Sort = request.Sort,
             Order = request.Order
         };
