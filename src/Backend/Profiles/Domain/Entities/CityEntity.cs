@@ -43,7 +43,7 @@ internal sealed class CityEntity
         Name = name;
     }
 
-    public void ChangeProvince(ProvinceIdValueObject provinceId)
+    public void UpdateProvince(ProvinceIdValueObject provinceId)
     {
         ProvinceId = provinceId;
     }

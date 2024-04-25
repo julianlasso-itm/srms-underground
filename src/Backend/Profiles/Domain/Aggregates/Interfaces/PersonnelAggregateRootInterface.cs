@@ -2,4 +2,4 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace Profiles.Domain.Aggregates.Interfaces;
 
-public interface IPersonnelAggregateRoot : IAggregateRoot { }
+public interface IPersonnelAggregateRoot : IAggregateRoot, IAccountAggregate { }

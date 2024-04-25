@@ -1,8 +1,9 @@
 namespace Profiles.Domain.Aggregates.Dto.Requests;
 
-public class UpdateCountryDomainRequest
+public class UpdateCityDomainRequest
 {
-    public required string CountryId { get; init; }
+    public required string CityId { get; init; }
+    public string? ProvinceId { get; init; }
     public string? Name { get; init; }
     public bool? Disable { get; init; }
 }

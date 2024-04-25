@@ -10,49 +10,56 @@ using Shared.Domain.ValueObjects;
 
 namespace Profiles.Domain.Aggregates.Helpers;
 
-internal abstract class UpdateCountryHelper
+internal abstract class UpdateCityHelper
     : BaseHelper,
-        IHelper<UpdateCountryDomainRequest, UpdateCountryDomainResponse>
+        IHelper<UpdateCityDomainRequest, UpdateCityDomainResponse>
 {
-    public static UpdateCountryDomainResponse Execute(UpdateCountryDomainRequest data)
+    public static UpdateCityDomainResponse Execute(UpdateCityDomainRequest data)
     {
-        var @struct = GetCountryStruct(data);
-        var country = new CountryEntity(@struct);
-        var response = new UpdateCountryDomainResponse { CountryId = country.CountryId.Value };
+        var @struct = GetCityStruct(data);
+        var city = new CityEntity(@struct);
+        var response = new UpdateCityDomainResponse { CityId = city.CityId.Value };
+
+        if (data.ProvinceId != null)
+        {
+            var provinceId = new ProvinceIdValueObject(data.ProvinceId);
+            city.UpdateProvince(provinceId);
+            response.ProvinceId = city.ProvinceId.Value;
+        }
 
         if (data.Name != null)
         {
             var name = new NameValueObject(data.Name);
-            country.UpdateName(name);
-            response.Name = country.Name.Value;
+            city.UpdateName(name);
+            response.Name = city.Name.Value;
         }
 
         if (data.Disable != null)
         {
             if (data.Disable == true)
             {
-                country.Disable();
+                city.Disable();
             }
             else
             {
-                country.Enable();
+                city.Enable();
             }
-            response.Disabled = country.Disabled.Value;
+            response.Disabled = city.Disabled.Value;
         }
 
-        ValidateStructureFields(country);
+        ValidateStructureFields(city);
         ValidateAmountDataToBeUpdated(response);
 
         return response;
     }
 
-    private static CountryStruct GetCountryStruct(UpdateCountryDomainRequest data)
+    private static CityStruct GetCityStruct(UpdateCityDomainRequest data)
     {
-        var id = new CountryIdValueObject(data.CountryId);
-        return new CountryStruct { CountryId = id };
+        var id = new CityIdValueObject(data.CityId);
+        return new CityStruct { CityId = id };
     }
 
-    private static void ValidateAmountDataToBeUpdated(UpdateCountryDomainResponse response)
+    private static void ValidateAmountDataToBeUpdated(UpdateCityDomainResponse response)
     {
         var count = response.GetType().GetProperties().Count(x => x.GetValue(response) != null);
         if (count == 1)
