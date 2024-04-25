@@ -9,7 +9,6 @@ internal sealed class RoleEntity
     public NameValueObject Name { get; private set; }
     public DescriptionValueObject? Description { get; private set; }
     public DisabledValueObject Disabled { get; private set; }
-    public List<CredentialEntity> Credentials { get; private set; }
 
     public RoleEntity() { }
 
@@ -19,13 +18,11 @@ internal sealed class RoleEntity
         Name = data.Name;
         Description = data.Description;
         Disabled = data.Disabled;
-        Credentials = data.Credentials ?? new List<CredentialEntity>();
     }
 
     public void Register(
         NameValueObject name,
-        DescriptionValueObject? description,
-        List<CredentialEntity>? credentials = null
+        DescriptionValueObject? description
     )
     {
         RoleId = new RoleIdValueObject(Guid.NewGuid().ToString());
@@ -35,7 +32,6 @@ internal sealed class RoleEntity
             Description = description;
         }
         Disabled = new DisabledValueObject(false);
-        Credentials = credentials ?? new List<CredentialEntity>();
     }
 
     public void Enable()
@@ -56,30 +52,5 @@ internal sealed class RoleEntity
     public void UpdateDescription(DescriptionValueObject description)
     {
         Description = description;
-    }
-
-    public void AddCredentials(IEnumerable<CredentialEntity> credentials)
-    {
-        Credentials ??= new List<CredentialEntity>();
-        Credentials.AddRange(credentials);
-    }
-
-    public void RemoveCredentials(IEnumerable<CredentialEntity> credentials)
-    {
-        if (Credentials != null)
-        {
-            foreach (var credential in credentials)
-            {
-                Credentials.Remove(credential);
-            }
-        }
-    }
-
-    public void RemoveAllCredentials()
-    {
-        if (Credentials != null)
-        {
-            Credentials.Clear();
-        }
     }
 }

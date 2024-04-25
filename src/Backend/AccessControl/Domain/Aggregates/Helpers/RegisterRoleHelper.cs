@@ -20,13 +20,7 @@ internal abstract class RegisterRoleHelper
         var role = new RoleEntity();
         role.Register(@struct.Name, @struct.Description);
 
-        return new RegisterRoleDomainResponse
-        {
-            RoleId = role.RoleId.Value,
-            Name = role.Name.Value,
-            Description = role.Description?.Value,
-            Disabled = role.Disabled.Value,
-        };
+        return MapToResponse(role);
     }
 
     private static RoleStruct GetRoleStruct(RegisterRoleDomainRequest request)
@@ -36,5 +30,16 @@ internal abstract class RegisterRoleHelper
             request.Description != null ? new DescriptionValueObject(request.Description) : null;
 
         return new RoleStruct { Name = name, Description = description };
+    }
+
+    private static RegisterRoleDomainResponse MapToResponse(RoleEntity role)
+    {
+        return new RegisterRoleDomainResponse
+        {
+            RoleId = role.RoleId.Value,
+            Name = role.Name.Value,
+            Description = role.Description?.Value,
+            Disabled = role.Disabled.Value,
+        };
     }
 }

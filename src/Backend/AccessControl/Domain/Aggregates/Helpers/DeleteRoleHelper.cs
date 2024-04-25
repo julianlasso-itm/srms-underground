@@ -15,12 +15,17 @@ internal abstract class DeleteRoleHelper
     {
         var @struct = GetRoleStruct(request);
         ValidateStructureFields(@struct);
-        return new DeleteRoleDomainResponse { RoleId = @struct.RoleId.Value };
+        return MapToResponse(@struct);
     }
 
     private static RoleStruct GetRoleStruct(DeleteRoleDomainRequest request)
     {
         var id = new RoleIdValueObject(request.RoleId);
         return new RoleStruct { RoleId = id };
+    }
+
+    private static DeleteRoleDomainResponse MapToResponse(RoleStruct role)
+    {
+        return new DeleteRoleDomainResponse { RoleId = role.RoleId.Value };
     }
 }
