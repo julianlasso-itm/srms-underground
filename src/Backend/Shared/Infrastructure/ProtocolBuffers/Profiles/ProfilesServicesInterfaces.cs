@@ -31,4 +31,52 @@ public interface IProfilesServices
         DeleteCountryRequest request,
         CallContext context = default
     );
+
+    [OperationContract]
+    Task<GetProvincesResponse> GetProvincesAsync(
+        GetProvincesResponse request,
+        CallContext context = default
+    );
+
+    [OperationContract]
+    Task<RegisterProvinceResponse> RegisterProvinceAsync(
+        RegisterProvinceRequest request,
+        CallContext context = default
+    );
+
+    [OperationContract]
+    Task<UpdateProvinceResponse> UpdateProvinceAsync(
+        UpdateProvinceRequest request,
+        CallContext context = default
+    );
+
+    [OperationContract]
+    Task<DeleteProvinceResponse> DeleteProvinceAsync(
+        DeleteProvinceRequest request,
+        CallContext context = default
+    );
+
+    [OperationContract]
+    Task<GetCitiesResponse> GetCitiesAsync(
+        GetCitiesRequest request,
+        CallContext context = default
+    );
+
+    [OperationContract]
+    Task<RegisterCityResponse> RegisterCityAsync(
+        RegisterCityRequest request,
+        CallContext context = default
+    );
+
+    [OperationContract]
+    Task<UpdateCityResponse> UpdateCityAsync(
+        UpdateCityRequest request,
+        CallContext context = default
+    );
+
+    [OperationContract]
+    Task<DeleteCityResponse> DeleteCityAsync(
+        DeleteCityRequest request,
+        CallContext context = default
+    );
 }
