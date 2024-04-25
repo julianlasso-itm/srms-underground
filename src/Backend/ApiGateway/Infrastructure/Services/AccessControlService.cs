@@ -24,14 +24,6 @@ public class AccessControlService : BaseServices<IAccessControlServices>, IAcces
         return Client.RegisterRoleAsync(request, context);
     }
 
-    public Task<RegisterUserResponse> RegisterUserAsync(
-        RegisterUserRequest request,
-        CallContext context = default
-    )
-    {
-        return Client.RegisterUserAsync(request, context);
-    }
-
     public Task<UpdateRoleResponse> UpdateRoleAsync(
         UpdateRoleRequest request,
         CallContext context = default
