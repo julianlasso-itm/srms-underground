@@ -15,10 +15,12 @@ if (builder.Environment.IsDevelopment())
     };
 
     builder.Services.AddSingleton(provider => new AccessControlService(httpClientHandler));
+    builder.Services.AddSingleton(provider => new ProfilesService(httpClientHandler));
 }
 else
 {
     builder.Services.AddSingleton<AccessControlService>();
+    builder.Services.AddSingleton<ProfilesService>();
 }
 
 // Define CORS policy
