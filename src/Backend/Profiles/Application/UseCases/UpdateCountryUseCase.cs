@@ -10,18 +10,14 @@ using Shared.Application.Base;
 
 namespace Profiles.Application.UseCases;
 
-public sealed class RegisterCountryUseCase<TEntity>
-    : BaseUseCase<
-        RegisterCountryCommand,
-        RegisterCountryApplicationResponse,
-        IPersonnelAggregateRoot
-    >
+public sealed class UpdateCountryUseCase<TEntity>
+    : BaseUseCase<UpdateCountryCommand, UpdateCountryApplicationResponse, IPersonnelAggregateRoot>
     where TEntity : class
 {
     private readonly ICountryRepository<TEntity> _countryRepository;
-    private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventCountryRegistered}";
+    private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventCountryUpdated}";
 
-    public RegisterCountryUseCase(
+    public UpdateCountryUseCase(
         IPersonnelAggregateRoot aggregateRoot,
         ICountryRepository<TEntity> countryRepository
     )
@@ -30,30 +26,33 @@ public sealed class RegisterCountryUseCase<TEntity>
         _countryRepository = countryRepository;
     }
 
-    public override async Task<RegisterCountryApplicationResponse> Handle(
-        RegisterCountryCommand request
+    public override async Task<UpdateCountryApplicationResponse> Handle(
+        UpdateCountryCommand request
     )
     {
         var newCountry = MapToRequestForDomain(request);
-        var country = AggregateRoot.RegisterCountry(newCountry);
+        var country = AggregateRoot.UpdateCountry(newCountry);
         var response = MapToResponse(country);
         _ = await Persistence(response);
         EmitEvent(Channel, JsonSerializer.Serialize(response));
         return response;
     }
 
-    private static RegisterCountryDomainRequest MapToRequestForDomain(
-        RegisterCountryCommand request
-    )
+    private static UpdateCountryDomainRequest MapToRequestForDomain(UpdateCountryCommand request)
     {
-        return new RegisterCountryDomainRequest { Name = request.Name };
+        return new UpdateCountryDomainRequest
+        {
+            CountryId = request.CountryId,
+            Name = request.Name,
+            Disable = request.Disable,
+        };
     }
 
-    private static RegisterCountryApplicationResponse MapToResponse(
-        RegisterCountryDomainResponse country
+    private static UpdateCountryApplicationResponse MapToResponse(
+        UpdateCountryDomainResponse country
     )
     {
-        return new RegisterCountryApplicationResponse
+        return new UpdateCountryApplicationResponse
         {
             CountryId = country.CountryId,
             Name = country.Name,
@@ -61,8 +60,8 @@ public sealed class RegisterCountryUseCase<TEntity>
         };
     }
 
-    private async Task<TEntity> Persistence(RegisterCountryApplicationResponse response)
+    private async Task<TEntity> Persistence(UpdateCountryApplicationResponse response)
     {
-        return await _countryRepository.AddAsync(response);
+        return await _countryRepository.UpdateAsync(Guid.Parse(response.CountryId), response);
     }
 }
