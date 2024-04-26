@@ -8,21 +8,23 @@ namespace Profiles.Infrastructure.Services.Helpers;
 
 internal class RegisterProvinceHelper : BaseHelperServiceInfrastructure
 {
-    public static async Task<RegisterProvinceResponse> RegisterRoleAsync(
+    public static async Task<RegisterProvinceResponse> RegisterProvinceAsync(
         RegisterProvinceRequest request
     )
     {
-        var provinceCommand = MapToRegisterRoleCommand(request);
+        var provinceCommand = MapToRegisterProvinceCommand(request);
         var data = await Application.RegisterProvince(provinceCommand);
-        return MapToRegisterRoleResponse(data);
+        return MapToRegisterProvinceResponse(data);
     }
 
-    private static RegisterProvinceCommand MapToRegisterRoleCommand(RegisterProvinceRequest request)
+    private static RegisterProvinceCommand MapToRegisterProvinceCommand(
+        RegisterProvinceRequest request
+    )
     {
         return new RegisterProvinceCommand { Name = request.Name };
     }
 
-    private static RegisterProvinceResponse MapToRegisterRoleResponse(
+    private static RegisterProvinceResponse MapToRegisterProvinceResponse(
         RegisterProvinceApplicationResponse data
     )
     {

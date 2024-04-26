@@ -4,7 +4,7 @@ using Profiles.Infrastructure.Services.Helpers.Base;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
 
-namespace AccessControl.Infrastructure.Services.Helpers;
+namespace Profiles.Infrastructure.Services.Helpers;
 
 internal class DeleteProvinceHelper : BaseHelperServiceInfrastructure
 {
