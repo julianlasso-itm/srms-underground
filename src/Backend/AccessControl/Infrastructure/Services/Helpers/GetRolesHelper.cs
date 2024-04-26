@@ -9,7 +9,7 @@ namespace AccessControl.Infrastructure.Services.Helpers;
 
 internal class GetRolesHelper : BaseHelperServiceInfrastructure
 {
-    public static async Task<GetRolesResponse> UpdateRoleAsync(GetRolesRequest request)
+    public static async Task<GetRolesResponse> GetRolesAsync(GetRolesRequest request)
     {
         var getRolesCommand = MapToGetRolesCommand(request);
         var data = await Application.GetRoles(getRolesCommand);

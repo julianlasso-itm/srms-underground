@@ -48,6 +48,6 @@ public class AccessControlService : IAccessControlServices
     )
     {
         GetRolesHelper.SetApplication(_applicationService.GetApplication());
-        return await GetRolesHelper.UpdateRoleAsync(request);
+        return await GetRolesHelper.GetRolesAsync(request);
     }
 }
