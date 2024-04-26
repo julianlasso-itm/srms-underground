@@ -161,7 +161,7 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
     public async Task<IEnumerable<TEntity>> GetWithPaginationAsync(
         int page,
         int limit,
-        string sort = CreatedAt,
+        string? sort = null,
         string order = "asc",
         string? filter = null,
         string? filterBy = null
@@ -190,9 +190,12 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
             if (!string.IsNullOrEmpty(filterBy))
             {
                 var prop = typeof(TEntity).GetProperty(filterBy);
-                if (prop != null && prop.PropertyType == typeof(Guid)) // Specific handling for UUID fields
+                if (prop != null)
                 {
-                    if (Guid.TryParse(filter, out Guid filterGuid))
+                    if (
+                        prop.PropertyType == typeof(Guid)
+                        && Guid.TryParse(filter, out var filterGuid)
+                    )
                     {
                         var propAccess = Expression.Property(param, prop);
                         var exactExpression = Expression.Equal(
@@ -201,28 +204,23 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
                         );
                         filterExpression = exactExpression;
                     }
-                }
-                else if (
-                    prop != null
-                    && prop.PropertyType == typeof(string)
-                    && !prop.Name.EndsWith(Id)
-                )
-                {
-                    var propAccess = Expression.Property(param, prop);
-                    var likeExpression = Expression.Call(
-                        typeof(DbFunctionsExtensions),
-                        "Like",
-                        Type.EmptyTypes,
-                        Expression.Constant(EF.Functions),
-                        propAccess,
-                        Expression.Constant($"%{filter}%")
-                    );
-                    filterExpression = likeExpression;
+                    else if (prop.PropertyType == typeof(string))
+                    {
+                        var propAccess = Expression.Property(param, prop);
+                        var likeExpression = Expression.Call(
+                            typeof(DbFunctionsExtensions),
+                            "Like",
+                            Type.EmptyTypes,
+                            Expression.Constant(EF.Functions),
+                            propAccess,
+                            Expression.Constant($"%{filter}%")
+                        );
+                        filterExpression = likeExpression;
+                    }
                 }
             }
             else
             {
-                // Apply filter to all eligible string fields
                 foreach (
                     var prop in typeof(TEntity)
                         .GetProperties()
@@ -253,19 +251,25 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
             }
         }
 
-        // Preparing for the ordinance
-        sort ??= CreatedAt;
-        var sortParam = Expression.Parameter(typeof(TEntity), Entity);
-        var sortExpression = Expression.Property(sortParam, sort);
-        var lambdaSort = Expression.Lambda<Func<TEntity, object>>(
-            Expression.Convert(sortExpression, typeof(object)),
-            sortParam
-        );
+        // Handling sorting
+        if (string.IsNullOrEmpty(sort) && typeof(TEntity).GetProperty(CreatedAt) != null)
+        {
+            sort = CreatedAt; // Default to CreatedAt if no sort specified and the property exists
+        }
 
-        // Apply sorting before pagination
-        query = order.Equals("desc", StringComparison.CurrentCultureIgnoreCase)
-            ? query.OrderByDescending(lambdaSort)
-            : query.OrderBy(lambdaSort);
+        if (!string.IsNullOrEmpty(sort) && typeof(TEntity).GetProperty(sort) != null)
+        {
+            var sortParam = Expression.Parameter(typeof(TEntity), Entity);
+            var sortExpression = Expression.Property(sortParam, sort);
+            var lambdaSort = Expression.Lambda<Func<TEntity, object>>(
+                Expression.Convert(sortExpression, typeof(object)),
+                sortParam
+            );
+
+            query = order.Equals("desc", StringComparison.OrdinalIgnoreCase)
+                ? query.OrderByDescending(lambdaSort)
+                : query.OrderBy(lambdaSort);
+        }
 
         // Apply pagination after sorting
         query = query.Skip((page - 1) * limit).Take(limit);

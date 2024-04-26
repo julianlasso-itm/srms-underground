@@ -8,7 +8,7 @@ public interface IRepository<TEntity>
     public Task<IEnumerable<TEntity>> GetWithPaginationAsync(
         int page,
         int limit,
-        string sort = "CreatedAt",
+        string? sort = null,
         string order = "asc",
         string? filter = null,
         string? filterBy = null
