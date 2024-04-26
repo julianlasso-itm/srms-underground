@@ -15,49 +15,52 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{5AD09F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Domain", "src\Backend\Shared\Domain\Shared.Domain.csproj", "{95F20A2F-F23D-4B00-8947-26A72AC9FC82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Application", "src\Backend\Shared\Application\Shared.Application.csproj", "{860152AE-A145-4896-A44F-E1E483FB7E06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Application", "src\Backend\Shared\Application\Shared.Application.csproj", "{860152AE-A145-4896-A44F-E1E483FB7E06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Infrastructure", "src\Backend\Shared\Infrastructure\Shared.Infrastructure.csproj", "{95F2C4F7-D786-40B3-8724-67E59E11F4B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Infrastructure", "src\Backend\Shared\Infrastructure\Shared.Infrastructure.csproj", "{95F2C4F7-D786-40B3-8724-67E59E11F4B1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AccessControl", "AccessControl", "{F06FF958-B52F-4BED-BC7E-AD2A4E576309}"
+	ProjectSection(SolutionItems) = preProject
+		src\Backend\Profiles\Application\UseCases\DeleteRoleDomainRequest.cs = src\Backend\Profiles\Application\UseCases\DeleteRoleDomainRequest.cs
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl.Domain", "src\Backend\AccessControl\Domain\AccessControl.Domain.csproj", "{9D1780B0-1ED6-4BAE-B6D0-2042097FCC19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessControl.Application", "src\Backend\AccessControl\Application\AccessControl.Application.csproj", "{45C9479E-2D1F-483E-9A71-F3B29EFC951E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl.Application", "src\Backend\AccessControl\Application\AccessControl.Application.csproj", "{45C9479E-2D1F-483E-9A71-F3B29EFC951E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessControl.Infrastructure", "src\Backend\AccessControl\Infrastructure\AccessControl.Infrastructure.csproj", "{1B83E3D1-E7CB-4999-83A9-D8FC80A84B96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl.Infrastructure", "src\Backend\AccessControl\Infrastructure\AccessControl.Infrastructure.csproj", "{1B83E3D1-E7CB-4999-83A9-D8FC80A84B96}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assessments", "Assessments", "{EB714F04-043F-48EB-9238-0BE61E20C4D6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assessments.Domain", "src\Backend\Assessments\Domain\Assessments.Domain.csproj", "{E3E9590A-A66A-44A5-9DF3-1AAD198EFC33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assessments.Application", "src\Backend\Assessments\Application\Assessments.Application.csproj", "{BA40F9E2-7756-4C05-99D3-21EE51582E32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assessments.Application", "src\Backend\Assessments\Application\Assessments.Application.csproj", "{BA40F9E2-7756-4C05-99D3-21EE51582E32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assessments.Infrastructure", "src\Backend\Assessments\Infrastructure\Assessments.Infrastructure.csproj", "{369457E3-FD0B-47DE-AF6A-32AC0046621F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assessments.Infrastructure", "src\Backend\Assessments\Infrastructure\Assessments.Infrastructure.csproj", "{369457E3-FD0B-47DE-AF6A-32AC0046621F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Profiles", "Profiles", "{E6B07F08-6630-4083-AAB1-1FA3F4862322}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Profiles.Domain", "src\Backend\Profiles\Domain\Profiles.Domain.csproj", "{14CC66E9-0F28-46D6-9EB3-D81F970DF550}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Profiles.Domain", "src\Backend\Profiles\Domain\Profiles.Domain.csproj", "{14CC66E9-0F28-46D6-9EB3-D81F970DF550}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Profiles.Application", "src\Backend\Profiles\Application\Profiles.Application.csproj", "{3121EA87-688D-409F-9A9E-F29B82F510FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Profiles.Application", "src\Backend\Profiles\Application\Profiles.Application.csproj", "{3121EA87-688D-409F-9A9E-F29B82F510FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Profiles.Infrastructure", "src\Backend\Profiles\Infrastructure\Profiles.Infrastructure.csproj", "{09528462-4C77-4211-9A55-8C7BD1510B9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Profiles.Infrastructure", "src\Backend\Profiles\Infrastructure\Profiles.Infrastructure.csproj", "{09528462-4C77-4211-9A55-8C7BD1510B9C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Analytics", "Analytics", "{4FD30D97-98D4-4B95-83B3-1F99A1C58392}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Analytics.Domain", "src\Backend\Analytics\Domain\Analytics.Domain.csproj", "{E445E400-067A-491E-9349-389D69D74042}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Analytics.Domain", "src\Backend\Analytics\Domain\Analytics.Domain.csproj", "{E445E400-067A-491E-9349-389D69D74042}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Analytics.Application", "src\Backend\Analytics\Application\Analytics.Application.csproj", "{1BA898B0-487F-481A-A72C-17DD8C0A6D21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Analytics.Application", "src\Backend\Analytics\Application\Analytics.Application.csproj", "{1BA898B0-487F-481A-A72C-17DD8C0A6D21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Analytics.Infrastructure", "src\Backend\Analytics\Infrastructure\Analytics.Infrastructure.csproj", "{F6C1F7E3-992A-4EBE-8320-D61FF930E36F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Analytics.Infrastructure", "src\Backend\Analytics\Infrastructure\Analytics.Infrastructure.csproj", "{F6C1F7E3-992A-4EBE-8320-D61FF930E36F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "QueryBank", "QueryBank", "{BA2DA6A7-0BB0-430D-AC6B-BA544390AF5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryBank.Domain", "src\Backend\QueryBank\Domain\QueryBank.Domain.csproj", "{979BB615-3109-4DB8-B54E-581C1EC40634}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueryBank.Domain", "src\Backend\QueryBank\Domain\QueryBank.Domain.csproj", "{979BB615-3109-4DB8-B54E-581C1EC40634}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryBank.Application", "src\Backend\QueryBank\Application\QueryBank.Application.csproj", "{30F231D3-7687-4D18-9C09-8E96BB62A2BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueryBank.Application", "src\Backend\QueryBank\Application\QueryBank.Application.csproj", "{30F231D3-7687-4D18-9C09-8E96BB62A2BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryBank.Infrastructure", "src\Backend\QueryBank\Infrastructure\QueryBank.Infrastructure.csproj", "{AE92D762-690D-4966-822F-5B4C4DA184E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueryBank.Infrastructure", "src\Backend\QueryBank\Infrastructure\QueryBank.Infrastructure.csproj", "{AE92D762-690D-4966-822F-5B4C4DA184E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -173,5 +176,8 @@ Global
 		{979BB615-3109-4DB8-B54E-581C1EC40634} = {BA2DA6A7-0BB0-430D-AC6B-BA544390AF5B}
 		{30F231D3-7687-4D18-9C09-8E96BB62A2BB} = {BA2DA6A7-0BB0-430D-AC6B-BA544390AF5B}
 		{AE92D762-690D-4966-822F-5B4C4DA184E4} = {BA2DA6A7-0BB0-430D-AC6B-BA544390AF5B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {24E6F688-029A-4CD7-9424-D87949D440F6}
 	EndGlobalSection
 EndGlobal

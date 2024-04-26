@@ -2,10 +2,11 @@
 
 using System.ComponentModel.DataAnnotations;
 using Profiles.Infrastructure.Persistence.interfaces;
+using Shared.Infrastructure.Persistence.Models;
 
 namespace Profiles.Infrastructure.Persistence.Models
 {
-    public class Country: IEntityWithName
+    public class Country: AuditableEntity, IEntityWithName
     {
         public int Id { get; set; }
 

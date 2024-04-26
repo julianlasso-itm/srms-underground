@@ -3,10 +3,9 @@
 namespace Profiles.Domain.Aggregates.Dto.Requests
 {
     [DataContract]
-    public class RegisterSkillDomainRequest
+    public class DeleteSkillDomainRequest
     {
         [DataMember(Order = 1)]
-        public string Name { get; init; }
-
+        public required string SkillId { get; set; }
     }
 }

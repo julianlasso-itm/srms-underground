@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Profiles.Infrastructure.Persistence.interfaces;
+using Shared.Infrastructure.Persistence.Models;
 
 namespace Profiles.Infrastructure.Persistence.Models
 {
-    public class State: IEntityWithName
+    public class State: AuditableEntity, IEntityWithName
     {
         public int Id { get; set; }
 

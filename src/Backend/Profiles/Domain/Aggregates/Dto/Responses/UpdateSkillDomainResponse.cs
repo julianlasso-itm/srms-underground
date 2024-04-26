@@ -3,15 +3,15 @@
 namespace Profiles.Domain.Aggregates.Dto.Responses
 {
     [DataContract]
-    public class RegisterSkillDomainResponse
+    public class UpdateSkillDomainResponse
     {
         [DataMember(Order = 1)]
-        public required string SkillId { get; init; }
+        public string SkillId { get; internal set; }
 
         [DataMember(Order = 2)]
-        public string Name { get; init; }
+        public string Name { get; internal set; }
 
         [DataMember(Order = 3)]
-        public bool Disabled { get; init; }
+        public bool Disabled { get; internal set; }
     }
 }

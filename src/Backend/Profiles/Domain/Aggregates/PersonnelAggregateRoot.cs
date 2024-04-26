@@ -18,4 +18,14 @@ public class PersonnelAggregateRoot : BaseAggregateRoot, IPersonnelAggregateRoot
     {
         return RegisterSkillHelper.Execute(skillData);
     }
+
+    public DeleteSkillDomainResponse DeleteSkill(DeleteSkillDomainRequest dataDeleteRole)
+    {
+       return DeleteSkillHelper.Execute(dataDeleteRole);
+    }
+
+    public UpdateSkillDomainResponse UpdateSkill(UpdateSkillDomainRequest dataUpdateSkill)
+    {
+        return UpdateSkillHelper.Execute(dataUpdateSkill); 
+    }
 }

@@ -22,5 +22,19 @@ namespace Profiles.Infrastructure.Persistence.Repositories
             };
             return AddAsync(skill);
         }
+
+        public Task<Skill> UpdateAsync(Guid id, UpdateSkillApplicationResponse entity)
+        {
+            var skill = new Skill { SkillId = id };
+            if (entity.Name != null)
+            {
+                skill.Name = entity.Name;
+            }
+            if (entity.Disabled != null)
+            {
+                skill.Disabled = (bool)entity.Disabled;
+            }
+            return UpdateAsync(id, skill);
+        }
     }
 }
