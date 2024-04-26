@@ -1,5 +1,12 @@
 using Microsoft.EntityFrameworkCore;
+using Profiles.Application.Repositories;
 using Profiles.Infrastructure.Persistence;
+using Profiles.Infrastructure.Persistence.Models;
+using Profiles.Infrastructure.Persistence.Repositories;
+using Profiles.Infrastructure.Services;
+using ProtoBuf.Grpc.Server;
+using Shared.Infrastructure.Events;
+using Shared.Infrastructure.Interceptors;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,21 +17,59 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 });
 // ==========================================
 
-// Add services to the container.
-// builder.Services.AddGrpc();
+// == Configure repositories ==
+builder.Services.AddScoped<ICountryRepository<CountryModel>, CountryRepository>(serviceProvider =>
+{
+    var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
+    return new CountryRepository(dbContext);
+});
+
+builder.Services.AddScoped<IProvinceRepository<ProvinceModel>, ProvinceRepository>(
+    serviceProvider =>
+    {
+        var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
+        return new ProvinceRepository(dbContext);
+    }
+);
+
+builder.Services.AddScoped<ICityRepository<CityModel>, CityRepository>(serviceProvider =>
+{
+    var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
+    return new CityRepository(dbContext);
+});
+// ============================
+
+// == Configure dependency injection for services ==
+builder.Services.AddScoped<SharedEventHandler>();
+builder.Services.AddScoped<ApplicationService>();
+// =================================================
+
+// == Configure interceptors for gRPC services ==
+builder.Services.AddSingleton<ErrorHandlingInterceptor>();
+// ==============================================
+
+// == Configure gRPC services ==
+builder.Services.AddCodeFirstGrpc(options =>
+{
+    options.Interceptors.Add<ErrorHandlingInterceptor>();
+});
+// ========================================
 
 var app = builder.Build();
 
-// Ensure the database is created or migrated before starting the application
+// == Ensure the database is created or migrated before starting the application ==
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<ApplicationDbContext>();
     context.Database.Migrate();
 }
+// ================================================================================
 
-// Configure the HTTP request pipeline.
-// app.MapGrpcService<GreeterService>();
+// == Configure gRPC services ==
+app.MapGrpcService<ProfilesService>();
+// =============================
+
 app.MapGet(
     "/",
     () =>
