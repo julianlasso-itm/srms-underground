@@ -25,8 +25,5 @@ public class City
     public required string ProvinceId { get; set; }
 
     [DataMember(Order = 4)]
-    public required string ProvinceName  { get; set; }
-
-    [DataMember(Order = 5)]
     public required bool Disabled { get; set; }
 }

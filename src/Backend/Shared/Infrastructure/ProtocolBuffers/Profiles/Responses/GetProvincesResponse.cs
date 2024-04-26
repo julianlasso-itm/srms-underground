@@ -25,8 +25,5 @@ public class Province
     public required string CountryId { get; set; }
 
     [DataMember(Order = 4)]
-    public required string CountryName { get; set; }
-
-    [DataMember(Order = 5)]
     public required bool Disabled { get; set; }
 }
