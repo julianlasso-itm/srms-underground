@@ -1,4 +1,6 @@
-﻿namespace Profiles.Application.Commands
+﻿using System.Runtime.Serialization;
+
+namespace Profiles.Application.Commands
 {
     public class DeleteSkillCommand
     {

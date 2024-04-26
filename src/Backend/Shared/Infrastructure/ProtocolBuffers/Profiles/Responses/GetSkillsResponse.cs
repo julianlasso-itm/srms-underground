@@ -13,13 +13,11 @@ namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Responses
     public class GetSkillsResponse
     {
 
-        public GetSkillsResponse(){}
-
         [DataMember(Order = 1)]
         public required IEnumerable<SkillContract> Skills { get; set; }
 
         [DataMember(Order = 2)]
-        public int Total { get; set; }
+        public required int Total { get; set; }
     }
 
     [DataContract]

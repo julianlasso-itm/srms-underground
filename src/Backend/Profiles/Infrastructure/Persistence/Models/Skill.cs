@@ -1,12 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Profiles.Infrastructure.Persistence.interfaces;
+using Shared.Infrastructure.Persistence.Models;
 
 namespace Profiles.Infrastructure.Persistence.Models
 {
 
     [Table("tbl_skill")]
-    public class Skill: IEntityWithName
+    public class Skill: AuditableEntity, IEntityWithName
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]

@@ -1,10 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-
-using Profiles.Application;
+﻿using Profiles.Application;
 using Profiles.Application.Responses;
 using Profiles.Infrastructure.Persistence.Models;
-using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
-using Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
 
@@ -33,7 +29,7 @@ namespace Profiles.Infrastructure.Services.helpers
             {
                 SkillId = request.SkillId!,
                 Name = request.Name,
-                Disable = request.Disable
+                Disabled = request.Disabled
             };
         }
 

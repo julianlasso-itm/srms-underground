@@ -27,7 +27,7 @@ namespace ApiGateway.Infrastructure.Controllers
         }
 
 
-        [HttpPut("role/{id}")]
+        [HttpPut("skill/{id}")]
         public async Task<IActionResult> UpdateSkillAsync(
             string id,
             [FromBody] UpdateSkillRequest request
@@ -39,7 +39,7 @@ namespace ApiGateway.Infrastructure.Controllers
             );
         }
 
-        [HttpDelete("role/{id}")]
+        [HttpDelete("skill/{id}")]
         public async Task<IActionResult> DeleteRoleAsync(string id)
         {
             var request = new DeleteSkillRequest { SkillId = id };
@@ -48,7 +48,7 @@ namespace ApiGateway.Infrastructure.Controllers
             );
         }
 
-        [HttpGet("roles")]
+        [HttpGet("skills")]
         public async Task<IActionResult> GetSkillsAsync([FromQuery] GetSkillsRequest request)
         {
             return await HandleAsync(

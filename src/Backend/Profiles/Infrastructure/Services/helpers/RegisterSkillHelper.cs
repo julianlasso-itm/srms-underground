@@ -40,6 +40,7 @@ namespace Profiles.Infrastructure.Services.helpers
             {
                 SkillId = data.SkillId,
                 Name = data.Name,
+                Disabled = data.Disabled
             };
         }
     }

@@ -16,15 +16,15 @@ namespace Shared.Infrastructure.ProtocolBuffers.Profiles
     public interface IProfilesServices
     {
         [OperationContract]
-        Task<DeleteSkillResponse> DeleteSkillAsync(DeleteSkillRequest request);
+        Task<DeleteSkillResponse> DeleteSkillAsync(DeleteSkillRequest request, CallContext context = default);
 
         [OperationContract]
-        Task<GetSkillsResponse> GetSkillAsync(GetSkillsRequest request);
+        Task<GetSkillsResponse> GetSkillAsync(GetSkillsRequest request, CallContext context = default);
 
         [OperationContract]
         Task<RegisterSkillResponse> RegisterSkillAsync(RegisterSkillRequest request, CallContext context = default);
 
         [OperationContract]
-        Task<UpdateSkillResponse> UpdateSkillRoleAsync(UpdateSkillRequest request);
+        Task<UpdateSkillResponse> UpdateSkillRoleAsync(UpdateSkillRequest request, CallContext context = default);
     }
 }

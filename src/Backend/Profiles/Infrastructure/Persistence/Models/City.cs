@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Profiles.Infrastructure.Persistence.interfaces;
+using Shared.Infrastructure.Persistence.Models;
 
 namespace Profiles.Infrastructure.Persistence.Models
 {
-    public class City: IEntityWithName
+    public class City: AuditableEntity, IEntityWithName
     {
         public int Id { get; set; }
 
@@ -15,5 +16,7 @@ namespace Profiles.Infrastructure.Persistence.Models
         public int StateId { get; set; }
 
         public State? State { get; set; }
+
+
     }
 }

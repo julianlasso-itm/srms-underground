@@ -15,13 +15,13 @@ namespace Profiles.Infrastructure.Services
             _applicationService = applicationService;
         }
 
-        public async Task<DeleteSkillResponse> DeleteSkillAsync(DeleteSkillRequest request)
+        public async Task<DeleteSkillResponse> DeleteSkillAsync(DeleteSkillRequest request, CallContext context = default)
         {
             DeleteSkillHelper.SetApplication(_applicationService.GetApplication());
             return await DeleteSkillHelper.DeleteSkillAsync(request);
         }
 
-        public async Task<GetSkillsResponse> GetSkillAsync(GetSkillsRequest request)
+        public async Task<GetSkillsResponse> GetSkillAsync(GetSkillsRequest request, CallContext context = default)
         {
             GetSkillsHelper.SetApplication(_applicationService.GetApplication());
             return await GetSkillsHelper.GetSkillsAsync(request);
@@ -33,7 +33,7 @@ namespace Profiles.Infrastructure.Services
             return await RegisterSkillHelper.RegisterSkillAsync(request);
         }
 
-        public async Task<UpdateSkillResponse> UpdateSkillRoleAsync(UpdateSkillRequest request)
+        public async Task<UpdateSkillResponse> UpdateSkillRoleAsync(UpdateSkillRequest request, CallContext context = default)
         {
             UpdateSkillHelper.SetApplication(_applicationService.GetApplication());
             return await UpdateSkillHelper.UpdateSkillAsync(request);

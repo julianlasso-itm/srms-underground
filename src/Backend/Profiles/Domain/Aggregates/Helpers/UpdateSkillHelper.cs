@@ -30,9 +30,9 @@ namespace Profiles.Domain.Aggregates.Helpers
                 response.Name = skill.Name.Value;
             }
 
-            if (data.Disable != null)
+            if (data.Disabled != null)
             {
-                if (data.Disable == true)
+                if (data.Disabled == true)
                 {
                     skill.Disable();
                 }

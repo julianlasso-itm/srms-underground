@@ -1,15 +1,11 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
 namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Responses
 {
+    [DataContract]
     public class DeleteSkillResponse
     {
-        public object SkillId { get; set; }
+        [DataMember(Order = 1)]
+        public required string SkillId { get; set; }
     }
 }

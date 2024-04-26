@@ -40,7 +40,7 @@ namespace Profiles.Application.UseCases
             {
                 SkillId = request.SkillId,
                 Name = request.Name,
-                Disable = request.Disable,
+                Disabled = request.Disabled,
             };
         }
 

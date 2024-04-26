@@ -4,6 +4,6 @@
     {
         public required string SkillId { get; set; }
         public string? Name { get; set; }
-        public bool? Disable { get; set; }
+        public bool? Disabled { get; set; }
     }
 }

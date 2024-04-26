@@ -24,9 +24,13 @@ namespace Profiles.Application.UseCases
 			return response;
 		}
 
-		private GetSkillsApplicationResponse<TSkillEntity> MapToResponse(object data, object count)
+		private GetSkillsApplicationResponse<TSkillEntity> MapToResponse(IEnumerable<TSkillEntity> data, int count)
 		{
-			throw new NotImplementedException();
+            return new GetSkillsApplicationResponse<TSkillEntity>
+            {
+                Skills = data,
+                Total = count
+            };
 		}
 
 		private async Task<int> QuerySkillsCount(GetSkillsCommand request)

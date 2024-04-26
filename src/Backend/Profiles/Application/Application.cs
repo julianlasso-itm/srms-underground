@@ -20,7 +20,6 @@ public class Application<TCountryEntity, TProvinceEntity, TCityEntity, TSkillEnt
     private readonly IProvinceRepository<TProvinceEntity> _provinceRepository;
     private readonly ICityRepository<TCityEntity> _cityRepository;
     private readonly ISkillRepository<TSkillEntity> _skillRepository;
-    private ISkillRepository<TSkillEntity> _skillRepository1;
 
     public Application(
         ICountryRepository<TCountryEntity> countryRepository,
