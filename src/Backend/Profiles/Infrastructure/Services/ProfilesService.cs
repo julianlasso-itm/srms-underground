@@ -1,3 +1,4 @@
+using Profiles.Infrastructure.Services.Helpers;
 using ProtoBuf.Grpc;
 using Shared.Infrastructure.ProtocolBuffers.Profiles;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
@@ -19,7 +20,8 @@ internal class ProfilesService : IProfilesServices
         CallContext context = default
     )
     {
-        throw new NotImplementedException();
+        DeleteCityHelper.SetApplication(_applicationService.GetApplication());
+        return DeleteCityHelper.DeleteCityAsync(request);
     }
 
     public Task<DeleteCountryResponse> DeleteCountryAsync(
@@ -27,7 +29,8 @@ internal class ProfilesService : IProfilesServices
         CallContext context = default
     )
     {
-        throw new NotImplementedException();
+        DeleteCountryHelper.SetApplication(_applicationService.GetApplication());
+        return DeleteCountryHelper.DeleteCountryAsync(request);
     }
 
     public Task<DeleteProvinceResponse> DeleteProvinceAsync(
@@ -35,7 +38,8 @@ internal class ProfilesService : IProfilesServices
         CallContext context = default
     )
     {
-        throw new NotImplementedException();
+        DeleteProvinceHelper.SetApplication(_applicationService.GetApplication());
+        return DeleteProvinceHelper.DeleteProvinceAsync(request);
     }
 
     public Task<GetCitiesResponse> GetCitiesAsync(
@@ -43,7 +47,8 @@ internal class ProfilesService : IProfilesServices
         CallContext context = default
     )
     {
-        throw new NotImplementedException();
+        GetCitiesHelper.SetApplication(_applicationService.GetApplication());
+        return GetCitiesHelper.GetCitiesAsync(request);
     }
 
     public Task<GetCountriesResponse> GetCountriesAsync(
@@ -51,7 +56,8 @@ internal class ProfilesService : IProfilesServices
         CallContext context = default
     )
     {
-        throw new NotImplementedException();
+        GetCountriesHelper.SetApplication(_applicationService.GetApplication());
+        return GetCountriesHelper.GetCountriesAsync(request);
     }
 
     public Task<GetProvincesResponse> GetProvincesAsync(
@@ -59,7 +65,8 @@ internal class ProfilesService : IProfilesServices
         CallContext context = default
     )
     {
-        throw new NotImplementedException();
+        GetProvincesHelper.SetApplication(_applicationService.GetApplication());
+        return GetProvincesHelper.GetProvincesAsync(request);
     }
 
     public Task<RegisterCityResponse> RegisterCityAsync(
@@ -67,7 +74,8 @@ internal class ProfilesService : IProfilesServices
         CallContext context = default
     )
     {
-        throw new NotImplementedException();
+        RegisterCityHelper.SetApplication(_applicationService.GetApplication());
+        return RegisterCityHelper.RegisterCityAsync(request);
     }
 
     public Task<RegisterCountryResponse> RegisterCountryAsync(
@@ -75,7 +83,8 @@ internal class ProfilesService : IProfilesServices
         CallContext context = default
     )
     {
-        throw new NotImplementedException();
+        RegisterCountryHelper.SetApplication(_applicationService.GetApplication());
+        return RegisterCountryHelper.RegisterCountryAsync(request);
     }
 
     public Task<RegisterProvinceResponse> RegisterProvinceAsync(
@@ -83,7 +92,8 @@ internal class ProfilesService : IProfilesServices
         CallContext context = default
     )
     {
-        throw new NotImplementedException();
+        RegisterProvinceHelper.SetApplication(_applicationService.GetApplication());
+        return RegisterProvinceHelper.RegisterProvinceAsync(request);
     }
 
     public Task<UpdateCityResponse> UpdateCityAsync(
@@ -91,7 +101,8 @@ internal class ProfilesService : IProfilesServices
         CallContext context = default
     )
     {
-        throw new NotImplementedException();
+        UpdateCityHelper.SetApplication(_applicationService.GetApplication());
+        return UpdateCityHelper.UpdateCityAsync(request);
     }
 
     public Task<UpdateCountryResponse> UpdateCountryAsync(
@@ -99,7 +110,8 @@ internal class ProfilesService : IProfilesServices
         CallContext context = default
     )
     {
-        throw new NotImplementedException();
+        UpdateCountryHelper.SetApplication(_applicationService.GetApplication());
+        return UpdateCountryHelper.UpdateCountryAsync(request);
     }
 
     public Task<UpdateProvinceResponse> UpdateProvinceAsync(
@@ -107,6 +119,7 @@ internal class ProfilesService : IProfilesServices
         CallContext context = default
     )
     {
-        throw new NotImplementedException();
+        UpdateProvinceHelper.SetApplication(_applicationService.GetApplication());
+        return UpdateProvinceHelper.UpdateProvinceAsync(request);
     }
 }
