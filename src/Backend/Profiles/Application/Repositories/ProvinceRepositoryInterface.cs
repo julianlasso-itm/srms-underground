@@ -4,4 +4,8 @@ using Shared.Application.Interfaces;
 namespace Profiles.Application.Repositories;
 
 public interface IProvinceRepository<TEntity> : IRepository<TEntity>
-    where TEntity : class { }
+    where TEntity : class
+{
+    public Task<TEntity> AddAsync(RegisterProvinceApplicationResponse entity);
+    public Task<TEntity> UpdateAsync(Guid id, UpdateProvinceApplicationResponse entity);
+}
