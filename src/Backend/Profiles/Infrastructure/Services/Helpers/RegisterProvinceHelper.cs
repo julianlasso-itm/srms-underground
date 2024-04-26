@@ -21,7 +21,7 @@ internal class RegisterProvinceHelper : BaseHelperServiceInfrastructure
         RegisterProvinceRequest request
     )
     {
-        return new RegisterProvinceCommand { Name = request.Name };
+        return new RegisterProvinceCommand { Name = request.Name, CountryId = request.CountryId };
     }
 
     private static RegisterProvinceResponse MapToRegisterProvinceResponse(

@@ -17,7 +17,7 @@ internal class RegisterCityHelper : BaseHelperServiceInfrastructure
 
     private static RegisterCityCommand MapToRegisterCityCommand(RegisterCityRequest request)
     {
-        return new RegisterCityCommand { Name = request.Name };
+        return new RegisterCityCommand { Name = request.Name, ProvinceId = request.ProvinceId };
     }
 
     private static RegisterCityResponse MapToRegisterCityResponse(
