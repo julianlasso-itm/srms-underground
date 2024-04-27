@@ -26,4 +26,7 @@ public class City
 
     [DataMember(Order = 4)]
     public required bool Disabled { get; set; }
+
+    [DataMember(Order = 5)]
+    public required Province Province { get; set; }
 }
