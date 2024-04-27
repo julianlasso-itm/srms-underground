@@ -332,23 +332,39 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
 
     public async Task<TEntity> DeleteAsync(Guid id)
     {
-        var entity = await GetByIdAsync(id);
-
-        // Checks if the entity has a "DeletedAt" property
-        var deletedAtProperty = entity.GetType().GetProperty(DeletedAt);
-        if (deletedAtProperty != null && deletedAtProperty.PropertyType == typeof(DateTime?))
+        try
         {
-            // If the property exists and it is of the correct type, perform a soft delete
-            deletedAtProperty.SetValue(entity, DateTime.UtcNow);
-        }
-        else
-        {
-            // If the "DeletedAt" property does not exist, perform a physical deletion
-            DbSet.Remove(entity);
-        }
+            var entity = await GetByIdAsync(id);
 
-        await Context.SaveChangesAsync();
-        return entity;
+            // Checks if the entity has a "DeletedAt" property
+            var deletedAtProperty = entity.GetType().GetProperty(DeletedAt);
+            if (deletedAtProperty != null && deletedAtProperty.PropertyType == typeof(DateTime?))
+            {
+                // If the property exists and it is of the correct type, perform a soft delete
+                deletedAtProperty.SetValue(entity, DateTime.UtcNow);
+            }
+            else
+            {
+                // If the "DeletedAt" property does not exist, perform a physical deletion
+                DbSet.Remove(entity);
+            }
+
+            await Context.SaveChangesAsync();
+            return entity;
+        }
+        catch (DbUpdateException exception)
+        {
+            var message = JsonSerializer.Serialize(
+                new
+                {
+                    StatusCode = HttpStatusCode.Conflict,
+                    Message = exception.Message,
+                    Errors = exception.InnerException?.Message,
+                },
+                options: new JsonSerializerOptions { WriteIndented = true, }
+            );
+            throw new RpcException(new Status(StatusCode.AlreadyExists, message));
+        }
     }
 
     private static PropertyInfo? FindIdProperty()
