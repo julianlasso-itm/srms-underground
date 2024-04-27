@@ -20,6 +20,7 @@ internal class UpdateCityHelper : BaseHelperServiceInfrastructure
         return new UpdateCityCommand
         {
             CityId = request.CityId!,
+            ProvinceId = request.ProvinceId,
             Name = request.Name,
             Disable = request.Disable
         };
