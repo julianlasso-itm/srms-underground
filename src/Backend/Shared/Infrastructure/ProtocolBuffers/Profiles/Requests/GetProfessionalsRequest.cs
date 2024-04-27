@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
 namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Requests
 {
     [DataContract]
-    public class GetSkillsRequest
+    public class GetProfessionalsRequest
     {
         [DataMember(Order = 1)]
         public int Page { get; set; }

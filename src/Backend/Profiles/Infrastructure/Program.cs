@@ -25,8 +25,14 @@ builder.Services.AddScoped<ISkillRepository<Skill>, SkillRepository>(serviceProv
     var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
     return new SkillRepository(dbContext);
 });
+builder.Services.AddScoped<IProfessionalRepository<Professional>, ProfessionalRepository>(serviceProvider =>
+{
+    var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
+    return new ProfessionalRepository(dbContext);
+});
 
-builder.Services.AddScoped<RegisterSkillEvent>(); 
+builder.Services.AddScoped<RegisterSkillEvent>();
+builder.Services.AddScoped<RegisterProfessionalEvent>();
 builder.Services.AddScoped<ApplicationService>();
 
 // Add services to the container.

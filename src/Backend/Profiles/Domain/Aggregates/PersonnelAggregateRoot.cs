@@ -21,11 +21,26 @@ public class PersonnelAggregateRoot : BaseAggregateRoot, IPersonnelAggregateRoot
 
     public DeleteSkillDomainResponse DeleteSkill(DeleteSkillDomainRequest dataDeleteRole)
     {
-       return DeleteSkillHelper.Execute(dataDeleteRole);
+        return DeleteSkillHelper.Execute(dataDeleteRole);
     }
 
     public UpdateSkillDomainResponse UpdateSkill(UpdateSkillDomainRequest dataUpdateSkill)
     {
-        return UpdateSkillHelper.Execute(dataUpdateSkill); 
+        return UpdateSkillHelper.Execute(dataUpdateSkill);
+    }
+
+    public RegisterProfessionalDomainResponse RegisterProfessional(RegisterProfessionalDomainRequest dataRegisterProfessional)
+    {
+        return RegisterProfessionalHelper.Execute(dataRegisterProfessional);
+    }
+
+    public DeleteProfessionalDomainResponse DeleteProfessional(DeleteProfessionalDomainRequest dataDeleteProfessional)
+    {
+        return DeleteProfessionalHelper.Execute(dataDeleteProfessional);
+    }
+
+    public UpdateProfessionalDomainResponse UpdateProfessional(UpdateProfessionalDomainRequest dataUpdateProfessional)
+    {
+        return UpdateProfessionalHelper.Execute(dataUpdateProfessional);
     }
 }

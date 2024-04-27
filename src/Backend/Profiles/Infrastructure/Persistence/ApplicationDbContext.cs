@@ -2,7 +2,9 @@
 using Profiles.Infrastructure.Persistence.Models;
 
 public class ApplicationDbContext : DbContext
-{ 
+{
+    public DbSet<Professional> Professionals { get; set; }
+
     public DbSet<Skill> Skills { get; set; }
 
     public DbSet<Country> Countries { get; set; }
@@ -17,6 +19,7 @@ public class ApplicationDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<Professional>().HasIndex(c => c.Name).IsUnique();
         modelBuilder.Entity<Skill>().HasIndex(c => c.Name).IsUnique();
         modelBuilder.Entity<Country>().HasIndex(c => c.Name).IsUnique();
         modelBuilder.Entity<City>().HasIndex(c => new { c.StateId, c.Name }).IsUnique();

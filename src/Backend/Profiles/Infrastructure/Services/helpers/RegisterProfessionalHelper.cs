@@ -1,4 +1,6 @@
-﻿using Profiles.Application;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+
+using Profiles.Application;
 using Profiles.Application.Commands;
 using Profiles.Application.Responses;
 using Profiles.Infrastructure.Persistence.Models;
@@ -7,7 +9,7 @@ using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
 
 namespace Profiles.Infrastructure.Services.helpers
 {
-    internal static class RegisterSkillHelper
+    public class RegisterProfessionalHelper
     {
         private static Application<Country, State, City, Skill, Professional> s_application;
 
@@ -16,30 +18,31 @@ namespace Profiles.Infrastructure.Services.helpers
             s_application = application;
         }
 
-        public static async Task<RegisterSkillResponse> RegisterSkillAsync(RegisterSkillRequest request)
+        public static async Task<RegisterProfessionalResponse> RegisterProfessionalAsync(RegisterProfessionalRequest request)
         {
             var newUserCommand = MapToNewUserCommand(request);
-            var data = await s_application.RegisterSkill(newUserCommand);
-            return MapToRegisterSkillResponse(data);
+            var data = await s_application.RegisterProfessional(newUserCommand);
+            return MapToRegisterProfessionalResponse(data);
         }
 
-        private static RegisterSkillCommand MapToNewUserCommand(RegisterSkillRequest request)
+        private static RegisterProfessionalCommand MapToNewUserCommand(RegisterProfessionalRequest request)
         {
-            return new RegisterSkillCommand
+            return new RegisterProfessionalCommand
             {
                 Name = request.Name,
-
+                Email = request.Email,   
+                Disabled = request.Disabled
             };
         }
 
-        private static RegisterSkillResponse MapToRegisterSkillResponse(
-            RegisterSkillApplicationResponse data
+        private static RegisterProfessionalResponse MapToRegisterProfessionalResponse(
+            RegisterProfessionalApplicationResponse data
         )
         {
-            return new RegisterSkillResponse
+            return new RegisterProfessionalResponse
             {
-                SkillId = data.SkillId,
                 Name = data.Name,
+                Email = data.Email,
                 Disabled = data.Disabled
             };
         }

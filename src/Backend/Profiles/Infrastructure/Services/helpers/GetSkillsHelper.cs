@@ -6,15 +6,14 @@ using Profiles.Application;
 using Profiles.Infrastructure.Persistence.Models;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
-using Profiles.Domain.Entities;
 
 namespace Profiles.Infrastructure.Services.helpers
 {
     public class GetSkillsHelper
     {
-        private static Application<Country, State, City, Skill> s_application;
+        private static Application<Country, State, City, Skill, Professional> s_application;
 
-        public static void SetApplication(Application<Country, State, City, Skill> application)
+        public static void SetApplication(Application<Country, State, City, Skill, Professional> application)
         {
             s_application = application;
         }
