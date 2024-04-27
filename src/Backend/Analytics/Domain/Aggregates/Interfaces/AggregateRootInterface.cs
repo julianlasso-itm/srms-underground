@@ -1,4 +1,4 @@
-using Analytics.Domain.Aggregates.Dto;
+﻿using Analytics.Domain.Aggregates.Dto;
 
 namespace Analytics.Domain.Aggregates.Interfaces;
 
