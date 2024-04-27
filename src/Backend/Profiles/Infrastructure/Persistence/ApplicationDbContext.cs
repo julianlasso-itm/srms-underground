@@ -11,4 +11,11 @@ public class ApplicationDbContext : DbContext
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options) { }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        Seeds.SeedCountries(modelBuilder);
+        Seeds.SeedProvinces(modelBuilder);
+        Seeds.SeedCities(modelBuilder);
+    }
 }
