@@ -17,7 +17,7 @@ public class AccessControlController : BaseController
     }
 
     [HttpPost("role")]
-    public async Task<IActionResult> RegisterRoleAsync([FromBody] RegisterRoleRequest request)
+    public async Task<IActionResult> RegisterRoleAsync([FromBody] RegisterRoleSecurityRequest request)
     {
         return await HandleAsync(
             async () => Ok(await _accessControlService.RegisterRoleAsync(request))
@@ -27,7 +27,7 @@ public class AccessControlController : BaseController
     [HttpPut("role/{id}")]
     public async Task<IActionResult> UpdateRoleAsync(
         string id,
-        [FromBody] UpdateRoleRequest request
+        [FromBody] UpdateRoleSecurityRequest request
     )
     {
         request.RoleId = id;
@@ -39,14 +39,14 @@ public class AccessControlController : BaseController
     [HttpDelete("role/{id}")]
     public async Task<IActionResult> DeleteRoleAsync(string id)
     {
-        var request = new DeleteRoleRequest { RoleId = id };
+        var request = new DeleteRoleSecurityRequest { RoleId = id };
         return await HandleAsync(
             async () => Ok(await _accessControlService.DeleteRoleAsync(request))
         );
     }
 
     [HttpGet("roles")]
-    public async Task<IActionResult> GetRolesAsync([FromQuery] GetRolesRequest request)
+    public async Task<IActionResult> GetRolesAsync([FromQuery] GetRolesSecurityRequest request)
     {
         return await HandleAsync(
             async () => Ok(await _accessControlService.GetRolesAsync(request))

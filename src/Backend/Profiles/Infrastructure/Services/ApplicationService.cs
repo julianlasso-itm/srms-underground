@@ -8,26 +8,28 @@ namespace Profiles.Infrastructure.Services;
 
 internal class ApplicationService
 {
-    private readonly Application<CountryModel, ProvinceModel, CityModel> _application;
+    private readonly Application<CountryModel, ProvinceModel, CityModel, RoleModel> _application;
 
     public ApplicationService(
         SharedEventHandler eventHandler,
         ICountryRepository<CountryModel> countryRepository,
         IProvinceRepository<ProvinceModel> provinceRepository,
-        ICityRepository<CityModel> cityRepository
+        ICityRepository<CityModel> cityRepository,
+        IRoleRepository<RoleModel> roleRepository
     )
     {
-        _application = new Application<CountryModel, ProvinceModel, CityModel>(
+        _application = new Application<CountryModel, ProvinceModel, CityModel, RoleModel>(
             countryRepository,
             provinceRepository,
-            cityRepository
+            cityRepository,
+            roleRepository
         )
         {
             AggregateRoot = new PersonnelAggregateRoot(eventHandler)
         };
     }
 
-    public Application<CountryModel, ProvinceModel, CityModel> GetApplication()
+    public Application<CountryModel, ProvinceModel, CityModel, RoleModel> GetApplication()
     {
         return _application;
     }

@@ -8,14 +8,16 @@ namespace AccessControl.Infrastructure.Services.Helpers;
 
 internal class UpdateRoleHelper : BaseHelperServiceInfrastructure
 {
-    public static async Task<UpdateRoleResponse> UpdateRoleAsync(UpdateRoleRequest request)
+    public static async Task<UpdateRoleSecurityResponse> UpdateRoleAsync(
+        UpdateRoleSecurityRequest request
+    )
     {
         var updateRoleCommand = MapToUpdateRoleCommand(request);
         var data = await Application.UpdateRole(updateRoleCommand);
         return MapToUpdateRoleResponse(data);
     }
 
-    private static UpdateRoleCommand MapToUpdateRoleCommand(UpdateRoleRequest request)
+    private static UpdateRoleCommand MapToUpdateRoleCommand(UpdateRoleSecurityRequest request)
     {
         return new UpdateRoleCommand
         {
@@ -26,11 +28,11 @@ internal class UpdateRoleHelper : BaseHelperServiceInfrastructure
         };
     }
 
-    private static UpdateRoleResponse MapToUpdateRoleResponse(
+    private static UpdateRoleSecurityResponse MapToUpdateRoleResponse(
         UpdateRoleApplicationResponse data
     )
     {
-        return new UpdateRoleResponse
+        return new UpdateRoleSecurityResponse
         {
             RoleId = data.RoleId,
             Name = data.Name,

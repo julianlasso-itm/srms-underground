@@ -4,122 +4,159 @@ using Shared.Infrastructure.ProtocolBuffers.Profiles;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
 
-namespace Profiles.Infrastructure.Services;
-
-internal class ProfilesService : IProfilesServices
+namespace Profiles.Infrastructure.Services
 {
-    private readonly ApplicationService _applicationService;
-
-    public ProfilesService(ApplicationService applicationService)
+    internal class ProfilesService : IProfilesServices
     {
-        _applicationService = applicationService;
-    }
+        private readonly ApplicationService _applicationService;
 
-    public Task<DeleteCityResponse> DeleteCityAsync(
-        DeleteCityRequest request,
-        CallContext context = default
-    )
-    {
-        DeleteCityHelper.SetApplication(_applicationService.GetApplication());
-        return DeleteCityHelper.DeleteCityAsync(request);
-    }
+        public ProfilesService(ApplicationService applicationService)
+        {
+            _applicationService = applicationService;
+        }
 
-    public Task<DeleteCountryResponse> DeleteCountryAsync(
-        DeleteCountryRequest request,
-        CallContext context = default
-    )
-    {
-        DeleteCountryHelper.SetApplication(_applicationService.GetApplication());
-        return DeleteCountryHelper.DeleteCountryAsync(request);
-    }
+        public Task<DeleteCityResponse> DeleteCityAsync(
+            DeleteCityRequest request,
+            CallContext context = default
+        )
+        {
+            DeleteCityHelper.SetApplication(_applicationService.GetApplication());
+            return DeleteCityHelper.DeleteCityAsync(request);
+        }
 
-    public Task<DeleteProvinceResponse> DeleteProvinceAsync(
-        DeleteProvinceRequest request,
-        CallContext context = default
-    )
-    {
-        DeleteProvinceHelper.SetApplication(_applicationService.GetApplication());
-        return DeleteProvinceHelper.DeleteProvinceAsync(request);
-    }
+        public Task<DeleteCountryResponse> DeleteCountryAsync(
+            DeleteCountryRequest request,
+            CallContext context = default
+        )
+        {
+            DeleteCountryHelper.SetApplication(_applicationService.GetApplication());
+            return DeleteCountryHelper.DeleteCountryAsync(request);
+        }
 
-    public Task<GetCitiesResponse> GetCitiesAsync(
-        GetCitiesRequest request,
-        CallContext context = default
-    )
-    {
-        GetCitiesHelper.SetApplication(_applicationService.GetApplication());
-        return GetCitiesHelper.GetCitiesAsync(request);
-    }
+        public Task<DeleteProvinceResponse> DeleteProvinceAsync(
+            DeleteProvinceRequest request,
+            CallContext context = default
+        )
+        {
+            DeleteProvinceHelper.SetApplication(_applicationService.GetApplication());
+            return DeleteProvinceHelper.DeleteProvinceAsync(request);
+        }
 
-    public Task<GetCountriesResponse> GetCountriesAsync(
-        GetCountriesRequest request,
-        CallContext context = default
-    )
-    {
-        GetCountriesHelper.SetApplication(_applicationService.GetApplication());
-        return GetCountriesHelper.GetCountriesAsync(request);
-    }
+        public Task<GetCitiesResponse> GetCitiesAsync(
+            GetCitiesRequest request,
+            CallContext context = default
+        )
+        {
+            GetCitiesHelper.SetApplication(_applicationService.GetApplication());
+            return GetCitiesHelper.GetCitiesAsync(request);
+        }
 
-    public Task<GetProvincesResponse> GetProvincesAsync(
-        GetProvincesRequest request,
-        CallContext context = default
-    )
-    {
-        GetProvincesHelper.SetApplication(_applicationService.GetApplication());
-        return GetProvincesHelper.GetProvincesAsync(request);
-    }
+        public Task<GetCountriesResponse> GetCountriesAsync(
+            GetCountriesRequest request,
+            CallContext context = default
+        )
+        {
+            GetCountriesHelper.SetApplication(_applicationService.GetApplication());
+            return GetCountriesHelper.GetCountriesAsync(request);
+        }
 
-    public Task<RegisterCityResponse> RegisterCityAsync(
-        RegisterCityRequest request,
-        CallContext context = default
-    )
-    {
-        RegisterCityHelper.SetApplication(_applicationService.GetApplication());
-        return RegisterCityHelper.RegisterCityAsync(request);
-    }
+        public Task<GetProvincesResponse> GetProvincesAsync(
+            GetProvincesRequest request,
+            CallContext context = default
+        )
+        {
+            GetProvincesHelper.SetApplication(_applicationService.GetApplication());
+            return GetProvincesHelper.GetProvincesAsync(request);
+        }
 
-    public Task<RegisterCountryResponse> RegisterCountryAsync(
-        RegisterCountryRequest request,
-        CallContext context = default
-    )
-    {
-        RegisterCountryHelper.SetApplication(_applicationService.GetApplication());
-        return RegisterCountryHelper.RegisterCountryAsync(request);
-    }
+        public Task<RegisterCityResponse> RegisterCityAsync(
+            RegisterCityRequest request,
+            CallContext context = default
+        )
+        {
+            RegisterCityHelper.SetApplication(_applicationService.GetApplication());
+            return RegisterCityHelper.RegisterCityAsync(request);
+        }
 
-    public Task<RegisterProvinceResponse> RegisterProvinceAsync(
-        RegisterProvinceRequest request,
-        CallContext context = default
-    )
-    {
-        RegisterProvinceHelper.SetApplication(_applicationService.GetApplication());
-        return RegisterProvinceHelper.RegisterProvinceAsync(request);
-    }
+        public Task<RegisterCountryResponse> RegisterCountryAsync(
+            RegisterCountryRequest request,
+            CallContext context = default
+        )
+        {
+            RegisterCountryHelper.SetApplication(_applicationService.GetApplication());
+            return RegisterCountryHelper.RegisterCountryAsync(request);
+        }
 
-    public Task<UpdateCityResponse> UpdateCityAsync(
-        UpdateCityRequest request,
-        CallContext context = default
-    )
-    {
-        UpdateCityHelper.SetApplication(_applicationService.GetApplication());
-        return UpdateCityHelper.UpdateCityAsync(request);
-    }
+        public Task<RegisterProvinceResponse> RegisterProvinceAsync(
+            RegisterProvinceRequest request,
+            CallContext context = default
+        )
+        {
+            RegisterProvinceHelper.SetApplication(_applicationService.GetApplication());
+            return RegisterProvinceHelper.RegisterProvinceAsync(request);
+        }
 
-    public Task<UpdateCountryResponse> UpdateCountryAsync(
-        UpdateCountryRequest request,
-        CallContext context = default
-    )
-    {
-        UpdateCountryHelper.SetApplication(_applicationService.GetApplication());
-        return UpdateCountryHelper.UpdateCountryAsync(request);
-    }
+        public Task<UpdateCityResponse> UpdateCityAsync(
+            UpdateCityRequest request,
+            CallContext context = default
+        )
+        {
+            UpdateCityHelper.SetApplication(_applicationService.GetApplication());
+            return UpdateCityHelper.UpdateCityAsync(request);
+        }
 
-    public Task<UpdateProvinceResponse> UpdateProvinceAsync(
-        UpdateProvinceRequest request,
-        CallContext context = default
-    )
-    {
-        UpdateProvinceHelper.SetApplication(_applicationService.GetApplication());
-        return UpdateProvinceHelper.UpdateProvinceAsync(request);
+        public Task<UpdateCountryResponse> UpdateCountryAsync(
+            UpdateCountryRequest request,
+            CallContext context = default
+        )
+        {
+            UpdateCountryHelper.SetApplication(_applicationService.GetApplication());
+            return UpdateCountryHelper.UpdateCountryAsync(request);
+        }
+
+        public Task<UpdateProvinceResponse> UpdateProvinceAsync(
+            UpdateProvinceRequest request,
+            CallContext context = default
+        )
+        {
+            UpdateProvinceHelper.SetApplication(_applicationService.GetApplication());
+            return UpdateProvinceHelper.UpdateProvinceAsync(request);
+        }
+
+        public Task<DeleteRoleResponse> DeleteRoleAsync(
+            DeleteRoleRequest request,
+            CallContext context = default
+        )
+        {
+            DeleteRoleHelper.SetApplication(_applicationService.GetApplication());
+            return DeleteRoleHelper.DeleteRoleAsync(request);
+        }
+
+        public Task<GetRolesResponse> GetRolesAsync(
+            GetRolesRequest request,
+            CallContext context = default
+        )
+        {
+            GetRolesHelper.SetApplication(_applicationService.GetApplication());
+            return GetRolesHelper.GetRolesAsync(request);
+        }
+
+        public Task<RegisterRoleResponse> RegisterRoleAsync(
+            RegisterRoleRequest request,
+            CallContext context = default
+        )
+        {
+            RegisterRoleHelper.SetApplication(_applicationService.GetApplication());
+            return RegisterRoleHelper.RegisterRoleAsync(request);
+        }
+
+        public Task<UpdateRoleResponse> UpdateRoleAsync(
+            UpdateRoleRequest request,
+            CallContext context = default
+        )
+        {
+            UpdateRoleHelper.SetApplication(_applicationService.GetApplication());
+            return UpdateRoleHelper.UpdateRoleAsync(request);
+        }
     }
 }

@@ -8,20 +8,24 @@ namespace AccessControl.Infrastructure.Services.Helpers;
 
 internal class DeleteRoleHelper : BaseHelperServiceInfrastructure
 {
-    public static async Task<DeleteRoleResponse> DeleteRoleAsync(DeleteRoleRequest request)
+    public static async Task<DeleteRoleSecurityResponse> DeleteRoleAsync(
+        DeleteRoleSecurityRequest request
+    )
     {
         var deleteRoleCommand = MapToDeleteRoleCommand(request);
         var data = await Application.DeleteRole(deleteRoleCommand);
         return MapToDeleteRoleResponse(data);
     }
 
-    private static DeleteRoleCommand MapToDeleteRoleCommand(DeleteRoleRequest request)
+    private static DeleteRoleCommand MapToDeleteRoleCommand(DeleteRoleSecurityRequest request)
     {
         return new DeleteRoleCommand { RoleId = request.RoleId };
     }
 
-    private static DeleteRoleResponse MapToDeleteRoleResponse(DeleteRoleApplicationResponse data)
+    private static DeleteRoleSecurityResponse MapToDeleteRoleResponse(
+        DeleteRoleApplicationResponse data
+    )
     {
-        return new DeleteRoleResponse { RoleId = data.RoleId };
+        return new DeleteRoleSecurityResponse { RoleId = data.RoleId };
     }
 }

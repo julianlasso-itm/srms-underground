@@ -12,4 +12,7 @@ public abstract class EventsConst
     public const string EventCityRegistered = "CityRegistered";
     public const string EventCityUpdated = "CityUpdated";
     public const string EventCityDeleted = "CityDeleted";
+    public const string EventRoleRegistered = "RoleRegistered";
+    public const string EventRoleDeleted = "RoleDeleted";
+    public const string EventRoleUpdated = "RoleUpdated";
 }

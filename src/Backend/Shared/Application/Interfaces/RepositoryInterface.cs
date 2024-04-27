@@ -15,6 +15,5 @@ public interface IRepository<TEntity>
     );
     public Task<TEntity> AddAsync(TEntity entity);
     public Task<TEntity> UpdateAsync(Guid id, TEntity entity);
-    // public Task<TEntity> UpdateAsync(Guid id, IDictionary<string, object> entity);
     public Task<TEntity> DeleteAsync(Guid id);
 }

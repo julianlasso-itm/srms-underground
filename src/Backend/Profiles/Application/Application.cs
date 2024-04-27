@@ -6,26 +6,30 @@ using Profiles.Domain.Aggregates.Interfaces;
 
 namespace Profiles.Application;
 
-public class Application<TCountryEntity, TProvinceEntity, TCityEntity>
+public class Application<TCountryEntity, TProvinceEntity, TCityEntity, TRoleEntity>
     where TCountryEntity : class
     where TProvinceEntity : class
     where TCityEntity : class
+    where TRoleEntity : class
 {
     public required IPersonnelAggregateRoot AggregateRoot { get; init; }
 
     private readonly ICountryRepository<TCountryEntity> _countryRepository;
     private readonly IProvinceRepository<TProvinceEntity> _provinceRepository;
     private readonly ICityRepository<TCityEntity> _cityRepository;
+    private readonly IRoleRepository<TRoleEntity> _roleRepository;
 
     public Application(
         ICountryRepository<TCountryEntity> countryRepository,
         IProvinceRepository<TProvinceEntity> provinceRepository,
-        ICityRepository<TCityEntity> cityRepository
+        ICityRepository<TCityEntity> cityRepository,
+        IRoleRepository<TRoleEntity> roleRepository
     )
     {
         _countryRepository = countryRepository;
         _provinceRepository = provinceRepository;
         _cityRepository = cityRepository;
+        _roleRepository = roleRepository;
     }
 
     public Task<GetCountriesApplicationResponse<TCountryEntity>> GetCountries(
@@ -112,6 +116,30 @@ public class Application<TCountryEntity, TProvinceEntity, TCityEntity>
     public Task<DeleteCityApplicationResponse> DeleteCity(DeleteCityCommand request)
     {
         var useCase = new DeleteCityUseCase<TCityEntity>(AggregateRoot, _cityRepository);
+        return useCase.Handle(request);
+    }
+
+    public Task<RegisterRoleApplicationResponse> RegisterRole(RegisterRoleCommand request)
+    {
+        var useCase = new RegisterRoleUseCase<TRoleEntity>(AggregateRoot, _roleRepository);
+        return useCase.Handle(request);
+    }
+
+    public Task<UpdateRoleApplicationResponse> UpdateRole(UpdateRoleCommand request)
+    {
+        var useCase = new UpdateRoleUseCase<TRoleEntity>(AggregateRoot, _roleRepository);
+        return useCase.Handle(request);
+    }
+
+    public Task<DeleteRoleApplicationResponse> DeleteRole(DeleteRoleCommand request)
+    {
+        var useCase = new DeleteRoleUseCase<TRoleEntity>(AggregateRoot, _roleRepository);
+        return useCase.Handle(request);
+    }
+
+    public Task<GetRolesApplicationResponse<TRoleEntity>> GetRoles(GetRolesCommand request)
+    {
+        var useCase = new GetRolesUseCase<TRoleEntity>(AggregateRoot, _roleRepository);
         return useCase.Handle(request);
     }
 }

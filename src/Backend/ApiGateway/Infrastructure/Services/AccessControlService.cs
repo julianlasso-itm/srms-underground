@@ -16,32 +16,32 @@ public class AccessControlService : BaseServices<IAccessControlServices>, IAcces
         CreateChannel(UrlMicroservice);
     }
 
-    public Task<RegisterRoleResponse> RegisterRoleAsync(
-        RegisterRoleRequest request,
+    public Task<RegisterRoleSecurityResponse> RegisterRoleAsync(
+        RegisterRoleSecurityRequest request,
         CallContext context = default
     )
     {
         return Client.RegisterRoleAsync(request, context);
     }
 
-    public Task<UpdateRoleResponse> UpdateRoleAsync(
-        UpdateRoleRequest request,
+    public Task<UpdateRoleSecurityResponse> UpdateRoleAsync(
+        UpdateRoleSecurityRequest request,
         CallContext context = default
     )
     {
         return Client.UpdateRoleAsync(request, context);
     }
 
-    public Task<DeleteRoleResponse> DeleteRoleAsync(
-        DeleteRoleRequest request,
+    public Task<DeleteRoleSecurityResponse> DeleteRoleAsync(
+        DeleteRoleSecurityRequest request,
         CallContext context = default
     )
     {
         return Client.DeleteRoleAsync(request, context);
     }
 
-    public Task<GetRolesResponse> GetRolesAsync(
-        GetRolesRequest request,
+    public Task<GetRolesSecurityResponse> GetRolesAsync(
+        GetRolesSecurityRequest request,
         CallContext context = default
     )
     {

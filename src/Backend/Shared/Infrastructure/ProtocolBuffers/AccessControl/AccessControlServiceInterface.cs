@@ -9,23 +9,26 @@ namespace Shared.Infrastructure.ProtocolBuffers.AccessControl;
 public interface IAccessControlServices
 {
     [OperationContract]
-    Task<RegisterRoleResponse> RegisterRoleAsync(
-        RegisterRoleRequest request,
+    Task<RegisterRoleSecurityResponse> RegisterRoleAsync(
+        RegisterRoleSecurityRequest request,
         CallContext context = default
     );
 
     [OperationContract]
-    Task<UpdateRoleResponse> UpdateRoleAsync(
-        UpdateRoleRequest request,
+    Task<UpdateRoleSecurityResponse> UpdateRoleAsync(
+        UpdateRoleSecurityRequest request,
         CallContext context = default
     );
 
     [OperationContract]
-    Task<DeleteRoleResponse> DeleteRoleAsync(
-        DeleteRoleRequest request,
+    Task<DeleteRoleSecurityResponse> DeleteRoleAsync(
+        DeleteRoleSecurityRequest request,
         CallContext context = default
     );
 
     [OperationContract]
-    Task<GetRolesResponse> GetRolesAsync(GetRolesRequest request, CallContext context = default);
+    Task<GetRolesSecurityResponse> GetRolesAsync(
+        GetRolesSecurityRequest request,
+        CallContext context = default
+    );
 }

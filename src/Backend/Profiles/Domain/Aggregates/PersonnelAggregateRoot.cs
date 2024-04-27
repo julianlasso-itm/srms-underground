@@ -1,5 +1,6 @@
 using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
+using Profiles.Domain.Aggregates.Helpers;
 using Profiles.Domain.Aggregates.Interfaces;
 using Shared.Domain.Aggregate.Base;
 using Shared.Domain.Events.Interfaces;
@@ -59,5 +60,20 @@ public class PersonnelAggregateRoot : BaseAggregateRoot, IPersonnelAggregateRoot
     public DeleteCityDomainResponse DeleteCity(DeleteCityDomainRequest request)
     {
         return AccountAggregate.DeleteCity(request);
+    }
+
+    public RegisterRoleDomainResponse RegisterRole(RegisterRoleDomainRequest roleData)
+    {
+        return RegisterRoleHelper.Execute(roleData);
+    }
+
+    public DeleteRoleDomainResponse DeleteRole(DeleteRoleDomainRequest dataDeleteRole)
+    {
+        return DeleteRoleHelper.Execute(dataDeleteRole);
+    }
+
+    public UpdateRoleDomainResponse UpdateRole(UpdateRoleDomainRequest dataUpdateRole)
+    {
+        return UpdateRoleHelper.Execute(dataUpdateRole);
     }
 }

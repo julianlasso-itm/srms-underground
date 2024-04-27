@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 namespace Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
 
 [DataContract]
-public class RegisterRoleRequest
+public class RegisterRoleSecurityRequest
 {
     [DataMember(Order = 1)]
     public required string Name { get; set; }

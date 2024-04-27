@@ -5,10 +5,10 @@ namespace Profiles.Infrastructure.Services.Helpers.Base;
 
 public abstract class BaseHelperServiceInfrastructure
 {
-    protected static Application<CountryModel, ProvinceModel, CityModel> Application;
+    protected static Application<CountryModel, ProvinceModel, CityModel, RoleModel> Application;
 
     public static void SetApplication(
-        Application<CountryModel, ProvinceModel, CityModel> application
+        Application<CountryModel, ProvinceModel, CityModel, RoleModel> application
     )
     {
         Application = application;

@@ -8,27 +8,25 @@ namespace AccessControl.Infrastructure.Services.Helpers;
 
 internal class RegisterRoleHelper : BaseHelperServiceInfrastructure
 {
-    public static async Task<RegisterRoleResponse> RegisterRoleAsync(RegisterRoleRequest request)
+    public static async Task<RegisterRoleSecurityResponse> RegisterRoleAsync(
+        RegisterRoleSecurityRequest request
+    )
     {
         var newRoleCommand = MapToRegisterRoleCommand(request);
         var data = await Application.RegisterRole(newRoleCommand);
         return MapToRegisterRoleResponse(data);
     }
 
-    private static RegisterRoleCommand MapToRegisterRoleCommand(RegisterRoleRequest request)
+    private static RegisterRoleCommand MapToRegisterRoleCommand(RegisterRoleSecurityRequest request)
     {
-        return new RegisterRoleCommand
-        {
-            Name = request.Name,
-            Description = request.Description,
-        };
+        return new RegisterRoleCommand { Name = request.Name, Description = request.Description, };
     }
 
-    private static RegisterRoleResponse MapToRegisterRoleResponse(
+    private static RegisterRoleSecurityResponse MapToRegisterRoleResponse(
         RegisterRoleApplicationResponse data
     )
     {
-        return new RegisterRoleResponse
+        return new RegisterRoleSecurityResponse
         {
             RoleId = data.RoleId,
             Name = data.Name,

@@ -37,6 +37,12 @@ builder.Services.AddScoped<ICityRepository<CityModel>, CityRepository>(servicePr
     var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
     return new CityRepository(dbContext);
 });
+
+builder.Services.AddScoped<IRoleRepository<RoleModel>, RoleRepository>(serviceProvider =>
+{
+    var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
+    return new RoleRepository(dbContext);
+});
 // ============================
 
 // == Configure dependency injection for services ==
