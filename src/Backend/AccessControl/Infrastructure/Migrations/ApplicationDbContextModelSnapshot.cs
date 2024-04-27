@@ -60,7 +60,7 @@ namespace AccessControl.Infrastructure.Migrations
                     b.HasIndex("Name", "DeletedAt")
                         .IsUnique();
 
-                    b.ToTable("tbl_role");
+                    b.ToTable("tbl_role", (string)null);
                 });
 
             modelBuilder.Entity("AccessControl.Infrastructure.Persistence.Models.UserModel", b =>
@@ -104,7 +104,7 @@ namespace AccessControl.Infrastructure.Migrations
 
                     b.HasIndex("Email", "Password");
 
-                    b.ToTable("tbl_user");
+                    b.ToTable("tbl_user", (string)null);
                 });
 
             modelBuilder.Entity("AccessControl.Infrastructure.Persistence.Models.UserPerRoleModel", b =>
@@ -128,7 +128,7 @@ namespace AccessControl.Infrastructure.Migrations
                     b.HasIndex("UserId", "RoleId")
                         .IsUnique();
 
-                    b.ToTable("tbl_user_per_role");
+                    b.ToTable("tbl_user_per_role", (string)null);
                 });
 
             modelBuilder.Entity("AccessControl.Infrastructure.Persistence.Models.UserPerRoleModel", b =>

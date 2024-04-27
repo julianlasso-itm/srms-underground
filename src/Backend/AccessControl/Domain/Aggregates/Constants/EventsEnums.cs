@@ -1,4 +1,4 @@
-namespace AccessControl.Domain.Aggregates.Constants;
+﻿namespace AccessControl.Domain.Aggregates.Constants;
 
 public abstract class EventsConst
 {

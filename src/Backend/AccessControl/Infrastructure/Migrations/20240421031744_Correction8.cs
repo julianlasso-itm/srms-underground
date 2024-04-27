@@ -10,7 +10,7 @@ namespace AccessControl.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropIndex(
+                migrationBuilder.DropIndex(
                 name: "IX_tbl_user_usr_email",
                 table: "tbl_user");
 
