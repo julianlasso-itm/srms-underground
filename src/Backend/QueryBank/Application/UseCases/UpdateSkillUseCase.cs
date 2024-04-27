@@ -44,12 +44,13 @@ namespace QueryBank.Application.UseCases
 
         private UpdateQuestionApplicationResponse MapToResponse(UpdateQuestionDomainResponse question)
         {
-            return new UpdateQuestionApplicationResponse
-            {
-                QuestionId = question.QuestionId,
-                Name = question.Name,
-                Disabled = question.Disabled,
-            };
+            throw new System.NotImplementedException();
+            // return new UpdateQuestionApplicationResponse
+            // {
+            //     QuestionId = question.QuestionId,
+            //     Name = question.Name,
+            //     Disabled = question.Disabled,
+            // };
         }
 
         private async Task<TQuestionEntity> Persistence(UpdateQuestionApplicationResponse response)

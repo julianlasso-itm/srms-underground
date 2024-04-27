@@ -14,26 +14,28 @@ internal abstract class RegisterQuestionHelper
 {
     public static RegisterQuestionDomainResponse Execute(RegisterQuestionDomainRequest request)
     {
-        var @struct = GetQuestionStruct(request);
-        ValidateStructureFields(@struct);
+        throw new NotImplementedException();
+        // var @struct = GetQuestionStruct(request);
+        // ValidateStructureFields(@struct);
 
-        var role = new QuestionEntity();
-        role.Register(@struct.Name, @struct.Description);
+        // var role = new QuestionEntity();
+        // role.Register(@struct.Name, @struct.Description);
 
-        return new RegisterQuestionDomainResponse
-        {
-            QuestionId = role.QuestionId.Value,
-            Name = role.Name.Value,
-            Disabled = role.Disabled.Value,
-        };
+        // return new RegisterQuestionDomainResponse
+        // {
+        //     QuestionId = role.QuestionId.Value,
+        //     Name = role.Name.Value,
+        //     Disabled = role.Disabled.Value,
+        // };
     }
 
     private static QuestionStruct GetQuestionStruct(RegisterQuestionDomainRequest request)
     {
-        var name = new NameValueObject(request.Name);
-        var description =
-            request.Description != null ? new DescriptionValueObject(request.Description) : null;
+        throw new NotImplementedException();
+        // var name = new NameValueObject(request.Name);
+        // var description =
+        //     request.Description != null ? new DescriptionValueObject(request.Description) : null;
 
-        return new QuestionStruct { Name = name, Description = description };
+        // return new QuestionStruct { Name = name, Description = description };
     }
 }

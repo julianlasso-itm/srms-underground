@@ -9,8 +9,6 @@ namespace QueryBank.Domain.Aggregates;
 
 public class CatalogAggregateRoot : BaseAggregateRoot, ICatalogAggregateRoot
 {
-    public IAccountAggregate AccountAggregate { get; init; }
-
     public CatalogAggregateRoot(IEvent eventInterface)
         : base(eventInterface) { }
 

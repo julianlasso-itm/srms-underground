@@ -13,9 +13,10 @@ internal abstract class DeleteQuestionHelper
 {
     public static DeleteQuestionDomainResponse Execute(DeleteQuestionDomainRequest request)
     {
-        var @struct = GetQuestionStruct(request);
-        ValidateStructureFields(@struct);
-        return new DeleteQuestionDomainResponse { QuestionId = @struct.QuestionId.Value };
+        throw new NotImplementedException();
+        // var @struct = GetQuestionStruct(request);
+        // ValidateStructureFields(@struct);
+        // return new DeleteQuestionDomainResponse { QuestionId = @struct.QuestionId.Value };
     }
 
     private static QuestionStruct GetQuestionStruct(DeleteQuestionDomainRequest request)

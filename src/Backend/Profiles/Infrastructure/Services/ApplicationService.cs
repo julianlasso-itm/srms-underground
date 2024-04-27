@@ -1,27 +1,28 @@
 ﻿using Profiles.Application;
 using Profiles.Application.Repositories;
 using Profiles.Domain.Aggregates;
-using Profiles.Infrastructure.Messaging.Events;
 using Profiles.Infrastructure.Persistence.Models;
+using Shared.Infrastructure.Events;
 
-namespace Profiles.Infrastructure.Services
+namespace Profiles.Infrastructure.Services;
+
+public class ApplicationService
 {
-    public class ApplicationService
+    private readonly Application<RoleModel> _application;
+
+    public ApplicationService(
+        SharedEventHandler eventHandler,
+        IRoleRepository<RoleModel> roleRepository
+    )
     {
-        private readonly Application<Country, State, City, Skill, Professional, Role> _application;
-
-        public ApplicationService(RegisterSkillEvent registerSkillEvent,
-        ISkillRepository<Skill> skillRepository, IProfessionalRepository<Professional> professionalRepository)
+        _application = new Application<RoleModel>(roleRepository)
         {
-            _application = new Application<Country, State, City, Skill, Professional, Role>(skillRepository, professionalRepository)
-            {
-                AggregateRoot = new PersonnelAggregateRoot(registerSkillEvent)
-            };
-        }
+            AggregateRoot = new PersonnelAggregateRoot(eventHandler)
+        };
+    }
 
-        public Application<Country, State, City, Skill, Professional, Role> GetApplication()
-        {
-            return _application;
-        }
+    public Application<RoleModel> GetApplication()
+    {
+        return _application;
     }
 }

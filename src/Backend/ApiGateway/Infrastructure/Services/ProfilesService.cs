@@ -6,55 +6,46 @@ using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
 
 namespace ApiGateway.Infrastructure.Services
 {
-    public class ProfilesService: BaseServices<IProfilesServices>, IProfilesServices
+    public class ProfilesService : BaseServices<IProfilesServices>, IProfilesServices
     {
-
         const string UrlMicroservice = "http://localhost:5199";
 
         public ProfilesService(HttpClientHandler? httpClientHandler = null)
-        : base(httpClientHandler)
+            : base(httpClientHandler)
         {
             CreateChannel(UrlMicroservice);
         }
 
-        public Task<RegisterSkillResponse> RegisterSkillAsync(RegisterSkillRequest request, CallContext context = default)
+        public Task<RegisterRoleResponse> RegisterRoleAsync(
+            RegisterRoleRequest request,
+            CallContext context = default
+        )
         {
-           return Client.RegisterSkillAsync(request);
+            return Client.RegisterRoleAsync(request);
         }
 
-        public Task<DeleteSkillResponse> DeleteSkillAsync(DeleteSkillRequest request, CallContext context = default)
+        public Task<UpdateRoleResponse> UpdateRoleAsync(
+            UpdateRoleRequest request,
+            CallContext context = default
+        )
         {
-            return Client.DeleteSkillAsync(request);
+            return Client.UpdateRoleAsync(request);
         }
 
-        public Task<GetSkillsResponse> GetSkillAsync(GetSkillsRequest request, CallContext context = default)
+        public Task<DeleteRoleResponse> DeleteRoleAsync(
+            DeleteRoleRequest request,
+            CallContext context = default
+        )
         {
-            return Client.GetSkillAsync(request);
+            return Client.DeleteRoleAsync(request);
         }
 
-        public Task<UpdateSkillResponse> UpdateSkillRoleAsync(UpdateSkillRequest request, CallContext context = default)
+        public Task<GetRolesResponse> GetRolesAsync(
+            GetRolesRequest request,
+            CallContext context = default
+        )
         {
-            return Client.UpdateSkillRoleAsync(request);
-        }
-
-        public Task<DeleteProfessionalResponse> DeleteProfessionalAsync(DeleteProfessionalRequest request, CallContext context = default)
-        {
-            return Client.DeleteProfessionalAsync(request);
-        }
-
-        public Task<GetProfessionalResponse> GetProfessionalAsync(GetProfessionalsRequest request, CallContext context = default)
-        {
-            return Client.GetProfessionalAsync(request);
-        }
-
-        public Task<RegisterProfessionalResponse> RegisterProfessionalAsync(RegisterProfessionalRequest request, CallContext context = default)
-        {
-            return Client.RegisterProfessionalAsync(request);
-        }
-
-        public Task<UpdateProfessionalResponse> UpdateProfessionalAsync(UpdateProfessionalRequest request, CallContext context = default)
-        {
-            return Client.UpdateProfessionalAsync(request);
+            return Client.GetRolesAsync(request);
         }
     }
 }

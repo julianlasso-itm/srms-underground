@@ -6,15 +6,14 @@ using Shared.Infrastructure.Persistence.Repositories;
 
 namespace Profiles.Infrastructure.Persistence.Repositories
 {
-    public class RoleRepository : BaseRepository<Role>, IRoleRepository<Role>
+    public class RoleRepository : BaseRepository<RoleModel>, IRoleRepository<RoleModel>
     {
-        public RoleRepository(DbContext context) : base(context)
-        {
-        }
+        public RoleRepository(DbContext context)
+            : base(context) { }
 
-        public Task<Role> AddAsync(RegisterRoleApplicationResponse entity)
+        public Task<RoleModel> AddAsync(RegisterRoleApplicationResponse entity)
         {
-            var role = new Role
+            var role = new RoleModel
             {
                 RoleId = Guid.Parse(entity.RoleId),
                 Name = entity.Name,
@@ -24,9 +23,9 @@ namespace Profiles.Infrastructure.Persistence.Repositories
             return AddAsync(role);
         }
 
-        public Task<Role> UpdateAsync(Guid id, UpdateRoleApplicationResponse entity)
+        public Task<RoleModel> UpdateAsync(Guid id, UpdateRoleApplicationResponse entity)
         {
-            var role = new Role { RoleId = id };
+            var role = new RoleModel { RoleId = id };
             if (entity.Name != null)
             {
                 role.Name = entity.Name;

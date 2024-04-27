@@ -3,8 +3,6 @@ using Analytics.Application.Commands;
 using Analytics.Application.Repositories;
 using Analytics.Application.Responses;
 using Analytics.Domain.Aggregates.Constants;
-using Analytics.Domain.Aggregates.Dto.Requests;
-using Analytics.Domain.Aggregates.Dto.Responses;
 using Analytics.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 
@@ -28,36 +26,37 @@ public sealed class RegisterLevelUseCase<TEntity>
 
     public override async Task<RegisterLevelApplicationResponse> Handle(RegisterLevelCommand request)
     {
-        var newLevel = MapToRequestForDomain(request);
-        var level = AggregateRoot.RegisterLevel(newLevel);
-        var response = MapToResponse(level);
-        _ = await Persistence(response);
-        EmitEvent(Channel, JsonSerializer.Serialize(response));
-        return response;
+        throw new NotImplementedException();
+        // var newLevel = MapToRequestForDomain(request);
+        // var level = AggregateRoot.RegisterLevel(newLevel);
+        // var response = MapToResponse(level);
+        // _ = await Persistence(response);
+        // EmitEvent(Channel, JsonSerializer.Serialize(response));
+        // return response;
     }
 
-    private RegisterLevelDomainRequest MapToRequestForDomain(RegisterLevelCommand request)
-    {
-        return new RegisterLevelDomainRequest
-        {
-            Name = request.Name,
-            Description = request.Description,
-        };
-    }
+    // private RegisterLevelDomainRequest MapToRequestForDomain(RegisterLevelCommand request)
+    // {
+    //     return new RegisterLevelDomainRequest
+    //     {
+    //         Name = request.Name,
+    //         Description = request.Description,
+    //     };
+    // }
 
-    private RegisterLevelApplicationResponse MapToResponse(RegisterLevelDomainResponse role)
-    {
-        return new RegisterLevelApplicationResponse
-        {
-            LevelId = role.LevelId,
-            Name = role.Name,
-            Description = role.Description,
-            Disabled = role.Disabled,
-        };
-    }
+    // private RegisterLevelApplicationResponse MapToResponse(RegisterLevelDomainResponse role)
+    // {
+    //     return new RegisterLevelApplicationResponse
+    //     {
+    //         LevelId = role.LevelId,
+    //         Name = role.Name,
+    //         Description = role.Description,
+    //         Disabled = role.Disabled,
+    //     };
+    // }
 
-    private async Task<TEntity> Persistence(RegisterLevelApplicationResponse response)
-    {
-        return await _roleRepository.AddAsync(response);
-    }
+    // private async Task<TEntity> Persistence(RegisterLevelApplicationResponse response)
+    // {
+    //     return await _roleRepository.AddAsync(response);
+    // }
 }

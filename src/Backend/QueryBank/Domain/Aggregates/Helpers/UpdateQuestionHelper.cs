@@ -19,34 +19,35 @@ namespace QueryBank.Domain.Aggregates.Helpers
     {
         public static UpdateQuestionDomainResponse Execute(UpdateQuestionDomainRequest data)
         {
-            var @struct = GetQuestionStruct(data);
-            var skill = new QuestionEntity(@struct);
-            var response = new UpdateQuestionDomainResponse { QuestionId = question.QuestionId.Value };
+            throw new NotImplementedException();
+            // var @struct = GetQuestionStruct(data);
+            // var skill = new QuestionEntity(@struct);
+            // var response = new UpdateQuestionDomainResponse { QuestionId = question.QuestionId.Value };
 
-            if (data.Name != null)
-            {
-                var name = new NameValueObject(data.Name);
-                question.UpdateName(name);
-                response.Name = skill.Name.Value;
-            }
+            // if (data.Name != null)
+            // {
+            //     var name = new NameValueObject(data.Name);
+            //     question.UpdateName(name);
+            //     response.Name = skill.Name.Value;
+            // }
 
-            if (data.Disabled != null)
-            {
-                if (data.Disabled == true)
-                {
-                    question.Disable();
-                }
-                else
-                {
-                    question.Enable();
-                }
-                response.Disabled = question.Disabled.Value;
-            }
+            // if (data.Disabled != null)
+            // {
+            //     if (data.Disabled == true)
+            //     {
+            //         question.Disable();
+            //     }
+            //     else
+            //     {
+            //         question.Enable();
+            //     }
+            //     response.Disabled = question.Disabled.Value;
+            // }
 
-            ValidateStructureFields(question);
-            ValidateAmountDataToBeUpdated(response);
+            // ValidateStructureFields(question);
+            // ValidateAmountDataToBeUpdated(response);
 
-            return response;
+            // return response;
         }
 
         private static void ValidateAmountDataToBeUpdated(UpdateQuestionDomainResponse response)

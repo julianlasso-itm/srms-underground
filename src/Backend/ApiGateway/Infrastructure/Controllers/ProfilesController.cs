@@ -5,12 +5,10 @@ using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
 
 namespace ApiGateway.Infrastructure.Controllers
 {
-
     [ApiController]
     [Route("api/profiles")]
-    public class ProfilesController: BaseController
+    public class ProfilesController : BaseController
     {
-
         private readonly ProfilesService _profilesServices;
 
         public ProfilesController(ProfilesService profilesService)
@@ -18,80 +16,40 @@ namespace ApiGateway.Infrastructure.Controllers
             _profilesServices = profilesService;
         }
 
-        [HttpPost("skill")]
-        public async Task<IActionResult> RegisterSkillAsync([FromBody] RegisterSkillRequest request)
+        [HttpPost("role")]
+        public async Task<IActionResult> RegisterRoleAsync([FromBody] RegisterRoleRequest request)
         {
             return await HandleAsync(
-                async () => Ok(await _profilesServices.RegisterSkillAsync(request))
+                async () => Ok(await _profilesServices.RegisterRoleAsync(request))
             );
         }
 
-
-        [HttpPut("skill/{id}")]
-        public async Task<IActionResult> UpdateSkillAsync(
+        [HttpPut("role/{id}")]
+        public async Task<IActionResult> UpdateRoleAsync(
             string id,
-            [FromBody] UpdateSkillRequest request
+            [FromBody] UpdateRoleRequest request
         )
         {
-            request.SkillId = id;
+            request.RoleId = id;
             return await HandleAsync(
-                async () => Ok(await _profilesServices.UpdateSkillRoleAsync(request))
+                async () => Ok(await _profilesServices.UpdateRoleAsync(request))
             );
         }
 
-        [HttpDelete("skill/{id}")]
+        [HttpDelete("role/{id}")]
         public async Task<IActionResult> DeleteRoleAsync(string id)
         {
-            var request = new DeleteSkillRequest { SkillId = id };
+            var request = new DeleteRoleRequest { RoleId = id };
             return await HandleAsync(
-                async () => Ok(await _profilesServices.DeleteSkillAsync(request))
+                async () => Ok(await _profilesServices.DeleteRoleAsync(request))
             );
         }
 
-        [HttpGet("skills")]
-        public async Task<IActionResult> GetSkillsAsync([FromQuery] GetSkillsRequest request)
+        [HttpGet("roles")]
+        public async Task<IActionResult> GetRolesAsync([FromQuery] GetRolesRequest request)
         {
             return await HandleAsync(
-                async () => Ok(await _profilesServices.GetSkillAsync(request))
-            );
-        }
-
-
-        [HttpPost("professional")]
-        public async Task<IActionResult> RegisterProfessionalAsync([FromBody] RegisterProfessionalRequest request)
-        {
-            return await HandleAsync(
-                async () => Ok(await _profilesServices.RegisterProfessionalAsync(request))
-            );
-        }
-
-
-        [HttpPut("professional/{id}")]
-        public async Task<IActionResult> UpdateProfessionalAsync(
-            string id,
-            [FromBody] UpdateProfessionalRequest request
-        )
-        {
-            request.ProfessionalId = id;
-            return await HandleAsync(
-                async () => Ok(await _profilesServices.UpdateProfessionalAsync(request))
-            );
-        }
-
-        [HttpDelete("professional/{id}")]
-        public async Task<IActionResult> DeleteProfessionalAsync(string id)
-        {
-            var request = new DeleteProfessionalRequest { ProfessionalId = id };
-            return await HandleAsync(
-                async () => Ok(await _profilesServices.DeleteProfessionalAsync(request))
-            );
-        }
-
-        [HttpGet("professionals")]
-        public async Task<IActionResult> GetProfessionalsAsync([FromQuery] GetProfessionalsRequest request)
-        {
-            return await HandleAsync(
-                async () => Ok(await _profilesServices.GetProfessionalAsync(request))
+                async () => Ok(await _profilesServices.GetRolesAsync(request))
             );
         }
     }

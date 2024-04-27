@@ -22,6 +22,12 @@
       "request": "launch",
       "projectPath": "${workspaceFolder}/src/Backend/Analytics/Infrastructure/Analytics.Infrastructure.csproj",
     },
+    {
+      "name": "C#: Profiles Debug",
+      "type": "dotnet",
+      "request": "launch",
+      "projectPath": "${workspaceFolder}/src/Backend/Profiles/Infrastructure/Profiles.Infrastructure.csproj",
+    },
   ],
   "compounds": [
     {
@@ -30,7 +36,7 @@
         "C#: ApiGateway Debug",
         "C#: AccessControl Debug",
         "C#: Analytics Debug",
-        "probando commit"
+        "C#: Profiles Debug",
       ]
     }
   ]

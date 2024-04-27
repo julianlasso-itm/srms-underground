@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Profiles.Domain.ValueObjects;
+﻿using Profiles.Domain.ValueObjects;
 
-namespace Profiles.Domain.Entities.Structs
+namespace Profiles.Domain.Entities.Structs;
+
+internal struct RoleStruct
 {
-    public struct RoleStruct
-    {
-
-        public RolelIdValueObject RoleId { get; set; }
-        public NameValueObject Name { get; set; }
-        public DescriptionValueObject? Description { get; set; }
-        public DisabledValueObject Disabled { get; set; }
-    }
+    public RoleIdValueObject RoleId { get; set; }
+    public NameValueObject Name { get; set; }
+    public DescriptionValueObject? Description { get; set; }
+    public DisabledValueObject Disabled { get; set; }
 }

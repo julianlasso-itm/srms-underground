@@ -18,9 +18,7 @@ internal sealed class QuestionEntity
         Disabled = data.Disabled;
     }
 
-    public void Register(
-        NameValueObject name,
-    )
+    public void Register(NameValueObject name)
     {
         QuestionId = new QuestionIdValueObject(Guid.NewGuid().ToString());
         Name = name;

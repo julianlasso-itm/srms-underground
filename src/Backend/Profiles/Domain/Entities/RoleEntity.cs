@@ -22,7 +22,7 @@ internal sealed class RoleEntity
 
     public void Register(
         NameValueObject name,
-        DescriptionValueObject? description,
+        DescriptionValueObject? description = null
     )
     {
         RoleId = new RoleIdValueObject(Guid.NewGuid().ToString());
