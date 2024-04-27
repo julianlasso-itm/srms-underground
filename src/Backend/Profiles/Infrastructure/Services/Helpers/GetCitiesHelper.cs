@@ -41,7 +41,20 @@ internal class GetCitiesHelper : BaseHelperServiceInfrastructure
                     CityId = city.CityId.ToString(),
                     ProvinceId = city.ProvinceId.ToString(),
                     Name = city.Name,
-                    Disabled = city.Disabled
+                    Disabled = city.Disabled,
+                    Province = new Province
+                    {
+                        ProvinceId = city.Province.ProvinceId.ToString(),
+                        CountryId = city.Province.CountryId.ToString(),
+                        Name = city.Province.Name,
+                        Disabled = city.Province.Disabled,
+                        Country = new Country
+                        {
+                            CountryId = city.Province.Country.CountryId.ToString(),
+                            Name = city.Province.Country.Name,
+                            Disabled = city.Province.Country.Disabled
+                        }
+                    }
                 })
                 .ToList(),
             Total = data.Total

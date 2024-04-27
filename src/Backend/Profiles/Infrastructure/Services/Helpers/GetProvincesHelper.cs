@@ -41,7 +41,13 @@ internal class GetProvincesHelper : BaseHelperServiceInfrastructure
                     ProvinceId = province.ProvinceId.ToString(),
                     CountryId = province.CountryId.ToString(),
                     Name = province.Name,
-                    Disabled = province.Disabled
+                    Disabled = province.Disabled,
+                    Country = new Country
+                    {
+                        CountryId = province.Country.CountryId.ToString(),
+                        Name = province.Country.Name,
+                        Disabled = province.Country.Disabled
+                    }
                 })
                 .ToList(),
             Total = data.Total

@@ -22,6 +22,7 @@ internal class UpdateProvinceHelper : BaseHelperServiceInfrastructure
         return new UpdateProvinceCommand
         {
             ProvinceId = request.ProvinceId!,
+            CountryId = request.CountryId,
             Name = request.Name,
             Disable = request.Disable
         };
