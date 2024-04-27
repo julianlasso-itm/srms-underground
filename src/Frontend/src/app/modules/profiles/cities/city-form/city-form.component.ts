@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HttpParams } from '@angular/common/http';
 import {
   Component,
   EventEmitter,
@@ -17,22 +18,23 @@ import {
 } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Constant } from '../../../shared/constants/constants';
 import { HttpService } from '../../../shared/services/http.service';
 import { ReloadDataService } from '../../../shared/services/reload-data.service';
 import { SharedModule } from '../../../shared/shared.module';
-import { IProvince } from '../province/province.interface';
-import { HttpParams } from '@angular/common/http';
 import { ICountry } from '../../countries/country/country.interface';
+import { IProvince } from '../../provinces/province/province.interface';
+import { ICity } from '../city/city.interface';
 
-const URL_PROVINCE = `${Constant.URL_BASE}${Constant.URL_PROVINCE}`;
+const URL_CITY = `${Constant.URL_BASE}${Constant.URL_CITY}`;
+const URL_GET_PROVINCES = `${Constant.URL_BASE}${Constant.URL_GET_PROVINCES}`;
 const URL_GET_COUNTRIES = `${Constant.URL_BASE}${Constant.URL_GET_COUNTRIES}`;
 
 @Component({
-  selector: 'srms-province-form',
+  selector: 'srms-city-form',
   standalone: true,
   imports: [
     CommonModule,
@@ -44,15 +46,16 @@ const URL_GET_COUNTRIES = `${Constant.URL_BASE}${Constant.URL_GET_COUNTRIES}`;
     ReactiveFormsModule,
     SharedModule,
   ],
-  templateUrl: './province-form.component.html',
-  styleUrl: './province-form.component.scss',
+  templateUrl: './city-form.component.html',
+  styleUrl: './city-form.component.scss',
 })
-export class ProvinceFormComponent implements OnInit {
-  @Input() province: Signal<IProvince | null> = signal(null);
-  @Output('frmProvince') form: EventEmitter<Signal<FormGroup>>;
-  public frmProvince: Signal<FormGroup>;
+export class CityFormComponent implements OnInit {
+  @Input() city: Signal<ICity | null> = signal(null);
+  @Output('frmCity') form: EventEmitter<Signal<FormGroup>>;
+  public frmCity: Signal<FormGroup>;
   private regexp =
     '^[0-9A-Za-z]{8}-[0-9A-Za-z]{4}-4[0-9A-Za-z]{3}-[89ABab][0-9A-Za-z]{3}-[0-9A-Za-z]{12}$';
+  provinces: IProvince[];
   countries: ICountry[];
 
   constructor(
@@ -60,52 +63,67 @@ export class ProvinceFormComponent implements OnInit {
     public httpService: HttpService,
     public reloadDataService: ReloadDataService
   ) {
+    this.provinces = [];
     this.countries = [];
-    this.frmProvince = signal(
+    this.frmCity = signal(
       new FormGroup({
         name: new FormControl('', [
           Validators.required,
           Validators.maxLength(50),
         ]),
         countryId: new FormControl('', [Validators.required]),
+        provinceId: new FormControl('', [Validators.required]),
       })
     );
     this.form = new EventEmitter<Signal<FormGroup>>();
   }
 
   ngOnInit(): void {
-    if (this.province()?.provinceId !== undefined) {
-      this.frmProvince().setControl(
-        'provinceId',
-        new FormControl(this.province()?.provinceId, [
+    if (this.city()?.cityId !== undefined) {
+      this.frmCity().setControl(
+        'cityId',
+        new FormControl(this.city()?.cityId, [
           Validators.required,
           Validators.pattern(this.regexp),
         ])
       );
-      this.frmProvince().get('name')?.setValue(this.province()?.name);
-      this.frmProvince().get('countryId')?.setValue(this.province()?.countryId);
-      this.frmProvince().setControl(
+      this.frmCity().get('name')?.setValue(this.city()?.name);
+      this.frmCity()
+        .get('countryId')
+        ?.setValue(this.city()?.province.countryId);
+      this.frmCity().get('provinceId')?.setValue(this.city()?.provinceId);
+      this.frmCity().setControl(
         'disabled',
-        new FormControl<boolean>(!this.province()?.disabled || false)
+        new FormControl<boolean>(!this.city()?.disabled || false)
       );
+      this.loadProvinces(this.city()?.province.countryId.countryId ?? '');
     }
-    this.form.emit(computed(() => this.frmProvince()));
     this.loadCountries();
+    this.form.emit(computed(() => this.frmCity()));
   }
 
   onSubmit(): void {
-    if (this.frmProvince().valid) {
-      if (this.province()?.provinceId === undefined) {
-        this.createProvince();
+    if (this.frmCity().valid) {
+      if (this.city()?.cityId === undefined) {
+        this.createCity();
       } else {
-        this.updateProvince();
+        this.updateCity();
       }
     }
   }
 
-  private createProvince(): void {
-    const body = this.frmProvince().value;
-    this.httpService.post(URL_PROVINCE, body).subscribe({
+  onCountryChange(event: MatSelectChange): void {
+    if (event.value === undefined || event.value === '') {
+      this.provinces = [];
+    } else {
+      this.loadProvinces(event.value);
+    }
+    this.frmCity().get('provinceId')?.setValue('');
+  }
+
+  private createCity(): void {
+    const body = this.frmCity().value;
+    this.httpService.post(URL_CITY, body).subscribe({
       next: (response) => {
         console.log(response);
         this.reloadDataService.reload();
@@ -120,13 +138,14 @@ export class ProvinceFormComponent implements OnInit {
     });
   }
 
-  private updateProvince(): void {
-    const body = this.frmProvince().value;
+  private updateCity(): void {
+    const body = this.frmCity().value;
     body.disable = !body.disabled;
     delete body.disabled;
 
-    const url = `${URL_PROVINCE}/${this.province()?.provinceId}`;
-    delete body.provinceId;
+    const url = `${URL_CITY}/${this.city()?.cityId}`;
+    delete body.cityId;
+    delete body.countryId;
 
     this.httpService.put(url, body).subscribe({
       next: (response) => {
@@ -144,13 +163,41 @@ export class ProvinceFormComponent implements OnInit {
   }
 
   private loadCountries(): void {
-    this.frmProvince().disable();
+    this.frmCity().disable();
     let params = new HttpParams().append('Page', 1).append('Limit', 9999999);
     this.httpService.get(URL_GET_COUNTRIES, params).subscribe({
       next: (response: any) => {
         console.log(response);
         this.countries = response.countries;
-        this.frmProvince().enable();
+        this.frmCity().enable();
+      },
+      error: (error) => {
+        console.error(error);
+        this.handleException(error);
+      },
+      complete: () => {
+        console.log('complete');
+      },
+    });
+  }
+
+  private loadProvinces(countryId: string): void {
+    this.frmCity().disable();
+    let params: HttpParams;
+    if (countryId === '') {
+      params = new HttpParams().append('Page', 1).append('Limit', 9999999);
+    } else {
+      params = new HttpParams()
+        .append('Page', 1)
+        .append('Limit', 9999999)
+        .append('Filter', countryId)
+        .append('FilterBy', 'CountryId');
+    }
+    this.httpService.get(URL_GET_PROVINCES, params).subscribe({
+      next: (response: any) => {
+        console.log(response);
+        this.provinces = response.provinces;
+        this.frmCity().enable();
       },
       error: (error) => {
         console.error(error);

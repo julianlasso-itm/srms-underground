@@ -136,7 +136,7 @@ export class CountryFormComponent implements OnInit {
 
   private handleException(error: any): void {
     const errorMessages = new Map([
-      ['409_23505', 'El país que intentas crear ya existe'],
+      ['409_23505', 'El registro ya existe'],
       [
         '409_23503',
         'No es posible eliminar un registro porque tiene otros registros asociados',

@@ -11,4 +11,9 @@ export const profilesRoutes: Routes = [
     loadChildren: () =>
       import('./provinces/provinces.module').then((m) => m.ProvincesModule),
   },
+  {
+    path: 'cities',
+    loadChildren: () =>
+      import('./cities/cities.module').then((m) => m.CitiesModule),
+  },
 ];

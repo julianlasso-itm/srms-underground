@@ -20,8 +20,8 @@
       <mat-label>País</mat-label>
       <mat-select formControlName="countryId">
         <mat-option>Seleccione un país</mat-option>
-        @for (food of countries; track food) {
-        <mat-option [value]="food.countryId">{{food.name}}</mat-option>
+        @for (country of countries; track country) {
+        <mat-option [value]="country.countryId">{{country.name}}</mat-option>
         }
       </mat-select>
       @if (frmProvince().get('countryId')?.errors?.['required']) {
