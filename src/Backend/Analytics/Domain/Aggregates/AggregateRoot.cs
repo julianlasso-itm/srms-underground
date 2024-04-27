@@ -1,4 +1,4 @@
-using Analytics.Domain.Aggregates.Dto;
+﻿using Analytics.Domain.Aggregates.Dto;
 using Analytics.Domain.Aggregates.Helpers;
 using Analytics.Domain.Aggregates.Interfaces;
 using Shared.Domain.Aggregate.Base;

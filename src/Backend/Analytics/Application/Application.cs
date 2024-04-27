@@ -6,23 +6,46 @@ using Analytics.Domain.Aggregates.Interfaces;
 
 namespace Analytics.Application;
 
-public class Application<TQuestionEntity>
+public class Application<TLevelEntity, TQuestionEntity>
     where TQuestionEntity : class
+    where TLevelEntity : class
 {
-    public required ISecurityAggregateRoot AggregateRoot { get; init; }
+    public required IAggregateRoot AggregateRoot { get; init; }
 
     private readonly IQuestionRepository<TQuestionEntity> _questionRepository;
+    private readonly ILevelRepository<TLevelEntity> _levelRepository;
 
     public Application(
-        IQuestionRepository<TQuestionEntity> questionRepository,
+               ILevelRepository<TLevelEntity> levelRepository,
+               IQuestionRepository<TQuestionEntity> questionRepository
     )
     {
+        _levelRepository = levelRepository;
         _questionRepository = questionRepository;
+    }
+
+    public Application(ILevelRepository<TLevelEntity> levelRepository, IQuestionRepository<TQuestionEntity> questionRepository,
+    )
+    {
+        _levelRepository = levelRepository;
+        _questionRepository = questionRepository;
+    }
+
+    public Task<RegisterLevelApplicationResponse> RegisterLevel(RegisterLevelCommand request)
+    {
+        var useCase = new RegisterLevelUseCase<TLevelEntity>(AggregateRoot, _levelRepository);
+        return useCase.Handle(request);
     }
 
     public Task<RegisterQuestionApplicationResponse> RegisterQuestion(RegisterQuestionCommand request)
     {
         var useCase = new RegisterQuestionUseCase<TQuestionEntity>(AggregateRoot, _questionRepository);
+        return useCase.Handle(request);
+    }
+
+    public Task<UpdateLevelApplicationResponse> UpdateLevel(UpdateLevelCommand request)
+    {
+        var useCase = new UpdateLevelUseCase<TLevelEntity>(AggregateRoot, _levelRepository);
         return useCase.Handle(request);
     }
 

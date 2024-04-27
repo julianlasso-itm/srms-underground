@@ -11,7 +11,7 @@ using Shared.Application.Base;
 namespace Analytics.Application.UseCases;
 
 public sealed class RegisterQuestionUseCase<TEntity>
-    : BaseUseCase<RegisterQuestionCommand, RegisterQuestionApplicationResponse, ISecurityAggregateRoot>
+    : BaseUseCase<RegisterQuestionCommand, RegisterQuestionApplicationResponse, IAggregateRoot>
     where TEntity : class
 {
     private readonly IQuestionRepository<TEntity> _roleRepository;
