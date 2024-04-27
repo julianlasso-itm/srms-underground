@@ -8,4 +8,8 @@ public interface IPersonnelAggregateRoot : IAggregateRoot {
     public DeleteSkillDomainResponse DeleteSkill(DeleteSkillDomainRequest dataDeleteSkill);
     public RegisterSkillDomainResponse RegisterSkill(RegisterSkillDomainRequest skillData);
     public UpdateSkillDomainResponse UpdateSkill(UpdateSkillDomainRequest dataUpdateSkill);
+
+    public RegisterProfessionalDomainResponse RegisterProfessional(RegisterProfessionalDomainRequest dataRegisterProfessional);
+    public DeleteProfessionalDomainResponse DeleteProfessional(DeleteProfessionalDomainRequest dataDeleteProfessional);
+    public UpdateProfessionalDomainResponse UpdateProfessional(UpdateProfessionalDomainRequest dataUpdateProfessional);
 }

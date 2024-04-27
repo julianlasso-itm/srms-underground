@@ -36,5 +36,25 @@ namespace ApiGateway.Infrastructure.Services
         {
             return Client.UpdateSkillRoleAsync(request);
         }
+
+        public Task<DeleteProfessionalResponse> DeleteProfessionalAsync(DeleteProfessionalRequest request, CallContext context = default)
+        {
+            return Client.DeleteProfessionalAsync(request);
+        }
+
+        public Task<GetProfessionalResponse> GetProfessionalAsync(GetProfessionalsRequest request, CallContext context = default)
+        {
+            return Client.GetProfessionalAsync(request);
+        }
+
+        public Task<RegisterProfessionalResponse> RegisterProfessionalAsync(RegisterProfessionalRequest request, CallContext context = default)
+        {
+            return Client.RegisterProfessionalAsync(request);
+        }
+
+        public Task<UpdateProfessionalResponse> UpdateProfessionalAsync(UpdateProfessionalRequest request, CallContext context = default)
+        {
+            return Client.UpdateProfessionalAsync(request);
+        }
     }
 }

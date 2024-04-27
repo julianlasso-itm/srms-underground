@@ -1,6 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-
-using Profiles.Domain.Aggregates.Constants;
+﻿using Profiles.Domain.Aggregates.Constants;
 using Profiles.Application.Repositories;
 using Profiles.Domain.Aggregates.Interfaces;
 using Profiles.Infrastructure.Services.helpers;

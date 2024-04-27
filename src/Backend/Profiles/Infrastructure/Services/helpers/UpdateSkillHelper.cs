@@ -9,9 +9,9 @@ namespace Profiles.Infrastructure.Services.helpers
     internal static class UpdateSkillHelper
     {
 
-        private static Application<Country, State, City, Skill> s_application;
+        private static Application<Country, State, City, Skill, Professional> s_application;
 
-        public static void SetApplication(Application<Country, State, City, Skill> application)
+        public static void SetApplication(Application<Country, State, City, Skill, Professional> application)
         {
             s_application = application;
         }
