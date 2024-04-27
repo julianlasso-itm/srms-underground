@@ -27,6 +27,12 @@ namespace Profiles.Infrastructure.Services
             return await DeleteSkillHelper.DeleteSkillAsync(request);
         }
 
+        public async Task<DeleteRoleResponse> DeleteRoleAsync(DeleteRoleRequest request, CallContext context = default)
+        {
+            DeleteRoleHelper.SetApplication(_applicationService.GetApplication());
+            return await DeleteRoleHelper.DeleteRoleAsync(request);
+        }
+
         public async Task<GetProfessionalResponse> GetProfessionalAsync(GetProfessionalsRequest request, CallContext context = default)
         {
             GetProfessionalHelper.SetApplication(_applicationService.GetApplication());
@@ -37,6 +43,12 @@ namespace Profiles.Infrastructure.Services
         {
             GetSkillsHelper.SetApplication(_applicationService.GetApplication());
             return await GetSkillsHelper.GetSkillsAsync(request);
+        }
+
+        public async Task<GetRoleResponse> GetRoleAsync(GetRoleRequest request, CallContext context = default)
+        {
+            GetRoleHelper.SetApplication(_applicationService.GetApplication());
+            return await GetRoleHelper.GetRoleAsync(request);
         }
 
         public async Task<RegisterProfessionalResponse> RegisterProfessionalAsync(RegisterProfessionalRequest request, CallContext context = default)
@@ -51,6 +63,12 @@ namespace Profiles.Infrastructure.Services
             return await RegisterSkillHelper.RegisterSkillAsync(request);
         }
 
+        public async Task<RegisterRoleResponse> RegisterRoleAsync(RegisterRoleRequest request, CallContext context = default)
+        {
+            RegisterRoleHelper.SetApplication(_applicationService.GetApplication());
+            return await RegisterRoleHelper.RegisterRoleAsync(request);
+        }
+
         public async Task<UpdateProfessionalResponse> UpdateProfessionalAsync(UpdateProfessionalRequest request, CallContext context = default)
         {
             UpdateProfessionalHelper.SetApplication(_applicationService.GetApplication());
@@ -62,6 +80,11 @@ namespace Profiles.Infrastructure.Services
             UpdateSkillHelper.SetApplication(_applicationService.GetApplication());
             return await UpdateSkillHelper.UpdateSkillAsync(request);
         }
-       
+
+        public async Task<UpdateRoleResponse> UpdateRoleAsync(UpdateRoleRequest request, CallContext context = default)
+        {
+            UpdateRoleHelper.SetApplication(_applicationService.GetApplication());
+            return await UpdateRoleHelper.UpdateRoleAsync(request);
+        }
     }
 }

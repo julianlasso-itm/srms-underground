@@ -7,6 +7,8 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<Skill> Skills { get; set; }
 
+    public DbSet<Role> Roles { get; set; }
+
     public DbSet<Country> Countries { get; set; }
 
     public DbSet<City> Cities { get; set; }
@@ -21,6 +23,7 @@ public class ApplicationDbContext : DbContext
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<Professional>().HasIndex(c => c.Name).IsUnique();
         modelBuilder.Entity<Skill>().HasIndex(c => c.Name).IsUnique();
+        modelBuilder.Entity<Role>().HasIndex(c => c.Name).IsUnique();
         modelBuilder.Entity<Country>().HasIndex(c => c.Name).IsUnique();
         modelBuilder.Entity<City>().HasIndex(c => new { c.StateId, c.Name }).IsUnique();
         modelBuilder.Entity<State>().HasIndex(c => new { c.CountryId, c.Name }).IsUnique();

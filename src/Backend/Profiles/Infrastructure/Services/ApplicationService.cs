@@ -8,18 +8,18 @@ namespace Profiles.Infrastructure.Services
 {
     public class ApplicationService
     {
-        private readonly Application<Country, State, City, Skill, Professional> _application;
+        private readonly Application<Country, State, City, Skill, Professional, Role> _application;
 
         public ApplicationService(RegisterSkillEvent registerSkillEvent,
         ISkillRepository<Skill> skillRepository, IProfessionalRepository<Professional> professionalRepository)
         {
-            _application = new Application<Country, State, City, Skill, Professional>(skillRepository, professionalRepository)
+            _application = new Application<Country, State, City, Skill, Professional, Role>(skillRepository, professionalRepository)
             {
                 AggregateRoot = new PersonnelAggregateRoot(registerSkillEvent)
             };
         }
 
-        public Application<Country, State, City, Skill, Professional> GetApplication()
+        public Application<Country, State, City, Skill, Professional, Role> GetApplication()
         {
             return _application;
         }

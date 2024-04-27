@@ -8,12 +8,13 @@ using Profiles.Infrastructure.Services.helpers;
 
 namespace Profiles.Application;
 
-public class Application<TCountryEntity, TProvinceEntity, TCityEntity, TSkillEntity, TProfessionalEntity>
+public class Application<TCountryEntity, TProvinceEntity, TCityEntity, TSkillEntity, TProfessionalEntity, TRoleEntity>
     where TCountryEntity : class
     where TProvinceEntity : class
     where TCityEntity : class
     where TSkillEntity : class
     where TProfessionalEntity : class
+    where TRoleEntity : class
 {
     public required IPersonnelAggregateRoot AggregateRoot { get; init; }
 
@@ -22,6 +23,7 @@ public class Application<TCountryEntity, TProvinceEntity, TCityEntity, TSkillEnt
     private readonly ICityRepository<TCityEntity> _cityRepository;
     private readonly ISkillRepository<TSkillEntity> _skillRepository;
     private readonly IProfessionalRepository<TProfessionalEntity> _professionalRepository;
+    private readonly IRoleRepository<TRoleEntity> _roleRepository;
 
     public Application(
         ICountryRepository<TCountryEntity> countryRepository,
@@ -29,6 +31,7 @@ public class Application<TCountryEntity, TProvinceEntity, TCityEntity, TSkillEnt
         ICityRepository<TCityEntity> cityRepository,
         ISkillRepository<TSkillEntity> skillRepository,
         IProfessionalRepository<TProfessionalEntity> professionalRepository
+        IRoleRepository<TRoleEntity> roleRepository
     )
     {
         _skillRepository = skillRepository;
@@ -36,12 +39,14 @@ public class Application<TCountryEntity, TProvinceEntity, TCityEntity, TSkillEnt
         _provinceRepository = provinceRepository;
         _cityRepository = cityRepository;
         _professionalRepository = professionalRepository;
+        _roleRepository = roleRepository;
     }
 
-    public Application(ISkillRepository<TSkillEntity> skillRepository, IProfessionalRepository<TProfessionalEntity> professionalRepository)
+    public Application(ISkillRepository<TSkillEntity> skillRepository, IProfessionalRepository<TProfessionalEntity> professionalRepository, IRoleRepository<TRoleEntity> roleRepository)
     {
         _skillRepository = skillRepository;
         _professionalRepository = professionalRepository;
+        _roleRepository = roleRepository;
     }
 
     public Task<RegisterCountryApplicationResponse> RegisterCountry(RegisterCountryCommand request)
@@ -95,6 +100,30 @@ public class Application<TCountryEntity, TProvinceEntity, TCityEntity, TSkillEnt
     public Task<UpdateProfessionalApplicationResponse> UpdateProfessional(UpdateProfessionalCommand request)
     {
         var useCase = new UpdateProfessionalUseCase<TProfessionalEntity>(AggregateRoot, _professionalRepository);
+        return useCase.Handle(request);
+    }
+
+    public Task<RegisterRoleApplicationResponse> RegisterRole(RegisterRoleCommand request)
+    {
+        var useCase = new RegisterRoleUseCase<TRoleEntity>(AggregateRoot, _roleRepository);
+        return useCase.Handle(request);
+    }
+
+    public Task<UpdateRoleApplicationResponse> UpdateRole(UpdateRoleCommand request)
+    {
+        var useCase = new UpdateRoleUseCase<TRoleEntity>(AggregateRoot, _roleRepository);
+        return useCase.Handle(request);
+    }
+
+    public Task<DeleteRoleApplicationResponse> DeleteRole(DeleteRoleCommand request)
+    {
+        var useCase = new DeleteRoleUseCase<TRoleEntity>(AggregateRoot, _roleRepository);
+        return useCase.Handle(request);
+    }
+
+    public Task<GetRolesApplicationResponse<TRoleEntity>> GetRoles(GetRolesCommand request)
+    {
+        var useCase = new GetRolesUseCase<TRoleEntity>(AggregateRoot, _roleRepository);
         return useCase.Handle(request);
     }
 }

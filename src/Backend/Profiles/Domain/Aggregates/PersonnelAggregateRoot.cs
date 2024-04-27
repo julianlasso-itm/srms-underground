@@ -43,4 +43,19 @@ public class PersonnelAggregateRoot : BaseAggregateRoot, IPersonnelAggregateRoot
     {
         return UpdateProfessionalHelper.Execute(dataUpdateProfessional);
     }
+
+    public RegisterRoleDomainResponse RegisterRole(RegisterRoleDomainRequest roleData)
+    {
+        return RegisterRoleHelper.Execute(roleData);
+    }
+
+    public DeleteRoleDomainResponse DeleteRole(DeleteRoleDomainRequest dataDeleteRole)
+    {
+        return DeleteRoleHelper.Execute(dataDeleteRole);
+    }
+
+    public UpdateRoleDomainResponse UpdateRole(UpdateRoleDomainRequest dataUpdateRole)
+    {
+        return UpdateRoleHelper.Execute(dataUpdateRole);
+    }
 }

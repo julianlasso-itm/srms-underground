@@ -12,4 +12,8 @@ public abstract class EventsConst
     public const string EventProfessionalUpdated = "ProfessionalUpdated";
     public const string EventProfessionalRegistered = "ProfessionalRegistered";
     public const string EventProfessionalDeleted = "ProfessionalDeleted";
+
+    public const string EventRoleRegistered = "RoleRegistered";
+    public const string EventRoleDeleted = "RoleDeleted";
+    public const string EventRoleUpdated = "RoleUpdated";
 }

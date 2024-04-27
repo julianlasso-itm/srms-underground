@@ -12,4 +12,8 @@ public interface IPersonnelAggregateRoot : IAggregateRoot {
     public RegisterProfessionalDomainResponse RegisterProfessional(RegisterProfessionalDomainRequest dataRegisterProfessional);
     public DeleteProfessionalDomainResponse DeleteProfessional(DeleteProfessionalDomainRequest dataDeleteProfessional);
     public UpdateProfessionalDomainResponse UpdateProfessional(UpdateProfessionalDomainRequest dataUpdateProfessional);
+
+    public DeleteRoleDomainResponse DeleteRole(DeleteRoleDomainRequest dataDeleteRole);
+    public RegisterRoleDomainResponse RegisterRole(RegisterRoleDomainRequest roleData);
+    public UpdateRoleDomainResponse UpdateRole(UpdateRoleDomainRequest dataUpdateRole);
 }
