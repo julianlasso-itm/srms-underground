@@ -11,6 +11,31 @@ public class CityRepository : BaseRepository<CityModel>, ICityRepository<CityMod
     public CityRepository(DbContext context)
         : base(context) { }
 
+    public new async Task<IEnumerable<CityModel>> GetWithPaginationAsync(
+        int page,
+        int limit,
+        string? sort = null,
+        string order = "asc",
+        string? filter = null,
+        string? filterBy = null
+    )
+    {
+        var data = await base.GetWithPaginationAsync(page, limit, sort, order, filter, filterBy);
+        data.ToList()
+            .ForEach(city =>
+            {
+                if (Context.Entry(city).Reference(c => c.Province).IsLoaded == false)
+                {
+                    Context.Entry(city).Reference(c => c.Province).Load();
+                    if (Context.Entry(city.Province).Reference(p => p.Country).IsLoaded == false)
+                    {
+                        Context.Entry(city.Province).Reference(p => p.Country).Load();
+                    }
+                }
+            });
+        return data;
+    }
+
     public Task<CityModel> AddAsync(RegisterCityApplicationResponse entity)
     {
         var city = new CityModel

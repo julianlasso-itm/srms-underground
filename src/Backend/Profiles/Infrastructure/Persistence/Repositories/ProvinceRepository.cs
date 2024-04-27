@@ -11,6 +11,27 @@ public class ProvinceRepository : BaseRepository<ProvinceModel>, IProvinceReposi
     public ProvinceRepository(DbContext context)
         : base(context) { }
 
+    public new async Task<IEnumerable<ProvinceModel>> GetWithPaginationAsync(
+        int page,
+        int limit,
+        string? sort = null,
+        string order = "asc",
+        string? filter = null,
+        string? filterBy = null
+    )
+    {
+        var data = await base.GetWithPaginationAsync(page, limit, sort, order, filter, filterBy);
+        data.ToList()
+            .ForEach(province =>
+            {
+                if (Context.Entry(province).Reference(p => p.Country).IsLoaded == false)
+                {
+                    Context.Entry(province).Reference(p => p.Country).Load();
+                }
+            });
+        return data;
+    }
+
     public Task<ProvinceModel> AddAsync(RegisterProvinceApplicationResponse entity)
     {
         var province = new ProvinceModel
