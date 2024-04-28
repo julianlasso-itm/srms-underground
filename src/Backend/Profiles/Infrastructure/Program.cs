@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Profiles.Application.Repositories;
-using Profiles.Infrastructure.Messaging.Events;
 using Profiles.Infrastructure.Persistence.Models;
 using Profiles.Infrastructure.Persistence.Repositories;
 using Profiles.Infrastructure.Services;
 using ProtoBuf.Grpc.Server;
+using Shared.Infrastructure.Events;
 using Shared.Infrastructure.Interceptors;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,14 +25,15 @@ builder.Services.AddScoped<ISkillRepository<Skill>, SkillRepository>(serviceProv
     var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
     return new SkillRepository(dbContext);
 });
-builder.Services.AddScoped<IProfessionalRepository<Professional>, ProfessionalRepository>(serviceProvider =>
-{
-    var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
-    return new ProfessionalRepository(dbContext);
-});
+builder.Services.AddScoped<IProfessionalRepository<Professional>, ProfessionalRepository>(
+    serviceProvider =>
+    {
+        var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
+        return new ProfessionalRepository(dbContext);
+    }
+);
 
-builder.Services.AddScoped<RegisterSkillEvent>();
-builder.Services.AddScoped<RegisterProfessionalEvent>();
+builder.Services.AddScoped<SharedEventHandler>();
 builder.Services.AddScoped<ApplicationService>();
 
 // Add services to the container.
@@ -42,8 +43,6 @@ builder.Services.AddCodeFirstGrpc(options =>
 {
     options.Interceptors.Add<ErrorHandlingInterceptor>();
 });
-
-
 
 var app = builder.Build();
 

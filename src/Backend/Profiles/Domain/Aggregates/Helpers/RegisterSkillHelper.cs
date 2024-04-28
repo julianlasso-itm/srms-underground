@@ -8,7 +8,9 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace Profiles.Domain.Aggregates.Helpers
 {
-    public class RegisterSkillHelper : BaseHelper, IHelper<RegisterSkillDomainRequest, RegisterSkillDomainResponse>
+    public class RegisterSkillHelper
+        : BaseHelper,
+            IHelper<RegisterSkillDomainRequest, RegisterSkillDomainResponse>
     {
         public static RegisterSkillDomainResponse Execute(RegisterSkillDomainRequest data)
         {

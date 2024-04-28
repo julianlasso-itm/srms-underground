@@ -1,5 +1,5 @@
 ﻿
-using Profiles.Infrastructure.Services.helpers;
+using Profiles.Infrastructure.Services.Helpers;
 using ProtoBuf.Grpc;
 using Shared.Infrastructure.ProtocolBuffers.Profiles;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
@@ -62,6 +62,6 @@ namespace Profiles.Infrastructure.Services
             UpdateSkillHelper.SetApplication(_applicationService.GetApplication());
             return await UpdateSkillHelper.UpdateSkillAsync(request);
         }
-       
+
     }
 }

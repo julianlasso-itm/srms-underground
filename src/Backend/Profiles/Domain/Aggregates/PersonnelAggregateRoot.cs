@@ -9,8 +9,6 @@ namespace Profiles.Domain.Aggregates;
 
 public class PersonnelAggregateRoot : BaseAggregateRoot, IPersonnelAggregateRoot
 {
-    public IAccountAggregate AccountAggregate { get; init; }
-
     public PersonnelAggregateRoot(IEvent eventInterface)
         : base(eventInterface) { }
 
@@ -29,17 +27,23 @@ public class PersonnelAggregateRoot : BaseAggregateRoot, IPersonnelAggregateRoot
         return UpdateSkillHelper.Execute(dataUpdateSkill);
     }
 
-    public RegisterProfessionalDomainResponse RegisterProfessional(RegisterProfessionalDomainRequest dataRegisterProfessional)
+    public RegisterProfessionalDomainResponse RegisterProfessional(
+        RegisterProfessionalDomainRequest dataRegisterProfessional
+    )
     {
         return RegisterProfessionalHelper.Execute(dataRegisterProfessional);
     }
 
-    public DeleteProfessionalDomainResponse DeleteProfessional(DeleteProfessionalDomainRequest dataDeleteProfessional)
+    public DeleteProfessionalDomainResponse DeleteProfessional(
+        DeleteProfessionalDomainRequest dataDeleteProfessional
+    )
     {
         return DeleteProfessionalHelper.Execute(dataDeleteProfessional);
     }
 
-    public UpdateProfessionalDomainResponse UpdateProfessional(UpdateProfessionalDomainRequest dataUpdateProfessional)
+    public UpdateProfessionalDomainResponse UpdateProfessional(
+        UpdateProfessionalDomainRequest dataUpdateProfessional
+    )
     {
         return UpdateProfessionalHelper.Execute(dataUpdateProfessional);
     }

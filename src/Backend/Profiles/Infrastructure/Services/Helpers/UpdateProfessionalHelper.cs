@@ -1,29 +1,25 @@
-﻿using Profiles.Application;
-using Profiles.Application.Commands;
+﻿using Profiles.Application.Commands;
 using Profiles.Application.Responses;
-using Profiles.Infrastructure.Persistence.Models;
+using Profiles.Infrastructure.Services.Helpers.Base;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
 
-namespace Profiles.Infrastructure.Services.helpers
+namespace Profiles.Infrastructure.Services.Helpers
 {
-    public class UpdateProfessionalHelper
+    public class UpdateProfessionalHelper : BaseHelperServiceInfrastructure
     {
-        private static Application<Country, State, City, Skill, Professional> s_application;
-
-        public static void SetApplication(Application<Country, State, City, Skill, Professional> application)
-        {
-            s_application = application;
-        }
-
-        public static async Task<UpdateProfessionalResponse> UpdateProfessionalAsync(UpdateProfessionalRequest request)
+        public static async Task<UpdateProfessionalResponse> UpdateProfessionalAsync(
+            UpdateProfessionalRequest request
+        )
         {
             var newUserCommand = MapToUpdateProfessionalCommand(request);
-            var data = await s_application.UpdateProfessional(newUserCommand);
+            var data = await Application.UpdateProfessional(newUserCommand);
             return MapToUpdateProfessionalResponse(data);
         }
 
-        private static UpdateProfessionalCommand MapToUpdateProfessionalCommand(UpdateProfessionalRequest request)
+        private static UpdateProfessionalCommand MapToUpdateProfessionalCommand(
+            UpdateProfessionalRequest request
+        )
         {
             return new UpdateProfessionalCommand
             {
@@ -46,6 +42,5 @@ namespace Profiles.Infrastructure.Services.helpers
                 Disabled = data.Disabled
             };
         }
-
     }
 }

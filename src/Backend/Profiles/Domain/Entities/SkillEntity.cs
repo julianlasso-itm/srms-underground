@@ -1,25 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using Profiles.Domain.Entities.Structs;
+﻿using Profiles.Domain.Entities.Structs;
 using Profiles.Domain.ValueObjects;
 
 namespace Profiles.Domain.Entities
 {
-    public  class SkillEntity
+    public class SkillEntity
     {
-
-        public SkillIdValueObject SkillId {  get; set; }
+        public SkillIdValueObject SkillId { get; set; }
         public NameValueObject Name { get; set; }
         public DisabledValueObject Disabled { get; set; }
 
-        public SkillEntity()
-        {
-            
-        }
+        public SkillEntity() { }
 
         public SkillEntity(SkillStruct data)
         {

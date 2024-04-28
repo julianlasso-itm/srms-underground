@@ -9,14 +9,18 @@ using Shared.Domain.ValueObjects;
 
 namespace Profiles.Domain.Aggregates.Helpers
 {
-    internal class UpdateProfessionalHelper : BaseHelper, IHelper<UpdateProfessionalDomainRequest, UpdateProfessionalDomainResponse>
+    internal class UpdateProfessionalHelper
+        : BaseHelper,
+            IHelper<UpdateProfessionalDomainRequest, UpdateProfessionalDomainResponse>
     {
-
         public static UpdateProfessionalDomainResponse Execute(UpdateProfessionalDomainRequest data)
         {
             var @struct = GetProfessionalStruct(data);
             var professional = new ProfessionalEntity(@struct);
-            var response = new UpdateProfessionalDomainResponse { ProfessionalId = professional.ProfessionalId.Value };
+            var response = new UpdateProfessionalDomainResponse
+            {
+                ProfessionalId = professional.ProfessionalId.Value
+            };
 
             if (data.Name != null)
             {
@@ -27,8 +31,8 @@ namespace Profiles.Domain.Aggregates.Helpers
 
             if (data.Email != null)
             {
-                professional.UpdateEmail(data.Email);
-                response.Email = professional.Email;
+                professional.UpdateEmail(new EmailValueObject(data.Email));
+                response.Email = professional.Email.Value;
             }
 
             if (data.Disabled != null)
@@ -62,7 +66,9 @@ namespace Profiles.Domain.Aggregates.Helpers
             }
         }
 
-        private static ProfessionalStruct GetProfessionalStruct(UpdateProfessionalDomainRequest data)
+        private static ProfessionalStruct GetProfessionalStruct(
+            UpdateProfessionalDomainRequest data
+        )
         {
             var id = new ProfessionalIdValueObject(data.ProfessionalId);
             return new ProfessionalStruct { ProfessionalId = id };

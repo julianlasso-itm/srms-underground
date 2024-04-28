@@ -1,25 +1,17 @@
-﻿using Profiles.Application;
-using Profiles.Application.Responses;
-using Profiles.Infrastructure.Persistence.Models;
+﻿using Profiles.Application.Responses;
+using Profiles.Infrastructure.Services.helpers;
+using Profiles.Infrastructure.Services.Helpers.Base;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
 
-namespace Profiles.Infrastructure.Services.helpers
+namespace Profiles.Infrastructure.Services.Helpers
 {
-    internal static class UpdateSkillHelper
+    public class UpdateSkillHelper : BaseHelperServiceInfrastructure
     {
-
-        private static Application<Country, State, City, Skill, Professional> s_application;
-
-        public static void SetApplication(Application<Country, State, City, Skill, Professional> application)
-        {
-            s_application = application;
-        }
-
         public static async Task<UpdateSkillResponse> UpdateSkillAsync(UpdateSkillRequest request)
         {
             var newUserCommand = MapToUpdateSkillCommand(request);
-            var data = await s_application.UpdateSkill(newUserCommand);
+            var data = await Application.UpdateSkill(newUserCommand);
             return MapToUpdateSkillResponse(data);
         }
 
@@ -44,6 +36,5 @@ namespace Profiles.Infrastructure.Services.helpers
                 Disabled = data.Disabled,
             };
         }
-
     }
 }

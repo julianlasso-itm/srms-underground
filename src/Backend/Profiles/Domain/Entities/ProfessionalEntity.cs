@@ -5,16 +5,13 @@ namespace Profiles.Domain.Entities
 {
     public class ProfessionalEntity
     {
-
         public ProfessionalIdValueObject ProfessionalId { get; set; }
         public NameValueObject Name { get; set; }
         public DisabledValueObject Disabled { get; set; }
-        public string Email { get; set; }
+        public EmailValueObject Email { get; set; }
         public IEnumerable<SkillEntity> Skills { get; set; }
 
-        public ProfessionalEntity()
-        {
-        }
+        public ProfessionalEntity() { }
 
         public ProfessionalEntity(ProfessionalStruct data)
         {
@@ -25,7 +22,7 @@ namespace Profiles.Domain.Entities
             Disabled = data.Disabled;
         }
 
-        public void Register(NameValueObject name, string email)
+        public void Register(NameValueObject name, EmailValueObject email)
         {
             ProfessionalId = new ProfessionalIdValueObject(Guid.NewGuid().ToString());
             Email = email;
@@ -48,7 +45,7 @@ namespace Profiles.Domain.Entities
             Name = name;
         }
 
-        public void UpdateEmail(string email)
+        public void UpdateEmail(EmailValueObject email)
         {
             Email = email;
         }

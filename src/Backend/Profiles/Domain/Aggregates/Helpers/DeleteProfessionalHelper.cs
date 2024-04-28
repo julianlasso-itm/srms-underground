@@ -6,16 +6,25 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace Profiles.Domain.Aggregates.Helpers
 {
-    internal class DeleteProfessionalHelper : BaseHelper, IHelper<DeleteProfessionalDomainRequest, DeleteProfessionalDomainResponse>
+    internal class DeleteProfessionalHelper
+        : BaseHelper,
+            IHelper<DeleteProfessionalDomainRequest, DeleteProfessionalDomainResponse>
     {
-        public static DeleteProfessionalDomainResponse Execute(DeleteProfessionalDomainRequest request)
+        public static DeleteProfessionalDomainResponse Execute(
+            DeleteProfessionalDomainRequest request
+        )
         {
             var @struct = GetProfessionalStruct(request);
             ValidateStructureFields(@struct);
-            return new DeleteProfessionalDomainResponse { ProfessionalId = @struct.ProfessionalId.Value };
+            return new DeleteProfessionalDomainResponse
+            {
+                ProfessionalId = @struct.ProfessionalId.Value
+            };
         }
 
-        private static ProfessionalStruct GetProfessionalStruct(DeleteProfessionalDomainRequest request)
+        private static ProfessionalStruct GetProfessionalStruct(
+            DeleteProfessionalDomainRequest request
+        )
         {
             var id = new ProfessionalIdValueObject(request.ProfessionalId);
             return new ProfessionalStruct { ProfessionalId = id };

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Profiles.Domain.Aggregates.Dto.Requests;
+﻿using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Entities;
 using Profiles.Domain.Entities.Structs;
@@ -15,7 +10,9 @@ using Shared.Domain.ValueObjects;
 
 namespace Profiles.Domain.Aggregates.Helpers
 {
-    internal abstract class UpdateSkillHelper : BaseHelper, IHelper<UpdateSkillDomainRequest, UpdateSkillDomainResponse>
+    internal abstract class UpdateSkillHelper
+        : BaseHelper,
+            IHelper<UpdateSkillDomainRequest, UpdateSkillDomainResponse>
     {
         public static UpdateSkillDomainResponse Execute(UpdateSkillDomainRequest data)
         {
