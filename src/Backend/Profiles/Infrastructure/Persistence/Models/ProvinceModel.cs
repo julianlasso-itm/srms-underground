@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Profiles.Infrastructure.Persistence.Models;
 
+[Index(nameof(Name), nameof(CountryId), IsUnique = true)]
 [Table("province")]
 public class ProvinceModel
 {

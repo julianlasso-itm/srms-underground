@@ -5,7 +5,7 @@ using Shared.Infrastructure.Persistence.Models;
 
 namespace Profiles.Infrastructure.Persistence.Models
 {
-    [Index(nameof(Name), nameof(DeletedAt), IsUnique = true)]
+    [Index(nameof(Name), IsUnique = true)]
     [Table("skill")]
     public class SkillModel : AuditableEntity
     {

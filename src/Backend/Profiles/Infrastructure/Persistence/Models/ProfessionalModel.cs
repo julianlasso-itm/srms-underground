@@ -5,7 +5,7 @@ using Shared.Infrastructure.Persistence.Models;
 
 namespace Profiles.Infrastructure.Persistence.Models
 {
-    [Index(nameof(Email), nameof(DeletedAt), IsUnique = true)]
+    [Index(nameof(Email), IsUnique = true)]
     [Table("professional")]
     public class ProfessionalModel : AuditableEntity
     {

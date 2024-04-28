@@ -1,8 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace Profiles.Infrastructure.Persistence.Models;
 
+[Index(nameof(Name), IsUnique = true)]
 [Table("country")]
 public class CountryModel
 {

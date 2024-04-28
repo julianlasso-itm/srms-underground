@@ -17,8 +17,10 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        Seeds.SeedCountries(modelBuilder);
-        Seeds.SeedProvinces(modelBuilder);
-        Seeds.SeedCities(modelBuilder);
+        SeedsPlaces.SeedCountries(modelBuilder);
+        SeedsPlaces.SeedProvinces(modelBuilder);
+        SeedsPlaces.SeedCities(modelBuilder);
+        SeedsRoles.SeedRoles(modelBuilder);
+        SeedsSkills.SeedSkills(modelBuilder);
     }
 }

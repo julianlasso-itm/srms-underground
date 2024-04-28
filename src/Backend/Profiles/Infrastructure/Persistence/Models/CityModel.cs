@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Profiles.Infrastructure.Persistence.Models;
 
+[Index(nameof(Name), nameof(ProvinceId), IsUnique = true)]
 [Table("city")]
 public class CityModel
 {

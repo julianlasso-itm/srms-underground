@@ -5,8 +5,8 @@ using Shared.Infrastructure.Persistence.Models;
 
 namespace Analytics.Infrastructure.Persistence.Models;
 
-[Index(nameof(Name), nameof(DeletedAt), IsUnique = true)]
-[Table("tbl_level")]
+[Index(nameof(Name), IsUnique = true)]
+[Table("level")]
 public class LevelModel : AuditableEntity
 {
     [Key]

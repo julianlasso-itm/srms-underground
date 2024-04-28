@@ -1,100 +1,100 @@
-using Analytics.Infrastructure.Persistence.Models;
 using Microsoft.EntityFrameworkCore;
+using Profiles.Infrastructure.Persistence.Models;
 
-namespace Analytics.Infrastructure.Persistence;
+namespace Profiles.Infrastructure.Persistence;
 
-public class Seeds
+public class SeedsRoles
 {
-    public static void SeedLevels(ModelBuilder modelBuilder)
+    public static void SeedRoles(ModelBuilder modelBuilder)
     {
-        var levels = new List<LevelModel>
+        var roles = new List<RoleModel>
         {
             new()
             {
-                LevelId = Guid.NewGuid(),
-                Name = "Backend",
+                RoleId = Guid.NewGuid(),
+                Name = "Developer",
                 Disabled = false,
                 CreatedAt = DateTime.UtcNow,
             },
             new()
             {
-                LevelId = Guid.NewGuid(),
-                Name = "Frontend",
+                RoleId = Guid.NewGuid(),
+                Name = "Designer",
                 Disabled = false,
                 CreatedAt = DateTime.UtcNow,
             },
             new()
             {
-                LevelId = Guid.NewGuid(),
-                Name = "Fullstack",
+                RoleId = Guid.NewGuid(),
+                Name = "Manager",
                 Disabled = false,
                 CreatedAt = DateTime.UtcNow,
             },
             new()
             {
-                LevelId = Guid.NewGuid(),
-                Name = "DevOps",
-                Disabled = false,
-                CreatedAt = DateTime.UtcNow,
-            },
-            new()
-            {
-                LevelId = Guid.NewGuid(),
+                RoleId = Guid.NewGuid(),
                 Name = "QA",
                 Disabled = false,
                 CreatedAt = DateTime.UtcNow,
             },
             new()
             {
-                LevelId = Guid.NewGuid(),
-                Name = "UX/UI",
+                RoleId = Guid.NewGuid(),
+                Name = "DevOps",
                 Disabled = false,
                 CreatedAt = DateTime.UtcNow,
             },
             new()
             {
-                LevelId = Guid.NewGuid(),
-                Name = "DataScience",
+                RoleId = Guid.NewGuid(),
+                Name = "Data Scientist",
                 Disabled = false,
                 CreatedAt = DateTime.UtcNow,
             },
             new()
             {
-                LevelId = Guid.NewGuid(),
-                Name = "Cybersecurity",
+                RoleId = Guid.NewGuid(),
+                Name = "UX/UI Designer",
                 Disabled = false,
                 CreatedAt = DateTime.UtcNow,
             },
             new()
             {
-                LevelId = Guid.NewGuid(),
-                Name = "Product",
+                RoleId = Guid.NewGuid(),
+                Name = "Product Owner",
                 Disabled = false,
                 CreatedAt = DateTime.UtcNow,
             },
             new()
             {
-                LevelId = Guid.NewGuid(),
-                Name = "Project",
+                RoleId = Guid.NewGuid(),
+                Name = "Scrum Master",
                 Disabled = false,
                 CreatedAt = DateTime.UtcNow,
             },
             new()
             {
-                LevelId = Guid.NewGuid(),
-                Name = "Management",
+                RoleId = Guid.NewGuid(),
+                Name = "Architect",
                 Disabled = false,
                 CreatedAt = DateTime.UtcNow,
             },
             new()
             {
-                LevelId = Guid.NewGuid(),
-                Name = "Other",
+                RoleId = Guid.NewGuid(),
+                Name = "Lead Developer",
+                Disabled = false,
+                CreatedAt = DateTime.UtcNow,
+            },
+            new()
+            {
+                RoleId = Guid.NewGuid(),
+                Name = "Lead Designer",
                 Disabled = false,
                 CreatedAt = DateTime.UtcNow,
             },
         };
 
-        modelBuilder.Entity<LevelModel>().HasData(levels);
+        modelBuilder.Entity<RoleModel>().HasData(roles);
     }
 }

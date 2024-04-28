@@ -5,8 +5,8 @@ using Shared.Infrastructure.Persistence.Models;
 
 namespace AccessControl.Infrastructure.Persistence.Models;
 
-[Index(nameof(Name), nameof(DeletedAt), IsUnique = true)]
-[Table("tbl_role")]
+[Index(nameof(Name), IsUnique = true)]
+[Table("role")]
 public class RoleModel : AuditableEntity
 {
     [Key]

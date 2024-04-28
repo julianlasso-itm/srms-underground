@@ -3,8 +3,42 @@ using Profiles.Infrastructure.Persistence.Models;
 
 namespace Profiles.Infrastructure.Persistence;
 
-public class Seeds
+public class SeedsPlaces
 {
+    private static Guid VenezuelaId = Guid.NewGuid();
+    private static Guid PanamaId = Guid.NewGuid();
+    private static Guid CostaRicaId = Guid.NewGuid();
+    private static Guid NicaraguaId = Guid.NewGuid();
+    private static Guid HondurasId = Guid.NewGuid();
+    private static Guid GuatemalaId = Guid.NewGuid();
+    private static Guid ElSalvadorId = Guid.NewGuid();
+    private static Guid BelizeId = Guid.NewGuid();
+    private static Guid MexicoId = Guid.NewGuid();
+    private static Guid PeruId = Guid.NewGuid();
+    private static Guid ChileId = Guid.NewGuid();
+    private static Guid ArgentinaId = Guid.NewGuid();
+    private static Guid BrazilId = Guid.NewGuid();
+    private static Guid ParaguayId = Guid.NewGuid();
+    private static Guid UruguayId = Guid.NewGuid();
+    private static Guid BoliviaId = Guid.NewGuid();
+
+    private static Guid EcuadorId = Guid.NewGuid();
+    private static Guid AzuayId = Guid.NewGuid();
+    private static Guid BolivarEId = Guid.NewGuid();
+    private static Guid CanarId = Guid.NewGuid();
+    private static Guid CarchiId = Guid.NewGuid();
+    private static Guid ChimborazoId = Guid.NewGuid();
+    private static Guid CotopaxiId = Guid.NewGuid();
+    private static Guid ElOroId = Guid.NewGuid();
+    private static Guid EsmeraldasId = Guid.NewGuid();
+    private static Guid GalapagosId = Guid.NewGuid();
+    private static Guid GuayasId = Guid.NewGuid();
+    private static Guid ImbaburaId = Guid.NewGuid();
+    private static Guid LojaId = Guid.NewGuid();
+    private static Guid ManabiId = Guid.NewGuid();
+    private static Guid MoronaSantiagoId = Guid.NewGuid();
+    private static Guid NapoId = Guid.NewGuid();
+
     private static Guid ColombiaId = Guid.NewGuid();
     private static Guid AmazonasId = Guid.NewGuid();
     private static Guid AntioquiaId = Guid.NewGuid();
@@ -43,7 +77,114 @@ public class Seeds
     {
         var countries = new List<CountryModel>
         {
-            new() { CountryId = ColombiaId, Name = "Colombia", },
+            new()
+            {
+                CountryId = ColombiaId,
+                Name = "Colombia",
+                Disabled = false,
+            },
+            new()
+            {
+                CountryId = EcuadorId,
+                Name = "Ecuador",
+                Disabled = false,
+            },
+            new()
+            {
+                CountryId = VenezuelaId,
+                Name = "Venezuela",
+                Disabled = false,
+            },
+            new()
+            {
+                CountryId = PanamaId,
+                Name = "Panamá",
+                Disabled = false,
+            },
+            new()
+            {
+                CountryId = CostaRicaId,
+                Name = "Costa Rica",
+                Disabled = false,
+            },
+            new()
+            {
+                CountryId = NicaraguaId,
+                Name = "Nicaragua",
+                Disabled = false,
+            },
+            new()
+            {
+                CountryId = HondurasId,
+                Name = "Honduras",
+                Disabled = false,
+            },
+            new()
+            {
+                CountryId = GuatemalaId,
+                Name = "Guatemala",
+                Disabled = false,
+            },
+            new()
+            {
+                CountryId = ElSalvadorId,
+                Name = "El Salvador",
+                Disabled = false,
+            },
+            new()
+            {
+                CountryId = BelizeId,
+                Name = "Belize",
+                Disabled = false,
+            },
+            new()
+            {
+                CountryId = MexicoId,
+                Name = "México",
+                Disabled = false,
+            },
+            new()
+            {
+                CountryId = PeruId,
+                Name = "Perú",
+                Disabled = false,
+            },
+            new()
+            {
+                CountryId = ChileId,
+                Name = "Chile",
+                Disabled = false,
+            },
+            new()
+            {
+                CountryId = ArgentinaId,
+                Name = "Argentina",
+                Disabled = false,
+            },
+            new()
+            {
+                CountryId = BrazilId,
+                Name = "Brasil",
+                Disabled = false,
+            },
+            new()
+            {
+                CountryId = ParaguayId,
+                Name = "Paraguay",
+                Disabled = false,
+            },
+            new()
+            {
+                CountryId = UruguayId,
+                Name = "Uruguay",
+                Disabled = false,
+            },
+            new()
+            {
+                CountryId = BoliviaId,
+                Name = "Bolivia",
+                Disabled = false,
+            },
         };
 
         modelBuilder.Entity<CountryModel>().HasData(countries);
@@ -277,8 +418,112 @@ public class Seeds
                 CountryId = ColombiaId,
                 Disabled = false,
             },
+            new()
+            {
+                ProvinceId = AzuayId,
+                Name = "Azuay",
+                CountryId = EcuadorId,
+                Disabled = false,
+            },
+            new()
+            {
+                ProvinceId = BolivarEId,
+                Name = "Bolívar",
+                CountryId = EcuadorId,
+                Disabled = false,
+            },
+            new()
+            {
+                ProvinceId = CanarId,
+                Name = "Cañar",
+                CountryId = EcuadorId,
+                Disabled = false,
+            },
+            new()
+            {
+                ProvinceId = CarchiId,
+                Name = "Carchi",
+                CountryId = EcuadorId,
+                Disabled = false,
+            },
+            new()
+            {
+                ProvinceId = ChimborazoId,
+                Name = "Chimborazo",
+                CountryId = EcuadorId,
+                Disabled = false,
+            },
+            new()
+            {
+                ProvinceId = CotopaxiId,
+                Name = "Cotopaxi",
+                CountryId = EcuadorId,
+                Disabled = false,
+            },
+            new()
+            {
+                ProvinceId = ElOroId,
+                Name = "El Oro",
+                CountryId = EcuadorId,
+                Disabled = false,
+            },
+            new()
+            {
+                ProvinceId = EsmeraldasId,
+                Name = "Esmeraldas",
+                CountryId = EcuadorId,
+                Disabled = false,
+            },
+            new()
+            {
+                ProvinceId = GalapagosId,
+                Name = "Galápagos",
+                CountryId = EcuadorId,
+                Disabled = false,
+            },
+            new()
+            {
+                ProvinceId = GuayasId,
+                Name = "Guayas",
+                CountryId = EcuadorId,
+                Disabled = false,
+            },
+            new()
+            {
+                ProvinceId = ImbaburaId,
+                Name = "Imbabura",
+                CountryId = EcuadorId,
+                Disabled = false,
+            },
+            new()
+            {
+                ProvinceId = LojaId,
+                Name = "Loja",
+                CountryId = EcuadorId,
+                Disabled = false,
+            },
+            new()
+            {
+                ProvinceId = ManabiId,
+                Name = "Manabí",
+                CountryId = EcuadorId,
+                Disabled = false,
+            },
+            new()
+            {
+                ProvinceId = MoronaSantiagoId,
+                Name = "Morona Santiago",
+                CountryId = EcuadorId,
+                Disabled = false,
+            },
+            new()
+            {
+                ProvinceId = NapoId,
+                Name = "Napo",
+                CountryId = EcuadorId,
+                Disabled = false,
+            },
         };
-
         modelBuilder.Entity<ProvinceModel>().HasData(provinces);
     }
 
@@ -976,8 +1221,224 @@ public class Seeds
                 ProvinceId = VichadaId,
                 Disabled = false
             },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "Cuenca",
+                ProvinceId = AzuayId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "Girón",
+                ProvinceId = AzuayId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "Guaranda",
+                ProvinceId = BolivarEId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "San Miguel de Bolívar",
+                ProvinceId = BolivarEId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "Azogues",
+                ProvinceId = CanarId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "El Tambo",
+                ProvinceId = CanarId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "Tulcán",
+                ProvinceId = CarchiId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "El Guabo",
+                ProvinceId = CarchiId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "Riobamba",
+                ProvinceId = ChimborazoId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "Alausí",
+                ProvinceId = ChimborazoId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "Latacunga",
+                ProvinceId = CotopaxiId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "Salcedo",
+                ProvinceId = CotopaxiId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "Machala",
+                ProvinceId = ElOroId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "Santa Rosa",
+                ProvinceId = ElOroId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "Esmeraldas",
+                ProvinceId = EsmeraldasId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "Atacames",
+                ProvinceId = EsmeraldasId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "Puerto Baquerizo Moreno",
+                ProvinceId = GalapagosId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "San Cristóbal",
+                ProvinceId = GalapagosId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "Guayaquil",
+                ProvinceId = GuayasId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "Durán",
+                ProvinceId = GuayasId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "Ibarra",
+                ProvinceId = ImbaburaId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "Otavalo",
+                ProvinceId = ImbaburaId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "Loja",
+                ProvinceId = LojaId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "Saraguro",
+                ProvinceId = LojaId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "Portoviejo",
+                ProvinceId = ManabiId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "Manta",
+                ProvinceId = ManabiId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "Chone",
+                ProvinceId = ManabiId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "Macas",
+                ProvinceId = MoronaSantiagoId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "Gualaquiza",
+                ProvinceId = MoronaSantiagoId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "Tena",
+                ProvinceId = NapoId,
+                Disabled = false,
+            },
+            new()
+            {
+                CityId = Guid.NewGuid(),
+                Name = "Archidona",
+                ProvinceId = NapoId,
+                Disabled = false,
+            },
         };
-
         modelBuilder.Entity<CityModel>().HasData(cities);
     }
 }
