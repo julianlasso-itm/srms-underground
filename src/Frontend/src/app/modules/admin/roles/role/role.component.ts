@@ -20,8 +20,8 @@ import { FormType } from '../role-dialog/dialog.type';
 import { RoleDialogComponent } from '../role-dialog/role-dialog.component';
 import { IRole, IRoles } from './role.interface';
 
-const URL_GET_ROLES = `${Constant.URL_BASE}${Constant.URL_GET_ROLES}`;
-const URL_ROLE = `${Constant.URL_BASE}${Constant.URL_ROLE}`;
+const URL_GET_ROLES = `${Constant.URL_BASE}${Constant.URL_GET_ROLES_SECURITY}`;
+const URL_ROLE = `${Constant.URL_BASE}${Constant.URL_ROLE_SECURITY}`;
 const MIN_LENGTH = 5;
 
 @Component({

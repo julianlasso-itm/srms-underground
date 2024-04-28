@@ -1,9 +1,9 @@
-namespace Analytics.Domain.Aggregates.Dto;
+namespace Analytics.Domain.Aggregates.Dto.Requests;
 
-public class UpdateLevel
+public class UpdateLevelDomainRequest
 {
     public required string LevelId { get; init; }
     public string? Name { get; init; }
     public string? Description { get; init; }
-    public bool? Disabled { get; init; }
+    public bool? Disable { get; init; }
 }

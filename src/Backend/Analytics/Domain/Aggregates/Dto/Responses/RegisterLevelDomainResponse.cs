@@ -1,6 +1,6 @@
-namespace Analytics.Domain.Aggregates.Dto;
+namespace Analytics.Domain.Aggregates.Dto.Responses;
 
-public class RegisterLevelResponse
+public class RegisterLevelDomainResponse
 {
     public required string LevelId { get; init; }
     public required string Name { get; init; }

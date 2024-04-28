@@ -1,4 +1,5 @@
-using Analytics.Domain.Aggregates.Dto;
+using Analytics.Domain.Aggregates.Dto.Requests;
+using Analytics.Domain.Aggregates.Dto.Responses;
 using Analytics.Domain.Entities;
 using Analytics.Domain.Entities.Structs;
 using Analytics.Domain.ValueObjects;
@@ -9,36 +10,36 @@ namespace Analytics.Domain.Aggregates.Helpers;
 
 internal abstract class RegisterLevelHelper
     : BaseHelper,
-        IHelper<RegisterLevel, RegisterLevelResponse>
+        IHelper<RegisterLevelDomainRequest, RegisterLevelDomainResponse>
 {
-    public static RegisterLevelResponse Execute(RegisterLevel data)
+    public static RegisterLevelDomainResponse Execute(RegisterLevelDomainRequest request)
     {
-        var newLevel = GetLevelStruct(data);
-        ValidateStructureFields(newLevel);
+        var @struct = GetLevelStruct(request);
+        ValidateStructureFields(@struct);
 
-        var level = new LevelEntity();
-        level.Register(newLevel.Name, newLevel.Description);
+        var Level = new LevelEntity();
+        Level.Register(@struct.Name, @struct.Description);
 
-        return new RegisterLevelResponse
-        {
-            LevelId = level.LevelId.Value,
-            Name = level.Name.Value,
-            Description = level.Description?.Value,
-            Disabled = level.Disabled.Value,
-        };
+        return MapToResponse(Level);
     }
 
-    public static void Execute()
+    private static LevelStruct GetLevelStruct(RegisterLevelDomainRequest request)
     {
-        throw new NotImplementedException();
-    }
-
-    private static LevelStruct GetLevelStruct(RegisterLevel data)
-    {
-        var name = new NameValueObject(data.Name);
+        var name = new NameValueObject(request.Name);
         var description =
-            data.Description != null ? new DescriptionValueObject(data.Description) : null;
+            request.Description != null ? new DescriptionValueObject(request.Description) : null;
 
         return new LevelStruct { Name = name, Description = description };
+    }
+
+    private static RegisterLevelDomainResponse MapToResponse(LevelEntity Level)
+    {
+        return new RegisterLevelDomainResponse
+        {
+            LevelId = Level.LevelId.Value,
+            Name = Level.Name.Value,
+            Description = Level.Description?.Value,
+            Disabled = Level.Disabled.Value,
+        };
     }
 }

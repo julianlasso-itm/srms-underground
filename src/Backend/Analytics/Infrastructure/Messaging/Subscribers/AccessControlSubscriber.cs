@@ -2,12 +2,12 @@ using StackExchange.Redis;
 
 namespace Analytics.Infrastructure.Messaging.Subscribers;
 
-public class AccessControlSubscriber : BackgroundService
+public class AnalyticsSubscriber : BackgroundService
 {
     private readonly IConnectionMultiplexer _connectionMultiplexer;
     private readonly ISubscriber _subscriber;
 
-    public AccessControlSubscriber(IConnectionMultiplexer connectionMultiplexer)
+    public AnalyticsSubscriber(IConnectionMultiplexer connectionMultiplexer)
     {
         _connectionMultiplexer = connectionMultiplexer;
         _subscriber = _connectionMultiplexer.GetSubscriber();

@@ -25,7 +25,7 @@ import { ReloadDataService } from '../../../shared/services/reload-data.service'
 import { SharedModule } from '../../../shared/shared.module';
 import { IRole } from '../role/role.interface';
 
-const URL_ROLE = `${Constant.URL_BASE}${Constant.URL_ROLE}`;
+const URL_ROLE = `${Constant.URL_BASE}${Constant.URL_ROLE_SECURITY}`;
 
 @Component({
   selector: 'srms-role-form',

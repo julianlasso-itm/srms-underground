@@ -1,6 +1,6 @@
-namespace Analytics.Domain.Aggregates.Dto;
+namespace Analytics.Application.Responses;
 
-public class UpdateLevelResponse
+public sealed class UpdateLevelApplicationResponse
 {
     public required string LevelId { get; init; }
     public string? Name { get; init; }
