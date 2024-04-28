@@ -1,20 +1,45 @@
-using Analytics.Infrastructure.Messaging.Subscribers;
-using StackExchange.Redis;
+﻿using Microsoft.EntityFrameworkCore;
+using Analytics.Application.Repositories;
+using Analytics.Infrastructure.Messaging.Events;
+using Analytics.Infrastructure.Persistence.Models;
+using Analytics.Infrastructure.Persistence.Repositories;
+using Analytics.Infrastructure.Services;
+using ProtoBuf.Grpc.Server;
+using Shared.Infrastructure.Interceptors;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<IConnectionMultiplexer>(
-    ConnectionMultiplexer.Connect("localhost:6379")
-);
-builder.Services.AddHostedService<AccessControlSubscriber>();
+builder.Services.AddControllers();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+// Configure connection to the database
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+builder.Services.AddScoped<ILevelRepository<Level>, LevelRepository>(serviceProvider =>
+{
+    var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
+    return new LevelRepository(dbContext);
+});
+
+builder.Services.AddScoped<RegisterLevelEvent>();
 
 // Add services to the container.
-builder.Services.AddGrpc();
+builder.Services.AddSingleton<ErrorHandlingInterceptor>();
+
+builder.Services.AddCodeFirstGrpc(options =>
+{
+    options.Interceptors.Add<ErrorHandlingInterceptor>();
+});
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-// app.MapGrpcService<GreeterService>();
+app.MapGrpcService<AnalyticsService>();
 app.MapGet(
     "/",
     () =>
