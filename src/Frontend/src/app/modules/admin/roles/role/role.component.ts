@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -19,6 +19,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { FormType } from '../role-dialog/dialog.type';
 import { RoleDialogComponent } from '../role-dialog/role-dialog.component';
 import { IRole, IRoles } from './role.interface';
+import { Subscription } from 'rxjs';
 
 const URL_GET_ROLES = `${Constant.URL_BASE}${Constant.URL_GET_ROLES_SECURITY}`;
 const URL_ROLE = `${Constant.URL_BASE}${Constant.URL_ROLE_SECURITY}`;
@@ -42,7 +43,7 @@ const MIN_LENGTH = 5;
   templateUrl: './role.component.html',
   styleUrl: './role.component.scss',
 })
-export class RoleComponent implements OnInit {
+export class RoleComponent implements OnInit, OnDestroy {
   readonly displayedColumns: string[];
   dataSource = signal<IRole[]>([]);
   totalRecords = signal(0);
@@ -53,6 +54,7 @@ export class RoleComponent implements OnInit {
   loadingFromFilter = signal(false);
 
   private pageIndex: number;
+  private reloadData!: Subscription;
 
   constructor(
     public dialog: MatDialog,
@@ -73,9 +75,13 @@ export class RoleComponent implements OnInit {
 
   ngOnInit(): void {
     this.getRoles();
-    this.reloadDataService.changeData.subscribe((data) => {
+    this.reloadData = this.reloadDataService.changeData.subscribe((data) => {
       this.getRoles();
     });
+  }
+
+  ngOnDestroy(): void {
+    this.reloadData.unsubscribe();
   }
 
   openDialogNew(): void {

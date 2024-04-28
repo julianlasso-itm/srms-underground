@@ -10,4 +10,8 @@ export enum Constant {
   URL_CITY = '/api/profiles/city',
   URL_GET_ROLES = '/api/profiles/roles',
   URL_ROLE = '/api/profiles/role',
+  URL_GET_SKILLS = '/api/profiles/skills',
+  URL_SKILL = '/api/profiles/skill',
+  URL_GET_PROFESSIONALS = "/api/profiles/professionals",
+  URL_PROFESSIONAL = '/api/profiles/professional',
 }

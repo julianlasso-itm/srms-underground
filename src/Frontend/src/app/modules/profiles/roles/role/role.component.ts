@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,6 +10,7 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Subscription } from 'rxjs';
 import { DeleteDialogComponent } from '../../../shared/components/delete-dialog/delete-dialog.component';
 import { Constant } from '../../../shared/constants/constants';
 import { IPagination } from '../../../shared/interfaces/pagination.interface';
@@ -42,7 +43,7 @@ const MIN_LENGTH = 5;
   templateUrl: './role.component.html',
   styleUrl: './role.component.scss',
 })
-export class RoleComponent implements OnInit {
+export class RoleComponent implements OnInit, OnDestroy {
   readonly displayedColumns: string[];
   dataSource = signal<IRole[]>([]);
   totalRecords = signal(0);
@@ -53,6 +54,7 @@ export class RoleComponent implements OnInit {
   loadingFromFilter = signal(false);
 
   private pageIndex: number;
+  private reloadData!: Subscription;
 
   constructor(
     public dialog: MatDialog,
@@ -73,9 +75,13 @@ export class RoleComponent implements OnInit {
 
   ngOnInit(): void {
     this.getRoles();
-    this.reloadDataService.changeData.subscribe((data) => {
+    this.reloadData = this.reloadDataService.changeData.subscribe((data) => {
       this.getRoles();
     });
+  }
+
+  ngOnDestroy(): void {
+    this.reloadData.unsubscribe();
   }
 
   openDialogNew(): void {

@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,6 +11,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { DeleteDialogComponent } from '../../../shared/components/delete-dialog/delete-dialog.component';
 import { Constant } from '../../../shared/constants/constants';
 import { IPagination } from '../../../shared/interfaces/pagination.interface';
@@ -44,7 +45,7 @@ const MIN_LENGTH = 5;
   templateUrl: './country.component.html',
   styleUrl: './country.component.scss',
 })
-export class CountryComponent implements OnInit {
+export class CountryComponent implements OnInit, OnDestroy {
   readonly displayedColumns: string[];
   dataSource = signal<ICountry[]>([]);
   totalRecords = signal(0);
@@ -55,6 +56,7 @@ export class CountryComponent implements OnInit {
   loadingFromFilter = signal(false);
 
   private pageIndex: number;
+  private reloadData!: Subscription;
 
   constructor(
     public dialog: MatDialog,
@@ -69,9 +71,13 @@ export class CountryComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCountries();
-    this.reloadDataService.changeData.subscribe((data) => {
+    this.reloadData = this.reloadDataService.changeData.subscribe((data) => {
       this.getCountries();
     });
+  }
+
+  ngOnDestroy(): void {
+    this.reloadData.unsubscribe();
   }
 
   openDialogNew(): void {
