@@ -103,5 +103,29 @@ namespace Shared.Infrastructure.ProtocolBuffers.Profiles
             GetRolesRequest request,
             CallContext context = default
         );
+
+        [OperationContract]
+        Task<DeleteSkillResponse> DeleteSkillAsync(DeleteSkillRequest request, CallContext context = default);
+
+        [OperationContract]
+        Task<GetSkillsResponse> GetSkillAsync(GetSkillsRequest request, CallContext context = default);
+
+        [OperationContract]
+        Task<RegisterSkillResponse> RegisterSkillAsync(RegisterSkillRequest request, CallContext context = default);
+
+        [OperationContract]
+        Task<UpdateSkillResponse> UpdateSkillRoleAsync(UpdateSkillRequest request, CallContext context = default);
+
+        [OperationContract]
+        Task<DeleteProfessionalResponse> DeleteProfessionalAsync(DeleteProfessionalRequest request, CallContext context = default);
+
+        [OperationContract]
+        Task<GetProfessionalResponse> GetProfessionalAsync(GetProfessionalsRequest request, CallContext context = default);
+
+        [OperationContract]
+        Task<RegisterProfessionalResponse> RegisterProfessionalAsync(RegisterProfessionalRequest request, CallContext context = default);
+
+        [OperationContract]
+        Task<UpdateProfessionalResponse> UpdateProfessionalAsync(UpdateProfessionalRequest request, CallContext context = default);
     }
 }

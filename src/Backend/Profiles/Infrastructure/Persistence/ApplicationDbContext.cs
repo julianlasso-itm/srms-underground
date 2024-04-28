@@ -9,6 +9,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<ProvinceModel> Province { get; set; }
     public DbSet<CityModel> City { get; set; }
     public DbSet<RoleModel> Roles { get; set; }
+    public DbSet<ProfessionalModel> Professionals { get; set; }
+    public DbSet<SkillModel> Skills { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options) { }

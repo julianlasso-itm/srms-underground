@@ -143,5 +143,69 @@ namespace ApiGateway.Infrastructure.Services
         {
             return Client.GetRolesAsync(request);
         }
+
+        public Task<RegisterSkillResponse> RegisterSkillAsync(
+            RegisterSkillRequest request,
+            CallContext context = default
+        )
+        {
+            return Client.RegisterSkillAsync(request);
+        }
+
+        public Task<DeleteSkillResponse> DeleteSkillAsync(
+            DeleteSkillRequest request,
+            CallContext context = default
+        )
+        {
+            return Client.DeleteSkillAsync(request);
+        }
+
+        public Task<GetSkillsResponse> GetSkillAsync(
+            GetSkillsRequest request,
+            CallContext context = default
+        )
+        {
+            return Client.GetSkillAsync(request);
+        }
+
+        public Task<UpdateSkillResponse> UpdateSkillRoleAsync(
+            UpdateSkillRequest request,
+            CallContext context = default
+        )
+        {
+            return Client.UpdateSkillRoleAsync(request);
+        }
+
+        public Task<DeleteProfessionalResponse> DeleteProfessionalAsync(
+            DeleteProfessionalRequest request,
+            CallContext context = default
+        )
+        {
+            return Client.DeleteProfessionalAsync(request);
+        }
+
+        public Task<GetProfessionalResponse> GetProfessionalAsync(
+            GetProfessionalsRequest request,
+            CallContext context = default
+        )
+        {
+            return Client.GetProfessionalAsync(request);
+        }
+
+        public Task<RegisterProfessionalResponse> RegisterProfessionalAsync(
+            RegisterProfessionalRequest request,
+            CallContext context = default
+        )
+        {
+            return Client.RegisterProfessionalAsync(request);
+        }
+
+        public Task<UpdateProfessionalResponse> UpdateProfessionalAsync(
+            UpdateProfessionalRequest request,
+            CallContext context = default
+        )
+        {
+            return Client.UpdateProfessionalAsync(request);
+        }
     }
 }

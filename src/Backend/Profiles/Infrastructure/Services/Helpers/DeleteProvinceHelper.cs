@@ -8,7 +8,9 @@ namespace Profiles.Infrastructure.Services.Helpers;
 
 internal class DeleteProvinceHelper : BaseHelperServiceInfrastructure
 {
-    public static async Task<DeleteProvinceResponse> DeleteProvinceAsync(DeleteProvinceRequest request)
+    public static async Task<DeleteProvinceResponse> DeleteProvinceAsync(
+        DeleteProvinceRequest request
+    )
     {
         var deleteProvinceCommand = MapToDeleteProvinceCommand(request);
         var data = await Application.DeleteProvince(deleteProvinceCommand);

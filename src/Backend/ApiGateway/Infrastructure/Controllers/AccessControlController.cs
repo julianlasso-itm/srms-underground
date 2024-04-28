@@ -17,7 +17,9 @@ public class AccessControlController : BaseController
     }
 
     [HttpPost("role")]
-    public async Task<IActionResult> RegisterRoleAsync([FromBody] RegisterRoleSecurityRequest request)
+    public async Task<IActionResult> RegisterRoleAsync(
+        [FromBody] RegisterRoleSecurityRequest request
+    )
     {
         return await HandleAsync(
             async () => Ok(await _accessControlService.RegisterRoleAsync(request))

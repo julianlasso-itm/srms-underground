@@ -20,9 +20,7 @@ internal class DeleteCityHelper : BaseHelperServiceInfrastructure
         return new DeleteCityCommand { CityId = request.CityId };
     }
 
-    private static DeleteCityResponse MapToDeleteCityResponse(
-        DeleteCityApplicationResponse data
-    )
+    private static DeleteCityResponse MapToDeleteCityResponse(DeleteCityApplicationResponse data)
     {
         return new DeleteCityResponse { CityId = data.CityId };
     }

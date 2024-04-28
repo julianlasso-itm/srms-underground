@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Profiles.Infrastructure.Persistence.Models;
 
-[Table("tbl_country")]
+[Table("country")]
 public class CountryModel
 {
     [Key]

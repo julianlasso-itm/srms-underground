@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Profiles.Infrastructure.Persistence.Models;
 
-[Table("tbl_province")]
+[Table("province")]
 public class ProvinceModel
 {
     [Key]

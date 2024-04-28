@@ -6,7 +6,7 @@ using Shared.Infrastructure.Persistence.Models;
 namespace Profiles.Infrastructure.Persistence.Models;
 
 [Index(nameof(Name), nameof(DeletedAt), IsUnique = true)]
-[Table("tbl_role")]
+[Table("role")]
 public class RoleModel : AuditableEntity
 {
     [Key]

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Profiles.Infrastructure.Persistence.Models;
 
-[Table("tbl_city")]
+[Table("city")]
 public class CityModel
 {
     [Key]

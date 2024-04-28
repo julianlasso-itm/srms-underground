@@ -20,10 +20,7 @@ internal sealed class RoleEntity
         Disabled = data.Disabled;
     }
 
-    public void Register(
-        NameValueObject name,
-        DescriptionValueObject? description = null
-    )
+    public void Register(NameValueObject name, DescriptionValueObject? description = null)
     {
         RoleId = new RoleIdValueObject(Guid.NewGuid().ToString());
         Name = name;
