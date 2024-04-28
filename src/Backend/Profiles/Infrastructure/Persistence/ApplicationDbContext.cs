@@ -22,5 +22,6 @@ public class ApplicationDbContext : DbContext
         SeedsPlaces.SeedCities(modelBuilder);
         SeedsRoles.SeedRoles(modelBuilder);
         SeedsSkills.SeedSkills(modelBuilder);
+        SeedsProfessionals.SeedProfessionals(modelBuilder);
     }
 }

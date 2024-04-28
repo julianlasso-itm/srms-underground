@@ -28,7 +28,7 @@ import { IRole } from '../role/role.interface';
 const URL_ROLE = `${Constant.URL_BASE}${Constant.URL_ROLE_SECURITY}`;
 
 @Component({
-  selector: 'srms-role-form',
+  selector: 'srms-role-security-form',
   standalone: true,
   imports: [
     CommonModule,

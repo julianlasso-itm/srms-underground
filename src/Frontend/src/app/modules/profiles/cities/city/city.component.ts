@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit, signal, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,7 +11,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { DeleteDialogComponent } from '../../../shared/components/delete-dialog/delete-dialog.component';
+import { InputFilterComponent } from '../../../shared/components/input-filter/input-filter.component';
 import { Constant } from '../../../shared/constants/constants';
 import { IPagination } from '../../../shared/interfaces/pagination.interface';
 import { HttpService } from '../../../shared/services/http.service';
@@ -20,11 +22,10 @@ import { SharedModule } from '../../../shared/shared.module';
 import { CityDialogComponent } from '../city-dialog/city-dialog.component';
 import { FormType } from '../city-dialog/dialog.type';
 import { ICities, ICity } from './city.interface';
-import { Subscription } from 'rxjs';
 
 const URL_GET_CITIES = `${Constant.URL_BASE}${Constant.URL_GET_CITIES}`;
 const URL_CITY = `${Constant.URL_BASE}${Constant.URL_CITY}`;
-const MIN_LENGTH = 5;
+const MIN_LENGTH = 10;
 
 @Component({
   selector: 'srms-city-component',
@@ -40,6 +41,7 @@ const MIN_LENGTH = 5;
     MatTableModule,
     MatTooltipModule,
     SharedModule,
+    InputFilterComponent,
   ],
   templateUrl: './city.component.html',
   styleUrl: './city.component.scss',

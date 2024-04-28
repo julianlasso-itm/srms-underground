@@ -12,6 +12,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Subscription } from 'rxjs';
 import { DeleteDialogComponent } from '../../../shared/components/delete-dialog/delete-dialog.component';
+import { InputFilterComponent } from '../../../shared/components/input-filter/input-filter.component';
 import { Constant } from '../../../shared/constants/constants';
 import { IPagination } from '../../../shared/interfaces/pagination.interface';
 import { HttpService } from '../../../shared/services/http.service';
@@ -23,7 +24,7 @@ import { IRole, IRoles } from './role.interface';
 
 const URL_GET_ROLES = `${Constant.URL_BASE}${Constant.URL_GET_ROLES}`;
 const URL_ROLE = `${Constant.URL_BASE}${Constant.URL_ROLE}`;
-const MIN_LENGTH = 5;
+const MIN_LENGTH = 10;
 
 @Component({
   selector: 'srms-role-component',
@@ -39,6 +40,7 @@ const MIN_LENGTH = 5;
     MatTableModule,
     MatTooltipModule,
     SharedModule,
+    InputFilterComponent,
   ],
   templateUrl: './role.component.html',
   styleUrl: './role.component.scss',

@@ -21,10 +21,11 @@ import { SharedModule } from '../../../shared/shared.module';
 import { CountryDialogComponent } from '../country-dialog/country-dialog.component';
 import { FormType } from '../country-dialog/dialog.type';
 import { ICountries, ICountry } from './country.interface';
+import { InputFilterComponent } from '../../../shared/components/input-filter/input-filter.component';
 
 const URL_GET_COUNTRIES = `${Constant.URL_BASE}${Constant.URL_GET_COUNTRIES}`;
 const URL_COUNTRY = `${Constant.URL_BASE}${Constant.URL_COUNTRY}`;
-const MIN_LENGTH = 5;
+const MIN_LENGTH = 10;
 
 @Component({
   selector: 'srms-country-component',
@@ -41,6 +42,7 @@ const MIN_LENGTH = 5;
     MatTooltipModule,
     SharedModule,
     RouterModule,
+    InputFilterComponent,
   ],
   templateUrl: './country.component.html',
   styleUrl: './country.component.scss',

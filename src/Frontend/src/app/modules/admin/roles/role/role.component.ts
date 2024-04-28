@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit, signal, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,7 +10,9 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Subscription } from 'rxjs';
 import { DeleteDialogComponent } from '../../../shared/components/delete-dialog/delete-dialog.component';
+import { InputFilterComponent } from '../../../shared/components/input-filter/input-filter.component';
 import { Constant } from '../../../shared/constants/constants';
 import { IPagination } from '../../../shared/interfaces/pagination.interface';
 import { HttpService } from '../../../shared/services/http.service';
@@ -19,11 +21,10 @@ import { SharedModule } from '../../../shared/shared.module';
 import { FormType } from '../role-dialog/dialog.type';
 import { RoleDialogComponent } from '../role-dialog/role-dialog.component';
 import { IRole, IRoles } from './role.interface';
-import { Subscription } from 'rxjs';
 
 const URL_GET_ROLES = `${Constant.URL_BASE}${Constant.URL_GET_ROLES_SECURITY}`;
 const URL_ROLE = `${Constant.URL_BASE}${Constant.URL_ROLE_SECURITY}`;
-const MIN_LENGTH = 5;
+const MIN_LENGTH = 10;
 
 @Component({
   selector: 'srms-role-component',
@@ -39,6 +40,7 @@ const MIN_LENGTH = 5;
     MatTableModule,
     MatTooltipModule,
     SharedModule,
+    InputFilterComponent,
   ],
   templateUrl: './role.component.html',
   styleUrl: './role.component.scss',

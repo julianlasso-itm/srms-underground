@@ -2,25 +2,15 @@
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 } @else {
   <div class="title">
-    <h3><mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-signs-post"></mat-icon> Gestión de provinces</h3>
+    <h3><mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-signs-post"></mat-icon> Gestión de Departamentos</h3>
     <button mat-flat-button color="primary" (click)="openDialogNew()">
       Agregar
     </button>
   </div>
 }
 
-<form autocomplete="off">
-  <mat-form-field class="width-100">
-    <mat-label>Filtro</mat-label>
-    <input id="filterInput" name="filterInput" #filterInput matInput [disabled]="loadingTable && !loadingFromFilter()"
-      [ngModel]="filter()" (keyup)="filterData($any($event.target).value)">
-    @if (loadingTable) {
-      <div class="loading-table">
-        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-      </div>
-    }
-  </mat-form-field>
-</form>
+<srms-input-filter [loadingTable]="loadingTable" [filter]="filter" (filterData)="filterData($event)"
+  [loadingFromFilter]="loadingFromFilter"></srms-input-filter>
 
 <table mat-table [dataSource]="dataSource()" class="mat-elevation-z0" aria-label="Table with province data">
 

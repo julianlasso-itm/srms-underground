@@ -9,18 +9,8 @@
 </div>
 }
 
-<form autocomplete="off">
-  <mat-form-field class="width-100">
-    <mat-label>Filtro</mat-label>
-    <input id="filterInput" name="filterInput" #filterInput matInput [disabled]="loadingTable && !loadingFromFilter()"
-      [ngModel]="filter()" (keyup)="filterData($any($event.target).value)">
-    @if (loadingTable) {
-    <div class="loading-table">
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    </div>
-    }
-  </mat-form-field>
-</form>
+<srms-input-filter [loadingTable]="loadingTable" [filter]="filter" (filterData)="filterData($event)"
+  [loadingFromFilter]="loadingFromFilter"></srms-input-filter>
 
 <table mat-table [dataSource]="dataSource()" class="mat-elevation-z0" aria-label="Table with skill data">
 

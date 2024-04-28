@@ -14,7 +14,7 @@ import { RoleFormComponent } from '../role-form/role-form.component';
 import { DialogType, FormType } from './dialog.type';
 
 @Component({
-  selector: 'srms-role-dialog',
+  selector: 'srms-role-security-dialog',
   standalone: true,
   imports: [
     CommonModule,

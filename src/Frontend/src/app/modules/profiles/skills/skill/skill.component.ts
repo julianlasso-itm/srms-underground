@@ -12,6 +12,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Subscription } from 'rxjs';
 import { DeleteDialogComponent } from '../../../shared/components/delete-dialog/delete-dialog.component';
+import { InputFilterComponent } from '../../../shared/components/input-filter/input-filter.component';
 import { Constant } from '../../../shared/constants/constants';
 import { IPagination } from '../../../shared/interfaces/pagination.interface';
 import { HttpService } from '../../../shared/services/http.service';
@@ -23,7 +24,7 @@ import { ISkill, ISkills } from './skill.interface';
 
 const URL_GET_SKILLS = `${Constant.URL_BASE}${Constant.URL_GET_SKILLS}`;
 const URL_SKILL = `${Constant.URL_BASE}${Constant.URL_SKILL}`;
-const MIN_LENGTH = 5;
+const MIN_LENGTH = 10;
 
 @Component({
   selector: 'srms-skill-component',
@@ -39,6 +40,7 @@ const MIN_LENGTH = 5;
     MatTableModule,
     MatTooltipModule,
     SharedModule,
+    InputFilterComponent,
   ],
   templateUrl: './skill.component.html',
   styleUrl: './skill.component.scss',
@@ -61,7 +63,7 @@ export class SkillComponent implements OnInit, OnDestroy {
     public httpService: HttpService,
     public reloadDataService: ReloadDataService
   ) {
-    this.displayedColumns = ['position','name', 'disabled', 'actions'];
+    this.displayedColumns = ['position', 'name', 'disabled', 'actions'];
     this.loading = false;
     this.loadingTable = false;
     this.pageIndex = 0;
@@ -121,7 +123,6 @@ export class SkillComponent implements OnInit, OnDestroy {
         console.log(data);
         if (data.skills !== null) {
           this.dataSource.update(() => data.skills);
-          console.log(data);
           this.totalRecords.update(() => data.total);
         } else {
           this.dataSource.update(() => []);
