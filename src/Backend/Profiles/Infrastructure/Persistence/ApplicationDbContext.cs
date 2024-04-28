@@ -19,8 +19,8 @@ public class ApplicationDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<Professional>().HasIndex(c => c.Name).IsUnique();
-        modelBuilder.Entity<Skill>().HasIndex(c => c.Name).IsUnique();
+        modelBuilder.Entity<Professional>().HasIndex(c => new { c.Email, c.DeletedAt }).IsUnique();
+        modelBuilder.Entity<Skill>().HasIndex(c => new { c.Name, c.DeletedAt }).IsUnique();
         modelBuilder.Entity<Country>().HasIndex(c => c.Name).IsUnique();
         modelBuilder.Entity<City>().HasIndex(c => new { c.StateId, c.Name }).IsUnique();
         modelBuilder.Entity<State>().HasIndex(c => new { c.CountryId, c.Name }).IsUnique();

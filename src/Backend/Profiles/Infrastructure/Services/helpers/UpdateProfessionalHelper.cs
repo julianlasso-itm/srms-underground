@@ -30,7 +30,7 @@ namespace Profiles.Infrastructure.Services.helpers
                 ProfessionalId = request.ProfessionalId!,
                 Name = request.Name,
                 Email = request.Email,
-                Disabled = request.Disabled
+                Disabled = request.Disable
             };
         }
 

@@ -121,7 +121,7 @@ namespace Profiles.Infrastructure.Migrations
 
                     b.HasKey("ProfessionalId");
 
-                    b.HasIndex("Name")
+                    b.HasIndex("Email", "DeletedAt")
                         .IsUnique();
 
                     b.ToTable("Professionals");
@@ -160,10 +160,10 @@ namespace Profiles.Infrastructure.Migrations
 
                     b.HasKey("SkillId");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
-
                     b.HasIndex("ProfessionalId");
+
+                    b.HasIndex("Name", "DeletedAt")
+                        .IsUnique();
 
                     b.ToTable("tbl_skill");
                 });

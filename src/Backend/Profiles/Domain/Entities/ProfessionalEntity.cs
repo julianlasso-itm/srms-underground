@@ -47,5 +47,10 @@ namespace Profiles.Domain.Entities
         {
             Name = name;
         }
+
+        public void UpdateEmail(string email)
+        {
+            Email = email;
+        }
     }
 }

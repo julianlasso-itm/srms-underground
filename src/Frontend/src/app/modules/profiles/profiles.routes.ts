@@ -6,4 +6,10 @@ export const profilesRoutes: Routes = [
     loadChildren: () =>
       import('./skills/skills.module').then((m) => m.SkillsModule),
   },
+
+  {
+    path: 'professionals',
+    loadChildren: () =>
+      import('./professionals/professional.module').then((m) => m.ProfessionalsModule),
+  },
 ];
