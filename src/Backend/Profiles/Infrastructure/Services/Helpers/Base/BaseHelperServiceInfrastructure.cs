@@ -5,9 +5,9 @@ namespace Profiles.Infrastructure.Services.Helpers.Base;
 
 public abstract class BaseHelperServiceInfrastructure
 {
-    protected static Application<Skill, Professional> Application;
+    protected static Application<SkillModel, ProfessionalModel> Application;
 
-    public static void SetApplication(Application<Skill, Professional> application)
+    public static void SetApplication(Application<SkillModel, ProfessionalModel> application)
     {
         Application = application;
     }

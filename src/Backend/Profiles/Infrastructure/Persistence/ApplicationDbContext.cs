@@ -3,9 +3,9 @@ using Profiles.Infrastructure.Persistence.Models;
 
 public class ApplicationDbContext : DbContext
 {
-    public DbSet<Professional> Professionals { get; set; }
+    public DbSet<ProfessionalModel> Professionals { get; set; }
 
-    public DbSet<Skill> Skills { get; set; }
+    public DbSet<SkillModel> Skills { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options) { }
@@ -13,8 +13,11 @@ public class ApplicationDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<Professional>().HasIndex(c => new { c.Email, c.DeletedAt }).IsUnique();
-        modelBuilder.Entity<Skill>().HasIndex(c => new { c.Name, c.DeletedAt }).IsUnique();
+        modelBuilder
+            .Entity<ProfessionalModel>()
+            .HasIndex(c => new { c.Email, c.DeletedAt })
+            .IsUnique();
+        modelBuilder.Entity<SkillModel>().HasIndex(c => new { c.Name, c.DeletedAt }).IsUnique();
         DisableCascadingDelete(modelBuilder);
     }
 

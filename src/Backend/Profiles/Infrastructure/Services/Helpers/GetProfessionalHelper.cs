@@ -33,7 +33,7 @@ namespace Profiles.Infrastructure.Services.Helpers
         }
 
         private static GetProfessionalResponse MapToGetProfessionalsResponse(
-            GetProfessionalsApplicationResponse<Professional> data
+            GetProfessionalsApplicationResponse<ProfessionalModel> data
         )
         {
             return new GetProfessionalResponse
@@ -52,7 +52,7 @@ namespace Profiles.Infrastructure.Services.Helpers
             };
         }
 
-        private static IEnumerable<SkillContract> ObtenerSkills(IEnumerable<Skill> skills)
+        private static IEnumerable<SkillContract> ObtenerSkills(IEnumerable<SkillModel> skills)
         {
             List<SkillContract> skillsContract = new List<SkillContract>();
             foreach (var skill in skills)

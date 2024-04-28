@@ -29,7 +29,7 @@ namespace Profiles.Infrastructure.Services.Helpers
         }
 
         private static GetSkillsResponse MapToGetSkillsResponse(
-            GetSkillsApplicationResponse<Skill> data
+            GetSkillsApplicationResponse<SkillModel> data
         )
         {
             return new GetSkillsResponse

@@ -6,15 +6,16 @@ using Shared.Infrastructure.Persistence.Repositories;
 
 namespace Profiles.Infrastructure.Persistence.Repositories
 {
-    public class ProfessionalRepository : BaseRepository<Professional>, IProfessionalRepository<Professional>
+    public class ProfessionalRepository
+        : BaseRepository<ProfessionalModel>,
+            IProfessionalRepository<ProfessionalModel>
     {
-        public ProfessionalRepository(DbContext context) : base(context)
-        {
-        }
+        public ProfessionalRepository(DbContext context)
+            : base(context) { }
 
-        public Task<Professional> AddAsync(RegisterProfessionalApplicationResponse entity)
+        public Task<ProfessionalModel> AddAsync(RegisterProfessionalApplicationResponse entity)
         {
-            var professional = new Professional
+            var professional = new ProfessionalModel
             {
                 ProfessionalId = Guid.Parse(entity.ProfessionalId),
                 Name = entity.Name,
@@ -24,9 +25,12 @@ namespace Profiles.Infrastructure.Persistence.Repositories
             return AddAsync(professional);
         }
 
-        public Task<Professional> UpdateAsync(Guid id, UpdateProfessionalApplicationResponse entity)
+        public Task<ProfessionalModel> UpdateAsync(
+            Guid id,
+            UpdateProfessionalApplicationResponse entity
+        )
         {
-            var professional = new Professional { ProfessionalId = id };
+            var professional = new ProfessionalModel { ProfessionalId = id };
             if (entity.Name != null)
             {
                 professional.Name = entity.Name;

@@ -6,15 +6,14 @@ using Shared.Infrastructure.Persistence.Repositories;
 
 namespace Profiles.Infrastructure.Persistence.Repositories
 {
-    public class SkillRepository : BaseRepository<Skill>, ISkillRepository<Skill>
+    public class SkillRepository : BaseRepository<SkillModel>, ISkillRepository<SkillModel>
     {
-        public SkillRepository(DbContext context) : base(context)
-        {
-        }
+        public SkillRepository(DbContext context)
+            : base(context) { }
 
-        public Task<Skill> AddAsync(RegisterSkillApplicationResponse entity)
+        public Task<SkillModel> AddAsync(RegisterSkillApplicationResponse entity)
         {
-            var skill = new Skill
+            var skill = new SkillModel
             {
                 SkillId = Guid.Parse(entity.SkillId),
                 Name = entity.Name,
@@ -23,9 +22,9 @@ namespace Profiles.Infrastructure.Persistence.Repositories
             return AddAsync(skill);
         }
 
-        public Task<Skill> UpdateAsync(Guid id, UpdateSkillApplicationResponse entity)
+        public Task<SkillModel> UpdateAsync(Guid id, UpdateSkillApplicationResponse entity)
         {
-            var skill = new Skill { SkillId = id };
+            var skill = new SkillModel { SkillId = id };
             if (entity.Name != null)
             {
                 skill.Name = entity.Name;

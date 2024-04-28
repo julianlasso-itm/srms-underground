@@ -4,22 +4,26 @@ using Shared.Infrastructure.Persistence.Models;
 
 namespace Profiles.Infrastructure.Persistence.Models
 {
-
-    [Table("tbl_skill")]
-    public class Skill: AuditableEntity
+    [Table("professional")]
+    public class ProfessionalModel : AuditableEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [Column("skl_skill_id")]
-        public Guid SkillId { get; set; }
+        [Column("prf_professional_id")]
+        public Guid ProfessionalId { get; set; }
 
         [Required]
-        [Column("skl_name")]
-        [MaxLength(20)]
+        [Column("prf_name")]
+        [MaxLength(100)]
         public string Name { get; set; }
 
         [Required]
-        [Column("skl_disabled")]
+        [Column("prf_email")]
+        [MaxLength(100)]
+        public string Email { get; set; }
+
+        public IEnumerable<SkillModel> Skills { get; set; } = new List<SkillModel>();
+
         public bool Disabled { get; set; } = false;
     }
 }

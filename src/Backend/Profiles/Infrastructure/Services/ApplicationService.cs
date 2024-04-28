@@ -8,15 +8,15 @@ namespace Profiles.Infrastructure.Services
 {
     public class ApplicationService
     {
-        private readonly Application<Skill, Professional> _application;
+        private readonly Application<SkillModel, ProfessionalModel> _application;
 
         public ApplicationService(
             SharedEventHandler eventHandler,
-            ISkillRepository<Skill> skillRepository,
-            IProfessionalRepository<Professional> professionalRepository
+            ISkillRepository<SkillModel> skillRepository,
+            IProfessionalRepository<ProfessionalModel> professionalRepository
         )
         {
-            _application = new Application<Skill, Professional>(
+            _application = new Application<SkillModel, ProfessionalModel>(
                 skillRepository,
                 professionalRepository
             )
@@ -25,7 +25,7 @@ namespace Profiles.Infrastructure.Services
             };
         }
 
-        public Application<Skill, Professional> GetApplication()
+        public Application<SkillModel, ProfessionalModel> GetApplication()
         {
             return _application;
         }

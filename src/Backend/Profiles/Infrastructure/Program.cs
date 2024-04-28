@@ -20,12 +20,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-builder.Services.AddScoped<ISkillRepository<Skill>, SkillRepository>(serviceProvider =>
+builder.Services.AddScoped<ISkillRepository<SkillModel>, SkillRepository>(serviceProvider =>
 {
     var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
     return new SkillRepository(dbContext);
 });
-builder.Services.AddScoped<IProfessionalRepository<Professional>, ProfessionalRepository>(
+builder.Services.AddScoped<IProfessionalRepository<ProfessionalModel>, ProfessionalRepository>(
     serviceProvider =>
     {
         var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
