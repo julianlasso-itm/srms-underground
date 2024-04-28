@@ -35,7 +35,7 @@
 .menu {
   mat-card-content {
     overflow: auto;
-    height: calc(100vh - 64px - 64px);
+    height: calc(100vh - 64px - 72px);
   }
 }
 
@@ -43,7 +43,7 @@
   mat-card-content {
     .niam {
       overflow: auto;
-      height: calc(100vh - 64px - 64px);
+      height: calc(100vh - 64px - 72px);
       margin: 0;
       width: 100%;
       max-width: 100%;
@@ -61,4 +61,21 @@ a[mat-list-item]:hover {
 
 .is-activated {
   background-color: #f0f0f0;
+}
+
+.header-bar {
+  background-color: #001c40;
+  color: #f0f0f0;
+}
+
+.footer {
+  position: fixed; /* Fija el footer en la parte inferior de la ventana */
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #333; /* Cambia esto según el estilo deseado */
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-size: 10px;
 }

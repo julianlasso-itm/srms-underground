@@ -61,7 +61,7 @@ export class SkillComponent implements OnInit, OnDestroy {
     public httpService: HttpService,
     public reloadDataService: ReloadDataService
   ) {
-    this.displayedColumns = ['name', 'disabled', 'actions'];
+    this.displayedColumns = ['position','name', 'disabled', 'actions'];
     this.loading = false;
     this.loadingTable = false;
     this.pageIndex = 0;

@@ -21,7 +21,7 @@ namespace Profiles.Infrastructure.Services.Helpers
             {
                 SkillId = request.SkillId!,
                 Name = request.Name,
-                Disabled = request.Disabled,
+                Disabled = request.Disable
             };
         }
 
