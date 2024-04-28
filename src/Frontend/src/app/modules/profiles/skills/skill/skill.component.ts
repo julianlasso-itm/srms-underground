@@ -60,9 +60,7 @@ export class SkillComponent implements OnInit {
     public reloadDataService: ReloadDataService
   ) {
     this.displayedColumns = [
-      'position',
       'name',
-      'description',
       'disabled',
       'actions',
     ];
@@ -121,6 +119,7 @@ export class SkillComponent implements OnInit {
         console.log(data);
         if (data.skills !== null) {
           this.dataSource.update(() => data.skills);
+          console.log(data)
           this.totalRecords.update(() => data.total);
         } else {
           this.dataSource.update(() => []);

@@ -29,7 +29,7 @@ namespace Profiles.Infrastructure.Services.helpers
             {
                 SkillId = request.SkillId!,
                 Name = request.Name,
-                Disabled = request.Disabled
+                Disabled = request.Disable
             };
         }
 

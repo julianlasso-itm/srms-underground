@@ -135,12 +135,12 @@ export class SkillFormComponent implements OnInit {
 
   private handleException(error: any): void {
     if (error.status === 409 && error.error.Errors.startsWith('23505')) {
-      this.snackBar.open('El skill que intentas crear ya existe', 'Cerrar', {
+      this.snackBar.open('La habilidad que intentas crear ya existe', 'Cerrar', {
         duration: 5000,
       });
     } else {
       this.snackBar.open(
-        'Hay un error no controlado al crear un skill',
+        'Hay un error no controlado al crear una Habilidad',
         'Cerrar',
         {
           duration: 5000,

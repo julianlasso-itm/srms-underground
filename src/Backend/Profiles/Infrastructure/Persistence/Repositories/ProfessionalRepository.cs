@@ -31,6 +31,10 @@ namespace Profiles.Infrastructure.Persistence.Repositories
             {
                 professional.Name = entity.Name;
             }
+            if (entity.Email != null)
+            {
+                professional.Email = entity.Email;
+            }
             if (entity.Disabled != null)
             {
                 professional.Disabled = entity.Disabled;

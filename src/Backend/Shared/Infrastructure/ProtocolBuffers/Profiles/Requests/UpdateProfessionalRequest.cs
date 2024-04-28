@@ -15,6 +15,6 @@ namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Requests
         public string Email { get; set; }
 
         [DataMember(Order = 4, IsRequired = false)]
-        public bool Disabled { get; set; }
+        public bool Disable { get; set; }
     }
 }

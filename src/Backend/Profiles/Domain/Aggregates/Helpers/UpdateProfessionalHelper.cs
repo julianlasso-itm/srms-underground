@@ -25,6 +25,12 @@ namespace Profiles.Domain.Aggregates.Helpers
                 response.Name = professional.Name.Value;
             }
 
+            if (data.Email != null)
+            {
+                professional.UpdateEmail(data.Email);
+                response.Email = professional.Email;
+            }
+
             if (data.Disabled != null)
             {
                 if (data.Disabled == true)

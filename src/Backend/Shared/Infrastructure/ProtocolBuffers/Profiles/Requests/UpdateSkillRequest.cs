@@ -13,6 +13,6 @@ namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Requests
         public string? Name { get; set; }
 
         [DataMember(Order = 3, IsRequired = false)]
-        public bool? Disabled { get; set; }
+        public bool? Disable { get; set; }
     }
 }

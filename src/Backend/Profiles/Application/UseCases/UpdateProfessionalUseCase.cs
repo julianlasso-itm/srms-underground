@@ -28,8 +28,8 @@ namespace Profiles.Application.UseCases
         public override async Task<UpdateProfessionalApplicationResponse> Handle(UpdateProfessionalCommand request)
         {
             var dataUpdateProfessional = MapToRequestForDomain(request);
-            var Professional = AggregateRoot.UpdateProfessional(dataUpdateProfessional);
-            var response = MapToResponse(Professional);
+            var professional = AggregateRoot.UpdateProfessional(dataUpdateProfessional);
+            var response = MapToResponse(professional);
             _ = await Persistence(response);
             EmitEvent(Channel, JsonSerializer.Serialize(response));
             return response;
