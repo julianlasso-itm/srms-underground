@@ -6,16 +6,28 @@ using Shared.Application.Base;
 
 namespace Profiles.Application.UseCases
 {
-    internal class GetProfessionalsUseCase<TProfessionalEntity>: BaseUseCase<GetProfessionalsCommand, GetProfessionalsApplicationResponse<TProfessionalEntity>, IPersonnelAggregateRoot> where TProfessionalEntity : class
+    internal class GetProfessionalsUseCase<TProfessionalEntity>
+        : BaseUseCase<
+            GetProfessionalsCommand,
+            GetProfessionalsApplicationResponse<TProfessionalEntity>,
+            IPersonnelAggregateRoot
+        >
+        where TProfessionalEntity : class
     {
         private readonly IProfessionalRepository<TProfessionalEntity> _professionalRepository;
 
-        public GetProfessionalsUseCase(IPersonnelAggregateRoot aggregateRoot, IProfessionalRepository<TProfessionalEntity> professionalRepository): base (aggregateRoot)
+        public GetProfessionalsUseCase(
+            IPersonnelAggregateRoot aggregateRoot,
+            IProfessionalRepository<TProfessionalEntity> professionalRepository
+        )
+            : base(aggregateRoot)
         {
             _professionalRepository = professionalRepository;
         }
 
-        public override async Task<GetProfessionalsApplicationResponse<TProfessionalEntity>> Handle(GetProfessionalsCommand request)
+        public override async Task<GetProfessionalsApplicationResponse<TProfessionalEntity>> Handle(
+            GetProfessionalsCommand request
+        )
         {
             var data = await QueryProfessionals(request);
             var count = await QueryProfessionalsCount(request);
@@ -23,7 +35,10 @@ namespace Profiles.Application.UseCases
             return response;
         }
 
-        private GetProfessionalsApplicationResponse<TProfessionalEntity> MapToResponse(IEnumerable<TProfessionalEntity> data, int count)
+        private GetProfessionalsApplicationResponse<TProfessionalEntity> MapToResponse(
+            IEnumerable<TProfessionalEntity> data,
+            int count
+        )
         {
             return new GetProfessionalsApplicationResponse<TProfessionalEntity>
             {
@@ -37,7 +52,9 @@ namespace Profiles.Application.UseCases
             return await _professionalRepository.GetCountAsync(request.Filter);
         }
 
-        private async Task<IEnumerable<TProfessionalEntity>> QueryProfessionals(GetProfessionalsCommand request)
+        private async Task<IEnumerable<TProfessionalEntity>> QueryProfessionals(
+            GetProfessionalsCommand request
+        )
         {
             return await _professionalRepository.GetWithPaginationAsync(
                 request.Page,

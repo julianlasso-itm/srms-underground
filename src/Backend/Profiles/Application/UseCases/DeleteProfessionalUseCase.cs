@@ -4,26 +4,36 @@ using Profiles.Application.Repositories;
 using Profiles.Application.Responses;
 using Profiles.Domain.Aggregates.Constants;
 using Profiles.Domain.Aggregates.Dto.Requests;
-using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Aggregates.Interfaces;
-using Profiles.Domain.Entities;
 using Shared.Application.Base;
 
 namespace Profiles.Application.UseCases
 {
-    internal class DeleteProfessionalUseCase<TProfessionalEntity> : BaseUseCase<DeleteProfessionalCommand, DeleteProfessionalApplicationResponse, IPersonnelAggregateRoot> where TProfessionalEntity : class
+    internal class DeleteProfessionalUseCase<TProfessionalEntity>
+        : BaseUseCase<
+            DeleteProfessionalCommand,
+            DeleteProfessionalApplicationResponse,
+            IPersonnelAggregateRoot
+        >
+        where TProfessionalEntity : class
     {
-
         private readonly IProfessionalRepository<TProfessionalEntity> _professionalRepository;
 
-        private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventProfessionalDeleted}";
+        private const string Channel =
+            $"{EventsConst.Prefix}.{EventsConst.EventProfessionalDeleted}";
 
-        public DeleteProfessionalUseCase(IPersonnelAggregateRoot aggregateRoot, IProfessionalRepository<TProfessionalEntity> professionalRepository) : base(aggregateRoot)
+        public DeleteProfessionalUseCase(
+            IPersonnelAggregateRoot aggregateRoot,
+            IProfessionalRepository<TProfessionalEntity> professionalRepository
+        )
+            : base(aggregateRoot)
         {
             _professionalRepository = professionalRepository;
         }
 
-        public override async Task<DeleteProfessionalApplicationResponse> Handle(DeleteProfessionalCommand request)
+        public override async Task<DeleteProfessionalApplicationResponse> Handle(
+            DeleteProfessionalCommand request
+        )
         {
             var dataDeleteRole = MapToRequestForDomain(request);
             var role = AggregateRoot.DeleteProfessional(dataDeleteRole);
@@ -33,19 +43,28 @@ namespace Profiles.Application.UseCases
             return response;
         }
 
-        private async Task<TProfessionalEntity> Persistence(DeleteProfessionalApplicationResponse response)
+        private async Task<TProfessionalEntity> Persistence(
+            DeleteProfessionalApplicationResponse response
+        )
         {
             return await _professionalRepository.DeleteAsync(Guid.Parse(response.ProfessionalId));
         }
 
-        private DeleteProfessionalDomainRequest MapToRequestForDomain(DeleteProfessionalCommand request)
+        private DeleteProfessionalDomainRequest MapToRequestForDomain(
+            DeleteProfessionalCommand request
+        )
         {
             return new DeleteProfessionalDomainRequest { ProfessionalId = request.ProfessionalId };
         }
 
-        private DeleteProfessionalApplicationResponse MapToResponse(DeleteProfessionalDomainResponse Professional)
+        private DeleteProfessionalApplicationResponse MapToResponse(
+            DeleteProfessionalDomainResponse Professional
+        )
         {
-            return new DeleteProfessionalApplicationResponse { ProfessionalId = Professional.ProfessionalId };
+            return new DeleteProfessionalApplicationResponse
+            {
+                ProfessionalId = Professional.ProfessionalId
+            };
         }
     }
 }

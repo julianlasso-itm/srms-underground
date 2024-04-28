@@ -1,9 +1,6 @@
 ﻿using Shared.Application.Base;
 
-namespace Profiles.Infrastructure.Services.helpers
+namespace Profiles.Application.Commands
 {
-    public class GetSkillsCommand: BasePaginator
-    {
-       
-    }
+    public class GetSkillsCommand : BasePaginator { }
 }

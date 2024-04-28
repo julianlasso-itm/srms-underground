@@ -1,6 +1,6 @@
-﻿using Profiles.Application.Responses;
+﻿using Profiles.Application.Commands;
+using Profiles.Application.Responses;
 using Profiles.Infrastructure.Persistence.Models;
-using Profiles.Infrastructure.Services.helpers;
 using Profiles.Infrastructure.Services.Helpers.Base;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;

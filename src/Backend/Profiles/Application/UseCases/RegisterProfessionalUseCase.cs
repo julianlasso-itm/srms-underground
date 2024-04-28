@@ -4,25 +4,36 @@ using Profiles.Application.Repositories;
 using Profiles.Application.Responses;
 using Profiles.Domain.Aggregates.Constants;
 using Profiles.Domain.Aggregates.Dto.Requests;
-using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 
 namespace Profiles.Application.UseCases
 {
-    public class RegisterProfessionalUseCase<TProfessionalEntity> : BaseUseCase<RegisterProfessionalCommand, RegisterProfessionalApplicationResponse, IPersonnelAggregateRoot> where TProfessionalEntity : class
+    public class RegisterProfessionalUseCase<TProfessionalEntity>
+        : BaseUseCase<
+            RegisterProfessionalCommand,
+            RegisterProfessionalApplicationResponse,
+            IPersonnelAggregateRoot
+        >
+        where TProfessionalEntity : class
     {
-   
         private readonly IProfessionalRepository<TProfessionalEntity> _professionalRepository;
 
-        private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventProfessionalRegistered}";
+        private const string Channel =
+            $"{EventsConst.Prefix}.{EventsConst.EventProfessionalRegistered}";
 
-        public RegisterProfessionalUseCase(IPersonnelAggregateRoot aggregateRoot, IProfessionalRepository<TProfessionalEntity> professionalRepository): base(aggregateRoot) 
+        public RegisterProfessionalUseCase(
+            IPersonnelAggregateRoot aggregateRoot,
+            IProfessionalRepository<TProfessionalEntity> professionalRepository
+        )
+            : base(aggregateRoot)
         {
             _professionalRepository = professionalRepository;
         }
 
-        public override async Task<RegisterProfessionalApplicationResponse> Handle(RegisterProfessionalCommand request)
+        public override async Task<RegisterProfessionalApplicationResponse> Handle(
+            RegisterProfessionalCommand request
+        )
         {
             var newProfessional = MapToRequestForDomain(request);
             var professional = AggregateRoot.RegisterProfessional(newProfessional);
@@ -32,16 +43,20 @@ namespace Profiles.Application.UseCases
             return response;
         }
 
-        private RegisterProfessionalDomainRequest MapToRequestForDomain(RegisterProfessionalCommand request)
+        private RegisterProfessionalDomainRequest MapToRequestForDomain(
+            RegisterProfessionalCommand request
+        )
         {
             return new RegisterProfessionalDomainRequest
-            {  
+            {
                 Name = request.Name,
-                Email = request.Email, 
+                Email = request.Email,
             };
         }
 
-        private RegisterProfessionalApplicationResponse MapToResponse(RegisterProfessionalDomainResponse professional)
+        private RegisterProfessionalApplicationResponse MapToResponse(
+            RegisterProfessionalDomainResponse professional
+        )
         {
             return new RegisterProfessionalApplicationResponse
             {
@@ -52,7 +67,9 @@ namespace Profiles.Application.UseCases
             };
         }
 
-        private async Task<TProfessionalEntity> Persistence(RegisterProfessionalApplicationResponse response)
+        private async Task<TProfessionalEntity> Persistence(
+            RegisterProfessionalApplicationResponse response
+        )
         {
             return await _professionalRepository.AddAsync(response);
         }

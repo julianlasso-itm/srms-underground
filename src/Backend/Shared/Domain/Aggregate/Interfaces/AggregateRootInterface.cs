@@ -1,4 +1,4 @@
-﻿namespace Shared.Domain.Aggregate.Interfaces;
+namespace Shared.Domain.Aggregate.Interfaces;
 
 public interface IAggregateRoot
 {

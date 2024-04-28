@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 namespace Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses;
 
 [DataContract]
-public class UpdateRoleResponse
+public class UpdateRoleSecurityResponse
 {
     [DataMember(Order = 1)]
     public required string RoleId { get; set; }

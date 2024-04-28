@@ -8,5 +8,4 @@ internal struct RoleStruct
     public NameValueObject Name { get; set; }
     public DescriptionValueObject? Description { get; set; }
     public DisabledValueObject Disabled { get; set; }
-    public List<CredentialEntity> Credentials { get; set; }
 }

@@ -3,6 +3,5 @@
     public class RegisterSkillDomainRequest
     {
         public string Name { get; init; }
-
     }
 }

@@ -1,28 +1,35 @@
-﻿using Profiles.Domain.Aggregates.Constants;
+﻿using System.Text.Json;
+using Profiles.Application.Commands;
 using Profiles.Application.Repositories;
-using Profiles.Domain.Aggregates.Interfaces;
-using Profiles.Infrastructure.Services.helpers;
-using Shared.Application.Base;
-using System.Text.Json;
-using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Application.Responses;
+using Profiles.Domain.Aggregates.Constants;
+using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
+using Profiles.Domain.Aggregates.Interfaces;
+using Shared.Application.Base;
 
 namespace Profiles.Application.UseCases
 {
-    public class UpdateSkillUseCase<TSkillEntity>: BaseUseCase<UpdateSkillCommand, UpdateSkillApplicationResponse, IPersonnelAggregateRoot> where TSkillEntity : class
+    public class UpdateSkillUseCase<TSkillEntity>
+        : BaseUseCase<UpdateSkillCommand, UpdateSkillApplicationResponse, IPersonnelAggregateRoot>
+        where TSkillEntity : class
     {
-        
         private readonly ISkillRepository<TSkillEntity> _skillRepository;
 
         private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventSkillUpdated}";
 
-        public UpdateSkillUseCase(IPersonnelAggregateRoot aggregateRoot, ISkillRepository<TSkillEntity> skillRepository): base(aggregateRoot)
+        public UpdateSkillUseCase(
+            IPersonnelAggregateRoot aggregateRoot,
+            ISkillRepository<TSkillEntity> skillRepository
+        )
+            : base(aggregateRoot)
         {
             _skillRepository = skillRepository;
         }
-        
-        public override async Task<UpdateSkillApplicationResponse> Handle(UpdateSkillCommand request)
+
+        public override async Task<UpdateSkillApplicationResponse> Handle(
+            UpdateSkillCommand request
+        )
         {
             var dataUpdateSkill = MapToRequestForDomain(request);
             var skill = AggregateRoot.UpdateSkill(dataUpdateSkill);

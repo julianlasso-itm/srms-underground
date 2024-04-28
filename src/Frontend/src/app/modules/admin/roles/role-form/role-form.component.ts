@@ -25,7 +25,7 @@ import { ReloadDataService } from '../../../shared/services/reload-data.service'
 import { SharedModule } from '../../../shared/shared.module';
 import { IRole } from '../role/role.interface';
 
-const URL_ROLE = `${Constant.URL_BASE}${Constant.URL_ROLE}`;
+const URL_ROLE = `${Constant.URL_BASE}${Constant.URL_ROLE_SECURITY}`;
 
 @Component({
   selector: 'srms-role-form',
@@ -142,18 +142,18 @@ export class RoleFormComponent implements OnInit {
   }
 
   private handleException(error: any): void {
-    if (error.status === 409 && error.error.Errors.startsWith('23505')) {
-      this.snackBar.open('El rol que intentas crear ya existe', 'Cerrar', {
-        duration: 5000,
-      });
-    } else {
-      this.snackBar.open(
-        'Hay un error no controlado al crear un rol',
-        'Cerrar',
-        {
-          duration: 5000,
-        }
-      );
-    }
+    const errorMessages = new Map([
+      ['409_23505', 'El registro que intentas crear ya existe'],
+      [
+        '409_23503',
+        'No es posible eliminar un registro porque tiene otros registros asociados',
+      ],
+    ]);
+
+    const errorKey = `${error.status}_${error.error.Errors.substring(0, 5)}`;
+    const message =
+      errorMessages.get(errorKey) ?? error.error.Errors ?? 'Error desconocido';
+
+    this.snackBar.open(message, 'Cerrar', { duration: 5000 });
   }
 }

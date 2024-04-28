@@ -44,30 +44,11 @@ namespace Profiles.Infrastructure.Services.Helpers
                         ProfessionalId = professional.ProfessionalId.ToString(),
                         Name = professional.Name,
                         Email = professional.Email,
-                        Skills = ObtenerSkills(professional.Skills),
                         Disabled = professional.Disabled
                     })
                     .ToList(),
                 Total = data.Total
             };
-        }
-
-        private static IEnumerable<SkillContract> ObtenerSkills(IEnumerable<SkillModel> skills)
-        {
-            List<SkillContract> skillsContract = new List<SkillContract>();
-            foreach (var skill in skills)
-            {
-                skillsContract.Add(
-                    new SkillContract
-                    {
-                        SkillId = skill.SkillId.ToString(),
-                        Name = skill.Name,
-                        Disabled = skill.Disabled
-                    }
-                );
-            }
-
-            return skillsContract;
         }
     }
 }

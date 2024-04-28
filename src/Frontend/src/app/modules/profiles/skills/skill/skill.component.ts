@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,6 +10,7 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Subscription } from 'rxjs';
 import { DeleteDialogComponent } from '../../../shared/components/delete-dialog/delete-dialog.component';
 import { Constant } from '../../../shared/constants/constants';
 import { IPagination } from '../../../shared/interfaces/pagination.interface';
@@ -42,7 +43,7 @@ const MIN_LENGTH = 5;
   templateUrl: './skill.component.html',
   styleUrl: './skill.component.scss',
 })
-export class SkillComponent implements OnInit {
+export class SkillComponent implements OnInit, OnDestroy {
   readonly displayedColumns: string[];
   dataSource = signal<ISkill[]>([]);
   totalRecords = signal(0);
@@ -53,17 +54,14 @@ export class SkillComponent implements OnInit {
   loadingFromFilter = signal(false);
 
   private pageIndex: number;
+  private reloadData!: Subscription;
 
   constructor(
     public dialog: MatDialog,
     public httpService: HttpService,
     public reloadDataService: ReloadDataService
   ) {
-    this.displayedColumns = [
-      'name',
-      'disabled',
-      'actions',
-    ];
+    this.displayedColumns = ['name', 'disabled', 'actions'];
     this.loading = false;
     this.loadingTable = false;
     this.pageIndex = 0;
@@ -71,9 +69,13 @@ export class SkillComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSkills();
-    this.reloadDataService.changeData.subscribe((data) => {
+    this.reloadData = this.reloadDataService.changeData.subscribe((data) => {
       this.getSkills();
     });
+  }
+
+  ngOnDestroy(): void {
+    this.reloadData.unsubscribe();
   }
 
   openDialogNew(): void {
@@ -119,7 +121,7 @@ export class SkillComponent implements OnInit {
         console.log(data);
         if (data.skills !== null) {
           this.dataSource.update(() => data.skills);
-          console.log(data)
+          console.log(data);
           this.totalRecords.update(() => data.total);
         } else {
           this.dataSource.update(() => []);

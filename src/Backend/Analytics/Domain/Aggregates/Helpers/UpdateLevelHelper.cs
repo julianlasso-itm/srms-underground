@@ -1,72 +1,73 @@
-using Analytics.Domain.Aggregates.Dto;
+using Analytics.Domain.Aggregates.Dto.Requests;
+using Analytics.Domain.Aggregates.Dto.Responses;
 using Analytics.Domain.Entities;
 using Analytics.Domain.Entities.Structs;
 using Analytics.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
+using Shared.Domain.Exceptions;
+using Shared.Domain.ValueObjects;
 
 namespace Analytics.Domain.Aggregates.Helpers;
 
-internal abstract class UpdateLevelHelper : BaseHelper, IHelper<UpdateLevel, UpdateLevelResponse>
+internal abstract class UpdateLevelHelper
+    : BaseHelper,
+        IHelper<UpdateLevelDomainRequest, UpdateLevelDomainResponse>
 {
-    public static UpdateLevelResponse Execute(UpdateLevel data)
+    public static UpdateLevelDomainResponse Execute(UpdateLevelDomainRequest data)
     {
-        var updateLevel = GetLevelStruct(data);
-        ValidateStructureFields(updateLevel);
-
-        var level = new LevelEntity(new LevelStruct { LevelId = updateLevel.LevelId });
-        level.UpdateName(updateLevel.Name);
-        if (updateLevel.Description != null)
-        {
-            level.UpdateDescription(updateLevel.Description);
-        }
-        if (updateLevel.Disabled != null)
-        {
-            if (updateLevel.Disabled.Value)
-            {
-                level.Disable();
-            }
-            else
-            {
-                level.Enable();
-            }
-        }
-
-        return new UpdateLevelResponse
-        {
-            LevelId = level.LevelId.Value,
-            Name = level.Name.Value,
-            Description = level.Description?.Value,
-            Disabled = level.Disabled.Value,
-        };
-    }
-
-    public static void Execute()
-    {
-        throw new NotImplementedException();
-    }
-
-    private static LevelStruct GetLevelStruct(UpdateLevel data)
-    {
-        var response = new LevelStruct();
-        response.LevelId = new LevelIdValueObject(data.LevelId);
+        var @struct = GetLevelStruct(data);
+        var Level = new LevelEntity(@struct);
+        var response = new UpdateLevelDomainResponse { LevelId = Level.LevelId.Value };
 
         if (data.Name != null)
         {
-            response.Name = new NameValueObject(data.Name);
-            ;
+            var name = new NameValueObject(data.Name);
+            Level.UpdateName(name);
+            response.Name = Level.Name.Value;
         }
 
         if (data.Description != null)
         {
-            response.Description = new DescriptionValueObject(data.Description);
+            var description = new DescriptionValueObject(data.Description);
+            Level.UpdateDescription(description);
+            response.Description = Level.Description?.Value;
         }
 
-        if (data.Disabled != null)
+        if (data.Disable != null)
         {
-            response.Disabled = new DisabledValueObject((bool)data.Disabled);
+            if (data.Disable == true)
+            {
+                Level.Disable();
+            }
+            else
+            {
+                Level.Enable();
+            }
+            response.Disabled = Level.Disabled.Value;
         }
+
+        ValidateStructureFields(Level);
+        ValidateAmountDataToBeUpdated(response);
 
         return response;
+    }
+
+    private static LevelStruct GetLevelStruct(UpdateLevelDomainRequest data)
+    {
+        var id = new LevelIdValueObject(data.LevelId);
+        return new LevelStruct { LevelId = id };
+    }
+
+    private static void ValidateAmountDataToBeUpdated(UpdateLevelDomainResponse response)
+    {
+        var count = response.GetType().GetProperties().Count(x => x.GetValue(response) != null);
+        if (count == 1)
+        {
+            throw new DomainException(
+                "No data to update",
+                [new ErrorValueObject("No fields to update", "No fields to update")]
+            );
+        }
     }
 }

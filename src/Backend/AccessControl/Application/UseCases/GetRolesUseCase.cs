@@ -36,13 +36,14 @@ public sealed class GetRolesUseCase<TEntity>
             request.Limit,
             request.Sort!,
             request.Order!,
-            request.Filter
+            request.Filter,
+            request.FilterBy
         );
     }
 
     private async Task<int> QueryRolesCount(GetRolesCommand request)
     {
-        return await _roleRepository.GetCountAsync(request.Filter);
+        return await _roleRepository.GetCountAsync(request.Filter, request.FilterBy);
     }
 
     private GetRolesApplicationResponse<TEntity> MapToResponse(

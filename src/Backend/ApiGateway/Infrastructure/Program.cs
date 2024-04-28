@@ -1,4 +1,4 @@
-﻿using ApiGateway.Infrastructure.Services;
+using ApiGateway.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,11 +16,13 @@ if (builder.Environment.IsDevelopment())
 
     builder.Services.AddSingleton(provider => new AccessControlService(httpClientHandler));
     builder.Services.AddSingleton(provider => new ProfilesService(httpClientHandler));
+    builder.Services.AddSingleton(provider => new AnalyticsService(httpClientHandler));
 }
 else
 {
     builder.Services.AddSingleton<AccessControlService>();
     builder.Services.AddSingleton<ProfilesService>();
+    builder.Services.AddSingleton<AnalyticsService>();
 }
 
 // Define CORS policy

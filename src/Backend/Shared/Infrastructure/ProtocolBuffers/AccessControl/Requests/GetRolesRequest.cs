@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 namespace Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
 
 [DataContract]
-public class GetRolesRequest
+public class GetRolesSecurityRequest
 {
     [DataMember(Order = 1)]
     public int Page { get; set; }
@@ -15,8 +15,11 @@ public class GetRolesRequest
     public string? Filter { get; set; }
 
     [DataMember(Order = 4, IsRequired = false)]
-    public string? Sort { get; set; }
+    public string? FilterBy { get; set; }
 
     [DataMember(Order = 5, IsRequired = false)]
+    public string? Sort { get; set; }
+
+    [DataMember(Order = 6, IsRequired = false)]
     public string? Order { get; set; } = "asc";
 }

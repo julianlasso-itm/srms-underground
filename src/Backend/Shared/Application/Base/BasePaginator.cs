@@ -16,6 +16,9 @@ public abstract class BasePaginator : ICommand
     [MinLength(1, ErrorMessage = "Filter must be a string")]
     public string? Filter { get; init; }
 
+    [StringLength(1, ErrorMessage = "FilterBy must be a string")]
+    public string? FilterBy { get; init; }
+
     [RegularExpression(@"^[a-zA-Z]+(?:\s[a-zA-Z]+)*$", ErrorMessage = "Sort must be a string")]
     public string? Sort { get; init; }
 

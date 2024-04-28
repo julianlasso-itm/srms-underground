@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 using Shared.Infrastructure.Persistence.Models;
 
 namespace Profiles.Infrastructure.Persistence.Models
 {
+    [Index(nameof(Name), nameof(DeletedAt), IsUnique = true)]
     [Table("skill")]
     public class SkillModel : AuditableEntity
     {

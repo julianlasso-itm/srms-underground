@@ -1,4 +1,3 @@
-using AccessControl.Application.Commands;
 using AccessControl.Infrastructure.Services.Helpers;
 using ProtoBuf.Grpc;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl;
@@ -16,127 +15,39 @@ public class AccessControlService : IAccessControlServices
         _applicationService = applicationService;
     }
 
-    public async Task<RegisterUserResponse> RegisterUserAsync(
-        RegisterUserRequest request,
+    public async Task<RegisterRoleSecurityResponse> RegisterRoleAsync(
+        RegisterRoleSecurityRequest request,
         CallContext context = default
     )
     {
-        RegisterUserHelper.SetApplication(_applicationService.GetApplication());
-        return await RegisterUserHelper.RegisterUserAsync(request);
-        // var app = _applicationService.GetApplication();
-
-        // var newUserCommand = new NewUserCommand
-        // {
-        //     Email = request.Email,
-        //     Password = request.Password,
-        //     Roles = new List<string>()
-        // };
-
-        // var data = await app.RegisterUser(newUserCommand);
-        // var response = new RegisterUserResponse
-        // {
-        //     UserId = data.UserId,
-        //     Email = data.Email,
-        //     Disabled = data.Disabled,
-        // };
-        // return response;
+        RegisterRoleHelper.SetApplication(_applicationService.GetApplication());
+        return await RegisterRoleHelper.RegisterRoleAsync(request);
     }
 
-    public async Task<RegisterRoleResponse> RegisterRoleAsync(
-        RegisterRoleRequest request,
+    public async Task<UpdateRoleSecurityResponse> UpdateRoleAsync(
+        UpdateRoleSecurityRequest request,
         CallContext context = default
     )
     {
-        var app = _applicationService.GetApplication();
-
-        var newRoleCommand = new RegisterRoleCommand
-        {
-            Name = request.Name,
-            Description = request.Description
-        };
-
-        var data = await app.RegisterRole(newRoleCommand);
-        var response = new RegisterRoleResponse
-        {
-            RoleId = data.RoleId,
-            Name = data.Name,
-            Description = data.Description,
-            Disabled = data.Disabled,
-        };
-        return response;
+        UpdateRoleHelper.SetApplication(_applicationService.GetApplication());
+        return await UpdateRoleHelper.UpdateRoleAsync(request);
     }
 
-    public async Task<UpdateRoleResponse> UpdateRoleAsync(
-        UpdateRoleRequest request,
+    public async Task<DeleteRoleSecurityResponse> DeleteRoleAsync(
+        DeleteRoleSecurityRequest request,
         CallContext context = default
     )
     {
-        var app = _applicationService.GetApplication();
-
-        var updateRoleCommand = new UpdateRoleCommand
-        {
-            RoleId = request.RoleId!,
-            Name = request.Name,
-            Description = request.Description,
-            Disable = request.Disable
-        };
-
-        var data = await app.UpdateRole(updateRoleCommand);
-        var response = new UpdateRoleResponse
-        {
-            RoleId = data.RoleId,
-            Name = data.Name,
-            Description = data.Description,
-            Disabled = data.Disabled,
-        };
-        return response;
+        DeleteRoleHelper.SetApplication(_applicationService.GetApplication());
+        return await DeleteRoleHelper.DeleteRoleAsync(request);
     }
 
-    public async Task<DeleteRoleResponse> DeleteRoleAsync(
-        DeleteRoleRequest request,
+    public async Task<GetRolesSecurityResponse> GetRolesAsync(
+        GetRolesSecurityRequest request,
         CallContext context = default
     )
     {
-        var app = _applicationService.GetApplication();
-
-        var deleteRoleCommand = new DeleteRoleCommand { RoleId = request.RoleId };
-
-        var data = await app.DeleteRole(deleteRoleCommand);
-        var response = new DeleteRoleResponse { RoleId = data.RoleId, };
-        return response;
-    }
-
-    public async Task<GetRolesResponse> GetRolesAsync(
-        GetRolesRequest request,
-        CallContext context = default
-    )
-    {
-        var app = _applicationService.GetApplication();
-
-        var getRolesCommand = new GetRolesCommand
-        {
-            Page = request.Page,
-            Limit = request.Limit,
-            Filter = request.Filter,
-            Sort = request.Sort,
-            Order = request.Order
-        };
-
-        var data = await app.GetRoles(getRolesCommand);
-        var response = new GetRolesResponse
-        {
-            Roles = data
-                .Roles.Select(role => new Role
-                {
-                    RoleId = role.RoleId.ToString(),
-                    Name = role.Name,
-                    Description = role.Description,
-                    Disabled = role.Disabled
-                })
-                .ToList(),
-            Total = data.Total
-        };
-
-        return response;
+        GetRolesHelper.SetApplication(_applicationService.GetApplication());
+        return await GetRolesHelper.GetRolesAsync(request);
     }
 }

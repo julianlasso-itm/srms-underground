@@ -50,9 +50,4 @@ internal sealed class LevelEntity
     {
         Description = description;
     }
-
-    public void DeleteDescription()
-    {
-        Description = null;
-    }
 }

@@ -1,7 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-
-using System.Text.Json;
-using AccessControl.Domain.Aggregates.Dto.Requests;
+﻿using System.Text.Json;
 using Profiles.Application.Commands;
 using Profiles.Application.Repositories;
 using Profiles.Application.Responses;
@@ -13,20 +10,27 @@ using Shared.Application.Base;
 
 namespace Profiles.Application.UseCases
 {
-    internal class DeleteSkillUseCase<TSkillEntity> : BaseUseCase<DeleteSkillCommand, DeleteSkillApplicationResponse, IPersonnelAggregateRoot> where TSkillEntity : class
+    internal class DeleteSkillUseCase<TSkillEntity>
+        : BaseUseCase<DeleteSkillCommand, DeleteSkillApplicationResponse, IPersonnelAggregateRoot>
+        where TSkillEntity : class
     {
-       
         private ISkillRepository<TSkillEntity> _skillRepository;
         private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventSkillDeleted}";
 
-        public DeleteSkillUseCase(IPersonnelAggregateRoot aggregateRoot, ISkillRepository<TSkillEntity> skillRepository) : base(aggregateRoot)
+        public DeleteSkillUseCase(
+            IPersonnelAggregateRoot aggregateRoot,
+            ISkillRepository<TSkillEntity> skillRepository
+        )
+            : base(aggregateRoot)
         {
             {
                 _skillRepository = skillRepository;
             }
         }
 
-        public override async Task<DeleteSkillApplicationResponse> Handle(DeleteSkillCommand request)
+        public override async Task<DeleteSkillApplicationResponse> Handle(
+            DeleteSkillCommand request
+        )
         {
             var dataDeleteRole = MapToRequestForDomain(request);
             var role = AggregateRoot.DeleteSkill(dataDeleteRole);
@@ -50,7 +54,5 @@ namespace Profiles.Application.UseCases
         {
             return new DeleteSkillApplicationResponse { SkillId = skill.SkillId };
         }
-
     }
-
 }

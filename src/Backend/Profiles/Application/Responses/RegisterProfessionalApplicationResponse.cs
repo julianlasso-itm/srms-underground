@@ -1,5 +1,4 @@
-﻿
-using Profiles.Domain.Entities;
+﻿using Profiles.Domain.Entities;
 
 namespace Profiles.Application.Responses
 {

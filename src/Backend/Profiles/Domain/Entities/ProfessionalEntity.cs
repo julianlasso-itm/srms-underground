@@ -18,7 +18,6 @@ namespace Profiles.Domain.Entities
             ProfessionalId = data.ProfessionalId;
             Name = data.Name;
             Email = data.Email;
-            Skills = data.Skills;
             Disabled = data.Disabled;
         }
 

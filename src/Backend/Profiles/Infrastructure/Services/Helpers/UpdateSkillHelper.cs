@@ -1,5 +1,5 @@
-﻿using Profiles.Application.Responses;
-using Profiles.Infrastructure.Services.helpers;
+﻿using Profiles.Application.Commands;
+using Profiles.Application.Responses;
 using Profiles.Infrastructure.Services.Helpers.Base;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
@@ -21,7 +21,7 @@ namespace Profiles.Infrastructure.Services.Helpers
             {
                 SkillId = request.SkillId!,
                 Name = request.Name,
-                Disabled = request.Disable
+                Disabled = request.Disabled,
             };
         }
 

@@ -1,19 +1,19 @@
-﻿using System.Runtime.Serialization;
+using System.Runtime.Serialization;
 
 namespace Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses;
 
 [DataContract]
-public class GetRolesResponse
+public class GetRolesSecurityResponse
 {
     [DataMember(Order = 1)]
-    public required IEnumerable<Role> Roles { get; set; }
+    public required IEnumerable<RoleSecurity> Roles { get; set; }
 
     [DataMember(Order = 2)]
     public required int Total { get; set; }
 }
 
 [DataContract]
-public class Role
+public class RoleSecurity
 {
     [DataMember(Order = 1)]
     public required string RoleId { get; set; }

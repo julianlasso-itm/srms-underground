@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,6 +10,7 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Subscription } from 'rxjs';
 import { DeleteDialogComponent } from '../../../shared/components/delete-dialog/delete-dialog.component';
 import { Constant } from '../../../shared/constants/constants';
 import { IPagination } from '../../../shared/interfaces/pagination.interface';
@@ -42,7 +43,7 @@ const MIN_LENGTH = 5;
   templateUrl: './professional.component.html',
   styleUrl: './professional.component.scss',
 })
-export class ProfessionalComponent implements OnInit {
+export class ProfessionalComponent implements OnInit, OnDestroy {
   readonly displayedColumns: string[];
   dataSource = signal<IProfessional[]>([]);
   totalRecords = signal(0);
@@ -53,18 +54,14 @@ export class ProfessionalComponent implements OnInit {
   loadingFromFilter = signal(false);
 
   private pageIndex: number;
+  private reloadData!: Subscription;
 
   constructor(
     public dialog: MatDialog,
     public httpService: HttpService,
     public reloadDataService: ReloadDataService
   ) {
-    this.displayedColumns = [
-      'name',
-      'email',
-      'disabled',
-      'actions',
-    ];
+    this.displayedColumns = ['name', 'email', 'disabled', 'actions'];
     this.loading = false;
     this.loadingTable = false;
     this.pageIndex = 0;
@@ -72,9 +69,13 @@ export class ProfessionalComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProfessionals();
-    this.reloadDataService.changeData.subscribe((data) => {
+    this.reloadData = this.reloadDataService.changeData.subscribe((data) => {
       this.getProfessionals();
     });
+  }
+
+  ngOnDestroy(): void {
+    this.reloadData.unsubscribe();
   }
 
   openDialogNew(): void {
@@ -115,28 +116,30 @@ export class ProfessionalComponent implements OnInit {
         Filter: this.filter(),
       });
     }
-    this.httpService.get<IProfessionals>(URL_GET_PROFESSIONALS, params).subscribe({
-      next: (data) => {
-        console.log(data);
-        if (data.professionals !== null) {
-          this.dataSource.update(() => data.professionals);
-          this.totalRecords.update(() => data.total);
-        } else {
-          this.dataSource.update(() => []);
-          this.totalRecords.update(() => 0);
-        }
-      },
-      complete: () => {
-        this.tableLoadingFalse(loadingTable);
-        this.loadingFromFilter.update(() => false);
-        console.log('Professionals loaded');
-      },
-      error: (error) => {
-        this.tableLoadingFalse(loadingTable);
-        this.loadingFromFilter.update(() => false);
-        console.error(error);
-      },
-    });
+    this.httpService
+      .get<IProfessionals>(URL_GET_PROFESSIONALS, params)
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+          if (data.professionals !== null) {
+            this.dataSource.update(() => data.professionals);
+            this.totalRecords.update(() => data.total);
+          } else {
+            this.dataSource.update(() => []);
+            this.totalRecords.update(() => 0);
+          }
+        },
+        complete: () => {
+          this.tableLoadingFalse(loadingTable);
+          this.loadingFromFilter.update(() => false);
+          console.log('Professionals loaded');
+        },
+        error: (error) => {
+          this.tableLoadingFalse(loadingTable);
+          this.loadingFromFilter.update(() => false);
+          console.error(error);
+        },
+      });
   }
 
   handlePageEvent(paginator: PageEvent) {

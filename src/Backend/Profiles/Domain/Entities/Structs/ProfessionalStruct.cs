@@ -8,6 +8,5 @@ namespace Profiles.Domain.Entities.Structs
         public DisabledValueObject Disabled { get; set; }
         public NameValueObject Name { get; set; }
         public EmailValueObject Email { get; set; }
-        public IEnumerable<SkillEntity> Skills { get; internal set; }
     }
 }

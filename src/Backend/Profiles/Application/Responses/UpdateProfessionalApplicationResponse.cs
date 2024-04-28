@@ -9,6 +9,5 @@ namespace Profiles.Application.Responses
         public string? Email { get; set; }
         public IEnumerable<SkillStruct> Skills { get; set; }
         public bool Disabled { get; set; }
-        
     }
 }

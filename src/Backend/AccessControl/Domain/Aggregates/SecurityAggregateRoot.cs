@@ -12,13 +12,6 @@ public class SecurityAggregateRoot : BaseAggregateRoot, ISecurityAggregateRoot
     public SecurityAggregateRoot(IEvent eventInterface)
         : base(eventInterface) { }
 
-    public RegisterCredentialDomainResponse RegisterCredential(
-        RegisterCredentialDomainRequest registerData
-    )
-    {
-        return RegisterCredentialHelper.Execute(registerData);
-    }
-
     public RegisterRoleDomainResponse RegisterRole(RegisterRoleDomainRequest registerData)
     {
         return RegisterRoleHelper.Execute(registerData);

@@ -1,5 +1,4 @@
-﻿
-namespace Profiles.Application.Responses
+﻿namespace Profiles.Application.Responses
 {
     public class GetProfessionalsApplicationResponse<TProfessionalEntity>
     {

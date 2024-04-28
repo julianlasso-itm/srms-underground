@@ -1,4 +1,4 @@
-﻿namespace Profiles.Infrastructure.Services.helpers
+﻿namespace Profiles.Application.Commands
 {
     public class UpdateSkillCommand
     {

@@ -1,5 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Profiles.Application.Repositories;
+using Profiles.Infrastructure.Persistence;
 using Profiles.Infrastructure.Persistence.Models;
 using Profiles.Infrastructure.Persistence.Repositories;
 using Profiles.Infrastructure.Services;
@@ -9,12 +10,40 @@ using Shared.Infrastructure.Interceptors;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+// == Configure connection to the database ==
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+// ==========================================
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// == Configure repositories ==
+builder.Services.AddScoped<ICountryRepository<CountryModel>, CountryRepository>(serviceProvider =>
+{
+    var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
+    return new CountryRepository(dbContext);
+});
 
-// Configure connection to the database
+builder.Services.AddScoped<IProvinceRepository<ProvinceModel>, ProvinceRepository>(
+    serviceProvider =>
+    {
+        var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
+        return new ProvinceRepository(dbContext);
+    }
+);
+
+builder.Services.AddScoped<ICityRepository<CityModel>, CityRepository>(serviceProvider =>
+{
+    var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
+    return new CityRepository(dbContext);
+});
+
+builder.Services.AddScoped<IRoleRepository<RoleModel>, RoleRepository>(serviceProvider =>
+{
+    var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
+    return new RoleRepository(dbContext);
+});
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -25,6 +54,7 @@ builder.Services.AddScoped<ISkillRepository<SkillModel>, SkillRepository>(servic
     var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
     return new SkillRepository(dbContext);
 });
+
 builder.Services.AddScoped<IProfessionalRepository<ProfessionalModel>, ProfessionalRepository>(
     serviceProvider =>
     {
@@ -32,22 +62,39 @@ builder.Services.AddScoped<IProfessionalRepository<ProfessionalModel>, Professio
         return new ProfessionalRepository(dbContext);
     }
 );
+// ============================
 
+// == Configure dependency injection for services ==
 builder.Services.AddScoped<SharedEventHandler>();
 builder.Services.AddScoped<ApplicationService>();
+// =================================================
 
-// Add services to the container.
+// == Configure interceptors for gRPC services ==
 builder.Services.AddSingleton<ErrorHandlingInterceptor>();
+// ==============================================
 
+// == Configure gRPC services ==
 builder.Services.AddCodeFirstGrpc(options =>
 {
     options.Interceptors.Add<ErrorHandlingInterceptor>();
 });
+// ========================================
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// == Ensure the database is created or migrated before starting the application ==
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<ApplicationDbContext>();
+    context.Database.Migrate();
+}
+// ================================================================================
+
+// == Configure gRPC services ==
 app.MapGrpcService<ProfilesService>();
+// =============================
+
 app.MapGet(
     "/",
     () =>

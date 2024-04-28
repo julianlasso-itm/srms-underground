@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 using Shared.Infrastructure.Persistence.Models;
 
 namespace Profiles.Infrastructure.Persistence.Models
 {
+    [Index(nameof(Email), nameof(DeletedAt), IsUnique = true)]
     [Table("professional")]
     public class ProfessionalModel : AuditableEntity
     {
@@ -22,8 +24,8 @@ namespace Profiles.Infrastructure.Persistence.Models
         [MaxLength(100)]
         public string Email { get; set; }
 
-        public IEnumerable<SkillModel> Skills { get; set; } = new List<SkillModel>();
-
+        [Required]
+        [Column("prf_disabled")]
         public bool Disabled { get; set; } = false;
     }
 }
