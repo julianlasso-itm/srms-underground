@@ -5,7 +5,7 @@
   <p>
     <mat-form-field class="width-100">
       <mat-label>Nombre</mat-label>
-      <input matInput type="text" formControlName="name" placeholder="Nombre del rol">
+      <input matInput type="text" formControlName="name" placeholder="Nombre del Profesional">
       @if (frmProfessional().get('name')?.errors?.['required']) {
         <mat-error>El nombre es requerido</mat-error>
       }
@@ -18,7 +18,7 @@
     <mat-form-field class="width-100">
       <mat-label>Email</mat-label>
       <input matInput type="email" formControlName="email"
-        placeholder="Email del rol">
+        placeholder="Email del Profesional">
         @if (frmProfessional().get('email')?.errors?.['pattern']) {
           <mat-error>El formato de correo electronico no es valido</mat-error>
         }
