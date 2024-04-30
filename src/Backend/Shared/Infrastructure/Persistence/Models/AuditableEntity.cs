@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Shared.Infrastructure.Persistence.Models;
-
-public abstract class AuditableEntity
+namespace Shared.Infrastructure.Persistence.Models
 {
+  public abstract class AuditableEntity
+  {
     [Required]
     [Column("created_at")]
     [DataType(DataType.DateTime)]
@@ -19,4 +19,5 @@ public abstract class AuditableEntity
     [DataType(DataType.DateTime)]
     [DisplayFormat(ConvertEmptyStringToNull = true)]
     public DateTime? DeletedAt { get; set; }
+  }
 }

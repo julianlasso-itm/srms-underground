@@ -6,29 +6,29 @@ using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
 
 namespace Profiles.Infrastructure.Services.Helpers
 {
-    public class DeleteProfessionalHelper : BaseHelperServiceInfrastructure
+  public class DeleteProfessionalHelper : BaseHelperServiceInfrastructure
+  {
+    public static async Task<DeleteProfessionalResponse> DeleteProfessionalAsync(
+      DeleteProfessionalRequest request
+    )
     {
-        public static async Task<DeleteProfessionalResponse> DeleteProfessionalAsync(
-            DeleteProfessionalRequest request
-        )
-        {
-            var newUserCommand = MapToDeleteProfessionalCommand(request);
-            var data = await Application.DeleteProfessional(newUserCommand);
-            return MapToDeleteProfessionalResponse(data);
-        }
-
-        private static DeleteProfessionalResponse MapToDeleteProfessionalResponse(
-            DeleteProfessionalApplicationResponse data
-        )
-        {
-            return new DeleteProfessionalResponse { ProfessionalId = data.ProfessionalId, };
-        }
-
-        private static DeleteProfessionalCommand MapToDeleteProfessionalCommand(
-            DeleteProfessionalRequest request
-        )
-        {
-            return new DeleteProfessionalCommand { ProfessionalId = request.ProfessionalId, };
-        }
+      var newUserCommand = MapToDeleteProfessionalCommand(request);
+      var data = await Application.DeleteProfessional(newUserCommand);
+      return MapToDeleteProfessionalResponse(data);
     }
+
+    private static DeleteProfessionalResponse MapToDeleteProfessionalResponse(
+      DeleteProfessionalApplicationResponse data
+    )
+    {
+      return new DeleteProfessionalResponse { ProfessionalId = data.ProfessionalId, };
+    }
+
+    private static DeleteProfessionalCommand MapToDeleteProfessionalCommand(
+      DeleteProfessionalRequest request
+    )
+    {
+      return new DeleteProfessionalCommand { ProfessionalId = request.ProfessionalId, };
+    }
+  }
 }

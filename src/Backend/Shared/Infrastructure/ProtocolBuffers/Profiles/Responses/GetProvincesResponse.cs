@@ -1,20 +1,20 @@
 using System.Runtime.Serialization;
 
-namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
-
-[DataContract]
-public class GetProvincesResponse
+namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Responses
 {
+  [DataContract]
+  public class GetProvincesResponse
+  {
     [DataMember(Order = 1)]
     public required IEnumerable<Province> Provinces { get; set; }
 
     [DataMember(Order = 2)]
     public required int Total { get; set; }
-}
+  }
 
-[DataContract]
-public class Province
-{
+  [DataContract]
+  public class Province
+  {
     [DataMember(Order = 1)]
     public required string ProvinceId { get; set; }
 
@@ -29,4 +29,5 @@ public class Province
 
     [DataMember(Order = 5)]
     public required Country Country { get; set; }
+  }
 }

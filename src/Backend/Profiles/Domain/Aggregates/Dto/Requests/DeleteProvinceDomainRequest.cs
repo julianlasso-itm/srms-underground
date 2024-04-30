@@ -1,6 +1,7 @@
-namespace Profiles.Domain.Aggregates.Dto.Requests;
-
-public class DeleteProvinceDomainRequest
+namespace Profiles.Domain.Aggregates.Dto.Requests
 {
-    public string ProvinceId { get; init; }
+  public class DeleteProvinceDomainRequest
+  {
+    public required string ProvinceId { get; init; }
+  }
 }

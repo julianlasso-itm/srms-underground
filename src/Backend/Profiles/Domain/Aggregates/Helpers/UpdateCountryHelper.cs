@@ -8,59 +8,60 @@ using Shared.Domain.Aggregate.Interfaces;
 using Shared.Domain.Exceptions;
 using Shared.Domain.ValueObjects;
 
-namespace Profiles.Domain.Aggregates.Helpers;
-
-internal abstract class UpdateCountryHelper
-    : BaseHelper,
-        IHelper<UpdateCountryDomainRequest, UpdateCountryDomainResponse>
+namespace Profiles.Domain.Aggregates.Helpers
 {
+  internal abstract class UpdateCountryHelper
+    : BaseHelper,
+      IHelper<UpdateCountryDomainRequest, UpdateCountryDomainResponse>
+  {
     public static UpdateCountryDomainResponse Execute(UpdateCountryDomainRequest data)
     {
-        var @struct = GetCountryStruct(data);
-        var country = new CountryEntity(@struct);
-        var response = new UpdateCountryDomainResponse { CountryId = country.CountryId.Value };
+      var @struct = GetCountryStruct(data);
+      var country = new CountryEntity(@struct);
+      var response = new UpdateCountryDomainResponse { CountryId = country.CountryId.Value };
 
-        if (data.Name != null)
+      if (data.Name != null)
+      {
+        var name = new NameValueObject(data.Name);
+        country.UpdateName(name);
+        response.Name = country.Name.Value;
+      }
+
+      if (data.Disable != null)
+      {
+        if (data.Disable == true)
         {
-            var name = new NameValueObject(data.Name);
-            country.UpdateName(name);
-            response.Name = country.Name.Value;
+          country.Disable();
         }
-
-        if (data.Disable != null)
+        else
         {
-            if (data.Disable == true)
-            {
-                country.Disable();
-            }
-            else
-            {
-                country.Enable();
-            }
-            response.Disabled = country.Disabled.Value;
+          country.Enable();
         }
+        response.Disabled = country.Disabled.Value;
+      }
 
-        ValidateStructureFields(country);
-        ValidateAmountDataToBeUpdated(response);
+      ValidateStructureFields(country);
+      ValidateAmountDataToBeUpdated(response);
 
-        return response;
+      return response;
     }
 
     private static CountryStruct GetCountryStruct(UpdateCountryDomainRequest data)
     {
-        var id = new CountryIdValueObject(data.CountryId);
-        return new CountryStruct { CountryId = id };
+      var id = new CountryIdValueObject(data.CountryId);
+      return new CountryStruct { CountryId = id };
     }
 
     private static void ValidateAmountDataToBeUpdated(UpdateCountryDomainResponse response)
     {
-        var count = response.GetType().GetProperties().Count(x => x.GetValue(response) != null);
-        if (count == 1)
-        {
-            throw new DomainException(
-                "No data to update",
-                [new ErrorValueObject("No field to update", "No fields to update")]
-            );
-        }
+      var count = response.GetType().GetProperties().Count(x => x.GetValue(response) != null);
+      if (count == 1)
+      {
+        throw new DomainException(
+          "No data to update",
+          [new ErrorValueObject("No field to update", "No fields to update")]
+        );
+      }
     }
+  }
 }

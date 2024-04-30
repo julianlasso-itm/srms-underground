@@ -2,5 +2,5 @@
 
 namespace Profiles.Application.Commands
 {
-    public class GetSkillsCommand : BasePaginator { }
+  public class GetSkillsCommand : BasePaginator { }
 }

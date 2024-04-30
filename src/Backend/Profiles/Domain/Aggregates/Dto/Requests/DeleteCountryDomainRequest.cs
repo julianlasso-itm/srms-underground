@@ -1,6 +1,7 @@
-namespace Profiles.Domain.Aggregates.Dto.Requests;
-
-public class DeleteCountryDomainRequest
+namespace Profiles.Domain.Aggregates.Dto.Requests
 {
-    public string CountryId { get; init; }
+  public class DeleteCountryDomainRequest
+  {
+    public required string CountryId { get; init; }
+  }
 }

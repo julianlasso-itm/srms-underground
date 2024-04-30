@@ -1,6 +1,7 @@
-namespace Profiles.Domain.Aggregates.Dto.Requests;
-
-public class DeleteCityDomainRequest
+namespace Profiles.Domain.Aggregates.Dto.Requests
 {
-    public string CityId { get; init; }
+  public class DeleteCityDomainRequest
+  {
+    public required string CityId { get; init; }
+  }
 }

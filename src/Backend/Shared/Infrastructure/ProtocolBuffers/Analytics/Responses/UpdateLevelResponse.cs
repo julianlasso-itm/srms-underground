@@ -1,10 +1,10 @@
 using System.Runtime.Serialization;
 
-namespace Shared.Infrastructure.ProtocolBuffers.Analytics.Responses;
-
-[DataContract]
-public class UpdateLevelSecurityResponse
+namespace Shared.Infrastructure.ProtocolBuffers.Analytics.Responses
 {
+  [DataContract]
+  public class UpdateLevelSecurityResponse
+  {
     [DataMember(Order = 1)]
     public required string LevelId { get; set; }
 
@@ -16,4 +16,5 @@ public class UpdateLevelSecurityResponse
 
     [DataMember(Order = 4)]
     public bool? Disabled { get; set; }
+  }
 }

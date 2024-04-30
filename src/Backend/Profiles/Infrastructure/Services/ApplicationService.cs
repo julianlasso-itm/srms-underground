@@ -6,57 +6,57 @@ using Shared.Infrastructure.Events;
 
 namespace Profiles.Infrastructure.Services
 {
-    internal class ApplicationService
+  internal class ApplicationService
+  {
+    private readonly Application<
+      CountryModel,
+      ProvinceModel,
+      CityModel,
+      RoleModel,
+      SkillModel,
+      ProfessionalModel
+    > _application;
+
+    public ApplicationService(
+      SharedEventHandler eventHandler,
+      ICountryRepository<CountryModel> countryRepository,
+      IProvinceRepository<ProvinceModel> provinceRepository,
+      ICityRepository<CityModel> cityRepository,
+      IRoleRepository<RoleModel> roleRepository,
+      ISkillRepository<SkillModel> skillRepository,
+      IProfessionalRepository<ProfessionalModel> professionalRepository
+    )
     {
-        private readonly Application<
-            CountryModel,
-            ProvinceModel,
-            CityModel,
-            RoleModel,
-            SkillModel,
-            ProfessionalModel
-        > _application;
-
-        public ApplicationService(
-            SharedEventHandler eventHandler,
-            ICountryRepository<CountryModel> countryRepository,
-            IProvinceRepository<ProvinceModel> provinceRepository,
-            ICityRepository<CityModel> cityRepository,
-            IRoleRepository<RoleModel> roleRepository,
-            ISkillRepository<SkillModel> skillRepository,
-            IProfessionalRepository<ProfessionalModel> professionalRepository
-        )
-        {
-            _application = new Application<
-                CountryModel,
-                ProvinceModel,
-                CityModel,
-                RoleModel,
-                SkillModel,
-                ProfessionalModel
-            >(
-                countryRepository,
-                provinceRepository,
-                cityRepository,
-                roleRepository,
-                skillRepository,
-                professionalRepository
-            )
-            {
-                AggregateRoot = new PersonnelAggregateRoot(eventHandler)
-            };
-        }
-
-        public Application<
-            CountryModel,
-            ProvinceModel,
-            CityModel,
-            RoleModel,
-            SkillModel,
-            ProfessionalModel
-        > GetApplication()
-        {
-            return _application;
-        }
+      _application = new Application<
+        CountryModel,
+        ProvinceModel,
+        CityModel,
+        RoleModel,
+        SkillModel,
+        ProfessionalModel
+      >(
+        countryRepository,
+        provinceRepository,
+        cityRepository,
+        roleRepository,
+        skillRepository,
+        professionalRepository
+      )
+      {
+        AggregateRoot = new PersonnelAggregateRoot(eventHandler)
+      };
     }
+
+    public Application<
+      CountryModel,
+      ProvinceModel,
+      CityModel,
+      RoleModel,
+      SkillModel,
+      ProfessionalModel
+    > GetApplication()
+    {
+      return _application;
+    }
+  }
 }

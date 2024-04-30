@@ -1,14 +1,13 @@
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace Profiles.Infrastructure.Persistence.Models;
-
-[Index(nameof(Name), nameof(CountryId), IsUnique = true)]
-[Table("province")]
-public class ProvinceModel
+namespace Profiles.Infrastructure.Persistence.Models
 {
+  [Index(nameof(Name), nameof(CountryId), IsUnique = true)]
+  [Table("province")]
+  public class ProvinceModel
+  {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.None)]
     [Column("prv_province_id")]
@@ -32,4 +31,5 @@ public class ProvinceModel
 
     [InverseProperty("Province")]
     public ICollection<CityModel> Cities { get; set; } = new List<CityModel>();
+  }
 }

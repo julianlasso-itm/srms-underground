@@ -1,10 +1,10 @@
 ﻿namespace Profiles.Domain.Aggregates.Dto.Requests
 {
-    public class UpdateProfessionalDomainRequest
-    {
-        public required string ProfessionalId { get; set; }
-        public string? Name { get; set; }
-        public bool? Disabled { get; set; }
-        public required string Email { get; set; }
-    }
+  public class UpdateProfessionalDomainRequest
+  {
+    public required string ProfessionalId { get; init; }
+    public string? Name { get; init; }
+    public string? Email { get; init; }
+    public bool? Disabled { get; init; }
+  }
 }

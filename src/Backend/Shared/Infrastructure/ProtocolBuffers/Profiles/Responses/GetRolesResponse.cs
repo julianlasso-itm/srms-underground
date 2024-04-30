@@ -1,20 +1,20 @@
 using System.Runtime.Serialization;
 
-namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
-
-[DataContract]
-public class GetRolesResponse
+namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Responses
 {
+  [DataContract]
+  public class GetRolesResponse
+  {
     [DataMember(Order = 1)]
     public required IEnumerable<Role> Roles { get; set; }
 
     [DataMember(Order = 2)]
     public required int Total { get; set; }
-}
+  }
 
-[DataContract]
-public class Role
-{
+  [DataContract]
+  public class Role
+  {
     [DataMember(Order = 1)]
     public required string RoleId { get; set; }
 
@@ -26,4 +26,5 @@ public class Role
 
     [DataMember(Order = 4)]
     public required bool Disabled { get; set; }
+  }
 }

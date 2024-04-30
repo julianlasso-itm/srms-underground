@@ -1,10 +1,10 @@
 using System.Runtime.Serialization;
 
-namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
-
-[DataContract]
-public class UpdateCityRequest
+namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Requests
 {
+  [DataContract]
+  public class UpdateCityRequest
+  {
     [DataMember(Order = 1, IsRequired = false)]
     public string? CityId { get; set; }
 
@@ -16,4 +16,5 @@ public class UpdateCityRequest
 
     [DataMember(Order = 4, IsRequired = false)]
     public bool? Disable { get; set; }
+  }
 }

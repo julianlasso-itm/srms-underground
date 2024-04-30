@@ -1,13 +1,14 @@
 using Shared.Domain.ValueObjects.Base;
 
-namespace Analytics.Domain.ValueObjects;
-
-public class DisabledValueObject : BaseBooleanValueObject
+namespace Analytics.Domain.ValueObjects
 {
+  public class DisabledValueObject : BaseBooleanValueObject
+  {
     public DisabledValueObject(bool value)
-        : base(value)
+      : base(value)
     {
-        Name = "Disable";
-        Validate();
+      Name = "Disable";
+      Validate();
     }
+  }
 }

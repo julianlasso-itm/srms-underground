@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using Shared.Application.Interfaces;
 
-namespace Shared.Application.Base;
-
-public abstract class BasePaginator : ICommand
+namespace Shared.Application.Base
 {
+  public abstract class BasePaginator : ICommand
+  {
     [Range(1, int.MaxValue, ErrorMessage = "Page must be greater than 0")]
     [Required(ErrorMessage = "Page is required")]
     public required int Page { get; init; }
@@ -24,4 +24,5 @@ public abstract class BasePaginator : ICommand
 
     [RegularExpression(@"^(asc|desc)$", ErrorMessage = "Order must be 'asc' or 'desc'")]
     public string? Order { get; init; } = "asc";
+  }
 }

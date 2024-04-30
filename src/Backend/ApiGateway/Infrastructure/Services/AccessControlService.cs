@@ -4,47 +4,48 @@ using Shared.Infrastructure.ProtocolBuffers.AccessControl;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses;
 
-namespace ApiGateway.Infrastructure.Services;
-
-public class AccessControlService : BaseServices<IAccessControlServices>, IAccessControlServices
+namespace ApiGateway.Infrastructure.Services
 {
+  public class AccessControlService : BaseServices<IAccessControlServices>, IAccessControlServices
+  {
     const string UrlMicroservice = "http://localhost:5297";
 
     public AccessControlService(HttpClientHandler? httpClientHandler = null)
-        : base(httpClientHandler)
+      : base(httpClientHandler)
     {
-        CreateChannel(UrlMicroservice);
+      CreateChannel(UrlMicroservice);
     }
 
     public Task<RegisterRoleSecurityResponse> RegisterRoleAsync(
-        RegisterRoleSecurityRequest request,
-        CallContext context = default
+      RegisterRoleSecurityRequest request,
+      CallContext context = default
     )
     {
-        return Client.RegisterRoleAsync(request, context);
+      return Client.RegisterRoleAsync(request, context);
     }
 
     public Task<UpdateRoleSecurityResponse> UpdateRoleAsync(
-        UpdateRoleSecurityRequest request,
-        CallContext context = default
+      UpdateRoleSecurityRequest request,
+      CallContext context = default
     )
     {
-        return Client.UpdateRoleAsync(request, context);
+      return Client.UpdateRoleAsync(request, context);
     }
 
     public Task<DeleteRoleSecurityResponse> DeleteRoleAsync(
-        DeleteRoleSecurityRequest request,
-        CallContext context = default
+      DeleteRoleSecurityRequest request,
+      CallContext context = default
     )
     {
-        return Client.DeleteRoleAsync(request, context);
+      return Client.DeleteRoleAsync(request, context);
     }
 
     public Task<GetRolesSecurityResponse> GetRolesAsync(
-        GetRolesSecurityRequest request,
-        CallContext context = default
+      GetRolesSecurityRequest request,
+      CallContext context = default
     )
     {
-        return Client.GetRolesAsync(request, context);
+      return Client.GetRolesAsync(request, context);
     }
+  }
 }

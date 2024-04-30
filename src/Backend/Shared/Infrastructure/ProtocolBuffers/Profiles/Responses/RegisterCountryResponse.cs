@@ -1,10 +1,10 @@
 using System.Runtime.Serialization;
 
-namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
-
-[DataContract]
-public class RegisterCountryResponse
+namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Responses
 {
+  [DataContract]
+  public class RegisterCountryResponse
+  {
     [DataMember(Order = 1)]
     public required string CountryId { get; set; }
 
@@ -13,4 +13,5 @@ public class RegisterCountryResponse
 
     [DataMember(Order = 3)]
     public required bool Disabled { get; set; }
+  }
 }

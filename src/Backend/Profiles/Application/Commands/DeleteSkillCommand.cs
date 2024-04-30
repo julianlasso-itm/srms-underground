@@ -1,7 +1,7 @@
 ﻿namespace Profiles.Application.Commands
 {
-    public class DeleteSkillCommand
-    {
-        public required string SkillId { get; set; }
-    }
+  public class DeleteSkillCommand
+  {
+    public required string SkillId { get; init; }
+  }
 }

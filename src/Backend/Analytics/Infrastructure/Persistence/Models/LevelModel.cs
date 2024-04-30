@@ -3,12 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using Shared.Infrastructure.Persistence.Models;
 
-namespace Analytics.Infrastructure.Persistence.Models;
-
-[Index(nameof(Name), IsUnique = true)]
-[Table("level")]
-public class LevelModel : AuditableEntity
+namespace Analytics.Infrastructure.Persistence.Models
 {
+  [Index(nameof(Name), IsUnique = true)]
+  [Table("level")]
+  public class LevelModel : AuditableEntity
+  {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.None)]
     [Column("rol_level_id")]
@@ -26,4 +26,5 @@ public class LevelModel : AuditableEntity
     [Required]
     [Column("rol_disabled")]
     public bool Disabled { get; set; }
+  }
 }

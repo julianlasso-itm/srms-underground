@@ -3,12 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using Shared.Infrastructure.Persistence.Models;
 
-namespace AccessControl.Infrastructure.Persistence.Models;
-
-[Index(nameof(Name), IsUnique = true)]
-[Table("role")]
-public class RoleModel : AuditableEntity
+namespace AccessControl.Infrastructure.Persistence.Models
 {
+  [Index(nameof(Name), IsUnique = true)]
+  [Table("role")]
+  public class RoleModel : AuditableEntity
+  {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.None)]
     [Column("rol_role_id")]
@@ -26,4 +26,5 @@ public class RoleModel : AuditableEntity
     [Required]
     [Column("rol_disabled")]
     public bool Disabled { get; set; }
+  }
 }

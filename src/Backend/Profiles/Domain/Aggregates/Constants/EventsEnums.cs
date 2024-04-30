@@ -1,7 +1,7 @@
-namespace Profiles.Domain.Aggregates.Constants;
-
-public abstract class EventsConst
+namespace Profiles.Domain.Aggregates.Constants
 {
+  public abstract class EventsConst
+  {
     public const string Prefix = "Profiles";
     public const string EventCountryRegistered = "CountryRegistered";
     public const string EventCountryUpdated = "CountryUpdated";
@@ -21,4 +21,5 @@ public abstract class EventsConst
     public const string EventProfessionalUpdated = "ProfessionalUpdated";
     public const string EventProfessionalRegistered = "ProfessionalRegistered";
     public const string EventProfessionalDeleted = "ProfessionalDeleted";
+  }
 }

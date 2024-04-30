@@ -1,10 +1,10 @@
 using System.Runtime.Serialization;
 
-namespace Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses;
-
-[DataContract]
-public class UpdateRoleSecurityResponse
+namespace Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses
 {
+  [DataContract]
+  public class UpdateRoleSecurityResponse
+  {
     [DataMember(Order = 1)]
     public required string RoleId { get; set; }
 
@@ -16,4 +16,5 @@ public class UpdateRoleSecurityResponse
 
     [DataMember(Order = 4)]
     public bool? Disabled { get; set; }
+  }
 }

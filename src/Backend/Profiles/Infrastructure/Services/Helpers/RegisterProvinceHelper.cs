@@ -4,36 +4,37 @@ using Profiles.Infrastructure.Services.Helpers.Base;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
 
-namespace Profiles.Infrastructure.Services.Helpers;
-
-internal class RegisterProvinceHelper : BaseHelperServiceInfrastructure
+namespace Profiles.Infrastructure.Services.Helpers
 {
+  internal class RegisterProvinceHelper : BaseHelperServiceInfrastructure
+  {
     public static async Task<RegisterProvinceResponse> RegisterProvinceAsync(
-        RegisterProvinceRequest request
+      RegisterProvinceRequest request
     )
     {
-        var provinceCommand = MapToRegisterProvinceCommand(request);
-        var data = await Application.RegisterProvince(provinceCommand);
-        return MapToRegisterProvinceResponse(data);
+      var provinceCommand = MapToRegisterProvinceCommand(request);
+      var data = await Application.RegisterProvince(provinceCommand);
+      return MapToRegisterProvinceResponse(data);
     }
 
     private static RegisterProvinceCommand MapToRegisterProvinceCommand(
-        RegisterProvinceRequest request
+      RegisterProvinceRequest request
     )
     {
-        return new RegisterProvinceCommand { Name = request.Name, CountryId = request.CountryId };
+      return new RegisterProvinceCommand { Name = request.Name, CountryId = request.CountryId };
     }
 
     private static RegisterProvinceResponse MapToRegisterProvinceResponse(
-        RegisterProvinceApplicationResponse data
+      RegisterProvinceApplicationResponse data
     )
     {
-        return new RegisterProvinceResponse
-        {
-            ProvinceId = data.ProvinceId,
-            CountryId = data.CountryId,
-            Name = data.Name,
-            Disabled = data.Disabled,
-        };
+      return new RegisterProvinceResponse
+      {
+        ProvinceId = data.ProvinceId,
+        CountryId = data.CountryId,
+        Name = data.Name,
+        Disabled = data.Disabled,
+      };
     }
+  }
 }

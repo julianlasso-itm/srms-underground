@@ -7,21 +7,21 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace Profiles.Domain.Aggregates.Helpers
 {
-    internal abstract class DeleteSkillHelper
-        : BaseHelper,
-            IHelper<DeleteSkillDomainRequest, DeleteSkillDomainResponse>
+  internal abstract class DeleteSkillHelper
+    : BaseHelper,
+      IHelper<DeleteSkillDomainRequest, DeleteSkillDomainResponse>
+  {
+    public static DeleteSkillDomainResponse Execute(DeleteSkillDomainRequest request)
     {
-        public static DeleteSkillDomainResponse Execute(DeleteSkillDomainRequest request)
-        {
-            var @struct = GetSkillStruct(request);
-            ValidateStructureFields(@struct);
-            return new DeleteSkillDomainResponse { SkillId = @struct.SkillId.Value };
-        }
-
-        private static SkillStruct GetSkillStruct(DeleteSkillDomainRequest request)
-        {
-            var id = new SkillIdValueObject(request.SkillId);
-            return new SkillStruct { SkillId = id };
-        }
+      var @struct = GetSkillStruct(request);
+      ValidateStructureFields(@struct);
+      return new DeleteSkillDomainResponse { SkillId = @struct.SkillId.Value };
     }
+
+    private static SkillStruct GetSkillStruct(DeleteSkillDomainRequest request)
+    {
+      var id = new SkillIdValueObject(request.SkillId);
+      return new SkillStruct { SkillId = id };
+    }
+  }
 }

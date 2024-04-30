@@ -1,21 +1,22 @@
 using Shared.Domain.ValueObjects;
 
-namespace Shared.Domain.Exceptions;
-
-public class DomainException : Exception
+namespace Shared.Domain.Exceptions
 {
+  public class DomainException : Exception
+  {
     public List<ErrorValueObject> DomainErrors { get; protected set; } =
-        new List<ErrorValueObject>();
+      new List<ErrorValueObject>();
 
     public DomainException(string message, List<ErrorValueObject> errors)
-        : base(message)
+      : base(message)
     {
-        DomainErrors = errors;
+      DomainErrors = errors;
     }
 
     public DomainException(string message, List<ErrorValueObject> errors, Exception innerException)
-        : base(message, innerException)
+      : base(message, innerException)
     {
-        DomainErrors = errors;
+      DomainErrors = errors;
     }
+  }
 }

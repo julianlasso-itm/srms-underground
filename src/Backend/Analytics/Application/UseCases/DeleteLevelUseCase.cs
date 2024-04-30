@@ -8,46 +8,47 @@ using Analytics.Domain.Aggregates.Dto.Responses;
 using Analytics.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 
-namespace Analytics.Application.UseCases;
-
-public sealed class DeleteLevelUseCase<TEntity>
+namespace Analytics.Application.UseCases
+{
+  public sealed class DeleteLevelUseCase<TEntity>
     : BaseUseCase<DeleteLevelCommand, DeleteLevelApplicationResponse, IAggregateRoot>
     where TEntity : class
-{
+  {
     private readonly ILevelRepository<TEntity> _levelRepository;
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventLevelDeleted}";
 
     public DeleteLevelUseCase(
-        IAggregateRoot aggregateRoot,
-        ILevelRepository<TEntity> levelRepository
+      IAggregateRoot aggregateRoot,
+      ILevelRepository<TEntity> levelRepository
     )
-        : base(aggregateRoot)
+      : base(aggregateRoot)
     {
-        _levelRepository = levelRepository;
+      _levelRepository = levelRepository;
     }
 
     public override async Task<DeleteLevelApplicationResponse> Handle(DeleteLevelCommand request)
     {
-        var dataDeleteLevel = MapToRequestForDomain(request);
-        var level = AggregateRoot.DeleteLevel(dataDeleteLevel);
-        var response = MapToResponse(level);
-        _ = await Persistence(response);
-        EmitEvent(Channel, JsonSerializer.Serialize(response));
-        return response;
+      var dataDeleteLevel = MapToRequestForDomain(request);
+      var level = AggregateRoot.DeleteLevel(dataDeleteLevel);
+      var response = MapToResponse(level);
+      _ = await Persistence(response);
+      EmitEvent(Channel, JsonSerializer.Serialize(response));
+      return response;
     }
 
     private DeleteLevelDomainRequest MapToRequestForDomain(DeleteLevelCommand request)
     {
-        return new DeleteLevelDomainRequest { LevelId = request.LevelId };
+      return new DeleteLevelDomainRequest { LevelId = request.LevelId };
     }
 
     private DeleteLevelApplicationResponse MapToResponse(DeleteLevelDomainResponse level)
     {
-        return new DeleteLevelApplicationResponse { LevelId = level.LevelId };
+      return new DeleteLevelApplicationResponse { LevelId = level.LevelId };
     }
 
     private async Task<TEntity> Persistence(DeleteLevelApplicationResponse response)
     {
-        return await _levelRepository.DeleteAsync(Guid.Parse(response.LevelId));
+      return await _levelRepository.DeleteAsync(Guid.Parse(response.LevelId));
     }
+  }
 }

@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Profiles.Infrastructure.Persistence.Models;
 
-namespace Profiles.Infrastructure.Persistence;
-
-public class ApplicationDbContext : DbContext
+namespace Profiles.Infrastructure.Persistence
 {
+  public class ApplicationDbContext : DbContext
+  {
     public DbSet<CountryModel> Country { get; set; }
     public DbSet<ProvinceModel> Province { get; set; }
     public DbSet<CityModel> City { get; set; }
@@ -13,15 +13,16 @@ public class ApplicationDbContext : DbContext
     public DbSet<SkillModel> Skills { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options) { }
+      : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        SeedsPlaces.SeedCountries(modelBuilder);
-        SeedsPlaces.SeedProvinces(modelBuilder);
-        SeedsPlaces.SeedCities(modelBuilder);
-        SeedsRoles.SeedRoles(modelBuilder);
-        SeedsSkills.SeedSkills(modelBuilder);
-        SeedsProfessionals.SeedProfessionals(modelBuilder);
+      SeedsPlaces.SeedCountries(modelBuilder);
+      SeedsPlaces.SeedProvinces(modelBuilder);
+      SeedsPlaces.SeedCities(modelBuilder);
+      SeedsRoles.SeedRoles(modelBuilder);
+      SeedsSkills.SeedSkills(modelBuilder);
+      SeedsProfessionals.SeedProfessionals(modelBuilder);
     }
+  }
 }

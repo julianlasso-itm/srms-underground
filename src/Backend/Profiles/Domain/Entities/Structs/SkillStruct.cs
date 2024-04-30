@@ -2,10 +2,10 @@
 
 namespace Profiles.Domain.Entities.Structs
 {
-    public struct SkillStruct
-    {
-        public SkillIdValueObject SkillId { get; set; }
-        public NameValueObject Name { get; set; }
-        public DisabledValueObject Disabled { get; set; }
-    }
+  internal struct SkillStruct
+  {
+    public SkillIdValueObject SkillId { get; set; }
+    public NameValueObject Name { get; set; }
+    public DisabledValueObject Disabled { get; set; }
+  }
 }

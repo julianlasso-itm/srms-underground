@@ -1,10 +1,10 @@
 using Analytics.Domain.Entities.Structs;
 using Analytics.Domain.ValueObjects;
 
-namespace Analytics.Domain.Entities;
-
-internal sealed class LevelEntity
+namespace Analytics.Domain.Entities
 {
+  internal sealed class LevelEntity
+  {
     public LevelIdValueObject LevelId { get; private set; }
     public NameValueObject Name { get; private set; }
     public DescriptionValueObject? Description { get; private set; }
@@ -14,40 +14,38 @@ internal sealed class LevelEntity
 
     public LevelEntity(LevelStruct data)
     {
-        LevelId = data.LevelId;
-        Name = data.Name;
-        Description = data.Description;
-        Disabled = data.Disabled;
+      LevelId = data.LevelId;
+      Name = data.Name;
+      Description = data.Description;
+      Disabled = data.Disabled;
     }
 
-    public void Register(
-        NameValueObject name,
-        DescriptionValueObject? description
-    )
+    public void Register(NameValueObject name, DescriptionValueObject? description)
     {
-        LevelId = new LevelIdValueObject(Guid.NewGuid().ToString());
-        Name = name;
-        Description = description;
-        Disabled = new DisabledValueObject(false);
+      LevelId = new LevelIdValueObject(Guid.NewGuid().ToString());
+      Name = name;
+      Description = description;
+      Disabled = new DisabledValueObject(false);
     }
 
     public void Enable()
     {
-        Disabled = new DisabledValueObject(false);
+      Disabled = new DisabledValueObject(false);
     }
 
     public void Disable()
     {
-        Disabled = new DisabledValueObject(true);
+      Disabled = new DisabledValueObject(true);
     }
 
     public void UpdateName(NameValueObject name)
     {
-        Name = name;
+      Name = name;
     }
 
     public void UpdateDescription(DescriptionValueObject description)
     {
-        Description = description;
+      Description = description;
     }
+  }
 }

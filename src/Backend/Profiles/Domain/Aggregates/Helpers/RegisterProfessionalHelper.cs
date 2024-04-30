@@ -8,36 +8,33 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace Profiles.Domain.Aggregates.Helpers
 {
-    public class RegisterProfessionalHelper
-        : BaseHelper,
-            IHelper<RegisterProfessionalDomainRequest, RegisterProfessionalDomainResponse>
+  public class RegisterProfessionalHelper
+    : BaseHelper,
+      IHelper<RegisterProfessionalDomainRequest, RegisterProfessionalDomainResponse>
+  {
+    public static RegisterProfessionalDomainResponse Execute(RegisterProfessionalDomainRequest data)
     {
-        public static RegisterProfessionalDomainResponse Execute(
-            RegisterProfessionalDomainRequest data
-        )
-        {
-            var @struct = GetProfessional(data);
-            ValidateStructureFields(@struct);
+      var @struct = GetProfessional(data);
+      ValidateStructureFields(@struct);
 
-            var professional = new ProfessionalEntity();
-            professional.Register(@struct.Name, @struct.Email);
+      var professional = new ProfessionalEntity();
+      professional.Register(@struct.Name, @struct.Email);
 
-            return new RegisterProfessionalDomainResponse
-            {
-                ProfessionalId = professional.ProfessionalId.Value,
-                Name = professional.Name.Value,
-                Email = professional.Email.Value,
-                Skills = (IEnumerable<SkillStruct>)professional.Skills,
-                Disabled = professional.Disabled.Value
-            };
-        }
-
-        private static ProfessionalStruct GetProfessional(RegisterProfessionalDomainRequest data)
-        {
-            var name = new NameValueObject(data.Name);
-            var email = new EmailValueObject(data.Email);
-
-            return new ProfessionalStruct { Name = name, Email = email };
-        }
+      return new RegisterProfessionalDomainResponse
+      {
+        ProfessionalId = professional.ProfessionalId.Value,
+        Name = professional.Name.Value,
+        Email = professional.Email.Value,
+        Disabled = professional.Disabled.Value
+      };
     }
+
+    private static ProfessionalStruct GetProfessional(RegisterProfessionalDomainRequest data)
+    {
+      var name = new NameValueObject(data.Name);
+      var email = new EmailValueObject(data.Email);
+
+      return new ProfessionalStruct { Name = name, Email = email };
+    }
+  }
 }

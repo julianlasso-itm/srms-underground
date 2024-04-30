@@ -1,10 +1,10 @@
 using System.Runtime.Serialization;
 
-namespace Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
-
-[DataContract]
-public class GetRolesSecurityRequest
+namespace Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests
 {
+  [DataContract]
+  public class GetRolesSecurityRequest
+  {
     [DataMember(Order = 1)]
     public int Page { get; set; }
 
@@ -22,4 +22,5 @@ public class GetRolesSecurityRequest
 
     [DataMember(Order = 6, IsRequired = false)]
     public string? Order { get; set; } = "asc";
+  }
 }

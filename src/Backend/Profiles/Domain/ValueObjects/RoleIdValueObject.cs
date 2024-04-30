@@ -2,13 +2,13 @@
 
 namespace Profiles.Domain.ValueObjects
 {
-    public class RoleIdValueObject : BaseIdValueObject
+  public class RoleIdValueObject : BaseIdValueObject
+  {
+    public RoleIdValueObject(string value)
+      : base(value)
     {
-        public RoleIdValueObject(string value)
-            : base(value)
-        {
-            Name = "RoleId";
-            Validate();
-        }
+      Name = "RoleId";
+      Validate();
     }
+  }
 }

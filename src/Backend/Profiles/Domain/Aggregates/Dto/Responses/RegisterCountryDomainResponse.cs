@@ -1,8 +1,9 @@
-namespace Profiles.Domain.Aggregates.Dto.Responses;
-
-public class RegisterCountryDomainResponse
+namespace Profiles.Domain.Aggregates.Dto.Responses
 {
+  public class RegisterCountryDomainResponse
+  {
     public required string CountryId { get; init; }
-    public required string Name { get; init; }
-    public required bool Disabled { get; init; }
+    public string Name { get; init; }
+    public bool Disabled { get; init; }
+  }
 }

@@ -1,10 +1,10 @@
 using System.Runtime.Serialization;
 
-namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
-
-[DataContract]
-public class GetProvincesRequest
+namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Requests
 {
+  [DataContract]
+  public class GetProvincesRequest
+  {
     [DataMember(Order = 1)]
     public int Page { get; set; }
 
@@ -22,4 +22,5 @@ public class GetProvincesRequest
 
     [DataMember(Order = 6, IsRequired = false)]
     public string? Order { get; set; } = "asc";
+  }
 }

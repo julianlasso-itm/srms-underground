@@ -2,12 +2,12 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace Profiles.Infrastructure.Persistence.Models;
-
-[Index(nameof(Name), IsUnique = true)]
-[Table("country")]
-public class CountryModel
+namespace Profiles.Infrastructure.Persistence.Models
 {
+  [Index(nameof(Name), IsUnique = true)]
+  [Table("country")]
+  public class CountryModel
+  {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.None)]
     [Column("ctr_country_id")]
@@ -24,4 +24,5 @@ public class CountryModel
 
     [InverseProperty("Country")]
     public ICollection<ProvinceModel> Provinces { get; set; } = new List<ProvinceModel>();
+  }
 }

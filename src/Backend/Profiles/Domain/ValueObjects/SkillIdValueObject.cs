@@ -2,13 +2,13 @@
 
 namespace Profiles.Domain.ValueObjects
 {
-    public class SkillIdValueObject : BaseIdValueObject
+  public class SkillIdValueObject : BaseIdValueObject
+  {
+    public SkillIdValueObject(string value)
+      : base(value)
     {
-        public SkillIdValueObject(string value)
-            : base(value)
-        {
-            Name = "SkillId";
-            Validate();
-        }
+      Name = "SkillId";
+      Validate();
     }
+  }
 }

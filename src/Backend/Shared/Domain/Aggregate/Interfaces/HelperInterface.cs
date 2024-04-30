@@ -1,6 +1,7 @@
-namespace Shared.Domain.Aggregate.Interfaces;
-
-public interface IHelper<TRequest,TResponse>
+namespace Shared.Domain.Aggregate.Interfaces
 {
-    public abstract static TResponse Execute(TRequest data);
+  public interface IHelper<TRequest, TResponse>
+  {
+    public static abstract TResponse Execute(TRequest data);
+  }
 }

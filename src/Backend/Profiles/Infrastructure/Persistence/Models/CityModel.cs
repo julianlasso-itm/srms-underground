@@ -2,12 +2,12 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace Profiles.Infrastructure.Persistence.Models;
-
-[Index(nameof(Name), nameof(ProvinceId), IsUnique = true)]
-[Table("city")]
-public class CityModel
+namespace Profiles.Infrastructure.Persistence.Models
 {
+  [Index(nameof(Name), nameof(ProvinceId), IsUnique = true)]
+  [Table("city")]
+  public class CityModel
+  {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.None)]
     [Column("cty_city_id")]
@@ -28,4 +28,5 @@ public class CityModel
 
     [DeleteBehavior(DeleteBehavior.Restrict)]
     public ProvinceModel Province { get; set; }
+  }
 }

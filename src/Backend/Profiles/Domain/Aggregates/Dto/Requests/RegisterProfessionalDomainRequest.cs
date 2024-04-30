@@ -1,9 +1,8 @@
 ﻿namespace Profiles.Domain.Aggregates.Dto.Requests
 {
-    public class RegisterProfessionalDomainRequest
-    {
-        public string Name { get; set; }
-
-        public string Email { get; set; }
-    }
+  public class RegisterProfessionalDomainRequest
+  {
+    public required string Name { get; init; }
+    public required string Email { get; init; }
+  }
 }

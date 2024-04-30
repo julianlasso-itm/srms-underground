@@ -1,7 +1,7 @@
-﻿namespace Profiles.Domain.Aggregates.Dto.Requests
+﻿namespace Profiles.Domain.Aggregates.Dto.Responses
 {
-    public class DeleteProfessionalDomainResponse
-    {
-        public string ProfessionalId { get; set; }
-    }
+  public class DeleteProfessionalDomainResponse
+  {
+    public string ProfessionalId { get; init; }
+  }
 }

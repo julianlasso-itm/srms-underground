@@ -1,9 +1,10 @@
-namespace Profiles.Domain.Aggregates.Dto.Responses;
-
-public class UpdateProvinceDomainResponse
+namespace Profiles.Domain.Aggregates.Dto.Responses
 {
-    public string ProvinceId { get; init; }
+  public class UpdateProvinceDomainResponse
+  {
+    public required string ProvinceId { get; init; }
     public string? CountryId { get; set; }
     public string? Name { get; set; }
     public bool? Disabled { get; set; }
+  }
 }
