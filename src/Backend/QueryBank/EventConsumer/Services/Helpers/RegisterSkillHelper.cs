@@ -19,7 +19,7 @@ namespace QueryBank.EventConsumer.Services.Helpers
         SkillId = request.SkillId,
         SubSkillId = request.SubSkillId,
         Name = request.Name,
-        Disabled = request.Disabled,
+        Disable = request.Disable,
       };
     }
   }

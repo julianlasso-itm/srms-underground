@@ -8,13 +8,13 @@ namespace QueryBank.EventConsumer.Services.Helpers
   {
     public static async Task DeleteSkillAsync(DeleteSkillQueryBankRequest request)
     {
-      var newUserCommand = MapToDeleteSkillCommand(request);
-      await Application.DeleteSkill(newUserCommand);
+      var deleteSkillCommand = MapToDeleteSkillCommand(request);
+      await Application.DeleteSkill(deleteSkillCommand);
     }
 
     private static DeleteSkillCommand MapToDeleteSkillCommand(DeleteSkillQueryBankRequest request)
     {
-      return new DeleteSkillCommand { SkillId = request.SkillId, };
+      return new DeleteSkillCommand { SkillId = request.SkillId };
     }
   }
 }

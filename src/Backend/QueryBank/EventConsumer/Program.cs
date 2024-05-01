@@ -12,9 +12,13 @@ using StackExchange.Redis;
 var builder = Host.CreateApplicationBuilder(args);
 
 // == Configure connection to Redis for subscribing to messages ==
-builder.Services.AddSingleton<IConnectionMultiplexer>(
-  ConnectionMultiplexer.Connect("localhost:6379")
-);
+var connectionString = builder.Configuration.GetConnectionString("BrokerConnection");
+if (connectionString != null)
+{
+  builder.Services.AddSingleton<IConnectionMultiplexer>(
+    ConnectionMultiplexer.Connect(connectionString)
+  );
+}
 builder.Services.AddHostedService<QueryBankSubscriber>();
 // ===============================================================
 

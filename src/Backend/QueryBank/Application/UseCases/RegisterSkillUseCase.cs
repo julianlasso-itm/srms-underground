@@ -41,7 +41,13 @@ namespace QueryBank.Application.UseCases
 
     private RegisterSkillDomainRequest MapToRequestForDomain(RegisterSkillCommand request)
     {
-      return new RegisterSkillDomainRequest { Name = request.Name, };
+      return new RegisterSkillDomainRequest
+      {
+        SkillId = request.SkillId,
+        SubSkillId = request.SubSkillId,
+        Name = request.Name,
+        Disable = request.Disable,
+      };
     }
 
     private RegisterSkillApplicationResponse MapToResponse(RegisterSkillDomainResponse skill)
@@ -49,8 +55,9 @@ namespace QueryBank.Application.UseCases
       return new RegisterSkillApplicationResponse
       {
         SkillId = skill.SkillId,
+        SubSkillId = skill.SubSkillId,
         Name = skill.Name,
-        Disabled = skill.Disabled
+        Disabled = skill.Disabled,
       };
     }
 

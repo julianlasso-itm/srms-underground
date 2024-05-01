@@ -42,6 +42,7 @@ namespace QueryBank.Application.UseCases
       return new UpdateSkillDomainRequest
       {
         SkillId = request.SkillId,
+        SubSkillId = request.SubSkillId,
         Name = request.Name,
         Disabled = request.Disabled,
       };
@@ -52,6 +53,7 @@ namespace QueryBank.Application.UseCases
       return new UpdateSkillApplicationResponse
       {
         SkillId = skill.SkillId,
+        SubSkillId = skill.SubSkillId,
         Name = skill.Name,
         Disabled = skill.Disabled,
       };

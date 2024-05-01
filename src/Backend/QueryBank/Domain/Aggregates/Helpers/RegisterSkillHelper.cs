@@ -18,20 +18,33 @@ namespace QueryBank.Domain.Aggregates.Helpers
       ValidateStructureFields(@struct);
 
       var skill = new SkillEntity();
-      skill.Register(@struct.Name, @struct.SubSkillId);
+      skill.Register(@struct.Name, @struct.SkillId, @struct.SubSkillId, @struct.Disabled);
 
       return MapToResponse(skill);
     }
 
     private static SkillStruct GetSkillRole(RegisterSkillDomainRequest data)
     {
+      var id = new SkillIdValueObject(data.SkillId);
       var name = new NameValueObject(data.Name);
+      var disabled = new DisabledValueObject(data.Disable);
       if (data.SubSkillId != null)
       {
         var subSkillId = new SkillIdValueObject(data.SubSkillId);
-        return new SkillStruct { Name = name, SubSkillId = subSkillId };
+        return new SkillStruct
+        {
+          SkillId = id,
+          SubSkillId = subSkillId,
+          Name = name,
+          Disabled = disabled,
+        };
       }
-      return new SkillStruct { Name = name };
+      return new SkillStruct
+      {
+        SkillId = id,
+        Name = name,
+        Disabled = disabled,
+      };
     }
 
     private static RegisterSkillDomainResponse MapToResponse(SkillEntity skill)

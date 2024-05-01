@@ -20,12 +20,17 @@ namespace QueryBank.Domain.Entities
       Disabled = data.Disabled;
     }
 
-    public void Register(NameValueObject name, SkillIdValueObject? subSkillId)
+    public void Register(
+      NameValueObject name,
+      SkillIdValueObject? skillId,
+      SkillIdValueObject? subSkillId,
+      DisabledValueObject? disabled
+    )
     {
-      SkillId = new SkillIdValueObject(Guid.NewGuid().ToString());
+      SkillId = skillId ?? new SkillIdValueObject(Guid.NewGuid().ToString());
       SubSkillId = subSkillId;
       Name = name;
-      Disabled = new DisabledValueObject(false);
+      Disabled = disabled ?? new DisabledValueObject(false);
     }
 
     public void Enable()

@@ -38,6 +38,36 @@ namespace QueryBank.EventConsumer.Subscribers
         }
       );
 
+      await _subscriber.SubscribeAsync(
+        new RedisChannel("Profiles.SkillUpdated", RedisChannel.PatternMode.Literal),
+        async (channel, message) =>
+        {
+          var data = JsonSerializer.Deserialize<UpdateSkillQueryBankRequest>(
+            message.ToString() ?? string.Empty
+          );
+          if (data == null)
+          {
+            return;
+          }
+          await _queryBankServiceForSubscribers.UpdateSkillRoleAsync(data);
+        }
+      );
+
+      await _subscriber.SubscribeAsync(
+        new RedisChannel("Profiles.SkillDeleted", RedisChannel.PatternMode.Literal),
+        async (channel, message) =>
+        {
+          var data = JsonSerializer.Deserialize<DeleteSkillQueryBankRequest>(
+            message.ToString() ?? string.Empty
+          );
+          if (data == null)
+          {
+            return;
+          }
+          await _queryBankServiceForSubscribers.DeleteSkillAsync(data);
+        }
+      );
+
       // Keep the service running
       while (!stoppingToken.IsCancellationRequested)
       {
