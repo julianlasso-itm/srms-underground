@@ -15,8 +15,8 @@ namespace Analytics.Infrastructure.Services
       _applicationService = applicationService;
     }
 
-    public async Task<RegisterLevelSecurityResponse> RegisterLevelAsync(
-      RegisterLevelSecurityRequest request,
+    public async Task<RegisterLevelAnalyticsResponse> RegisterLevelAsync(
+      RegisterLevelAnalyticsRequest request,
       CallContext context = default
     )
     {
@@ -24,8 +24,8 @@ namespace Analytics.Infrastructure.Services
       return await RegisterLevelHelper.RegisterLevelAsync(request);
     }
 
-    public async Task<UpdateLevelSecurityResponse> UpdateLevelAsync(
-      UpdateLevelSecurityRequest request,
+    public async Task<UpdateLevelAnalyticsResponse> UpdateLevelAsync(
+      UpdateLevelAnalyticsRequest request,
       CallContext context = default
     )
     {
@@ -33,8 +33,8 @@ namespace Analytics.Infrastructure.Services
       return await UpdateLevelHelper.UpdateLevelAsync(request);
     }
 
-    public async Task<DeleteLevelSecurityResponse> DeleteLevelAsync(
-      DeleteLevelSecurityRequest request,
+    public async Task<DeleteLevelAnalyticsResponse> DeleteLevelAsync(
+      DeleteLevelAnalyticsRequest request,
       CallContext context = default
     )
     {
@@ -42,8 +42,8 @@ namespace Analytics.Infrastructure.Services
       return await DeleteLevelHelper.DeleteLevelAsync(request);
     }
 
-    public async Task<GetLevelsSecurityResponse> GetLevelsAsync(
-      GetLevelsSecurityRequest request,
+    public async Task<GetLevelsAnalyticsResponse> GetLevelsAsync(
+      GetLevelsAnalyticsRequest request,
       CallContext context = default
     )
     {

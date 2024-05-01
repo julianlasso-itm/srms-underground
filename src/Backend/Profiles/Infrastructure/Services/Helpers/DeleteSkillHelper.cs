@@ -8,21 +8,25 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   public class DeleteSkillHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<DeleteSkillResponse> DeleteSkillAsync(DeleteSkillRequest request)
+    public static async Task<DeleteSkillProfilesResponse> DeleteSkillAsync(
+      DeleteSkillProfilesRequest request
+    )
     {
       var newUserCommand = MapToDeleteSkillCommand(request);
       var data = await Application.DeleteSkill(newUserCommand);
       return MapToDeleteSkillResponse(data);
     }
 
-    private static DeleteSkillCommand MapToDeleteSkillCommand(DeleteSkillRequest request)
+    private static DeleteSkillCommand MapToDeleteSkillCommand(DeleteSkillProfilesRequest request)
     {
       return new DeleteSkillCommand { SkillId = request.SkillId, };
     }
 
-    private static DeleteSkillResponse MapToDeleteSkillResponse(DeleteSkillApplicationResponse data)
+    private static DeleteSkillProfilesResponse MapToDeleteSkillResponse(
+      DeleteSkillApplicationResponse data
+    )
     {
-      return new DeleteSkillResponse { SkillId = data.SkillId, };
+      return new DeleteSkillProfilesResponse { SkillId = data.SkillId, };
     }
   }
 }

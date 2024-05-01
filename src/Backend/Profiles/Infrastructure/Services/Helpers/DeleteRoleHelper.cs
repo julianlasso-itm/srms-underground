@@ -8,21 +8,25 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   public class DeleteRoleHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<DeleteRoleResponse> DeleteRoleAsync(DeleteRoleRequest request)
+    public static async Task<DeleteRoleProfilesResponse> DeleteRoleAsync(
+      DeleteRoleProfilesRequest request
+    )
     {
       var newUserCommand = MapToDeleteRoleCommand(request);
       var data = await Application.DeleteRole(newUserCommand);
       return MapToDeleteRoleResponse(data);
     }
 
-    private static DeleteRoleCommand MapToDeleteRoleCommand(DeleteRoleRequest request)
+    private static DeleteRoleCommand MapToDeleteRoleCommand(DeleteRoleProfilesRequest request)
     {
       return new DeleteRoleCommand { RoleId = request.RoleId, };
     }
 
-    private static DeleteRoleResponse MapToDeleteRoleResponse(DeleteRoleApplicationResponse data)
+    private static DeleteRoleProfilesResponse MapToDeleteRoleResponse(
+      DeleteRoleApplicationResponse data
+    )
     {
-      return new DeleteRoleResponse { RoleId = data.RoleId, };
+      return new DeleteRoleProfilesResponse { RoleId = data.RoleId, };
     }
   }
 }

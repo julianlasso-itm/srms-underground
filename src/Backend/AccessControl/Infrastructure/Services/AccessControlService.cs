@@ -15,8 +15,8 @@ namespace AccessControl.Infrastructure.Services
       _applicationService = applicationService;
     }
 
-    public async Task<RegisterRoleSecurityResponse> RegisterRoleAsync(
-      RegisterRoleSecurityRequest request,
+    public async Task<RegisterRoleAccessControlResponse> RegisterRoleAsync(
+      RegisterRoleAccessControlRequest request,
       CallContext context = default
     )
     {
@@ -24,8 +24,8 @@ namespace AccessControl.Infrastructure.Services
       return await RegisterRoleHelper.RegisterRoleAsync(request);
     }
 
-    public async Task<UpdateRoleSecurityResponse> UpdateRoleAsync(
-      UpdateRoleSecurityRequest request,
+    public async Task<UpdateRoleAccessControlResponse> UpdateRoleAsync(
+      UpdateRoleAccessControlRequest request,
       CallContext context = default
     )
     {
@@ -33,8 +33,8 @@ namespace AccessControl.Infrastructure.Services
       return await UpdateRoleHelper.UpdateRoleAsync(request);
     }
 
-    public async Task<DeleteRoleSecurityResponse> DeleteRoleAsync(
-      DeleteRoleSecurityRequest request,
+    public async Task<DeleteRoleAccessControlResponse> DeleteRoleAsync(
+      DeleteRoleAccessControlRequest request,
       CallContext context = default
     )
     {
@@ -42,8 +42,8 @@ namespace AccessControl.Infrastructure.Services
       return await DeleteRoleHelper.DeleteRoleAsync(request);
     }
 
-    public async Task<GetRolesSecurityResponse> GetRolesAsync(
-      GetRolesSecurityRequest request,
+    public async Task<GetRolesAccessControlResponse> GetRolesAsync(
+      GetRolesAccessControlRequest request,
       CallContext context = default
     )
     {

@@ -16,32 +16,32 @@ namespace ApiGateway.Infrastructure.Services
       CreateChannel(UrlMicroservice);
     }
 
-    public Task<RegisterLevelSecurityResponse> RegisterLevelAsync(
-      RegisterLevelSecurityRequest request,
+    public Task<RegisterLevelAnalyticsResponse> RegisterLevelAsync(
+      RegisterLevelAnalyticsRequest request,
       CallContext context = default
     )
     {
       return Client.RegisterLevelAsync(request, context);
     }
 
-    public Task<UpdateLevelSecurityResponse> UpdateLevelAsync(
-      UpdateLevelSecurityRequest request,
+    public Task<UpdateLevelAnalyticsResponse> UpdateLevelAsync(
+      UpdateLevelAnalyticsRequest request,
       CallContext context = default
     )
     {
       return Client.UpdateLevelAsync(request, context);
     }
 
-    public Task<DeleteLevelSecurityResponse> DeleteLevelAsync(
-      DeleteLevelSecurityRequest request,
+    public Task<DeleteLevelAnalyticsResponse> DeleteLevelAsync(
+      DeleteLevelAnalyticsRequest request,
       CallContext context = default
     )
     {
       return Client.DeleteLevelAsync(request, context);
     }
 
-    public Task<GetLevelsSecurityResponse> GetLevelsAsync(
-      GetLevelsSecurityRequest request,
+    public Task<GetLevelsAnalyticsResponse> GetLevelsAsync(
+      GetLevelsAnalyticsRequest request,
       CallContext context = default
     )
     {

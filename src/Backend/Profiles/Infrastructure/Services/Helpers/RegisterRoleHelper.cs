@@ -8,23 +8,25 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   internal class RegisterRoleHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<RegisterRoleResponse> RegisterRoleAsync(RegisterRoleRequest request)
+    public static async Task<RegisterRoleProfilesResponse> RegisterRoleAsync(
+      RegisterRoleProfilesRequest request
+    )
     {
       var newRoleCommand = MapToRegisterRoleCommand(request);
       var data = await Application.RegisterRole(newRoleCommand);
       return MapToRegisterRoleResponse(data);
     }
 
-    private static RegisterRoleCommand MapToRegisterRoleCommand(RegisterRoleRequest request)
+    private static RegisterRoleCommand MapToRegisterRoleCommand(RegisterRoleProfilesRequest request)
     {
       return new RegisterRoleCommand { Name = request.Name, Description = request.Description };
     }
 
-    private static RegisterRoleResponse MapToRegisterRoleResponse(
+    private static RegisterRoleProfilesResponse MapToRegisterRoleResponse(
       RegisterRoleApplicationResponse data
     )
     {
-      return new RegisterRoleResponse
+      return new RegisterRoleProfilesResponse
       {
         RoleId = data.RoleId,
         Name = data.Name,

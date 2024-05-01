@@ -8,14 +8,16 @@ namespace Profiles.Infrastructure.Services.Helpers;
 
 internal class UpdateCityHelper : BaseHelperServiceInfrastructure
 {
-  public static async Task<UpdateCityResponse> UpdateCityAsync(UpdateCityRequest request)
+  public static async Task<UpdateCityProfilesResponse> UpdateCityAsync(
+    UpdateCityProfilesRequest request
+  )
   {
     var updateCityCommand = MapToUpdateCityCommand(request);
     var data = await Application.UpdateCity(updateCityCommand);
     return MapToUpdateCityResponse(data);
   }
 
-  private static UpdateCityCommand MapToUpdateCityCommand(UpdateCityRequest request)
+  private static UpdateCityCommand MapToUpdateCityCommand(UpdateCityProfilesRequest request)
   {
     return new UpdateCityCommand
     {
@@ -26,9 +28,11 @@ internal class UpdateCityHelper : BaseHelperServiceInfrastructure
     };
   }
 
-  private static UpdateCityResponse MapToUpdateCityResponse(UpdateCityApplicationResponse data)
+  private static UpdateCityProfilesResponse MapToUpdateCityResponse(
+    UpdateCityApplicationResponse data
+  )
   {
-    return new UpdateCityResponse
+    return new UpdateCityProfilesResponse
     {
       CityId = data.CityId,
       ProvinceId = data.ProvinceId,

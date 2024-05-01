@@ -31,6 +31,14 @@ namespace Analytics.Infrastructure.Messaging.Subscribers
         }
       );
 
+      await _subscriber.SubscribeAsync(
+        new RedisChannel("Profiles.SkillRegistered", RedisChannel.PatternMode.Literal),
+        (channel, message) =>
+        {
+          Console.WriteLine($"Message received (RoleUpdated): {message}");
+        }
+      );
+
       // Keep the service running
       while (!stoppingToken.IsCancellationRequested)
       {

@@ -15,8 +15,8 @@ namespace Profiles.Infrastructure.Services
       _applicationService = applicationService;
     }
 
-    public Task<DeleteCityResponse> DeleteCityAsync(
-      DeleteCityRequest request,
+    public Task<DeleteCityProfilesResponse> DeleteCityAsync(
+      DeleteCityProfilesRequest request,
       CallContext context = default
     )
     {
@@ -24,8 +24,8 @@ namespace Profiles.Infrastructure.Services
       return DeleteCityHelper.DeleteCityAsync(request);
     }
 
-    public Task<DeleteCountryResponse> DeleteCountryAsync(
-      DeleteCountryRequest request,
+    public Task<DeleteCountryProfilesResponse> DeleteCountryAsync(
+      DeleteCountryProfilesRequest request,
       CallContext context = default
     )
     {
@@ -33,8 +33,8 @@ namespace Profiles.Infrastructure.Services
       return DeleteCountryHelper.DeleteCountryAsync(request);
     }
 
-    public Task<DeleteProvinceResponse> DeleteProvinceAsync(
-      DeleteProvinceRequest request,
+    public Task<DeleteProvinceProfilesResponse> DeleteProvinceAsync(
+      DeleteProvinceProfilesRequest request,
       CallContext context = default
     )
     {
@@ -42,8 +42,8 @@ namespace Profiles.Infrastructure.Services
       return DeleteProvinceHelper.DeleteProvinceAsync(request);
     }
 
-    public Task<GetCitiesResponse> GetCitiesAsync(
-      GetCitiesRequest request,
+    public Task<GetCitiesProfilesResponse> GetCitiesAsync(
+      GetCitiesProfilesRequest request,
       CallContext context = default
     )
     {
@@ -51,8 +51,8 @@ namespace Profiles.Infrastructure.Services
       return GetCitiesHelper.GetCitiesAsync(request);
     }
 
-    public Task<GetCountriesResponse> GetCountriesAsync(
-      GetCountriesRequest request,
+    public Task<GetCountriesProfilesResponse> GetCountriesAsync(
+      GetCountriesProfilesRequest request,
       CallContext context = default
     )
     {
@@ -60,8 +60,8 @@ namespace Profiles.Infrastructure.Services
       return GetCountriesHelper.GetCountriesAsync(request);
     }
 
-    public Task<GetProvincesResponse> GetProvincesAsync(
-      GetProvincesRequest request,
+    public Task<GetProvincesProfilesResponse> GetProvincesAsync(
+      GetProvincesProfilesRequest request,
       CallContext context = default
     )
     {
@@ -69,8 +69,8 @@ namespace Profiles.Infrastructure.Services
       return GetProvincesHelper.GetProvincesAsync(request);
     }
 
-    public Task<RegisterCityResponse> RegisterCityAsync(
-      RegisterCityRequest request,
+    public Task<RegisterCityProfilesResponse> RegisterCityAsync(
+      RegisterCityProfilesRequest request,
       CallContext context = default
     )
     {
@@ -78,8 +78,8 @@ namespace Profiles.Infrastructure.Services
       return RegisterCityHelper.RegisterCityAsync(request);
     }
 
-    public Task<RegisterCountryResponse> RegisterCountryAsync(
-      RegisterCountryRequest request,
+    public Task<RegisterCountryProfilesResponse> RegisterCountryAsync(
+      RegisterCountryProfilesRequest request,
       CallContext context = default
     )
     {
@@ -87,8 +87,8 @@ namespace Profiles.Infrastructure.Services
       return RegisterCountryHelper.RegisterCountryAsync(request);
     }
 
-    public Task<RegisterProvinceResponse> RegisterProvinceAsync(
-      RegisterProvinceRequest request,
+    public Task<RegisterProvinceProfilesResponse> RegisterProvinceAsync(
+      RegisterProvinceProfilesRequest request,
       CallContext context = default
     )
     {
@@ -96,8 +96,8 @@ namespace Profiles.Infrastructure.Services
       return RegisterProvinceHelper.RegisterProvinceAsync(request);
     }
 
-    public Task<UpdateCityResponse> UpdateCityAsync(
-      UpdateCityRequest request,
+    public Task<UpdateCityProfilesResponse> UpdateCityAsync(
+      UpdateCityProfilesRequest request,
       CallContext context = default
     )
     {
@@ -105,8 +105,8 @@ namespace Profiles.Infrastructure.Services
       return UpdateCityHelper.UpdateCityAsync(request);
     }
 
-    public Task<UpdateCountryResponse> UpdateCountryAsync(
-      UpdateCountryRequest request,
+    public Task<UpdateCountryProfilesResponse> UpdateCountryAsync(
+      UpdateCountryProfilesRequest request,
       CallContext context = default
     )
     {
@@ -114,8 +114,8 @@ namespace Profiles.Infrastructure.Services
       return UpdateCountryHelper.UpdateCountryAsync(request);
     }
 
-    public Task<UpdateProvinceResponse> UpdateProvinceAsync(
-      UpdateProvinceRequest request,
+    public Task<UpdateProvinceProfilesResponse> UpdateProvinceAsync(
+      UpdateProvinceProfilesRequest request,
       CallContext context = default
     )
     {
@@ -123,8 +123,8 @@ namespace Profiles.Infrastructure.Services
       return UpdateProvinceHelper.UpdateProvinceAsync(request);
     }
 
-    public Task<DeleteRoleResponse> DeleteRoleAsync(
-      DeleteRoleRequest request,
+    public Task<DeleteRoleProfilesResponse> DeleteRoleAsync(
+      DeleteRoleProfilesRequest request,
       CallContext context = default
     )
     {
@@ -132,8 +132,8 @@ namespace Profiles.Infrastructure.Services
       return DeleteRoleHelper.DeleteRoleAsync(request);
     }
 
-    public Task<GetRolesResponse> GetRolesAsync(
-      GetRolesRequest request,
+    public Task<GetRolesProfilesResponse> GetRolesAsync(
+      GetRolesProfilesRequest request,
       CallContext context = default
     )
     {
@@ -141,8 +141,8 @@ namespace Profiles.Infrastructure.Services
       return GetRolesHelper.GetRolesAsync(request);
     }
 
-    public Task<RegisterRoleResponse> RegisterRoleAsync(
-      RegisterRoleRequest request,
+    public Task<RegisterRoleProfilesResponse> RegisterRoleAsync(
+      RegisterRoleProfilesRequest request,
       CallContext context = default
     )
     {
@@ -150,8 +150,8 @@ namespace Profiles.Infrastructure.Services
       return RegisterRoleHelper.RegisterRoleAsync(request);
     }
 
-    public Task<UpdateRoleResponse> UpdateRoleAsync(
-      UpdateRoleRequest request,
+    public Task<UpdateRoleProfilesResponse> UpdateRoleAsync(
+      UpdateRoleProfilesRequest request,
       CallContext context = default
     )
     {
@@ -159,8 +159,8 @@ namespace Profiles.Infrastructure.Services
       return UpdateRoleHelper.UpdateRoleAsync(request);
     }
 
-    public async Task<DeleteProfessionalResponse> DeleteProfessionalAsync(
-      DeleteProfessionalRequest request,
+    public async Task<DeleteProfessionalProfilesResponse> DeleteProfessionalAsync(
+      DeleteProfessionalProfilesRequest request,
       CallContext context = default
     )
     {
@@ -168,8 +168,8 @@ namespace Profiles.Infrastructure.Services
       return await DeleteProfessionalHelper.DeleteProfessionalAsync(request);
     }
 
-    public async Task<DeleteSkillResponse> DeleteSkillAsync(
-      DeleteSkillRequest request,
+    public async Task<DeleteSkillProfilesResponse> DeleteSkillAsync(
+      DeleteSkillProfilesRequest request,
       CallContext context = default
     )
     {
@@ -177,8 +177,8 @@ namespace Profiles.Infrastructure.Services
       return await DeleteSkillHelper.DeleteSkillAsync(request);
     }
 
-    public async Task<GetProfessionalResponse> GetProfessionalAsync(
-      GetProfessionalsRequest request,
+    public async Task<GetProfessionalProfilesResponse> GetProfessionalAsync(
+      GetProfessionalsProfilesRequest request,
       CallContext context = default
     )
     {
@@ -186,8 +186,8 @@ namespace Profiles.Infrastructure.Services
       return await GetProfessionalHelper.GetProfessionalsAsync(request);
     }
 
-    public async Task<GetSkillsResponse> GetSkillAsync(
-      GetSkillsRequest request,
+    public async Task<GetSkillsProfilesResponse> GetSkillAsync(
+      GetSkillsProfilesRequest request,
       CallContext context = default
     )
     {
@@ -195,8 +195,8 @@ namespace Profiles.Infrastructure.Services
       return await GetSkillsHelper.GetSkillsAsync(request);
     }
 
-    public async Task<RegisterProfessionalResponse> RegisterProfessionalAsync(
-      RegisterProfessionalRequest request,
+    public async Task<RegisterProfessionalProfilesResponse> RegisterProfessionalAsync(
+      RegisterProfessionalProfilesRequest request,
       CallContext context = default
     )
     {
@@ -204,8 +204,8 @@ namespace Profiles.Infrastructure.Services
       return await RegisterProfessionalHelper.RegisterProfessionalAsync(request);
     }
 
-    public async Task<RegisterSkillResponse> RegisterSkillAsync(
-      RegisterSkillRequest request,
+    public async Task<RegisterSkillProfilesResponse> RegisterSkillAsync(
+      RegisterSkillProfilesRequest request,
       CallContext context = default
     )
     {
@@ -213,8 +213,8 @@ namespace Profiles.Infrastructure.Services
       return await RegisterSkillHelper.RegisterSkillAsync(request);
     }
 
-    public async Task<UpdateProfessionalResponse> UpdateProfessionalAsync(
-      UpdateProfessionalRequest request,
+    public async Task<UpdateProfessionalProfilesResponse> UpdateProfessionalAsync(
+      UpdateProfessionalProfilesRequest request,
       CallContext context = default
     )
     {
@@ -222,8 +222,8 @@ namespace Profiles.Infrastructure.Services
       return await UpdateProfessionalHelper.UpdateProfessionalAsync(request);
     }
 
-    public async Task<UpdateSkillResponse> UpdateSkillRoleAsync(
-      UpdateSkillRequest request,
+    public async Task<UpdateSkillProfilesResponse> UpdateSkillRoleAsync(
+      UpdateSkillProfilesRequest request,
       CallContext context = default
     )
     {

@@ -8,8 +8,8 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   public class RegisterProfessionalHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<RegisterProfessionalResponse> RegisterProfessionalAsync(
-      RegisterProfessionalRequest request
+    public static async Task<RegisterProfessionalProfilesResponse> RegisterProfessionalAsync(
+      RegisterProfessionalProfilesRequest request
     )
     {
       var newUserCommand = MapToNewUserCommand(request);
@@ -18,7 +18,7 @@ namespace Profiles.Infrastructure.Services.Helpers
     }
 
     private static RegisterProfessionalCommand MapToNewUserCommand(
-      RegisterProfessionalRequest request
+      RegisterProfessionalProfilesRequest request
     )
     {
       return new RegisterProfessionalCommand
@@ -29,11 +29,11 @@ namespace Profiles.Infrastructure.Services.Helpers
       };
     }
 
-    private static RegisterProfessionalResponse MapToRegisterProfessionalResponse(
+    private static RegisterProfessionalProfilesResponse MapToRegisterProfessionalResponse(
       RegisterProfessionalApplicationResponse data
     )
     {
-      return new RegisterProfessionalResponse
+      return new RegisterProfessionalProfilesResponse
       {
         Name = data.Name,
         Email = data.Email,

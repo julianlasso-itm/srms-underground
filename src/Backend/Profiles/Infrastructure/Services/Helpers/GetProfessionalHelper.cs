@@ -9,8 +9,8 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   public class GetProfessionalHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<GetProfessionalResponse> GetProfessionalsAsync(
-      GetProfessionalsRequest request
+    public static async Task<GetProfessionalProfilesResponse> GetProfessionalsAsync(
+      GetProfessionalsProfilesRequest request
     )
     {
       var newUserCommand = MapToGetProfessionalsCommand(request);
@@ -19,7 +19,7 @@ namespace Profiles.Infrastructure.Services.Helpers
     }
 
     private static GetProfessionalsCommand MapToGetProfessionalsCommand(
-      GetProfessionalsRequest request
+      GetProfessionalsProfilesRequest request
     )
     {
       return new GetProfessionalsCommand
@@ -32,14 +32,14 @@ namespace Profiles.Infrastructure.Services.Helpers
       };
     }
 
-    private static GetProfessionalResponse MapToGetProfessionalsResponse(
+    private static GetProfessionalProfilesResponse MapToGetProfessionalsResponse(
       GetProfessionalsApplicationResponse<ProfessionalModel> data
     )
     {
-      return new GetProfessionalResponse
+      return new GetProfessionalProfilesResponse
       {
         Professionals = data
-          .Professionals.Select(professional => new ProfessionalContract
+          .Professionals.Select(professional => new ProfessionalProfiles
           {
             ProfessionalId = professional.ProfessionalId.ToString(),
             Name = professional.Name,

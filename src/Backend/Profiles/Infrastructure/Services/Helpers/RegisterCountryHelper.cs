@@ -8,8 +8,8 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   internal class RegisterCountryHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<RegisterCountryResponse> RegisterCountryAsync(
-      RegisterCountryRequest request
+    public static async Task<RegisterCountryProfilesResponse> RegisterCountryAsync(
+      RegisterCountryProfilesRequest request
     )
     {
       var countryCommand = MapToRegisterCountryCommand(request);
@@ -18,17 +18,17 @@ namespace Profiles.Infrastructure.Services.Helpers
     }
 
     private static RegisterCountryCommand MapToRegisterCountryCommand(
-      RegisterCountryRequest request
+      RegisterCountryProfilesRequest request
     )
     {
       return new RegisterCountryCommand { Name = request.Name };
     }
 
-    private static RegisterCountryResponse MapToRegisterCountryResponse(
+    private static RegisterCountryProfilesResponse MapToRegisterCountryResponse(
       RegisterCountryApplicationResponse data
     )
     {
-      return new RegisterCountryResponse
+      return new RegisterCountryProfilesResponse
       {
         CountryId = data.CountryId,
         Name = data.Name,

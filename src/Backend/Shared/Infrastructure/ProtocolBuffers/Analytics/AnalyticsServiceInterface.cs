@@ -9,26 +9,26 @@ namespace Shared.Infrastructure.ProtocolBuffers.Analytics
   public interface IAnalyticsServices
   {
     [OperationContract]
-    Task<RegisterLevelSecurityResponse> RegisterLevelAsync(
-      RegisterLevelSecurityRequest request,
+    Task<RegisterLevelAnalyticsResponse> RegisterLevelAsync(
+      RegisterLevelAnalyticsRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<UpdateLevelSecurityResponse> UpdateLevelAsync(
-      UpdateLevelSecurityRequest request,
+    Task<UpdateLevelAnalyticsResponse> UpdateLevelAsync(
+      UpdateLevelAnalyticsRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<DeleteLevelSecurityResponse> DeleteLevelAsync(
-      DeleteLevelSecurityRequest request,
+    Task<DeleteLevelAnalyticsResponse> DeleteLevelAsync(
+      DeleteLevelAnalyticsRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<GetLevelsSecurityResponse> GetLevelsAsync(
-      GetLevelsSecurityRequest request,
+    Task<GetLevelsAnalyticsResponse> GetLevelsAsync(
+      GetLevelsAnalyticsRequest request,
       CallContext context = default
     );
   }

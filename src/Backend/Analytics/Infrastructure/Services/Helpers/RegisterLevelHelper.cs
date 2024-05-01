@@ -8,8 +8,8 @@ namespace Analytics.Infrastructure.Services.Helpers
 {
   internal class RegisterLevelHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<RegisterLevelSecurityResponse> RegisterLevelAsync(
-      RegisterLevelSecurityRequest request
+    public static async Task<RegisterLevelAnalyticsResponse> RegisterLevelAsync(
+      RegisterLevelAnalyticsRequest request
     )
     {
       var newLevelCommand = MapToRegisterLevelCommand(request);
@@ -18,17 +18,17 @@ namespace Analytics.Infrastructure.Services.Helpers
     }
 
     private static RegisterLevelCommand MapToRegisterLevelCommand(
-      RegisterLevelSecurityRequest request
+      RegisterLevelAnalyticsRequest request
     )
     {
       return new RegisterLevelCommand { Name = request.Name, Description = request.Description, };
     }
 
-    private static RegisterLevelSecurityResponse MapToRegisterLevelResponse(
+    private static RegisterLevelAnalyticsResponse MapToRegisterLevelResponse(
       RegisterLevelApplicationResponse data
     )
     {
-      return new RegisterLevelSecurityResponse
+      return new RegisterLevelAnalyticsResponse
       {
         LevelId = data.LevelId,
         Name = data.Name,

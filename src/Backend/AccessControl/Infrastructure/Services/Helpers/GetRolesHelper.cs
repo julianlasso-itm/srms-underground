@@ -9,8 +9,8 @@ namespace AccessControl.Infrastructure.Services.Helpers
 {
   internal class GetRolesHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<GetRolesSecurityResponse> GetRolesAsync(
-      GetRolesSecurityRequest request
+    public static async Task<GetRolesAccessControlResponse> GetRolesAsync(
+      GetRolesAccessControlRequest request
     )
     {
       var getRolesCommand = MapToGetRolesCommand(request);
@@ -18,7 +18,7 @@ namespace AccessControl.Infrastructure.Services.Helpers
       return MapToGetRolesResponse(data);
     }
 
-    private static GetRolesCommand MapToGetRolesCommand(GetRolesSecurityRequest request)
+    private static GetRolesCommand MapToGetRolesCommand(GetRolesAccessControlRequest request)
     {
       return new GetRolesCommand
       {
@@ -31,11 +31,11 @@ namespace AccessControl.Infrastructure.Services.Helpers
       };
     }
 
-    private static GetRolesSecurityResponse MapToGetRolesResponse(
+    private static GetRolesAccessControlResponse MapToGetRolesResponse(
       GetRolesApplicationResponse<RoleModel> data
     )
     {
-      return new GetRolesSecurityResponse
+      return new GetRolesAccessControlResponse
       {
         Roles = data
           .Roles.Select(role => new RoleSecurity

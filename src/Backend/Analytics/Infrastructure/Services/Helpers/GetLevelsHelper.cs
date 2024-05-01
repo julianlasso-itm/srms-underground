@@ -9,8 +9,8 @@ namespace Analytics.Infrastructure.Services.Helpers
 {
   internal class GetLevelsHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<GetLevelsSecurityResponse> GetLevelsAsync(
-      GetLevelsSecurityRequest request
+    public static async Task<GetLevelsAnalyticsResponse> GetLevelsAsync(
+      GetLevelsAnalyticsRequest request
     )
     {
       var getLevelsCommand = MapToGetLevelsCommand(request);
@@ -18,7 +18,7 @@ namespace Analytics.Infrastructure.Services.Helpers
       return MapToGetLevelsResponse(data);
     }
 
-    private static GetLevelsCommand MapToGetLevelsCommand(GetLevelsSecurityRequest request)
+    private static GetLevelsCommand MapToGetLevelsCommand(GetLevelsAnalyticsRequest request)
     {
       return new GetLevelsCommand
       {
@@ -31,14 +31,14 @@ namespace Analytics.Infrastructure.Services.Helpers
       };
     }
 
-    private static GetLevelsSecurityResponse MapToGetLevelsResponse(
+    private static GetLevelsAnalyticsResponse MapToGetLevelsResponse(
       GetLevelsApplicationResponse<LevelModel> data
     )
     {
-      return new GetLevelsSecurityResponse
+      return new GetLevelsAnalyticsResponse
       {
         Levels = data
-          .Levels.Select(level => new LevelSecurity
+          .Levels.Select(level => new LevelAnalytics
           {
             LevelId = level.LevelId.ToString(),
             Name = level.Name,

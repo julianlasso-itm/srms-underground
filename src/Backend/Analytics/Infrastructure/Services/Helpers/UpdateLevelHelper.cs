@@ -8,8 +8,8 @@ namespace Analytics.Infrastructure.Services.Helpers
 {
   internal class UpdateLevelHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<UpdateLevelSecurityResponse> UpdateLevelAsync(
-      UpdateLevelSecurityRequest request
+    public static async Task<UpdateLevelAnalyticsResponse> UpdateLevelAsync(
+      UpdateLevelAnalyticsRequest request
     )
     {
       var updateLevelCommand = MapToUpdateLevelCommand(request);
@@ -17,7 +17,7 @@ namespace Analytics.Infrastructure.Services.Helpers
       return MapToUpdateLevelResponse(data);
     }
 
-    private static UpdateLevelCommand MapToUpdateLevelCommand(UpdateLevelSecurityRequest request)
+    private static UpdateLevelCommand MapToUpdateLevelCommand(UpdateLevelAnalyticsRequest request)
     {
       return new UpdateLevelCommand
       {
@@ -28,11 +28,11 @@ namespace Analytics.Infrastructure.Services.Helpers
       };
     }
 
-    private static UpdateLevelSecurityResponse MapToUpdateLevelResponse(
+    private static UpdateLevelAnalyticsResponse MapToUpdateLevelResponse(
       UpdateLevelApplicationResponse data
     )
     {
-      return new UpdateLevelSecurityResponse
+      return new UpdateLevelAnalyticsResponse
       {
         LevelId = data.LevelId,
         Name = data.Name,

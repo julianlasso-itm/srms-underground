@@ -28,6 +28,18 @@
       "request": "launch",
       "projectPath": "${workspaceFolder}/src/Backend/Profiles/Infrastructure/Profiles.Infrastructure.csproj",
     },
+    {
+      "name": "C#: QueryBank Debug",
+      "type": "dotnet",
+      "request": "launch",
+      "projectPath": "${workspaceFolder}/src/Backend/QueryBank/Infrastructure/QueryBank.Infrastructure.csproj",
+    },
+    {
+      "name": "C#: QueryBank.EventConsumer Debug",
+      "type": "dotnet",
+      "request": "launch",
+      "projectPath": "${workspaceFolder}/src/Backend/QueryBank/EventConsumer/QueryBank.EventConsumer.csproj",
+    },
   ],
   "compounds": [
     {
@@ -37,6 +49,8 @@
         "C#: AccessControl Debug",
         "C#: Analytics Debug",
         "C#: Profiles Debug",
+        "C#: QueryBank Debug",
+        "C#: QueryBank.EventConsumer Debug",
       ]
     }
   ]

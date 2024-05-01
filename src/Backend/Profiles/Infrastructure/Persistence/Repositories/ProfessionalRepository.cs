@@ -41,7 +41,7 @@ namespace Profiles.Infrastructure.Persistence.Repositories
       }
       if (entity.Disabled != null)
       {
-        professional.Disabled = entity.Disabled;
+        professional.Disabled = (bool)entity.Disabled;
       }
       return UpdateAsync(id, professional);
     }

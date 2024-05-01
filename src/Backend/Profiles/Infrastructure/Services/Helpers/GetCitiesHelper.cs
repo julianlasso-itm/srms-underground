@@ -9,14 +9,16 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   internal class GetCitiesHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<GetCitiesResponse> GetCitiesAsync(GetCitiesRequest request)
+    public static async Task<GetCitiesProfilesResponse> GetCitiesAsync(
+      GetCitiesProfilesRequest request
+    )
     {
       var getCitiesCommand = MapToGetCitiesCommand(request);
       var data = await Application.GetCities(getCitiesCommand);
       return MapToGetCitiesResponse(data);
     }
 
-    private static GetCitiesCommand MapToGetCitiesCommand(GetCitiesRequest request)
+    private static GetCitiesCommand MapToGetCitiesCommand(GetCitiesProfilesRequest request)
     {
       return new GetCitiesCommand
       {
@@ -29,26 +31,26 @@ namespace Profiles.Infrastructure.Services.Helpers
       };
     }
 
-    private static GetCitiesResponse MapToGetCitiesResponse(
+    private static GetCitiesProfilesResponse MapToGetCitiesResponse(
       GetCitiesApplicationResponse<CityModel> data
     )
     {
-      return new GetCitiesResponse
+      return new GetCitiesProfilesResponse
       {
         Cities = data
-          .Cities.Select(city => new City
+          .Cities.Select(city => new CityProfiles
           {
             CityId = city.CityId.ToString(),
             ProvinceId = city.ProvinceId.ToString(),
             Name = city.Name,
             Disabled = city.Disabled,
-            Province = new Province
+            Province = new ProvinceProfiles
             {
               ProvinceId = city.Province.ProvinceId.ToString(),
               CountryId = city.Province.CountryId.ToString(),
               Name = city.Province.Name,
               Disabled = city.Province.Disabled,
-              Country = new Country
+              Country = new CountryProfiles
               {
                 CountryId = city.Province.Country.CountryId.ToString(),
                 Name = city.Province.Country.Name,

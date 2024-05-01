@@ -8,14 +8,16 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   internal class UpdateRoleHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<UpdateRoleResponse> UpdateRoleAsync(UpdateRoleRequest request)
+    public static async Task<UpdateRoleProfilesResponse> UpdateRoleAsync(
+      UpdateRoleProfilesRequest request
+    )
     {
       var updateRoleCommand = MapToUpdateRoleCommand(request);
       var data = await Application.UpdateRole(updateRoleCommand);
       return MapToUpdateRoleResponse(data);
     }
 
-    private static UpdateRoleCommand MapToUpdateRoleCommand(UpdateRoleRequest request)
+    private static UpdateRoleCommand MapToUpdateRoleCommand(UpdateRoleProfilesRequest request)
     {
       return new UpdateRoleCommand
       {
@@ -26,9 +28,11 @@ namespace Profiles.Infrastructure.Services.Helpers
       };
     }
 
-    private static UpdateRoleResponse MapToUpdateRoleResponse(UpdateRoleApplicationResponse data)
+    private static UpdateRoleProfilesResponse MapToUpdateRoleResponse(
+      UpdateRoleApplicationResponse data
+    )
     {
-      return new UpdateRoleResponse
+      return new UpdateRoleProfilesResponse
       {
         RoleId = data.RoleId,
         Name = data.Name,

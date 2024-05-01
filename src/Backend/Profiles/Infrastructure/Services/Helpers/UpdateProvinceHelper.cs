@@ -8,8 +8,8 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   internal class UpdateProvinceHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<UpdateProvinceResponse> UpdateProvinceAsync(
-      UpdateProvinceRequest request
+    public static async Task<UpdateProvinceProfilesResponse> UpdateProvinceAsync(
+      UpdateProvinceProfilesRequest request
     )
     {
       var updateProvinceCommand = MapToUpdateProvinceCommand(request);
@@ -17,7 +17,9 @@ namespace Profiles.Infrastructure.Services.Helpers
       return MapToUpdateProvinceResponse(data);
     }
 
-    private static UpdateProvinceCommand MapToUpdateProvinceCommand(UpdateProvinceRequest request)
+    private static UpdateProvinceCommand MapToUpdateProvinceCommand(
+      UpdateProvinceProfilesRequest request
+    )
     {
       return new UpdateProvinceCommand
       {
@@ -28,11 +30,11 @@ namespace Profiles.Infrastructure.Services.Helpers
       };
     }
 
-    private static UpdateProvinceResponse MapToUpdateProvinceResponse(
+    private static UpdateProvinceProfilesResponse MapToUpdateProvinceResponse(
       UpdateProvinceApplicationResponse data
     )
     {
-      return new UpdateProvinceResponse
+      return new UpdateProvinceProfilesResponse
       {
         ProvinceId = data.ProvinceId,
         CountryId = data.CountryId,

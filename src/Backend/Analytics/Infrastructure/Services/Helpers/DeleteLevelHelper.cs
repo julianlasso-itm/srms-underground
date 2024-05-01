@@ -8,8 +8,8 @@ namespace Analytics.Infrastructure.Services.Helpers
 {
   internal class DeleteLevelHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<DeleteLevelSecurityResponse> DeleteLevelAsync(
-      DeleteLevelSecurityRequest request
+    public static async Task<DeleteLevelAnalyticsResponse> DeleteLevelAsync(
+      DeleteLevelAnalyticsRequest request
     )
     {
       var deleteLevelCommand = MapToDeleteLevelCommand(request);
@@ -17,16 +17,16 @@ namespace Analytics.Infrastructure.Services.Helpers
       return MapToDeleteLevelResponse(data);
     }
 
-    private static DeleteLevelCommand MapToDeleteLevelCommand(DeleteLevelSecurityRequest request)
+    private static DeleteLevelCommand MapToDeleteLevelCommand(DeleteLevelAnalyticsRequest request)
     {
       return new DeleteLevelCommand { LevelId = request.LevelId };
     }
 
-    private static DeleteLevelSecurityResponse MapToDeleteLevelResponse(
+    private static DeleteLevelAnalyticsResponse MapToDeleteLevelResponse(
       DeleteLevelApplicationResponse data
     )
     {
-      return new DeleteLevelSecurityResponse { LevelId = data.LevelId };
+      return new DeleteLevelAnalyticsResponse { LevelId = data.LevelId };
     }
   }
 }

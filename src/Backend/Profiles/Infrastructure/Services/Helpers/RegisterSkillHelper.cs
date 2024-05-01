@@ -8,23 +8,25 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   public class RegisterSkillHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<RegisterSkillResponse> RegisterSkillAsync(RegisterSkillRequest request)
+    public static async Task<RegisterSkillProfilesResponse> RegisterSkillAsync(
+      RegisterSkillProfilesRequest request
+    )
     {
       var newUserCommand = MapToNewUserCommand(request);
       var data = await Application.RegisterSkill(newUserCommand);
       return MapToRegisterSkillResponse(data);
     }
 
-    private static RegisterSkillCommand MapToNewUserCommand(RegisterSkillRequest request)
+    private static RegisterSkillCommand MapToNewUserCommand(RegisterSkillProfilesRequest request)
     {
       return new RegisterSkillCommand { Name = request.Name, };
     }
 
-    private static RegisterSkillResponse MapToRegisterSkillResponse(
+    private static RegisterSkillProfilesResponse MapToRegisterSkillResponse(
       RegisterSkillApplicationResponse data
     )
     {
-      return new RegisterSkillResponse
+      return new RegisterSkillProfilesResponse
       {
         SkillId = data.SkillId,
         Name = data.Name,

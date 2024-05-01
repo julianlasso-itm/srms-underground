@@ -8,23 +8,27 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   internal class DeleteCountryHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<DeleteCountryResponse> DeleteCountryAsync(DeleteCountryRequest request)
+    public static async Task<DeleteCountryProfilesResponse> DeleteCountryAsync(
+      DeleteCountryProfilesRequest request
+    )
     {
       var deleteCountryCommand = MapToDeleteCountryCommand(request);
       var data = await Application.DeleteCountry(deleteCountryCommand);
       return MapToDeleteCountryResponse(data);
     }
 
-    private static DeleteCountryCommand MapToDeleteCountryCommand(DeleteCountryRequest request)
+    private static DeleteCountryCommand MapToDeleteCountryCommand(
+      DeleteCountryProfilesRequest request
+    )
     {
       return new DeleteCountryCommand { CountryId = request.CountryId };
     }
 
-    private static DeleteCountryResponse MapToDeleteCountryResponse(
+    private static DeleteCountryProfilesResponse MapToDeleteCountryResponse(
       DeleteCountryApplicationResponse data
     )
     {
-      return new DeleteCountryResponse { CountryId = data.CountryId };
+      return new DeleteCountryProfilesResponse { CountryId = data.CountryId };
     }
   }
 }

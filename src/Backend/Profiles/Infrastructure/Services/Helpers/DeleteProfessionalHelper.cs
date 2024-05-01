@@ -8,8 +8,8 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   public class DeleteProfessionalHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<DeleteProfessionalResponse> DeleteProfessionalAsync(
-      DeleteProfessionalRequest request
+    public static async Task<DeleteProfessionalProfilesResponse> DeleteProfessionalAsync(
+      DeleteProfessionalProfilesRequest request
     )
     {
       var newUserCommand = MapToDeleteProfessionalCommand(request);
@@ -17,15 +17,15 @@ namespace Profiles.Infrastructure.Services.Helpers
       return MapToDeleteProfessionalResponse(data);
     }
 
-    private static DeleteProfessionalResponse MapToDeleteProfessionalResponse(
+    private static DeleteProfessionalProfilesResponse MapToDeleteProfessionalResponse(
       DeleteProfessionalApplicationResponse data
     )
     {
-      return new DeleteProfessionalResponse { ProfessionalId = data.ProfessionalId, };
+      return new DeleteProfessionalProfilesResponse { ProfessionalId = data.ProfessionalId, };
     }
 
     private static DeleteProfessionalCommand MapToDeleteProfessionalCommand(
-      DeleteProfessionalRequest request
+      DeleteProfessionalProfilesRequest request
     )
     {
       return new DeleteProfessionalCommand { ProfessionalId = request.ProfessionalId, };

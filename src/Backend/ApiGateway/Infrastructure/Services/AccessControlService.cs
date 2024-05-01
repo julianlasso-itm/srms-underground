@@ -16,32 +16,32 @@ namespace ApiGateway.Infrastructure.Services
       CreateChannel(UrlMicroservice);
     }
 
-    public Task<RegisterRoleSecurityResponse> RegisterRoleAsync(
-      RegisterRoleSecurityRequest request,
+    public Task<RegisterRoleAccessControlResponse> RegisterRoleAsync(
+      RegisterRoleAccessControlRequest request,
       CallContext context = default
     )
     {
       return Client.RegisterRoleAsync(request, context);
     }
 
-    public Task<UpdateRoleSecurityResponse> UpdateRoleAsync(
-      UpdateRoleSecurityRequest request,
+    public Task<UpdateRoleAccessControlResponse> UpdateRoleAsync(
+      UpdateRoleAccessControlRequest request,
       CallContext context = default
     )
     {
       return Client.UpdateRoleAsync(request, context);
     }
 
-    public Task<DeleteRoleSecurityResponse> DeleteRoleAsync(
-      DeleteRoleSecurityRequest request,
+    public Task<DeleteRoleAccessControlResponse> DeleteRoleAsync(
+      DeleteRoleAccessControlRequest request,
       CallContext context = default
     )
     {
       return Client.DeleteRoleAsync(request, context);
     }
 
-    public Task<GetRolesSecurityResponse> GetRolesAsync(
-      GetRolesSecurityRequest request,
+    public Task<GetRolesAccessControlResponse> GetRolesAsync(
+      GetRolesAccessControlRequest request,
       CallContext context = default
     )
     {

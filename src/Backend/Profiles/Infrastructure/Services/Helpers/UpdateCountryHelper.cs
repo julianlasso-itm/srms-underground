@@ -8,14 +8,18 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   internal class UpdateCountryHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<UpdateCountryResponse> UpdateCountryAsync(UpdateCountryRequest request)
+    public static async Task<UpdateCountryProfilesResponse> UpdateCountryAsync(
+      UpdateCountryProfilesRequest request
+    )
     {
       var updateCountryCommand = MapToUpdateCountryCommand(request);
       var data = await Application.UpdateCountry(updateCountryCommand);
       return MapToUpdateCountryResponse(data);
     }
 
-    private static UpdateCountryCommand MapToUpdateCountryCommand(UpdateCountryRequest request)
+    private static UpdateCountryCommand MapToUpdateCountryCommand(
+      UpdateCountryProfilesRequest request
+    )
     {
       return new UpdateCountryCommand
       {
@@ -25,11 +29,11 @@ namespace Profiles.Infrastructure.Services.Helpers
       };
     }
 
-    private static UpdateCountryResponse MapToUpdateCountryResponse(
+    private static UpdateCountryProfilesResponse MapToUpdateCountryResponse(
       UpdateCountryApplicationResponse data
     )
     {
-      return new UpdateCountryResponse
+      return new UpdateCountryProfilesResponse
       {
         CountryId = data.CountryId,
         Name = data.Name,

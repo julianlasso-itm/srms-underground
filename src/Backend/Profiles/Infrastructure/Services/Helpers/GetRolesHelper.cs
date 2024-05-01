@@ -9,14 +9,16 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   internal class GetRolesHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<GetRolesResponse> GetRolesAsync(GetRolesRequest request)
+    public static async Task<GetRolesProfilesResponse> GetRolesAsync(
+      GetRolesProfilesRequest request
+    )
     {
       var getRolesCommand = MapToGetRolesCommand(request);
       var data = await Application.GetRoles(getRolesCommand);
       return MapToGetRolesResponse(data);
     }
 
-    private static GetRolesCommand MapToGetRolesCommand(GetRolesRequest request)
+    private static GetRolesCommand MapToGetRolesCommand(GetRolesProfilesRequest request)
     {
       return new GetRolesCommand
       {
@@ -29,14 +31,14 @@ namespace Profiles.Infrastructure.Services.Helpers
       };
     }
 
-    private static GetRolesResponse MapToGetRolesResponse(
+    private static GetRolesProfilesResponse MapToGetRolesResponse(
       GetRolesApplicationResponse<RoleModel> data
     )
     {
-      return new GetRolesResponse
+      return new GetRolesProfilesResponse
       {
         Roles = data
-          .Roles.Select(role => new Role
+          .Roles.Select(role => new RoleProfiles
           {
             RoleId = role.RoleId.ToString(),
             Name = role.Name,

@@ -18,7 +18,7 @@ namespace ApiGateway.Infrastructure.Controllers
 
     [HttpPost("level")]
     public async Task<IActionResult> RegisterLevelAsync(
-      [FromBody] RegisterLevelSecurityRequest request
+      [FromBody] RegisterLevelAnalyticsRequest request
     )
     {
       return await HandleAsync(async () => Ok(await _analyticsService.RegisterLevelAsync(request)));
@@ -27,7 +27,7 @@ namespace ApiGateway.Infrastructure.Controllers
     [HttpPut("level/{id}")]
     public async Task<IActionResult> UpdateLevelAsync(
       string id,
-      [FromBody] UpdateLevelSecurityRequest request
+      [FromBody] UpdateLevelAnalyticsRequest request
     )
     {
       request.LevelId = id;
@@ -37,12 +37,12 @@ namespace ApiGateway.Infrastructure.Controllers
     [HttpDelete("level/{id}")]
     public async Task<IActionResult> DeleteLevelAsync(string id)
     {
-      var request = new DeleteLevelSecurityRequest { LevelId = id };
+      var request = new DeleteLevelAnalyticsRequest { LevelId = id };
       return await HandleAsync(async () => Ok(await _analyticsService.DeleteLevelAsync(request)));
     }
 
     [HttpGet("levels")]
-    public async Task<IActionResult> GetLevelsAsync([FromQuery] GetLevelsSecurityRequest request)
+    public async Task<IActionResult> GetLevelsAsync([FromQuery] GetLevelsAnalyticsRequest request)
     {
       return await HandleAsync(async () => Ok(await _analyticsService.GetLevelsAsync(request)));
     }

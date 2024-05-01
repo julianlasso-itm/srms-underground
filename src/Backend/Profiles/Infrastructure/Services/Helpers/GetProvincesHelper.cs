@@ -9,14 +9,16 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   internal class GetProvincesHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<GetProvincesResponse> GetProvincesAsync(GetProvincesRequest request)
+    public static async Task<GetProvincesProfilesResponse> GetProvincesAsync(
+      GetProvincesProfilesRequest request
+    )
     {
       var getProvincesCommand = MapToGetProvincesCommand(request);
       var data = await Application.GetProvinces(getProvincesCommand);
       return MapToGetProvincesResponse(data);
     }
 
-    private static GetProvincesCommand MapToGetProvincesCommand(GetProvincesRequest request)
+    private static GetProvincesCommand MapToGetProvincesCommand(GetProvincesProfilesRequest request)
     {
       return new GetProvincesCommand
       {
@@ -29,20 +31,20 @@ namespace Profiles.Infrastructure.Services.Helpers
       };
     }
 
-    private static GetProvincesResponse MapToGetProvincesResponse(
+    private static GetProvincesProfilesResponse MapToGetProvincesResponse(
       GetProvincesApplicationResponse<ProvinceModel> data
     )
     {
-      return new GetProvincesResponse
+      return new GetProvincesProfilesResponse
       {
         Provinces = data
-          .Provinces.Select(province => new Province
+          .Provinces.Select(province => new ProvinceProfiles
           {
             ProvinceId = province.ProvinceId.ToString(),
             CountryId = province.CountryId.ToString(),
             Name = province.Name,
             Disabled = province.Disabled,
-            Country = new Country
+            Country = new CountryProfiles
             {
               CountryId = province.Country.CountryId.ToString(),
               Name = province.Country.Name,

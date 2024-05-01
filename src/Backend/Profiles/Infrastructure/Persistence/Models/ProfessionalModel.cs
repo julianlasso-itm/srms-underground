@@ -26,6 +26,6 @@ namespace Profiles.Infrastructure.Persistence.Models
 
     [Required]
     [Column("prf_disabled")]
-    public bool Disabled { get; set; } = false;
+    public bool Disabled { get; set; }
   }
 }

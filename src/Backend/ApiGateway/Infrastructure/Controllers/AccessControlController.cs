@@ -18,7 +18,7 @@ namespace ApiGateway.Infrastructure.Controllers
 
     [HttpPost("role")]
     public async Task<IActionResult> RegisterRoleAsync(
-      [FromBody] RegisterRoleSecurityRequest request
+      [FromBody] RegisterRoleAccessControlRequest request
     )
     {
       return await HandleAsync(
@@ -29,7 +29,7 @@ namespace ApiGateway.Infrastructure.Controllers
     [HttpPut("role/{id}")]
     public async Task<IActionResult> UpdateRoleAsync(
       string id,
-      [FromBody] UpdateRoleSecurityRequest request
+      [FromBody] UpdateRoleAccessControlRequest request
     )
     {
       request.RoleId = id;
@@ -41,14 +41,14 @@ namespace ApiGateway.Infrastructure.Controllers
     [HttpDelete("role/{id}")]
     public async Task<IActionResult> DeleteRoleAsync(string id)
     {
-      var request = new DeleteRoleSecurityRequest { RoleId = id };
+      var request = new DeleteRoleAccessControlRequest { RoleId = id };
       return await HandleAsync(
         async () => Ok(await _accessControlService.DeleteRoleAsync(request))
       );
     }
 
     [HttpGet("roles")]
-    public async Task<IActionResult> GetRolesAsync([FromQuery] GetRolesSecurityRequest request)
+    public async Task<IActionResult> GetRolesAsync([FromQuery] GetRolesAccessControlRequest request)
     {
       return await HandleAsync(async () => Ok(await _accessControlService.GetRolesAsync(request)));
     }

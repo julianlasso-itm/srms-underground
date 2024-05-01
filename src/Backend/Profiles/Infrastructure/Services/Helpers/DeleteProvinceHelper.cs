@@ -8,8 +8,8 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   internal class DeleteProvinceHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<DeleteProvinceResponse> DeleteProvinceAsync(
-      DeleteProvinceRequest request
+    public static async Task<DeleteProvinceProfilesResponse> DeleteProvinceAsync(
+      DeleteProvinceProfilesRequest request
     )
     {
       var deleteProvinceCommand = MapToDeleteProvinceCommand(request);
@@ -17,16 +17,18 @@ namespace Profiles.Infrastructure.Services.Helpers
       return MapToDeleteProvinceResponse(data);
     }
 
-    private static DeleteProvinceCommand MapToDeleteProvinceCommand(DeleteProvinceRequest request)
+    private static DeleteProvinceCommand MapToDeleteProvinceCommand(
+      DeleteProvinceProfilesRequest request
+    )
     {
       return new DeleteProvinceCommand { ProvinceId = request.ProvinceId };
     }
 
-    private static DeleteProvinceResponse MapToDeleteProvinceResponse(
+    private static DeleteProvinceProfilesResponse MapToDeleteProvinceResponse(
       DeleteProvinceApplicationResponse data
     )
     {
-      return new DeleteProvinceResponse { ProvinceId = data.ProvinceId };
+      return new DeleteProvinceProfilesResponse { ProvinceId = data.ProvinceId };
     }
   }
 }

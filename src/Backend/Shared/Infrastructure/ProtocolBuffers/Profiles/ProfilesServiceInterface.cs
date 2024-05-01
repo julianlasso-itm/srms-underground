@@ -9,137 +9,146 @@ namespace Shared.Infrastructure.ProtocolBuffers.Profiles
   public interface IProfilesServices
   {
     [OperationContract]
-    Task<GetCountriesResponse> GetCountriesAsync(
-      GetCountriesRequest request,
+    Task<GetCountriesProfilesResponse> GetCountriesAsync(
+      GetCountriesProfilesRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<RegisterCountryResponse> RegisterCountryAsync(
-      RegisterCountryRequest request,
+    Task<RegisterCountryProfilesResponse> RegisterCountryAsync(
+      RegisterCountryProfilesRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<UpdateCountryResponse> UpdateCountryAsync(
-      UpdateCountryRequest request,
+    Task<UpdateCountryProfilesResponse> UpdateCountryAsync(
+      UpdateCountryProfilesRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<DeleteCountryResponse> DeleteCountryAsync(
-      DeleteCountryRequest request,
+    Task<DeleteCountryProfilesResponse> DeleteCountryAsync(
+      DeleteCountryProfilesRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<GetProvincesResponse> GetProvincesAsync(
-      GetProvincesRequest request,
+    Task<GetProvincesProfilesResponse> GetProvincesAsync(
+      GetProvincesProfilesRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<RegisterProvinceResponse> RegisterProvinceAsync(
-      RegisterProvinceRequest request,
+    Task<RegisterProvinceProfilesResponse> RegisterProvinceAsync(
+      RegisterProvinceProfilesRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<UpdateProvinceResponse> UpdateProvinceAsync(
-      UpdateProvinceRequest request,
+    Task<UpdateProvinceProfilesResponse> UpdateProvinceAsync(
+      UpdateProvinceProfilesRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<DeleteProvinceResponse> DeleteProvinceAsync(
-      DeleteProvinceRequest request,
+    Task<DeleteProvinceProfilesResponse> DeleteProvinceAsync(
+      DeleteProvinceProfilesRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<GetCitiesResponse> GetCitiesAsync(GetCitiesRequest request, CallContext context = default);
-
-    [OperationContract]
-    Task<RegisterCityResponse> RegisterCityAsync(
-      RegisterCityRequest request,
+    Task<GetCitiesProfilesResponse> GetCitiesAsync(
+      GetCitiesProfilesRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<UpdateCityResponse> UpdateCityAsync(
-      UpdateCityRequest request,
+    Task<RegisterCityProfilesResponse> RegisterCityAsync(
+      RegisterCityProfilesRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<DeleteCityResponse> DeleteCityAsync(
-      DeleteCityRequest request,
+    Task<UpdateCityProfilesResponse> UpdateCityAsync(
+      UpdateCityProfilesRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<RegisterRoleResponse> RegisterRoleAsync(
-      RegisterRoleRequest request,
+    Task<DeleteCityProfilesResponse> DeleteCityAsync(
+      DeleteCityProfilesRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<UpdateRoleResponse> UpdateRoleAsync(
-      UpdateRoleRequest request,
+    Task<RegisterRoleProfilesResponse> RegisterRoleAsync(
+      RegisterRoleProfilesRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<DeleteRoleResponse> DeleteRoleAsync(
-      DeleteRoleRequest request,
+    Task<UpdateRoleProfilesResponse> UpdateRoleAsync(
+      UpdateRoleProfilesRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<GetRolesResponse> GetRolesAsync(GetRolesRequest request, CallContext context = default);
-
-    [OperationContract]
-    Task<DeleteSkillResponse> DeleteSkillAsync(
-      DeleteSkillRequest request,
+    Task<DeleteRoleProfilesResponse> DeleteRoleAsync(
+      DeleteRoleProfilesRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<GetSkillsResponse> GetSkillAsync(GetSkillsRequest request, CallContext context = default);
-
-    [OperationContract]
-    Task<RegisterSkillResponse> RegisterSkillAsync(
-      RegisterSkillRequest request,
+    Task<GetRolesProfilesResponse> GetRolesAsync(
+      GetRolesProfilesRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<UpdateSkillResponse> UpdateSkillRoleAsync(
-      UpdateSkillRequest request,
+    Task<DeleteSkillProfilesResponse> DeleteSkillAsync(
+      DeleteSkillProfilesRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<DeleteProfessionalResponse> DeleteProfessionalAsync(
-      DeleteProfessionalRequest request,
+    Task<GetSkillsProfilesResponse> GetSkillAsync(
+      GetSkillsProfilesRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<GetProfessionalResponse> GetProfessionalAsync(
-      GetProfessionalsRequest request,
+    Task<RegisterSkillProfilesResponse> RegisterSkillAsync(
+      RegisterSkillProfilesRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<RegisterProfessionalResponse> RegisterProfessionalAsync(
-      RegisterProfessionalRequest request,
+    Task<UpdateSkillProfilesResponse> UpdateSkillRoleAsync(
+      UpdateSkillProfilesRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<UpdateProfessionalResponse> UpdateProfessionalAsync(
-      UpdateProfessionalRequest request,
+    Task<DeleteProfessionalProfilesResponse> DeleteProfessionalAsync(
+      DeleteProfessionalProfilesRequest request,
+      CallContext context = default
+    );
+
+    [OperationContract]
+    Task<GetProfessionalProfilesResponse> GetProfessionalAsync(
+      GetProfessionalsProfilesRequest request,
+      CallContext context = default
+    );
+
+    [OperationContract]
+    Task<RegisterProfessionalProfilesResponse> RegisterProfessionalAsync(
+      RegisterProfessionalProfilesRequest request,
+      CallContext context = default
+    );
+
+    [OperationContract]
+    Task<UpdateProfessionalProfilesResponse> UpdateProfessionalAsync(
+      UpdateProfessionalProfilesRequest request,
       CallContext context = default
     );
   }

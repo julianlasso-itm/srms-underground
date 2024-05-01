@@ -8,23 +8,25 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   internal class RegisterCityHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<RegisterCityResponse> RegisterCityAsync(RegisterCityRequest request)
+    public static async Task<RegisterCityProfilesResponse> RegisterCityAsync(
+      RegisterCityProfilesRequest request
+    )
     {
       var cityCommand = MapToRegisterCityCommand(request);
       var data = await Application.RegisterCity(cityCommand);
       return MapToRegisterCityResponse(data);
     }
 
-    private static RegisterCityCommand MapToRegisterCityCommand(RegisterCityRequest request)
+    private static RegisterCityCommand MapToRegisterCityCommand(RegisterCityProfilesRequest request)
     {
       return new RegisterCityCommand { Name = request.Name, ProvinceId = request.ProvinceId };
     }
 
-    private static RegisterCityResponse MapToRegisterCityResponse(
+    private static RegisterCityProfilesResponse MapToRegisterCityResponse(
       RegisterCityApplicationResponse data
     )
     {
-      return new RegisterCityResponse
+      return new RegisterCityProfilesResponse
       {
         CityId = data.CityId,
         ProvinceId = data.ProvinceId,

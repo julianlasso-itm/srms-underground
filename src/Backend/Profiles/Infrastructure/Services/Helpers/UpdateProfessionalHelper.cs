@@ -8,8 +8,8 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   public class UpdateProfessionalHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<UpdateProfessionalResponse> UpdateProfessionalAsync(
-      UpdateProfessionalRequest request
+    public static async Task<UpdateProfessionalProfilesResponse> UpdateProfessionalAsync(
+      UpdateProfessionalProfilesRequest request
     )
     {
       var newUserCommand = MapToUpdateProfessionalCommand(request);
@@ -18,7 +18,7 @@ namespace Profiles.Infrastructure.Services.Helpers
     }
 
     private static UpdateProfessionalCommand MapToUpdateProfessionalCommand(
-      UpdateProfessionalRequest request
+      UpdateProfessionalProfilesRequest request
     )
     {
       return new UpdateProfessionalCommand
@@ -30,11 +30,11 @@ namespace Profiles.Infrastructure.Services.Helpers
       };
     }
 
-    private static UpdateProfessionalResponse MapToUpdateProfessionalResponse(
+    private static UpdateProfessionalProfilesResponse MapToUpdateProfessionalResponse(
       UpdateProfessionalApplicationResponse data
     )
     {
-      return new UpdateProfessionalResponse
+      return new UpdateProfessionalProfilesResponse
       {
         ProfessionalId = data.ProfessionalId!,
         Name = data.Name,

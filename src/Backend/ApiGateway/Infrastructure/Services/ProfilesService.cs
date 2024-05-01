@@ -16,192 +16,192 @@ namespace ApiGateway.Infrastructure.Services
       CreateChannel(UrlMicroservice);
     }
 
-    public Task<DeleteCityResponse> DeleteCityAsync(
-      DeleteCityRequest request,
+    public Task<DeleteCityProfilesResponse> DeleteCityAsync(
+      DeleteCityProfilesRequest request,
       CallContext context = default
     )
     {
       return Client.DeleteCityAsync(request, context);
     }
 
-    public Task<DeleteCountryResponse> DeleteCountryAsync(
-      DeleteCountryRequest request,
+    public Task<DeleteCountryProfilesResponse> DeleteCountryAsync(
+      DeleteCountryProfilesRequest request,
       CallContext context = default
     )
     {
       return Client.DeleteCountryAsync(request, context);
     }
 
-    public Task<DeleteProvinceResponse> DeleteProvinceAsync(
-      DeleteProvinceRequest request,
+    public Task<DeleteProvinceProfilesResponse> DeleteProvinceAsync(
+      DeleteProvinceProfilesRequest request,
       CallContext context = default
     )
     {
       return Client.DeleteProvinceAsync(request, context);
     }
 
-    public Task<GetCitiesResponse> GetCitiesAsync(
-      GetCitiesRequest request,
+    public Task<GetCitiesProfilesResponse> GetCitiesAsync(
+      GetCitiesProfilesRequest request,
       CallContext context = default
     )
     {
       return Client.GetCitiesAsync(request, context);
     }
 
-    public Task<GetCountriesResponse> GetCountriesAsync(
-      GetCountriesRequest request,
+    public Task<GetCountriesProfilesResponse> GetCountriesAsync(
+      GetCountriesProfilesRequest request,
       CallContext context = default
     )
     {
       return Client.GetCountriesAsync(request, context);
     }
 
-    public Task<GetProvincesResponse> GetProvincesAsync(
-      GetProvincesRequest request,
+    public Task<GetProvincesProfilesResponse> GetProvincesAsync(
+      GetProvincesProfilesRequest request,
       CallContext context = default
     )
     {
       return Client.GetProvincesAsync(request, context);
     }
 
-    public Task<RegisterCityResponse> RegisterCityAsync(
-      RegisterCityRequest request,
+    public Task<RegisterCityProfilesResponse> RegisterCityAsync(
+      RegisterCityProfilesRequest request,
       CallContext context = default
     )
     {
       return Client.RegisterCityAsync(request, context);
     }
 
-    public Task<RegisterCountryResponse> RegisterCountryAsync(
-      RegisterCountryRequest request,
+    public Task<RegisterCountryProfilesResponse> RegisterCountryAsync(
+      RegisterCountryProfilesRequest request,
       CallContext context = default
     )
     {
       return Client.RegisterCountryAsync(request, context);
     }
 
-    public Task<RegisterProvinceResponse> RegisterProvinceAsync(
-      RegisterProvinceRequest request,
+    public Task<RegisterProvinceProfilesResponse> RegisterProvinceAsync(
+      RegisterProvinceProfilesRequest request,
       CallContext context = default
     )
     {
       return Client.RegisterProvinceAsync(request, context);
     }
 
-    public Task<UpdateCityResponse> UpdateCityAsync(
-      UpdateCityRequest request,
+    public Task<UpdateCityProfilesResponse> UpdateCityAsync(
+      UpdateCityProfilesRequest request,
       CallContext context = default
     )
     {
       return Client.UpdateCityAsync(request, context);
     }
 
-    public Task<UpdateCountryResponse> UpdateCountryAsync(
-      UpdateCountryRequest request,
+    public Task<UpdateCountryProfilesResponse> UpdateCountryAsync(
+      UpdateCountryProfilesRequest request,
       CallContext context = default
     )
     {
       return Client.UpdateCountryAsync(request, context);
     }
 
-    public Task<UpdateProvinceResponse> UpdateProvinceAsync(
-      UpdateProvinceRequest request,
+    public Task<UpdateProvinceProfilesResponse> UpdateProvinceAsync(
+      UpdateProvinceProfilesRequest request,
       CallContext context = default
     )
     {
       return Client.UpdateProvinceAsync(request, context);
     }
 
-    public Task<RegisterRoleResponse> RegisterRoleAsync(
-      RegisterRoleRequest request,
+    public Task<RegisterRoleProfilesResponse> RegisterRoleAsync(
+      RegisterRoleProfilesRequest request,
       CallContext context = default
     )
     {
       return Client.RegisterRoleAsync(request);
     }
 
-    public Task<UpdateRoleResponse> UpdateRoleAsync(
-      UpdateRoleRequest request,
+    public Task<UpdateRoleProfilesResponse> UpdateRoleAsync(
+      UpdateRoleProfilesRequest request,
       CallContext context = default
     )
     {
       return Client.UpdateRoleAsync(request);
     }
 
-    public Task<DeleteRoleResponse> DeleteRoleAsync(
-      DeleteRoleRequest request,
+    public Task<DeleteRoleProfilesResponse> DeleteRoleAsync(
+      DeleteRoleProfilesRequest request,
       CallContext context = default
     )
     {
       return Client.DeleteRoleAsync(request);
     }
 
-    public Task<GetRolesResponse> GetRolesAsync(
-      GetRolesRequest request,
+    public Task<GetRolesProfilesResponse> GetRolesAsync(
+      GetRolesProfilesRequest request,
       CallContext context = default
     )
     {
       return Client.GetRolesAsync(request);
     }
 
-    public Task<RegisterSkillResponse> RegisterSkillAsync(
-      RegisterSkillRequest request,
+    public Task<RegisterSkillProfilesResponse> RegisterSkillAsync(
+      RegisterSkillProfilesRequest request,
       CallContext context = default
     )
     {
       return Client.RegisterSkillAsync(request);
     }
 
-    public Task<DeleteSkillResponse> DeleteSkillAsync(
-      DeleteSkillRequest request,
+    public Task<DeleteSkillProfilesResponse> DeleteSkillAsync(
+      DeleteSkillProfilesRequest request,
       CallContext context = default
     )
     {
       return Client.DeleteSkillAsync(request);
     }
 
-    public Task<GetSkillsResponse> GetSkillAsync(
-      GetSkillsRequest request,
+    public Task<GetSkillsProfilesResponse> GetSkillAsync(
+      GetSkillsProfilesRequest request,
       CallContext context = default
     )
     {
       return Client.GetSkillAsync(request);
     }
 
-    public Task<UpdateSkillResponse> UpdateSkillRoleAsync(
-      UpdateSkillRequest request,
+    public Task<UpdateSkillProfilesResponse> UpdateSkillRoleAsync(
+      UpdateSkillProfilesRequest request,
       CallContext context = default
     )
     {
       return Client.UpdateSkillRoleAsync(request);
     }
 
-    public Task<DeleteProfessionalResponse> DeleteProfessionalAsync(
-      DeleteProfessionalRequest request,
+    public Task<DeleteProfessionalProfilesResponse> DeleteProfessionalAsync(
+      DeleteProfessionalProfilesRequest request,
       CallContext context = default
     )
     {
       return Client.DeleteProfessionalAsync(request);
     }
 
-    public Task<GetProfessionalResponse> GetProfessionalAsync(
-      GetProfessionalsRequest request,
+    public Task<GetProfessionalProfilesResponse> GetProfessionalAsync(
+      GetProfessionalsProfilesRequest request,
       CallContext context = default
     )
     {
       return Client.GetProfessionalAsync(request);
     }
 
-    public Task<RegisterProfessionalResponse> RegisterProfessionalAsync(
-      RegisterProfessionalRequest request,
+    public Task<RegisterProfessionalProfilesResponse> RegisterProfessionalAsync(
+      RegisterProfessionalProfilesRequest request,
       CallContext context = default
     )
     {
       return Client.RegisterProfessionalAsync(request);
     }
 
-    public Task<UpdateProfessionalResponse> UpdateProfessionalAsync(
-      UpdateProfessionalRequest request,
+    public Task<UpdateProfessionalProfilesResponse> UpdateProfessionalAsync(
+      UpdateProfessionalProfilesRequest request,
       CallContext context = default
     )
     {

@@ -9,14 +9,16 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   internal class GetCountriesHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<GetCountriesResponse> GetCountriesAsync(GetCountriesRequest request)
+    public static async Task<GetCountriesProfilesResponse> GetCountriesAsync(
+      GetCountriesProfilesRequest request
+    )
     {
       var getCountriesCommand = MapToGetCountriesCommand(request);
       var data = await Application.GetCountries(getCountriesCommand);
       return MapToGetCountriesResponse(data);
     }
 
-    private static GetCountriesCommand MapToGetCountriesCommand(GetCountriesRequest request)
+    private static GetCountriesCommand MapToGetCountriesCommand(GetCountriesProfilesRequest request)
     {
       return new GetCountriesCommand
       {
@@ -29,14 +31,14 @@ namespace Profiles.Infrastructure.Services.Helpers
       };
     }
 
-    private static GetCountriesResponse MapToGetCountriesResponse(
+    private static GetCountriesProfilesResponse MapToGetCountriesResponse(
       GetCountriesApplicationResponse<CountryModel> data
     )
     {
-      return new GetCountriesResponse
+      return new GetCountriesProfilesResponse
       {
         Countries = data
-          .Countries.Select(country => new Country
+          .Countries.Select(country => new CountryProfiles
           {
             CountryId = country.CountryId.ToString(),
             Name = country.Name,

@@ -9,14 +9,16 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   public class GetSkillsHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<GetSkillsResponse> GetSkillsAsync(GetSkillsRequest request)
+    public static async Task<GetSkillsProfilesResponse> GetSkillsAsync(
+      GetSkillsProfilesRequest request
+    )
     {
       var newUserCommand = MapToGetSkillsCommand(request);
       var data = await Application.GetSkills(newUserCommand);
       return MapToGetSkillsResponse(data);
     }
 
-    private static GetSkillsCommand MapToGetSkillsCommand(GetSkillsRequest request)
+    private static GetSkillsCommand MapToGetSkillsCommand(GetSkillsProfilesRequest request)
     {
       return new GetSkillsCommand
       {
@@ -28,14 +30,14 @@ namespace Profiles.Infrastructure.Services.Helpers
       };
     }
 
-    private static GetSkillsResponse MapToGetSkillsResponse(
+    private static GetSkillsProfilesResponse MapToGetSkillsResponse(
       GetSkillsApplicationResponse<SkillModel> data
     )
     {
-      return new GetSkillsResponse
+      return new GetSkillsProfilesResponse
       {
         Skills = data
-          .Skills.Select(skill => new SkillContract
+          .Skills.Select(skill => new SkillProfiles
           {
             SkillId = skill.SkillId.ToString(),
             Name = skill.Name,
