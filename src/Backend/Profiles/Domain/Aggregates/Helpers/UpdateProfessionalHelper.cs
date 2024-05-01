@@ -35,9 +35,9 @@ namespace Profiles.Domain.Aggregates.Helpers
         response.Email = professional.Email.Value;
       }
 
-      if (data.Disabled != null)
+      if (data.Disable != null)
       {
-        if (data.Disabled == true)
+        if (data.Disable == true)
         {
           professional.Disable();
         }

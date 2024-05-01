@@ -49,7 +49,7 @@ namespace Profiles.Application.UseCases
         ProfessionalId = request.ProfessionalId,
         Name = request.Name,
         Email = request.Email,
-        Disabled = request.Disabled,
+        Disable = request.Disable,
       };
     }
 

@@ -27,9 +27,9 @@ namespace Profiles.Domain.Aggregates.Helpers
         response.Name = skill.Name.Value;
       }
 
-      if (data.Disabled != null)
+      if (data.Disable != null)
       {
-        if (data.Disabled == true)
+        if (data.Disable == true)
         {
           skill.Disable();
         }
