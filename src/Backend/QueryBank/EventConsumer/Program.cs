@@ -21,7 +21,7 @@ builder.Services.AddHostedService<QueryBankSubscriber>();
 // == Configure connection to the database ==
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-  options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+  options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionDataBase"));
 });
 // ==========================================
 
@@ -31,7 +31,6 @@ builder.Services.AddSingleton<ISkillRepository<SkillModel>, SkillRepository>(ser
   var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
   return new SkillRepository(dbContext);
 });
-// builder.Services.AddScoped<ISkillRepository<SkillModel>, SkillRepository>();
 // ============================
 
 // == Configure dependency injection for services ==

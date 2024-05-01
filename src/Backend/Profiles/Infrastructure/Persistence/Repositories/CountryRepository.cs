@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using Profiles.Application.Repositories;
 using Profiles.Application.Responses;
 using Profiles.Infrastructure.Persistence.Models;
@@ -8,7 +7,7 @@ namespace Profiles.Infrastructure.Persistence.Repositories
 {
   public class CountryRepository : BaseRepository<CountryModel>, ICountryRepository<CountryModel>
   {
-    public CountryRepository(DbContext context)
+    public CountryRepository(ApplicationDbContext context)
       : base(context) { }
 
     public Task<CountryModel> AddAsync(RegisterCountryApplicationResponse entity)

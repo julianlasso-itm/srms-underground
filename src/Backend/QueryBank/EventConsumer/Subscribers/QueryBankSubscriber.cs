@@ -27,7 +27,6 @@ namespace QueryBank.EventConsumer.Subscribers
         new RedisChannel("Profiles.SkillRegistered", RedisChannel.PatternMode.Literal),
         async (channel, message) =>
         {
-          Console.WriteLine($"Received message: {message}");
           var data = JsonSerializer.Deserialize<RegisterSkillQueryBankRequest>(
             message.ToString() ?? string.Empty
           );

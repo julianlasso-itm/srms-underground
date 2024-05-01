@@ -13,55 +13,17 @@ var builder = WebApplication.CreateBuilder(args);
 // == Configure connection to the database ==
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-  options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+  options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionDataBase"));
 });
 // ==========================================
 
 // == Configure repositories ==
-builder.Services.AddScoped<ICountryRepository<CountryModel>, CountryRepository>(serviceProvider =>
-{
-  var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
-  return new CountryRepository(dbContext);
-});
-
-builder.Services.AddScoped<IProvinceRepository<ProvinceModel>, ProvinceRepository>(
-  serviceProvider =>
-  {
-    var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
-    return new ProvinceRepository(dbContext);
-  }
-);
-
-builder.Services.AddScoped<ICityRepository<CityModel>, CityRepository>(serviceProvider =>
-{
-  var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
-  return new CityRepository(dbContext);
-});
-
-builder.Services.AddScoped<IRoleRepository<RoleModel>, RoleRepository>(serviceProvider =>
-{
-  var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
-  return new RoleRepository(dbContext);
-});
-
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-{
-  options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
-
-builder.Services.AddScoped<ISkillRepository<SkillModel>, SkillRepository>(serviceProvider =>
-{
-  var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
-  return new SkillRepository(dbContext);
-});
-
-builder.Services.AddScoped<IProfessionalRepository<ProfessionalModel>, ProfessionalRepository>(
-  serviceProvider =>
-  {
-    var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
-    return new ProfessionalRepository(dbContext);
-  }
-);
+builder.Services.AddScoped<ICountryRepository<CountryModel>, CountryRepository>();
+builder.Services.AddScoped<IProvinceRepository<ProvinceModel>, ProvinceRepository>();
+builder.Services.AddScoped<ICityRepository<CityModel>, CityRepository>();
+builder.Services.AddScoped<IRoleRepository<RoleModel>, RoleRepository>();
+builder.Services.AddScoped<ISkillRepository<SkillModel>, SkillRepository>();
+builder.Services.AddScoped<IProfessionalRepository<ProfessionalModel>, ProfessionalRepository>();
 // ============================
 
 // == Configure dependency injection for services ==
@@ -95,12 +57,12 @@ using (var scope = app.Services.CreateScope())
 app.MapGrpcService<ProfilesService>();
 // =============================
 
-// app.MapGet(
-//   "/",
-//   () =>
-//     "Communication with gRPC endpoints must be made through a gRPC client. "
-//     + "To learn how to create a client, visit: "
-//     + "https://go.microsoft.com/fwlink/?linkid=2086909"
-// );
+app.MapGet(
+  "/",
+  () =>
+    "Communication with gRPC endpoints must be made through a gRPC client. "
+    + "To learn how to create a client, visit: "
+    + "https://go.microsoft.com/fwlink/?linkid=2086909"
+);
 
 app.Run();

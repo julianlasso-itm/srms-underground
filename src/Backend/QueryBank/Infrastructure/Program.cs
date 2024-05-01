@@ -10,40 +10,20 @@ using Shared.Infrastructure.Interceptors;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// == Configure connection to Redis for subscribing to messages ==
-// builder.Services.AddSingleton<IConnectionMultiplexer>(
-//   ConnectionMultiplexer.Connect("localhost:6379")
-// );
-// builder.Services.AddHostedService(serviceProvider =>
-// {
-//   var connectionMultiplexer = serviceProvider.GetRequiredService<IConnectionMultiplexer>();
-//   return new QueryBankSubscriber(
-//     connectionMultiplexer,
-//     serviceProvider.GetRequiredService<QueryBankServiceForSubscribers>()
-//   );
-// });
-// builder.Services.AddHostedService<QueryBankSubscriber>();
-// ===============================================================
-
 // == Configure connection to the database ==
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-  options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+  options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionDataBase"));
 });
 // ==========================================
 
 // == Configure repositories ==
-builder.Services.AddSingleton<ISkillRepository<SkillModel>, SkillRepository>(serviceProvider =>
-{
-  var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
-  return new SkillRepository(dbContext);
-});
-// builder.Services.AddScoped<ISkillRepository<SkillModel>, SkillRepository>();
+builder.Services.AddScoped<ISkillRepository<SkillModel>, SkillRepository>();
 // ============================
 
 // == Configure dependency injection for services ==
-builder.Services.AddSingleton<SharedEventHandler>();
-builder.Services.AddSingleton<ApplicationService>();
+builder.Services.AddScoped<SharedEventHandler>();
+builder.Services.AddScoped<ApplicationService>();
 // =================================================
 
 // == Configure interceptors for gRPC services ==

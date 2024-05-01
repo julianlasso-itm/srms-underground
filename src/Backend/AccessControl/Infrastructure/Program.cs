@@ -13,16 +13,12 @@ var builder = WebApplication.CreateBuilder(args);
 // == Configure connection to the database ==
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-  options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+  options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionDataBase"));
 });
 // ==========================================
 
 // == Configure repositories ==
-builder.Services.AddScoped<IRoleRepository<RoleModel>, RoleRepository>(serviceProvider =>
-{
-  var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
-  return new RoleRepository(dbContext);
-});
+builder.Services.AddScoped<IRoleRepository<RoleModel>, RoleRepository>();
 // ============================
 
 // == Configure dependency injection for services ==

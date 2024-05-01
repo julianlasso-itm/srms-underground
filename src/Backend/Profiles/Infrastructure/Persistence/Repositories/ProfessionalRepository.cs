@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Profiles.Application.Repositories;
+﻿using Profiles.Application.Repositories;
 using Profiles.Application.Responses;
 using Profiles.Infrastructure.Persistence.Models;
 using Shared.Infrastructure.Persistence.Repositories;
@@ -10,7 +9,7 @@ namespace Profiles.Infrastructure.Persistence.Repositories
     : BaseRepository<ProfessionalModel>,
       IProfessionalRepository<ProfessionalModel>
   {
-    public ProfessionalRepository(DbContext context)
+    public ProfessionalRepository(ApplicationDbContext context)
       : base(context) { }
 
     public Task<ProfessionalModel> AddAsync(RegisterProfessionalApplicationResponse entity)

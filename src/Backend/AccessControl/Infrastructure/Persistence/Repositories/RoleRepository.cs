@@ -1,14 +1,13 @@
 using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
 using AccessControl.Infrastructure.Persistence.Models;
-using Microsoft.EntityFrameworkCore;
 using Shared.Infrastructure.Persistence.Repositories;
 
 namespace AccessControl.Infrastructure.Persistence.Repositories
 {
   public class RoleRepository : BaseRepository<RoleModel>, IRoleRepository<RoleModel>
   {
-    public RoleRepository(DbContext context)
+    public RoleRepository(ApplicationDbContext context)
       : base(context) { }
 
     public Task<RoleModel> AddAsync(RegisterRoleApplicationResponse entity)

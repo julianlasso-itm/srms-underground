@@ -1,14 +1,13 @@
 using Analytics.Application.Repositories;
 using Analytics.Application.Responses;
 using Analytics.Infrastructure.Persistence.Models;
-using Microsoft.EntityFrameworkCore;
 using Shared.Infrastructure.Persistence.Repositories;
 
 namespace Analytics.Infrastructure.Persistence.Repositories
 {
   public class LevelRepository : BaseRepository<LevelModel>, ILevelRepository<LevelModel>
   {
-    public LevelRepository(DbContext context)
+    public LevelRepository(ApplicationDbContext context)
       : base(context) { }
 
     public Task<LevelModel> AddAsync(RegisterLevelApplicationResponse entity)

@@ -1,5 +1,4 @@
 using Analytics.Application.Repositories;
-using Analytics.Infrastructure.Messaging.Subscribers;
 using Analytics.Infrastructure.Persistence;
 using Analytics.Infrastructure.Persistence.Models;
 using Analytics.Infrastructure.Persistence.Repositories;
@@ -8,30 +7,18 @@ using Microsoft.EntityFrameworkCore;
 using ProtoBuf.Grpc.Server;
 using Shared.Infrastructure.Events;
 using Shared.Infrastructure.Interceptors;
-using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// == Configure connection to Redis for subscribing to messages ==
-builder.Services.AddSingleton<IConnectionMultiplexer>(
-  ConnectionMultiplexer.Connect("localhost:6379")
-);
-builder.Services.AddHostedService<AnalyticsSubscriber>();
-// ===============================================================
 
 // == Configure connection to the database ==
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-  options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+  options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionDataBase"));
 });
 // ==========================================
 
 // == Configure repositories ==
-builder.Services.AddScoped<ILevelRepository<LevelModel>, LevelRepository>(serviceProvider =>
-{
-  var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
-  return new LevelRepository(dbContext);
-});
+builder.Services.AddScoped<ILevelRepository<LevelModel>, LevelRepository>();
 // ============================
 
 // == Configure dependency injection for services ==

@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using Profiles.Application.Repositories;
 using Profiles.Application.Responses;
 using Profiles.Infrastructure.Persistence.Models;
@@ -10,7 +9,7 @@ namespace Profiles.Infrastructure.Persistence.Repositories
     : BaseRepository<ProvinceModel>,
       IProvinceRepository<ProvinceModel>
   {
-    public ProvinceRepository(DbContext context)
+    public ProvinceRepository(ApplicationDbContext context)
       : base(context) { }
 
     public new async Task<IEnumerable<ProvinceModel>> GetWithPaginationAsync(

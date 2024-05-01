@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Profiles.Application.Repositories;
+﻿using Profiles.Application.Repositories;
 using Profiles.Application.Responses;
 using Profiles.Infrastructure.Persistence.Models;
 using Shared.Infrastructure.Persistence.Repositories;
@@ -8,7 +7,7 @@ namespace Profiles.Infrastructure.Persistence.Repositories
 {
   public class RoleRepository : BaseRepository<RoleModel>, IRoleRepository<RoleModel>
   {
-    public RoleRepository(DbContext context)
+    public RoleRepository(ApplicationDbContext context)
       : base(context) { }
 
     public Task<RoleModel> AddAsync(RegisterRoleApplicationResponse entity)
