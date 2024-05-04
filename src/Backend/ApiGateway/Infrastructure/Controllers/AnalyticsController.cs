@@ -1,10 +1,12 @@
 using ApiGateway.Infrastructure.Controllers.Base;
 using ApiGateway.Infrastructure.Services;
+using Infrastructure.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Infrastructure.ProtocolBuffers.Analytics.Requests;
 
 namespace ApiGateway.Infrastructure.Controllers
 {
+  [Permissions(Data = "admin")]
   [ApiController]
   [Route("api/access-control")]
   public class AnalyticsController : BaseController

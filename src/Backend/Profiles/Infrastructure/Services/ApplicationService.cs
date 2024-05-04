@@ -14,7 +14,7 @@ namespace Profiles.Infrastructure.Services
       CityModel,
       RoleModel,
       SkillModel,
-      ProfessionalModel
+      ProfessionalModel,
     > _application;
 
     public ApplicationService(

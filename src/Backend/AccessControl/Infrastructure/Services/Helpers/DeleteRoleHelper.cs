@@ -1,5 +1,3 @@
-using AccessControl.Application.Commands;
-using AccessControl.Application.Responses;
 using AccessControl.Infrastructure.Services.Helpers.Base;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses;
@@ -12,21 +10,11 @@ namespace AccessControl.Infrastructure.Services.Helpers
       DeleteRoleAccessControlRequest request
     )
     {
-      var deleteRoleCommand = MapToDeleteRoleCommand(request);
-      var data = await Application.DeleteRole(deleteRoleCommand);
-      return MapToDeleteRoleResponse(data);
-    }
-
-    private static DeleteRoleCommand MapToDeleteRoleCommand(DeleteRoleAccessControlRequest request)
-    {
-      return new DeleteRoleCommand { RoleId = request.RoleId };
-    }
-
-    private static DeleteRoleAccessControlResponse MapToDeleteRoleResponse(
-      DeleteRoleApplicationResponse data
-    )
-    {
-      return new DeleteRoleAccessControlResponse { RoleId = data.RoleId };
+      var command = AntiCorruptionLayer
+        .InfrastructureToApplication()
+        .MapToDeleteRoleCommand(request);
+      var data = await Application.DeleteRole(command);
+      return AntiCorruptionLayer.ApplicationToInfrastructure().MapToDeleteRoleResponse(data);
     }
   }
 }

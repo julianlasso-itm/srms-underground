@@ -12,7 +12,8 @@ namespace Profiles.Application
     TCityEntity,
     TRoleEntity,
     TSkillEntity,
-    TProfessionalEntity
+    TProfessionalEntity,
+    TLevelEntity
   >
     where TCountryEntity : class
     where TProvinceEntity : class
@@ -20,6 +21,7 @@ namespace Profiles.Application
     where TRoleEntity : class
     where TSkillEntity : class
     where TProfessionalEntity : class
+    where TLevelEntity : class
   {
     public required IPersonnelAggregateRoot AggregateRoot { get; init; }
     private readonly ICountryRepository<TCountryEntity> _countryRepository;
@@ -28,6 +30,7 @@ namespace Profiles.Application
     private readonly IRoleRepository<TRoleEntity> _roleRepository;
     private readonly ISkillRepository<TSkillEntity> _skillRepository;
     private readonly IProfessionalRepository<TProfessionalEntity> _professionalRepository;
+    private readonly ILevelRepository<TLevelEntity> _levelRepository;
 
     public Application(
       ICountryRepository<TCountryEntity> countryRepository,
@@ -35,7 +38,8 @@ namespace Profiles.Application
       ICityRepository<TCityEntity> cityRepository,
       IRoleRepository<TRoleEntity> roleRepository,
       ISkillRepository<TSkillEntity> skillRepository,
-      IProfessionalRepository<TProfessionalEntity> professionalRepository
+      IProfessionalRepository<TProfessionalEntity> professionalRepository,
+      ILevelRepository<TLevelEntity> levelRepository
     )
     {
       _countryRepository = countryRepository;
@@ -44,6 +48,7 @@ namespace Profiles.Application
       _roleRepository = roleRepository;
       _skillRepository = skillRepository;
       _professionalRepository = professionalRepository;
+      _levelRepository = levelRepository;
     }
 
     public Task<GetCountriesApplicationResponse<TCountryEntity>> GetCountries(
@@ -216,6 +221,24 @@ namespace Profiles.Application
         AggregateRoot,
         _professionalRepository
       );
+      return useCase.Handle(request);
+    }
+
+    public Task<RegisterLevelApplicationResponse> RegisterLevel(RegisterLevelCommand request)
+    {
+      var useCase = new RegisterLevelUseCase<TLevelEntity>(AggregateRoot, _levelRepository);
+      return useCase.Handle(request);
+    }
+
+    public Task<UpdateLevelApplicationResponse> UpdateLevel(UpdateLevelCommand request)
+    {
+      var useCase = new UpdateLevelUseCase<TLevelEntity>(AggregateRoot, _levelRepository);
+      return useCase.Handle(request);
+    }
+
+    public Task<DeleteLevelApplicationResponse> DeleteLevel(DeleteLevelCommand request)
+    {
+      var useCase = new DeleteLevelUseCase<TLevelEntity>(AggregateRoot, _levelRepository);
       return useCase.Handle(request);
     }
   }

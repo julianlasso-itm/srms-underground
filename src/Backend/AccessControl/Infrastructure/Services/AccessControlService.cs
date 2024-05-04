@@ -1,3 +1,4 @@
+using AccessControl.AntiCorruption.Interfaces;
 using AccessControl.Infrastructure.Services.Helpers;
 using ProtoBuf.Grpc;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl;
@@ -9,10 +10,15 @@ namespace AccessControl.Infrastructure.Services
   public class AccessControlService : IAccessControlServices
   {
     private readonly ApplicationService _applicationService;
+    private readonly IAntiCorruptionLayer _antiCorruptionLayerService;
 
-    public AccessControlService(ApplicationService applicationService)
+    public AccessControlService(
+      ApplicationService applicationService,
+      IAntiCorruptionLayer antiCorruptionLayer
+    )
     {
       _applicationService = applicationService;
+      _antiCorruptionLayerService = antiCorruptionLayer;
     }
 
     public async Task<RegisterRoleAccessControlResponse> RegisterRoleAsync(
@@ -21,6 +27,7 @@ namespace AccessControl.Infrastructure.Services
     )
     {
       RegisterRoleHelper.SetApplication(_applicationService.GetApplication());
+      RegisterRoleHelper.SetAntiCorruptionLayer(_antiCorruptionLayerService);
       return await RegisterRoleHelper.RegisterRoleAsync(request);
     }
 
@@ -30,6 +37,7 @@ namespace AccessControl.Infrastructure.Services
     )
     {
       UpdateRoleHelper.SetApplication(_applicationService.GetApplication());
+      UpdateRoleHelper.SetAntiCorruptionLayer(_antiCorruptionLayerService);
       return await UpdateRoleHelper.UpdateRoleAsync(request);
     }
 
@@ -39,6 +47,7 @@ namespace AccessControl.Infrastructure.Services
     )
     {
       DeleteRoleHelper.SetApplication(_applicationService.GetApplication());
+      DeleteRoleHelper.SetAntiCorruptionLayer(_antiCorruptionLayerService);
       return await DeleteRoleHelper.DeleteRoleAsync(request);
     }
 
@@ -48,6 +57,7 @@ namespace AccessControl.Infrastructure.Services
     )
     {
       GetRolesHelper.SetApplication(_applicationService.GetApplication());
+      GetRolesHelper.SetAntiCorruptionLayer(_antiCorruptionLayerService);
       return await GetRolesHelper.GetRolesAsync(request);
     }
   }

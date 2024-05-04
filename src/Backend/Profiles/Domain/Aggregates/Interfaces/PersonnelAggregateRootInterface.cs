@@ -21,5 +21,8 @@ namespace Profiles.Domain.Aggregates.Interfaces
     public UpdateProfessionalDomainResponse UpdateProfessional(
       UpdateProfessionalDomainRequest dataUpdateProfessional
     );
+    public RegisterLevelDomainResponse RegisterLevel(RegisterLevelDomainRequest request);
+    public UpdateLevelDomainResponse UpdateLevel(UpdateLevelDomainRequest request);
+    public DeleteLevelDomainResponse DeleteLevel(DeleteLevelDomainRequest request);
   }
 }

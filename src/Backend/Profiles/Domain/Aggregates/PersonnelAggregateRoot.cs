@@ -112,5 +112,20 @@ namespace Profiles.Domain.Aggregates
     {
       return UpdateProfessionalHelper.Execute(dataUpdateProfessional);
     }
+
+    public RegisterLevelDomainResponse RegisterLevel(RegisterLevelDomainRequest request)
+    {
+      return RegisterLevelHelper.Execute(request);
+    }
+
+    public UpdateLevelDomainResponse UpdateLevel(UpdateLevelDomainRequest request)
+    {
+      return UpdateLevelHelper.Execute(request);
+    }
+
+    public DeleteLevelDomainResponse DeleteLevel(DeleteLevelDomainRequest request)
+    {
+      return DeleteLevelHelper.Execute(request);
+    }
   }
 }

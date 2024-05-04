@@ -1,3 +1,4 @@
+using AccessControl.AntiCorruption;
 using AccessControl.Application.Repositories;
 using AccessControl.Infrastructure.Persistence;
 using AccessControl.Infrastructure.Persistence.Models;
@@ -7,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ProtoBuf.Grpc.Server;
 using Shared.Infrastructure.Events;
 using Shared.Infrastructure.Interceptors;
+using Shared.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +26,7 @@ builder.Services.AddScoped<IRoleRepository<RoleModel>, RoleRepository>();
 // == Configure dependency injection for services ==
 builder.Services.AddScoped<SharedEventHandler>();
 builder.Services.AddScoped<ApplicationService>();
+builder.Services.AddScoped<AntiCorruptionLayerService<AntiCorruptionLayer>>();
 // =================================================
 
 // == Configure interceptors for gRPC services ==

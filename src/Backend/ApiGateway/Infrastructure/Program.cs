@@ -3,6 +3,18 @@ using ApiGateway.Infrastructure.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddAuthorization(
+  options =>
+  {
+    options.AddPolicy(
+      "Admin",
+      policy =>
+      {
+        policy.RequireRole("admin");
+      }
+    );
+  }
+);
 builder.Services.AddControllers();
 
 // Configure services conditionally for development environment

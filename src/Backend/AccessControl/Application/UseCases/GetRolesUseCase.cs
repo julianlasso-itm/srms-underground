@@ -1,3 +1,4 @@
+using AccessControl.AntiCorruption.Interfaces;
 using AccessControl.Application.Commands;
 using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
@@ -11,14 +12,17 @@ namespace AccessControl.Application.UseCases
     where TEntity : class
   {
     private readonly IRoleRepository<TEntity> _roleRepository;
+    private readonly IAntiCorruptionLayer _antiCorruptionLayer;
 
     public GetRolesUseCase(
       ISecurityAggregateRoot aggregateRoot,
-      IRoleRepository<TEntity> roleRepository
+      IRoleRepository<TEntity> roleRepository,
+      IAntiCorruptionLayer antiCorruptionLayer
     )
       : base(aggregateRoot)
     {
       _roleRepository = roleRepository;
+      _antiCorruptionLayer = antiCorruptionLayer;
     }
 
     public override async Task<GetRolesApplicationResponse<TEntity>> Handle(GetRolesCommand request)

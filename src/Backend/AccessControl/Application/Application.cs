@@ -1,3 +1,4 @@
+using AccessControl.AntiCorruption.Interfaces;
 using AccessControl.Application.Commands;
 using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
@@ -36,9 +37,16 @@ namespace AccessControl.Application
       return useCase.Handle(request);
     }
 
-    public Task<GetRolesApplicationResponse<TRoleEntity>> GetRoles(GetRolesCommand request)
+    public Task<GetRolesApplicationResponse<TRoleEntity>> GetRoles(
+      GetRolesCommand request,
+      IAntiCorruptionLayer antiCorruptionLayer
+    )
     {
-      var useCase = new GetRolesUseCase<TRoleEntity>(AggregateRoot, _roleRepository);
+      var useCase = new GetRolesUseCase<TRoleEntity>(
+        AggregateRoot,
+        _roleRepository,
+        antiCorruptionLayer
+      );
       return useCase.Handle(request);
     }
   }
