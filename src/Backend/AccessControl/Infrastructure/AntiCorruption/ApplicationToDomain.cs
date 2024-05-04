@@ -41,5 +41,16 @@ namespace AccessControl.Infrastructure.AntiCorruption
     {
       return new DeleteRoleDomainRequest { RoleId = request.RoleId };
     }
+
+    public RegisterCredentialDomainRequest ToRegisterCredentialDomainRequest(
+      RegisterUserCommand request
+    )
+    {
+      return new RegisterCredentialDomainRequest
+      {
+        Email = request.Email,
+        Password = request.Password,
+      };
+    }
   }
 }

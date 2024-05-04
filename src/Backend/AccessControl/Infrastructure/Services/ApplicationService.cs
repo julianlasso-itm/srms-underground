@@ -10,17 +10,19 @@ namespace AccessControl.Infrastructure.Services
 {
   public class ApplicationService
   {
-    private readonly Application<RoleModel> _application;
+    private readonly Application<UserModel, RoleModel> _application;
 
     public ApplicationService(
       SharedEventHandler eventHandler,
+      IUserRepository<UserModel> userRepository,
       IRoleRepository<RoleModel> roleRepository,
-      AntiCorruptionLayerService<AntiCorruptionLayer> antiCorruptionLayer
+      AntiCorruptionLayerService<AntiCorruptionLayer> antiCorruptionLayerService
     )
     {
-      _application = new Application<RoleModel>(
-        antiCorruptionLayer.GetAntiCorruptionLayer().GetApplicationToDomain(),
-        antiCorruptionLayer.GetAntiCorruptionLayer().GetDomainToApplication(),
+      _application = new Application<UserModel, RoleModel>(
+        antiCorruptionLayerService.GetAntiCorruptionLayer().GetApplicationToDomain(),
+        antiCorruptionLayerService.GetAntiCorruptionLayer().GetDomainToApplication(),
+        userRepository,
         roleRepository
       )
       {
@@ -28,7 +30,7 @@ namespace AccessControl.Infrastructure.Services
       };
     }
 
-    public Application<RoleModel> GetApplication()
+    public Application<UserModel, RoleModel> GetApplication()
     {
       return _application;
     }

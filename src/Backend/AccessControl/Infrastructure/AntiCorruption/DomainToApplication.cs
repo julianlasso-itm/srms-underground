@@ -58,5 +58,18 @@ namespace AccessControl.Infrastructure.AntiCorruption
     {
       return new DeleteRoleApplicationResponse { RoleId = role.RoleId };
     }
+
+    public RegisterUserApplicationResponse ToRegisterUserApplicationResponse(
+      RegisterCredentialDomainResponse user
+    )
+    {
+      return new RegisterUserApplicationResponse
+      {
+        UserId = user.CredentialId,
+        Email = user.Email,
+        Password = user.Password,
+        Disabled = user.Disabled,
+      };
+    }
   }
 }

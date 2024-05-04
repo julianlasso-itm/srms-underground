@@ -5,7 +5,7 @@ using Shared.Infrastructure.Persistence.Models;
 
 namespace AccessControl.Infrastructure.Persistence.Models
 {
-  [Index(nameof(Name), IsUnique = true)]
+  [Index(nameof(Name), nameof(DeletedAt), IsUnique = true)]
   [Table("role")]
   public class RoleModel : AuditableEntity
   {
@@ -26,5 +26,8 @@ namespace AccessControl.Infrastructure.Persistence.Models
     [Required]
     [Column("rol_disabled")]
     public bool Disabled { get; set; }
+
+    [InverseProperty("Role")]
+    public ICollection<UserPerRoleModel> UserPerRoles { get; set; } = new List<UserPerRoleModel>();
   }
 }
