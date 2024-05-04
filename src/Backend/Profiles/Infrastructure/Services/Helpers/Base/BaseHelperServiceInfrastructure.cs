@@ -11,7 +11,8 @@ namespace Profiles.Infrastructure.Services.Helpers.Base
       CityModel,
       RoleModel,
       SkillModel,
-      ProfessionalModel
+      ProfessionalModel,
+      LevelModel
     > Application;
 
     public static void SetApplication(
@@ -21,7 +22,8 @@ namespace Profiles.Infrastructure.Services.Helpers.Base
         CityModel,
         RoleModel,
         SkillModel,
-        ProfessionalModel
+        ProfessionalModel,
+        LevelModel
       > application
     )
     {

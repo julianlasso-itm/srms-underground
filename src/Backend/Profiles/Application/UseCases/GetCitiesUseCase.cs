@@ -1,3 +1,4 @@
+using Profiles.Application.AntiCorruption.Interfaces;
 using Profiles.Application.Commands;
 using Profiles.Application.Repositories;
 using Profiles.Application.Responses;
@@ -7,16 +8,24 @@ using Shared.Application.Base;
 namespace Profiles.Application.UseCases
 {
   public sealed class GetCitiesUseCase<TEntity>
-    : BaseUseCase<GetCitiesCommand, GetCitiesApplicationResponse<TEntity>, IPersonnelAggregateRoot>
+    : BaseUseCase<
+      GetCitiesCommand,
+      GetCitiesApplicationResponse<TEntity>,
+      IPersonnelAggregateRoot,
+      IApplicationToDomain,
+      IDomainToApplication
+    >
     where TEntity : class
   {
     private readonly ICityRepository<TEntity> _cityRepository;
 
     public GetCitiesUseCase(
       IPersonnelAggregateRoot aggregateRoot,
-      ICityRepository<TEntity> cityRepository
+      ICityRepository<TEntity> cityRepository,
+      IApplicationToDomain applicationToDomain,
+      IDomainToApplication domainToApplication
     )
-      : base(aggregateRoot)
+      : base(aggregateRoot, applicationToDomain, domainToApplication)
     {
       _cityRepository = cityRepository;
     }

@@ -1,12 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using ProtoBuf.Grpc.Server;
 using QueryBank.Application.Repositories;
+using QueryBank.Infrastructure.AntiCorruption;
 using QueryBank.Infrastructure.Persistence;
 using QueryBank.Infrastructure.Persistence.Models;
 using QueryBank.Infrastructure.Persistence.Repositories;
 using QueryBank.Infrastructure.Services;
 using Shared.Infrastructure.Events;
 using Shared.Infrastructure.Interceptors;
+using Shared.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +26,7 @@ builder.Services.AddScoped<ISkillRepository<SkillModel>, SkillRepository>();
 // == Configure dependency injection for services ==
 builder.Services.AddScoped<SharedEventHandler>();
 builder.Services.AddScoped<ApplicationService>();
+builder.Services.AddScoped<AntiCorruptionLayerService<AntiCorruptionLayer>>();
 // =================================================
 
 // == Configure interceptors for gRPC services ==

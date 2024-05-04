@@ -20,7 +20,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // ==========================================
 
 // == Configure repositories ==
+builder.Services.AddScoped<IUserRepository<UserModel>, UserRepository>();
 builder.Services.AddScoped<IRoleRepository<RoleModel>, RoleRepository>();
+// builder.Services.AddScoped<IUserPerRoleRepository<UserPerRoleModel>, UserPerRoleRepository>();
 // ============================
 
 // == Configure dependency injection for services ==

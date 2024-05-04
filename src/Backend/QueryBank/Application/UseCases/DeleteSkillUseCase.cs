@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using QueryBank.Application.AntiCorruption.Interfaces;
 using QueryBank.Application.Commands;
 using QueryBank.Application.Repositories;
 using QueryBank.Application.Responses;
@@ -11,7 +12,13 @@ using Shared.Application.Base;
 namespace QueryBank.Application.UseCases
 {
   internal class DeleteSkillUseCase<TSkillEntity>
-    : BaseUseCase<DeleteSkillCommand, DeleteSkillApplicationResponse, ICatalogAggregateRoot>
+    : BaseUseCase<
+      DeleteSkillCommand,
+      DeleteSkillApplicationResponse,
+      ICatalogAggregateRoot,
+      IApplicationToDomain,
+      IDomainToApplication
+    >
     where TSkillEntity : class
   {
     private ISkillRepository<TSkillEntity> _skillRepository;
@@ -19,9 +26,11 @@ namespace QueryBank.Application.UseCases
 
     public DeleteSkillUseCase(
       ICatalogAggregateRoot aggregateRoot,
-      ISkillRepository<TSkillEntity> skillRepository
+      ISkillRepository<TSkillEntity> skillRepository,
+      IApplicationToDomain applicationToDomain,
+      IDomainToApplication domainToApplication
     )
-      : base(aggregateRoot)
+      : base(aggregateRoot, applicationToDomain, domainToApplication)
     {
       {
         _skillRepository = skillRepository;

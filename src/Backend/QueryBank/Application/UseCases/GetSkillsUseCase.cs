@@ -1,4 +1,5 @@
-﻿using QueryBank.Application.Commands;
+﻿using QueryBank.Application.AntiCorruption.Interfaces;
+using QueryBank.Application.Commands;
 using QueryBank.Application.Repositories;
 using QueryBank.Application.Responses;
 using QueryBank.Domain.Aggregates.Interfaces;
@@ -10,7 +11,9 @@ namespace QueryBank.Application.UseCases
     : BaseUseCase<
       GetSkillsCommand,
       GetSkillsApplicationResponse<TSkillEntity>,
-      ICatalogAggregateRoot
+      ICatalogAggregateRoot,
+      IApplicationToDomain,
+      IDomainToApplication
     >
     where TSkillEntity : class
   {
@@ -18,9 +21,11 @@ namespace QueryBank.Application.UseCases
 
     public GetSkillsUseCase(
       ICatalogAggregateRoot aggregateRoot,
-      ISkillRepository<TSkillEntity> skillRepository
+      ISkillRepository<TSkillEntity> skillRepository,
+      IApplicationToDomain applicationToDomain,
+      IDomainToApplication domainToApplication
     )
-      : base(aggregateRoot)
+      : base(aggregateRoot, applicationToDomain, domainToApplication)
     {
       _skillRepository = skillRepository;
     }

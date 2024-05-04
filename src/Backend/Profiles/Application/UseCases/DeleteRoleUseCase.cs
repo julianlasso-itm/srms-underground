@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using Profiles.Application.AntiCorruption.Interfaces;
 using Profiles.Application.Commands;
 using Profiles.Application.Repositories;
 using Profiles.Application.Responses;
@@ -11,7 +12,13 @@ using Shared.Application.Base;
 namespace Profiles.Application.UseCases
 {
   public sealed class DeleteRoleUseCase<TEntity>
-    : BaseUseCase<DeleteRoleCommand, DeleteRoleApplicationResponse, IPersonnelAggregateRoot>
+    : BaseUseCase<
+      DeleteRoleCommand,
+      DeleteRoleApplicationResponse,
+      IPersonnelAggregateRoot,
+      IApplicationToDomain,
+      IDomainToApplication
+    >
     where TEntity : class
   {
     private readonly IRoleRepository<TEntity> _roleRepository;
@@ -19,9 +26,11 @@ namespace Profiles.Application.UseCases
 
     public DeleteRoleUseCase(
       IPersonnelAggregateRoot aggregateRoot,
-      IRoleRepository<TEntity> roleRepository
+      IRoleRepository<TEntity> roleRepository,
+      IApplicationToDomain applicationToDomain,
+      IDomainToApplication domainToApplication
     )
-      : base(aggregateRoot)
+      : base(aggregateRoot, applicationToDomain, domainToApplication)
     {
       _roleRepository = roleRepository;
     }

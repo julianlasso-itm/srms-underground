@@ -1,4 +1,5 @@
-﻿using Profiles.Application.Commands;
+﻿using Profiles.Application.AntiCorruption.Interfaces;
+using Profiles.Application.Commands;
 using Profiles.Application.Repositories;
 using Profiles.Application.Responses;
 using Profiles.Domain.Aggregates.Interfaces;
@@ -10,7 +11,9 @@ namespace Profiles.Application.UseCases
     : BaseUseCase<
       GetProfessionalsCommand,
       GetProfessionalsApplicationResponse<TProfessionalEntity>,
-      IPersonnelAggregateRoot
+      IPersonnelAggregateRoot,
+      IApplicationToDomain,
+      IDomainToApplication
     >
     where TProfessionalEntity : class
   {
@@ -18,9 +21,11 @@ namespace Profiles.Application.UseCases
 
     public GetProfessionalsUseCase(
       IPersonnelAggregateRoot aggregateRoot,
-      IProfessionalRepository<TProfessionalEntity> professionalRepository
+      IProfessionalRepository<TProfessionalEntity> professionalRepository,
+      IApplicationToDomain applicationToDomain,
+      IDomainToApplication domainToApplication
     )
-      : base(aggregateRoot)
+      : base(aggregateRoot, applicationToDomain, domainToApplication)
     {
       _professionalRepository = professionalRepository;
     }

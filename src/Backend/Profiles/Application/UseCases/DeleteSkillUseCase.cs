@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using Profiles.Application.AntiCorruption.Interfaces;
 using Profiles.Application.Commands;
 using Profiles.Application.Repositories;
 using Profiles.Application.Responses;
@@ -11,7 +12,13 @@ using Shared.Application.Base;
 namespace Profiles.Application.UseCases
 {
   internal class DeleteSkillUseCase<TSkillEntity>
-    : BaseUseCase<DeleteSkillCommand, DeleteSkillApplicationResponse, IPersonnelAggregateRoot>
+    : BaseUseCase<
+      DeleteSkillCommand,
+      DeleteSkillApplicationResponse,
+      IPersonnelAggregateRoot,
+      IApplicationToDomain,
+      IDomainToApplication
+    >
     where TSkillEntity : class
   {
     private ISkillRepository<TSkillEntity> _skillRepository;
@@ -19,9 +26,11 @@ namespace Profiles.Application.UseCases
 
     public DeleteSkillUseCase(
       IPersonnelAggregateRoot aggregateRoot,
-      ISkillRepository<TSkillEntity> skillRepository
+      ISkillRepository<TSkillEntity> skillRepository,
+      IApplicationToDomain applicationToDomain,
+      IDomainToApplication domainToApplication
     )
-      : base(aggregateRoot)
+      : base(aggregateRoot, applicationToDomain, domainToApplication)
     {
       {
         _skillRepository = skillRepository;

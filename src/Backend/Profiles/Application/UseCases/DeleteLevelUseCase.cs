@@ -1,3 +1,4 @@
+using Profiles.Application.AntiCorruption.Interfaces;
 using Profiles.Application.Commands;
 using Profiles.Application.Repositories;
 using Profiles.Application.Responses;
@@ -9,16 +10,24 @@ using Shared.Application.Base;
 namespace Profiles.Application.UseCases
 {
   public sealed class DeleteLevelUseCase<TEntity>
-    : BaseUseCase<DeleteLevelCommand, DeleteLevelApplicationResponse, IPersonnelAggregateRoot>
+    : BaseUseCase<
+      DeleteLevelCommand,
+      DeleteLevelApplicationResponse,
+      IPersonnelAggregateRoot,
+      IApplicationToDomain,
+      IDomainToApplication
+    >
     where TEntity : class
   {
     private readonly ILevelRepository<TEntity> _levelRepository;
 
     public DeleteLevelUseCase(
       IPersonnelAggregateRoot aggregateRoot,
-      ILevelRepository<TEntity> levelRepository
+      ILevelRepository<TEntity> levelRepository,
+      IApplicationToDomain applicationToDomain,
+      IDomainToApplication domainToApplication
     )
-      : base(aggregateRoot)
+      : base(aggregateRoot, applicationToDomain, domainToApplication)
     {
       _levelRepository = levelRepository;
     }

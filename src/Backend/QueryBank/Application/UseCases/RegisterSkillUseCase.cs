@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using QueryBank.Application.AntiCorruption.Interfaces;
 using QueryBank.Application.Commands;
 using QueryBank.Application.Repositories;
 using QueryBank.Application.Responses;
@@ -11,7 +12,13 @@ using Shared.Application.Base;
 namespace QueryBank.Application.UseCases
 {
   public class RegisterSkillUseCase<TEntity>
-    : BaseUseCase<RegisterSkillCommand, RegisterSkillApplicationResponse, ICatalogAggregateRoot>
+    : BaseUseCase<
+      RegisterSkillCommand,
+      RegisterSkillApplicationResponse,
+      ICatalogAggregateRoot,
+      IApplicationToDomain,
+      IDomainToApplication
+    >
     where TEntity : class
   {
     private readonly ISkillRepository<TEntity> _skillRepository;
@@ -20,9 +27,11 @@ namespace QueryBank.Application.UseCases
 
     public RegisterSkillUseCase(
       ICatalogAggregateRoot aggregateRoot,
-      ISkillRepository<TEntity> skillRepository
+      ISkillRepository<TEntity> skillRepository,
+      IApplicationToDomain applicationToDomain,
+      IDomainToApplication domainToApplication
     )
-      : base(aggregateRoot)
+      : base(aggregateRoot, applicationToDomain, domainToApplication)
     {
       _skillRepository = skillRepository;
     }

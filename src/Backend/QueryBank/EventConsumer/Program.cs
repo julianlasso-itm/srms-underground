@@ -2,11 +2,13 @@ using Microsoft.EntityFrameworkCore;
 using QueryBank.Application.Repositories;
 using QueryBank.EventConsumer.Services;
 using QueryBank.EventConsumer.Subscribers;
+using QueryBank.Infrastructure.AntiCorruption;
 using QueryBank.Infrastructure.Persistence;
 using QueryBank.Infrastructure.Persistence.Models;
 using QueryBank.Infrastructure.Persistence.Repositories;
 using QueryBank.Infrastructure.Services;
 using Shared.Infrastructure.Events;
+using Shared.Infrastructure.Services;
 using StackExchange.Redis;
 
 var builder = Host.CreateApplicationBuilder(args);
@@ -41,6 +43,7 @@ builder.Services.AddSingleton<ISkillRepository<SkillModel>, SkillRepository>(ser
 builder.Services.AddSingleton<SharedEventHandler>();
 builder.Services.AddSingleton<ApplicationService>();
 builder.Services.AddSingleton<QueryBankServiceForSubscribers>();
+builder.Services.AddScoped<AntiCorruptionLayerService<AntiCorruptionLayer>>();
 // =================================================
 
 var app = builder.Build();

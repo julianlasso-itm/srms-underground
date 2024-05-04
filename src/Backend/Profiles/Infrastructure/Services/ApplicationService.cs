@@ -1,8 +1,10 @@
 using Profiles.Application;
 using Profiles.Application.Repositories;
 using Profiles.Domain.Aggregates;
+using Profiles.Infrastructure.AntiCorruption;
 using Profiles.Infrastructure.Persistence.Models;
 using Shared.Infrastructure.Events;
+using Shared.Infrastructure.Services;
 
 namespace Profiles.Infrastructure.Services
 {
@@ -15,6 +17,7 @@ namespace Profiles.Infrastructure.Services
       RoleModel,
       SkillModel,
       ProfessionalModel,
+      LevelModel
     > _application;
 
     public ApplicationService(
@@ -24,7 +27,9 @@ namespace Profiles.Infrastructure.Services
       ICityRepository<CityModel> cityRepository,
       IRoleRepository<RoleModel> roleRepository,
       ISkillRepository<SkillModel> skillRepository,
-      IProfessionalRepository<ProfessionalModel> professionalRepository
+      IProfessionalRepository<ProfessionalModel> professionalRepository,
+      ILevelRepository<LevelModel> levelRepository,
+      AntiCorruptionLayerService<AntiCorruptionLayer> antiCorruptionLayerService
     )
     {
       _application = new Application<
@@ -33,14 +38,18 @@ namespace Profiles.Infrastructure.Services
         CityModel,
         RoleModel,
         SkillModel,
-        ProfessionalModel
+        ProfessionalModel,
+        LevelModel
       >(
+        antiCorruptionLayerService.GetAntiCorruptionLayer().GetApplicationToDomain(),
+        antiCorruptionLayerService.GetAntiCorruptionLayer().GetDomainToApplication(),
         countryRepository,
         provinceRepository,
         cityRepository,
         roleRepository,
         skillRepository,
-        professionalRepository
+        professionalRepository,
+        levelRepository
       )
       {
         AggregateRoot = new PersonnelAggregateRoot(eventHandler)
@@ -53,7 +62,8 @@ namespace Profiles.Infrastructure.Services
       CityModel,
       RoleModel,
       SkillModel,
-      ProfessionalModel
+      ProfessionalModel,
+      LevelModel
     > GetApplication()
     {
       return _application;

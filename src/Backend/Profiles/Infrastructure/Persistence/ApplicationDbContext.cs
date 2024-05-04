@@ -11,6 +11,7 @@ namespace Profiles.Infrastructure.Persistence
     public DbSet<RoleModel> Roles { get; set; }
     public DbSet<ProfessionalModel> Professionals { get; set; }
     public DbSet<SkillModel> Skills { get; set; }
+    public DbSet<LevelModel> Levels { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
       : base(options) { }

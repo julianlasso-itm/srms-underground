@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Profiles.Application.Repositories;
+using Profiles.Infrastructure.AntiCorruption;
 using Profiles.Infrastructure.Persistence;
 using Profiles.Infrastructure.Persistence.Models;
 using Profiles.Infrastructure.Persistence.Repositories;
@@ -7,6 +8,7 @@ using Profiles.Infrastructure.Services;
 using ProtoBuf.Grpc.Server;
 using Shared.Infrastructure.Events;
 using Shared.Infrastructure.Interceptors;
+using Shared.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,11 +26,13 @@ builder.Services.AddScoped<ICityRepository<CityModel>, CityRepository>();
 builder.Services.AddScoped<IRoleRepository<RoleModel>, RoleRepository>();
 builder.Services.AddScoped<ISkillRepository<SkillModel>, SkillRepository>();
 builder.Services.AddScoped<IProfessionalRepository<ProfessionalModel>, ProfessionalRepository>();
+builder.Services.AddScoped<ILevelRepository<LevelModel>, LevelRepository>();
 // ============================
 
 // == Configure dependency injection for services ==
 builder.Services.AddScoped<SharedEventHandler>();
 builder.Services.AddScoped<ApplicationService>();
+builder.Services.AddScoped<AntiCorruptionLayerService<AntiCorruptionLayer>>();
 // =================================================
 
 // == Configure interceptors for gRPC services ==

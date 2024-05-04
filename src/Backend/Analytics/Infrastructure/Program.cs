@@ -1,4 +1,5 @@
 using Analytics.Application.Repositories;
+using Analytics.Infrastructure.AntiCorruption;
 using Analytics.Infrastructure.Persistence;
 using Analytics.Infrastructure.Persistence.Models;
 using Analytics.Infrastructure.Persistence.Repositories;
@@ -7,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ProtoBuf.Grpc.Server;
 using Shared.Infrastructure.Events;
 using Shared.Infrastructure.Interceptors;
+using Shared.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +26,7 @@ builder.Services.AddScoped<ILevelRepository<LevelModel>, LevelRepository>();
 // == Configure dependency injection for services ==
 builder.Services.AddScoped<SharedEventHandler>();
 builder.Services.AddScoped<ApplicationService>();
+builder.Services.AddScoped<AntiCorruptionLayerService<AntiCorruptionLayer>>();
 // =================================================
 
 // == Configure interceptors for gRPC services ==

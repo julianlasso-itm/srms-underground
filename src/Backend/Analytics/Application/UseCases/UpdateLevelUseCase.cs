@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Analytics.Application.AntiCorruption.Interfaces;
 using Analytics.Application.Commands;
 using Analytics.Application.Repositories;
 using Analytics.Application.Responses;
@@ -11,7 +12,13 @@ using Shared.Application.Base;
 namespace Analytics.Application.UseCases
 {
   public sealed class UpdateLevelUseCase<TEntity>
-    : BaseUseCase<UpdateLevelCommand, UpdateLevelApplicationResponse, IAggregateRoot>
+    : BaseUseCase<
+      UpdateLevelCommand,
+      UpdateLevelApplicationResponse,
+      IAggregateRoot,
+      IApplicationToDomain,
+      IDomainToApplication
+    >
     where TEntity : class
   {
     private readonly ILevelRepository<TEntity> _levelRepository;
@@ -19,9 +26,11 @@ namespace Analytics.Application.UseCases
 
     public UpdateLevelUseCase(
       IAggregateRoot aggregateRoot,
-      ILevelRepository<TEntity> levelRepository
+      ILevelRepository<TEntity> levelRepository,
+      IApplicationToDomain applicationToDomain,
+      IDomainToApplication domainToApplication
     )
-      : base(aggregateRoot)
+      : base(aggregateRoot, applicationToDomain, domainToApplication)
     {
       _levelRepository = levelRepository;
     }

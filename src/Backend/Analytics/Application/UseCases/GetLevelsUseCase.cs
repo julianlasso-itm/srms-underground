@@ -1,3 +1,4 @@
+using Analytics.Application.AntiCorruption.Interfaces;
 using Analytics.Application.Commands;
 using Analytics.Application.Repositories;
 using Analytics.Application.Responses;
@@ -7,13 +8,24 @@ using Shared.Application.Base;
 namespace Analytics.Application.UseCases
 {
   public sealed class GetLevelsUseCase<TEntity>
-    : BaseUseCase<GetLevelsCommand, GetLevelsApplicationResponse<TEntity>, IAggregateRoot>
+    : BaseUseCase<
+      GetLevelsCommand,
+      GetLevelsApplicationResponse<TEntity>,
+      IAggregateRoot,
+      IApplicationToDomain,
+      IDomainToApplication
+    >
     where TEntity : class
   {
     private readonly ILevelRepository<TEntity> _levelRepository;
 
-    public GetLevelsUseCase(IAggregateRoot aggregateRoot, ILevelRepository<TEntity> levelRepository)
-      : base(aggregateRoot)
+    public GetLevelsUseCase(
+      IAggregateRoot aggregateRoot,
+      ILevelRepository<TEntity> levelRepository,
+      IApplicationToDomain applicationToDomain,
+      IDomainToApplication domainToApplication
+    )
+      : base(aggregateRoot, applicationToDomain, domainToApplication)
     {
       _levelRepository = levelRepository;
     }

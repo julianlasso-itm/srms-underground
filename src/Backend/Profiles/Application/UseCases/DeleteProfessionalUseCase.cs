@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using Profiles.Application.AntiCorruption.Interfaces;
 using Profiles.Application.Commands;
 using Profiles.Application.Repositories;
 using Profiles.Application.Responses;
@@ -14,7 +15,9 @@ namespace Profiles.Application.UseCases
     : BaseUseCase<
       DeleteProfessionalCommand,
       DeleteProfessionalApplicationResponse,
-      IPersonnelAggregateRoot
+      IPersonnelAggregateRoot,
+      IApplicationToDomain,
+      IDomainToApplication
     >
     where TProfessionalEntity : class
   {
@@ -24,9 +27,11 @@ namespace Profiles.Application.UseCases
 
     public DeleteProfessionalUseCase(
       IPersonnelAggregateRoot aggregateRoot,
-      IProfessionalRepository<TProfessionalEntity> professionalRepository
+      IProfessionalRepository<TProfessionalEntity> professionalRepository,
+      IApplicationToDomain applicationToDomain,
+      IDomainToApplication domainToApplication
     )
-      : base(aggregateRoot)
+      : base(aggregateRoot, applicationToDomain, domainToApplication)
     {
       _professionalRepository = professionalRepository;
     }

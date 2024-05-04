@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Profiles.Application.AntiCorruption.Interfaces;
 using Profiles.Application.Commands;
 using Profiles.Application.Repositories;
 using Profiles.Application.Responses;
@@ -11,7 +12,13 @@ using Shared.Application.Base;
 namespace Profiles.Application.UseCases
 {
   public sealed class DeleteCityUseCase<TEntity>
-    : BaseUseCase<DeleteCityCommand, DeleteCityApplicationResponse, IPersonnelAggregateRoot>
+    : BaseUseCase<
+      DeleteCityCommand,
+      DeleteCityApplicationResponse,
+      IPersonnelAggregateRoot,
+      IApplicationToDomain,
+      IDomainToApplication
+    >
     where TEntity : class
   {
     private readonly ICityRepository<TEntity> _cityRepository;
@@ -19,9 +26,11 @@ namespace Profiles.Application.UseCases
 
     public DeleteCityUseCase(
       IPersonnelAggregateRoot aggregateRoot,
-      ICityRepository<TEntity> cityRepository
+      ICityRepository<TEntity> cityRepository,
+      IApplicationToDomain applicationToDomain,
+      IDomainToApplication domainToApplication
     )
-      : base(aggregateRoot)
+      : base(aggregateRoot, applicationToDomain, domainToApplication)
     {
       _cityRepository = cityRepository;
     }

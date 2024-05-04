@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using Profiles.Application.AntiCorruption.Interfaces;
 using Profiles.Application.Commands;
 using Profiles.Application.Repositories;
 using Profiles.Application.Responses;
@@ -11,7 +12,13 @@ using Shared.Application.Base;
 namespace Profiles.Application.UseCases
 {
   public class RegisterSkillUseCase<TEntity>
-    : BaseUseCase<RegisterSkillCommand, RegisterSkillApplicationResponse, IPersonnelAggregateRoot>
+    : BaseUseCase<
+      RegisterSkillCommand,
+      RegisterSkillApplicationResponse,
+      IPersonnelAggregateRoot,
+      IApplicationToDomain,
+      IDomainToApplication
+    >
     where TEntity : class
   {
     private readonly ISkillRepository<TEntity> _skillRepository;
@@ -20,9 +27,11 @@ namespace Profiles.Application.UseCases
 
     public RegisterSkillUseCase(
       IPersonnelAggregateRoot aggregateRoot,
-      ISkillRepository<TEntity> skillRepository
+      ISkillRepository<TEntity> skillRepository,
+      IApplicationToDomain applicationToDomain,
+      IDomainToApplication domainToApplication
     )
-      : base(aggregateRoot)
+      : base(aggregateRoot, applicationToDomain, domainToApplication)
     {
       _skillRepository = skillRepository;
     }

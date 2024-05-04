@@ -1,3 +1,4 @@
+using Profiles.Application.AntiCorruption.Interfaces;
 using Profiles.Application.Commands;
 using Profiles.Application.Repositories;
 using Profiles.Application.Responses;
@@ -10,7 +11,9 @@ namespace Profiles.Application.UseCases
     : BaseUseCase<
       GetCountriesCommand,
       GetCountriesApplicationResponse<TEntity>,
-      IPersonnelAggregateRoot
+      IPersonnelAggregateRoot,
+      IApplicationToDomain,
+      IDomainToApplication
     >
     where TEntity : class
   {
@@ -18,9 +21,11 @@ namespace Profiles.Application.UseCases
 
     public GetCountriesUseCase(
       IPersonnelAggregateRoot aggregateRoot,
-      ICountryRepository<TEntity> countryRepository
+      ICountryRepository<TEntity> countryRepository,
+      IApplicationToDomain applicationToDomain,
+      IDomainToApplication domainToApplication
     )
-      : base(aggregateRoot)
+      : base(aggregateRoot, applicationToDomain, domainToApplication)
     {
       _countryRepository = countryRepository;
     }

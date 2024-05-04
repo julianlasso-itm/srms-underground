@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Profiles.Application.AntiCorruption.Interfaces;
 using Profiles.Application.Commands;
 using Profiles.Application.Repositories;
 using Profiles.Application.Responses;
@@ -11,7 +12,13 @@ using Shared.Application.Base;
 namespace Profiles.Application.UseCases
 {
   public sealed class UpdateCountryUseCase<TEntity>
-    : BaseUseCase<UpdateCountryCommand, UpdateCountryApplicationResponse, IPersonnelAggregateRoot>
+    : BaseUseCase<
+      UpdateCountryCommand,
+      UpdateCountryApplicationResponse,
+      IPersonnelAggregateRoot,
+      IApplicationToDomain,
+      IDomainToApplication
+    >
     where TEntity : class
   {
     private readonly ICountryRepository<TEntity> _countryRepository;
@@ -19,9 +26,11 @@ namespace Profiles.Application.UseCases
 
     public UpdateCountryUseCase(
       IPersonnelAggregateRoot aggregateRoot,
-      ICountryRepository<TEntity> countryRepository
+      ICountryRepository<TEntity> countryRepository,
+      IApplicationToDomain applicationToDomain,
+      IDomainToApplication domainToApplication
     )
-      : base(aggregateRoot)
+      : base(aggregateRoot, applicationToDomain, domainToApplication)
     {
       _countryRepository = countryRepository;
     }

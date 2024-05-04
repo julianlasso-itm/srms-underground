@@ -21,7 +21,6 @@
     <ProjectReference Include="..\..\Shared\Infrastructure\Shared.Infrastructure.csproj" />
     <ProjectReference Include="..\Domain\AccessControl.Domain.csproj" />
     <ProjectReference Include="..\Application\AccessControl.Application.csproj" />
-    <ProjectReference Include="..\AntiCorruption\AccessControl.AntiCorruption.csproj" />
   </ItemGroup>
 
 </Project>

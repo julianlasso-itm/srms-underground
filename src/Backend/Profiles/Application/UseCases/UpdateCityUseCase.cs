@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Profiles.Application.AntiCorruption.Interfaces;
 using Profiles.Application.Commands;
 using Profiles.Application.Repositories;
 using Profiles.Application.Responses;
@@ -11,7 +12,13 @@ using Shared.Application.Base;
 namespace Profiles.Application.UseCases
 {
   public sealed class UpdateCityUseCase<TEntity>
-    : BaseUseCase<UpdateCityCommand, UpdateCityApplicationResponse, IPersonnelAggregateRoot>
+    : BaseUseCase<
+      UpdateCityCommand,
+      UpdateCityApplicationResponse,
+      IPersonnelAggregateRoot,
+      IApplicationToDomain,
+      IDomainToApplication
+    >
     where TEntity : class
   {
     private readonly ICityRepository<TEntity> _cityRepository;
@@ -19,9 +26,11 @@ namespace Profiles.Application.UseCases
 
     public UpdateCityUseCase(
       IPersonnelAggregateRoot aggregateRoot,
-      ICityRepository<TEntity> cityRepository
+      ICityRepository<TEntity> cityRepository,
+      IApplicationToDomain applicationToDomain,
+      IDomainToApplication domainToApplication
     )
-      : base(aggregateRoot)
+      : base(aggregateRoot, applicationToDomain, domainToApplication)
     {
       _cityRepository = cityRepository;
     }

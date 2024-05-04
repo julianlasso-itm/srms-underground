@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Profiles.Application.AntiCorruption.Interfaces;
 using Profiles.Application.Commands;
 using Profiles.Application.Repositories;
 using Profiles.Application.Responses;
@@ -14,7 +15,9 @@ namespace Profiles.Application.UseCases
     : BaseUseCase<
       RegisterCountryCommand,
       RegisterCountryApplicationResponse,
-      IPersonnelAggregateRoot
+      IPersonnelAggregateRoot,
+      IApplicationToDomain,
+      IDomainToApplication
     >
     where TEntity : class
   {
@@ -23,9 +26,11 @@ namespace Profiles.Application.UseCases
 
     public RegisterCountryUseCase(
       IPersonnelAggregateRoot aggregateRoot,
-      ICountryRepository<TEntity> countryRepository
+      ICountryRepository<TEntity> countryRepository,
+      IApplicationToDomain applicationToDomain,
+      IDomainToApplication domainToApplication
     )
-      : base(aggregateRoot)
+      : base(aggregateRoot, applicationToDomain, domainToApplication)
     {
       _countryRepository = countryRepository;
     }
