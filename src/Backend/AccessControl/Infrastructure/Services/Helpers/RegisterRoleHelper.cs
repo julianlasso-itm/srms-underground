@@ -10,11 +10,9 @@ namespace AccessControl.Infrastructure.Services.Helpers
       RegisterRoleAccessControlRequest request
     )
     {
-      var command = AntiCorruptionLayer
-        .InfrastructureToApplication()
-        .MapToRegisterRoleCommand(request);
+      var command = AclInputMapper.ToRegisterRoleCommand(request);
       var data = await Application.RegisterRole(command);
-      return AntiCorruptionLayer.ApplicationToInfrastructure().MapToRegisterRoleResponse(data);
+      return AclOutputMapper.ToRegisterRoleResponse(data);
     }
   }
 }

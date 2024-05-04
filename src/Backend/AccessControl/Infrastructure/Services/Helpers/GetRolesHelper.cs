@@ -10,9 +10,9 @@ namespace AccessControl.Infrastructure.Services.Helpers
       GetRolesAccessControlRequest request
     )
     {
-      var command = AntiCorruptionLayer.InfrastructureToApplication().MapToGetRolesCommand(request);
+      var command = AclInputMapper.ToGetRolesCommand(request);
       var data = await Application.GetRoles(command);
-      return AntiCorruptionLayer.ApplicationToInfrastructure().MapToGetRolesResponse(data);
+      return AclOutputMapper.ToGetRolesResponse(data);
     }
   }
 }

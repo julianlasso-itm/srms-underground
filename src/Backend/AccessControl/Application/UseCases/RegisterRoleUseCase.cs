@@ -1,4 +1,5 @@
 using System.Text.Json;
+using AccessControl.Application.AntiCorruption.Interfaces;
 using AccessControl.Application.Commands;
 using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
@@ -11,7 +12,13 @@ using Shared.Application.Base;
 namespace AccessControl.Application.UseCases
 {
   public sealed class RegisterRoleUseCase<TEntity>
-    : BaseUseCase<RegisterRoleCommand, RegisterRoleApplicationResponse, ISecurityAggregateRoot>
+    : BaseUseCase<
+      RegisterRoleCommand,
+      RegisterRoleApplicationResponse,
+      ISecurityAggregateRoot,
+      IApplicationToDomain,
+      IDomainToApplication
+    >
     where TEntity : class
   {
     private readonly IRoleRepository<TEntity> _roleRepository;
@@ -19,30 +26,23 @@ namespace AccessControl.Application.UseCases
 
     public RegisterRoleUseCase(
       ISecurityAggregateRoot aggregateRoot,
-      IRoleRepository<TEntity> roleRepository
+      IRoleRepository<TEntity> roleRepository,
+      IApplicationToDomain applicationToDomain,
+      IDomainToApplication domainToApplication
     )
-      : base(aggregateRoot)
+      : base(aggregateRoot, applicationToDomain, domainToApplication)
     {
       _roleRepository = roleRepository;
     }
 
     public override async Task<RegisterRoleApplicationResponse> Handle(RegisterRoleCommand request)
     {
-      var newRole = MapToRequestForDomain(request);
+      var newRole = AclInputMapper.ToRegisterRoleDomainRequest(request);
       var role = AggregateRoot.RegisterRole(newRole);
       var response = MapToResponse(role);
       _ = await Persistence(response);
       EmitEvent(Channel, JsonSerializer.Serialize(response));
       return response;
-    }
-
-    private RegisterRoleDomainRequest MapToRequestForDomain(RegisterRoleCommand request)
-    {
-      return new RegisterRoleDomainRequest
-      {
-        Name = request.Name,
-        Description = request.Description,
-      };
     }
 
     private RegisterRoleApplicationResponse MapToResponse(RegisterRoleDomainResponse role)

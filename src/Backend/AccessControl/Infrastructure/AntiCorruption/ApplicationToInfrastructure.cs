@@ -1,10 +1,11 @@
 using AccessControl.Application.Responses;
+using AccessControl.Infrastructure.AntiCorruption.Interfaces;
 using AccessControl.Infrastructure.Persistence.Models;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses;
 
 namespace AccessControl.Infrastructure.AntiCorruption
 {
-  public class ApplicationToInfrastructure
+  public class ApplicationToInfrastructure : IApplicationToInfrastructure
   {
     private static ApplicationToInfrastructure s_instance;
 
@@ -17,7 +18,7 @@ namespace AccessControl.Infrastructure.AntiCorruption
       }
     }
 
-    public GetRolesAccessControlResponse MapToGetRolesResponse(
+    public GetRolesAccessControlResponse ToGetRolesResponse(
       GetRolesApplicationResponse<RoleModel> data
     )
     {
@@ -36,7 +37,7 @@ namespace AccessControl.Infrastructure.AntiCorruption
       };
     }
 
-    public RegisterRoleAccessControlResponse MapToRegisterRoleResponse(
+    public RegisterRoleAccessControlResponse ToRegisterRoleResponse(
       RegisterRoleApplicationResponse data
     )
     {
@@ -49,7 +50,7 @@ namespace AccessControl.Infrastructure.AntiCorruption
       };
     }
 
-    public UpdateRoleAccessControlResponse MapToUpdateRoleResponse(
+    public UpdateRoleAccessControlResponse ToUpdateRoleResponse(
       UpdateRoleApplicationResponse data
     )
     {
@@ -62,7 +63,7 @@ namespace AccessControl.Infrastructure.AntiCorruption
       };
     }
 
-    public DeleteRoleAccessControlResponse MapToDeleteRoleResponse(
+    public DeleteRoleAccessControlResponse ToDeleteRoleResponse(
       DeleteRoleApplicationResponse data
     )
     {

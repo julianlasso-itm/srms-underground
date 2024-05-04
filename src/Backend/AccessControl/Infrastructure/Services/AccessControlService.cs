@@ -1,4 +1,4 @@
-using AccessControl.AntiCorruption.Interfaces;
+using AccessControl.Infrastructure.AntiCorruption.Interfaces;
 using AccessControl.Infrastructure.Services.Helpers;
 using ProtoBuf.Grpc;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl;

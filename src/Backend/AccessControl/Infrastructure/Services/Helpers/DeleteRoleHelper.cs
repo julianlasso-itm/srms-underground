@@ -10,11 +10,9 @@ namespace AccessControl.Infrastructure.Services.Helpers
       DeleteRoleAccessControlRequest request
     )
     {
-      var command = AntiCorruptionLayer
-        .InfrastructureToApplication()
-        .MapToDeleteRoleCommand(request);
+      var command = AclInputMapper.ToDeleteRoleCommand(request);
       var data = await Application.DeleteRole(command);
-      return AntiCorruptionLayer.ApplicationToInfrastructure().MapToDeleteRoleResponse(data);
+      return AclOutputMapper.ToDeleteRoleResponse(data);
     }
   }
 }

@@ -1,10 +1,12 @@
+using AccessControl.Application.AntiCorruption.Interfaces;
+
 namespace AccessControl.Infrastructure.AntiCorruption.Interfaces
 {
   public interface IAntiCorruptionLayer
   {
-    public ApplicationToDomain ApplicationToDomain();
-    public ApplicationToInfrastructure ApplicationToInfrastructure();
-    public DomainToApplication DomainToApplication();
-    public InfrastructureToApplication InfrastructureToApplication();
+    public IApplicationToDomain GetApplicationToDomain();
+    public IApplicationToInfrastructure GetApplicationToInfrastructure();
+    public IDomainToApplication GetDomainToApplication();
+    public IInfrastructureToApplication GetInfrastructureToApplication();
   }
 }

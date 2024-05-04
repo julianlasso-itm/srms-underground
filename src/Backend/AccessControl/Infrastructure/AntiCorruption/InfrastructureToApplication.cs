@@ -1,9 +1,10 @@
 using AccessControl.Application.Commands;
+using AccessControl.Infrastructure.AntiCorruption.Interfaces;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
 
 namespace AccessControl.Infrastructure.AntiCorruption
 {
-  public class InfrastructureToApplication
+  public class InfrastructureToApplication : IInfrastructureToApplication
   {
     private static InfrastructureToApplication s_instance;
 
@@ -16,7 +17,7 @@ namespace AccessControl.Infrastructure.AntiCorruption
       }
     }
 
-    public GetRolesCommand MapToGetRolesCommand(GetRolesAccessControlRequest request)
+    public GetRolesCommand ToGetRolesCommand(GetRolesAccessControlRequest request)
     {
       return new GetRolesCommand
       {
@@ -29,14 +30,12 @@ namespace AccessControl.Infrastructure.AntiCorruption
       };
     }
 
-    public RegisterRoleCommand MapToRegisterRoleCommand(
-      RegisterRoleAccessControlRequest request
-    )
+    public RegisterRoleCommand ToRegisterRoleCommand(RegisterRoleAccessControlRequest request)
     {
       return new RegisterRoleCommand { Name = request.Name, Description = request.Description };
     }
 
-    public UpdateRoleCommand MapToUpdateRoleCommand(UpdateRoleAccessControlRequest request)
+    public UpdateRoleCommand ToUpdateRoleCommand(UpdateRoleAccessControlRequest request)
     {
       return new UpdateRoleCommand
       {
@@ -47,7 +46,7 @@ namespace AccessControl.Infrastructure.AntiCorruption
       };
     }
 
-    public DeleteRoleCommand MapToDeleteRoleCommand(DeleteRoleAccessControlRequest request)
+    public DeleteRoleCommand ToDeleteRoleCommand(DeleteRoleAccessControlRequest request)
     {
       return new DeleteRoleCommand { RoleId = request.RoleId };
     }

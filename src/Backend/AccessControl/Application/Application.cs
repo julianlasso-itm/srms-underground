@@ -1,4 +1,4 @@
-using AccessControl.AntiCorruption.Interfaces;
+using AccessControl.Application.AntiCorruption.Interfaces;
 using AccessControl.Application.Commands;
 using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
@@ -13,39 +13,60 @@ namespace AccessControl.Application
     public required ISecurityAggregateRoot AggregateRoot { get; init; }
 
     private readonly IRoleRepository<TRoleEntity> _roleRepository;
+    private readonly IApplicationToDomain _applicationToDomain;
+    private readonly IDomainToApplication _domainToApplication;
 
-    public Application(IRoleRepository<TRoleEntity> roleRepository)
+    public Application(
+      IApplicationToDomain applicationToDomain,
+      IDomainToApplication domainToApplication,
+      IRoleRepository<TRoleEntity> roleRepository
+    )
     {
+      _applicationToDomain = applicationToDomain;
+      _domainToApplication = domainToApplication;
       _roleRepository = roleRepository;
     }
 
     public Task<RegisterRoleApplicationResponse> RegisterRole(RegisterRoleCommand request)
     {
-      var useCase = new RegisterRoleUseCase<TRoleEntity>(AggregateRoot, _roleRepository);
+      var useCase = new RegisterRoleUseCase<TRoleEntity>(
+        AggregateRoot,
+        _roleRepository,
+        _applicationToDomain,
+        _domainToApplication
+      );
       return useCase.Handle(request);
     }
 
     public Task<UpdateRoleApplicationResponse> UpdateRole(UpdateRoleCommand request)
     {
-      var useCase = new UpdateRoleUseCase<TRoleEntity>(AggregateRoot, _roleRepository);
+      var useCase = new UpdateRoleUseCase<TRoleEntity>(
+        AggregateRoot,
+        _roleRepository,
+        _applicationToDomain,
+        _domainToApplication
+      );
       return useCase.Handle(request);
     }
 
     public Task<DeleteRoleApplicationResponse> DeleteRole(DeleteRoleCommand request)
     {
-      var useCase = new DeleteRoleUseCase<TRoleEntity>(AggregateRoot, _roleRepository);
+      var useCase = new DeleteRoleUseCase<TRoleEntity>(
+        AggregateRoot,
+        _roleRepository,
+        _applicationToDomain,
+        _domainToApplication
+      );
       return useCase.Handle(request);
     }
 
-    public Task<GetRolesApplicationResponse<TRoleEntity>> GetRoles(
-      GetRolesCommand request,
-      IAntiCorruptionLayer antiCorruptionLayer
-    )
+    public Task<GetRolesApplicationResponse<TRoleEntity>> GetRoles(GetRolesCommand request)
     {
       var useCase = new GetRolesUseCase<TRoleEntity>(
         AggregateRoot,
         _roleRepository,
-        antiCorruptionLayer
+        _applicationToDomain,
+        _domainToApplication
       );
       return useCase.Handle(request);
     }

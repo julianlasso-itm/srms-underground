@@ -1,25 +1,26 @@
+using AccessControl.Application.AntiCorruption.Interfaces;
 using AccessControl.Infrastructure.AntiCorruption.Interfaces;
 
 namespace AccessControl.Infrastructure.AntiCorruption
 {
   public class AntiCorruptionLayer : IAntiCorruptionLayer
   {
-    ApplicationToDomain IAntiCorruptionLayer.ApplicationToDomain()
+    public IApplicationToDomain GetApplicationToDomain()
     {
       return ApplicationToDomain.Instance;
     }
 
-    ApplicationToInfrastructure IAntiCorruptionLayer.ApplicationToInfrastructure()
+    public IApplicationToInfrastructure GetApplicationToInfrastructure()
     {
       return ApplicationToInfrastructure.Instance;
     }
 
-    DomainToApplication IAntiCorruptionLayer.DomainToApplication()
+    public IDomainToApplication GetDomainToApplication()
     {
       return DomainToApplication.Instance;
     }
 
-    InfrastructureToApplication IAntiCorruptionLayer.InfrastructureToApplication()
+    public IInfrastructureToApplication GetInfrastructureToApplication()
     {
       return InfrastructureToApplication.Instance;
     }

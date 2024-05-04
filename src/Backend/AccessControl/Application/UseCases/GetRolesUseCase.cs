@@ -1,4 +1,4 @@
-using AccessControl.AntiCorruption.Interfaces;
+using AccessControl.Application.AntiCorruption.Interfaces;
 using AccessControl.Application.Commands;
 using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
@@ -8,28 +8,33 @@ using Shared.Application.Base;
 namespace AccessControl.Application.UseCases
 {
   public sealed class GetRolesUseCase<TEntity>
-    : BaseUseCase<GetRolesCommand, GetRolesApplicationResponse<TEntity>, ISecurityAggregateRoot>
+    : BaseUseCase<
+      GetRolesCommand,
+      GetRolesApplicationResponse<TEntity>,
+      ISecurityAggregateRoot,
+      IApplicationToDomain,
+      IDomainToApplication
+    >
     where TEntity : class
   {
     private readonly IRoleRepository<TEntity> _roleRepository;
-    private readonly IAntiCorruptionLayer _antiCorruptionLayer;
 
     public GetRolesUseCase(
       ISecurityAggregateRoot aggregateRoot,
       IRoleRepository<TEntity> roleRepository,
-      IAntiCorruptionLayer antiCorruptionLayer
+      IApplicationToDomain applicationToDomain,
+      IDomainToApplication domainToApplication
     )
-      : base(aggregateRoot)
+      : base(aggregateRoot, applicationToDomain, domainToApplication)
     {
       _roleRepository = roleRepository;
-      _antiCorruptionLayer = antiCorruptionLayer;
     }
 
     public override async Task<GetRolesApplicationResponse<TEntity>> Handle(GetRolesCommand request)
     {
       var data = await QueryRoles(request);
       var count = await QueryRolesCount(request);
-      var response = MapToResponse(data, count);
+      var response = AclOutputMapper.ToGetRolesApplicationResponse(data, count);
       return response;
     }
 
@@ -48,14 +53,6 @@ namespace AccessControl.Application.UseCases
     private async Task<int> QueryRolesCount(GetRolesCommand request)
     {
       return await _roleRepository.GetCountAsync(request.Filter, request.FilterBy);
-    }
-
-    private GetRolesApplicationResponse<TEntity> MapToResponse(
-      IEnumerable<TEntity> roles,
-      int total
-    )
-    {
-      return new GetRolesApplicationResponse<TEntity> { Roles = roles, Total = total };
     }
   }
 }

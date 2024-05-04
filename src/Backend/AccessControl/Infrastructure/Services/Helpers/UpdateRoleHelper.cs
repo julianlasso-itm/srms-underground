@@ -10,11 +10,9 @@ namespace AccessControl.Infrastructure.Services.Helpers
       UpdateRoleAccessControlRequest request
     )
     {
-      var command = AntiCorruptionLayer
-        .InfrastructureToApplication()
-        .MapToUpdateRoleCommand(request);
+      var command = AclInputMapper.ToUpdateRoleCommand(request);
       var data = await Application.UpdateRole(command);
-      return AntiCorruptionLayer.ApplicationToInfrastructure().MapToUpdateRoleResponse(data);
+      return AclOutputMapper.ToUpdateRoleResponse(data);
     }
   }
 }
