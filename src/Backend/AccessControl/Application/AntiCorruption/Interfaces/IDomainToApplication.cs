@@ -5,6 +5,9 @@ namespace AccessControl.Application.AntiCorruption.Interfaces
 {
   public interface IDomainToApplication
   {
+    public RegisterUserApplicationResponse ToRegisterUserApplicationResponse(
+      RegisterCredentialDomainResponse user
+    );
     public GetRolesApplicationResponse<TEntity> ToGetRolesApplicationResponse<TEntity>(
       IEnumerable<TEntity> roles,
       int total

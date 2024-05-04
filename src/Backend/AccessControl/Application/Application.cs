@@ -1,30 +1,44 @@
 using AccessControl.Application.AntiCorruption.Interfaces;
 using AccessControl.Application.Commands;
+using AccessControl.Application.Interfaces;
 using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
 using AccessControl.Application.UseCases;
 using AccessControl.Domain.Aggregates.Interfaces;
+using Shared.Application.Base;
 
 namespace AccessControl.Application
 {
-  public class Application<TRoleEntity>
+  public class Application<TUserEntity, TRoleEntity>
+    : BaseApplication<ISecurityAggregateRoot, IApplicationToDomain, IDomainToApplication>,
+      IApplication<TUserEntity, TRoleEntity>
+    where TUserEntity : class
     where TRoleEntity : class
   {
-    public required ISecurityAggregateRoot AggregateRoot { get; init; }
-
+    private readonly IUserRepository<TUserEntity> _userRepository;
     private readonly IRoleRepository<TRoleEntity> _roleRepository;
-    private readonly IApplicationToDomain _applicationToDomain;
-    private readonly IDomainToApplication _domainToApplication;
 
     public Application(
       IApplicationToDomain applicationToDomain,
       IDomainToApplication domainToApplication,
+      IUserRepository<TUserEntity> userRepository,
       IRoleRepository<TRoleEntity> roleRepository
     )
+      : base(applicationToDomain, domainToApplication)
     {
-      _applicationToDomain = applicationToDomain;
-      _domainToApplication = domainToApplication;
+      _userRepository = userRepository;
       _roleRepository = roleRepository;
+    }
+
+    public Task<RegisterUserApplicationResponse> RegisterUser(RegisterUserCommand request)
+    {
+      var useCase = new RegisterUserUseCase<TUserEntity>(
+        AggregateRoot,
+        _userRepository,
+        ApplicationToDomain,
+        DomainToApplication
+      );
+      return useCase.Handle(request);
     }
 
     public Task<RegisterRoleApplicationResponse> RegisterRole(RegisterRoleCommand request)
@@ -32,8 +46,8 @@ namespace AccessControl.Application
       var useCase = new RegisterRoleUseCase<TRoleEntity>(
         AggregateRoot,
         _roleRepository,
-        _applicationToDomain,
-        _domainToApplication
+        ApplicationToDomain,
+        DomainToApplication
       );
       return useCase.Handle(request);
     }
@@ -43,8 +57,8 @@ namespace AccessControl.Application
       var useCase = new UpdateRoleUseCase<TRoleEntity>(
         AggregateRoot,
         _roleRepository,
-        _applicationToDomain,
-        _domainToApplication
+        ApplicationToDomain,
+        DomainToApplication
       );
       return useCase.Handle(request);
     }
@@ -54,8 +68,8 @@ namespace AccessControl.Application
       var useCase = new DeleteRoleUseCase<TRoleEntity>(
         AggregateRoot,
         _roleRepository,
-        _applicationToDomain,
-        _domainToApplication
+        ApplicationToDomain,
+        DomainToApplication
       );
       return useCase.Handle(request);
     }
@@ -65,8 +79,8 @@ namespace AccessControl.Application
       var useCase = new GetRolesUseCase<TRoleEntity>(
         AggregateRoot,
         _roleRepository,
-        _applicationToDomain,
-        _domainToApplication
+        ApplicationToDomain,
+        DomainToApplication
       );
       return useCase.Handle(request);
     }
