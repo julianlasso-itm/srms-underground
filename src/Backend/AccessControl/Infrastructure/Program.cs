@@ -1,5 +1,6 @@
 using AccessControl.Application.Repositories;
 using AccessControl.Infrastructure.AntiCorruption;
+using AccessControl.Infrastructure.AntiCorruption.Interfaces;
 using AccessControl.Infrastructure.Persistence;
 using AccessControl.Infrastructure.Persistence.Models;
 using AccessControl.Infrastructure.Persistence.Repositories;
@@ -28,6 +29,7 @@ builder.Services.AddScoped<IRoleRepository<RoleModel>, RoleRepository>();
 // == Configure dependency injection for services ==
 builder.Services.AddScoped<SharedEventHandler>();
 builder.Services.AddScoped<ApplicationService>();
+builder.Services.AddScoped<IAntiCorruptionLayer, AntiCorruptionLayer>();
 builder.Services.AddScoped<AntiCorruptionLayerService<AntiCorruptionLayer>>();
 // =================================================
 

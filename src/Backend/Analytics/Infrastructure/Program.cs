@@ -1,5 +1,6 @@
 using Analytics.Application.Repositories;
 using Analytics.Infrastructure.AntiCorruption;
+using Analytics.Infrastructure.AntiCorruption.Interfaces;
 using Analytics.Infrastructure.Persistence;
 using Analytics.Infrastructure.Persistence.Models;
 using Analytics.Infrastructure.Persistence.Repositories;
@@ -26,6 +27,7 @@ builder.Services.AddScoped<ILevelRepository<LevelModel>, LevelRepository>();
 // == Configure dependency injection for services ==
 builder.Services.AddScoped<SharedEventHandler>();
 builder.Services.AddScoped<ApplicationService>();
+builder.Services.AddScoped<IAntiCorruptionLayer, AntiCorruptionLayer>();
 builder.Services.AddScoped<AntiCorruptionLayerService<AntiCorruptionLayer>>();
 // =================================================
 

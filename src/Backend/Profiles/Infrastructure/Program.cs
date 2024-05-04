@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Profiles.Application.Repositories;
 using Profiles.Infrastructure.AntiCorruption;
+using Profiles.Infrastructure.AntiCorruption.Interfaces;
 using Profiles.Infrastructure.Persistence;
 using Profiles.Infrastructure.Persistence.Models;
 using Profiles.Infrastructure.Persistence.Repositories;
@@ -32,6 +33,7 @@ builder.Services.AddScoped<ILevelRepository<LevelModel>, LevelRepository>();
 // == Configure dependency injection for services ==
 builder.Services.AddScoped<SharedEventHandler>();
 builder.Services.AddScoped<ApplicationService>();
+builder.Services.AddScoped<IAntiCorruptionLayer, AntiCorruptionLayer>();
 builder.Services.AddScoped<AntiCorruptionLayerService<AntiCorruptionLayer>>();
 // =================================================
 
