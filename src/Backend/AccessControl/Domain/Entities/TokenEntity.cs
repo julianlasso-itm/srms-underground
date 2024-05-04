@@ -32,7 +32,7 @@ namespace AccessControl.Domain.Entities
     )
     {
       TokenId = new TokenIdValueObject(Guid.NewGuid().ToString());
-      Jwt = jwt; // TODO: Implement JWT generation
+      // Jwt = jwt; // TODO: Implement JWT generation
       FullName = fullName;
       Email = email;
       Photo = photo;
