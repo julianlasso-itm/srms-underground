@@ -9,6 +9,12 @@ namespace Shared.Infrastructure.ProtocolBuffers.AccessControl
   public interface IAccessControlServices
   {
     [OperationContract]
+    Task<RegisterUserResponse> RegisterUserAsync(
+      RegisterUserRequest request,
+      CallContext context = default
+    );
+
+    [OperationContract]
     Task<RegisterRoleAccessControlResponse> RegisterRoleAsync(
       RegisterRoleAccessControlRequest request,
       CallContext context = default

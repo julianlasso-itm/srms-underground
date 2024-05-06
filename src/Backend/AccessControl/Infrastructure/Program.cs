@@ -27,8 +27,9 @@ builder.Services.AddScoped<IRoleRepository<RoleModel>, RoleRepository>();
 // ============================
 
 // == Configure dependency injection for services ==
-builder.Services.AddScoped<SharedEventHandler>();
+builder.Services.AddScoped<MessageService>();
 builder.Services.AddScoped<ApplicationService>();
+builder.Services.AddScoped<SharedEventHandler>();
 builder.Services.AddScoped<IAntiCorruptionLayer, AntiCorruptionLayer>();
 builder.Services.AddScoped<AntiCorruptionLayerService<AntiCorruptionLayer>>();
 // =================================================

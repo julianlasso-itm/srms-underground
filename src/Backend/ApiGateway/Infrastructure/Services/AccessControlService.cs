@@ -16,6 +16,14 @@ namespace ApiGateway.Infrastructure.Services
       CreateChannel(UrlMicroservice);
     }
 
+    public Task<RegisterUserResponse> RegisterUserAsync(
+      RegisterUserRequest request,
+      CallContext context = default
+    )
+    {
+      return Client.RegisterUserAsync(request, context);
+    }
+
     public Task<RegisterRoleAccessControlResponse> RegisterRoleAsync(
       RegisterRoleAccessControlRequest request,
       CallContext context = default

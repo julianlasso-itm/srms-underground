@@ -1,4 +1,4 @@
-using AccessControl.Application;
+using AccessControl.Application.Interfaces;
 using AccessControl.Infrastructure.AntiCorruption.Interfaces;
 using AccessControl.Infrastructure.Persistence.Models;
 
@@ -6,11 +6,11 @@ namespace AccessControl.Infrastructure.Services.Helpers.Base
 {
   public abstract class BaseHelperServiceInfrastructure
   {
-    protected static Application<UserModel, RoleModel> Application;
+    protected static IApplication<UserModel, RoleModel> Application;
     protected static IInfrastructureToApplication AclInputMapper;
     protected static IApplicationToInfrastructure AclOutputMapper;
 
-    public static void SetApplication(Application<UserModel, RoleModel> application)
+    public static void SetApplication(IApplication<UserModel, RoleModel> application)
     {
       Application = application;
     }

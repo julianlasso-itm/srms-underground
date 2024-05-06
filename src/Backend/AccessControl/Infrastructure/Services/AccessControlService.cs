@@ -21,6 +21,15 @@ namespace AccessControl.Infrastructure.Services
       _antiCorruptionLayerService = antiCorruptionLayer;
     }
 
+    public async Task<RegisterUserResponse> RegisterUserAsync(
+      RegisterUserRequest request,
+      CallContext context = default
+    )
+    {
+      RegisterUserHelper.SetApplication(_applicationService.GetApplication());
+      return await RegisterUserHelper.RegisterUserAsync(request);
+    }
+
     public async Task<RegisterRoleAccessControlResponse> RegisterRoleAsync(
       RegisterRoleAccessControlRequest request,
       CallContext context = default

@@ -15,17 +15,20 @@ namespace AccessControl.Application
     where TUserEntity : class
     where TRoleEntity : class
   {
+    private readonly IMessageService _messageService;
     private readonly IUserRepository<TUserEntity> _userRepository;
     private readonly IRoleRepository<TRoleEntity> _roleRepository;
 
     public Application(
       IApplicationToDomain applicationToDomain,
       IDomainToApplication domainToApplication,
+      IMessageService messageService,
       IUserRepository<TUserEntity> userRepository,
       IRoleRepository<TRoleEntity> roleRepository
     )
       : base(applicationToDomain, domainToApplication)
     {
+      _messageService = messageService;
       _userRepository = userRepository;
       _roleRepository = roleRepository;
     }
@@ -36,7 +39,8 @@ namespace AccessControl.Application
         AggregateRoot,
         _userRepository,
         ApplicationToDomain,
-        DomainToApplication
+        DomainToApplication,
+        _messageService
       );
       return useCase.Handle(request);
     }
