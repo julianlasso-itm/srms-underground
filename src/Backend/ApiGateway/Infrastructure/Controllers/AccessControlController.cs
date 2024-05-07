@@ -1,6 +1,8 @@
 using ApiGateway.Infrastructure.Controllers.Base;
+using ApiGateway.Infrastructure.Dto;
 using ApiGateway.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Infrastructure.Cache;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
 
 namespace ApiGateway.Infrastructure.Controllers
@@ -11,17 +13,35 @@ namespace ApiGateway.Infrastructure.Controllers
   {
     private readonly AccessControlService _accessControlService;
 
-    public AccessControlController(AccessControlService accessControlService)
+    public AccessControlController(AccessControlService accessControlService, ICache cache)
+      : base(cache)
     {
       _accessControlService = accessControlService;
     }
 
     [HttpPost("sign-up")]
-    public async Task<IActionResult> RegisterUserAsync([FromForm] RegisterUserRequest request)
+    public async Task<IActionResult> RegisterUserAsync([FromForm] RegisterUserRequestDto request)
     {
-      return await HandleAsync(
-        async () => Ok(await _accessControlService.RegisterUserAsync(request))
-      );
+      using (var memoryStream = new MemoryStream())
+      {
+        await request.Avatar.CopyToAsync(memoryStream);
+        var avatar = memoryStream.ToArray();
+
+        var id = Guid.NewGuid().ToString();
+        Cache.Set(id, avatar);
+
+        var newRequest = new RegisterUserRequest
+        {
+          Name = request.Name,
+          Email = request.Email,
+          Password = request.Password,
+          Avatar = id
+        };
+
+        return await HandleAsync(
+          async () => Ok(await _accessControlService.RegisterUserAsync(newRequest))
+        );
+      }
     }
 
     [HttpPost("role")]

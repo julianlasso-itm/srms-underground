@@ -2,6 +2,7 @@ using ApiGateway.Infrastructure.Controllers.Base;
 using ApiGateway.Infrastructure.Services;
 using Infrastructure.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Infrastructure.Cache;
 using Shared.Infrastructure.ProtocolBuffers.Analytics.Requests;
 
 namespace ApiGateway.Infrastructure.Controllers
@@ -13,7 +14,8 @@ namespace ApiGateway.Infrastructure.Controllers
   {
     private readonly AnalyticsService _analyticsService;
 
-    public AnalyticsController(AnalyticsService analyticsService)
+    public AnalyticsController(AnalyticsService analyticsService, ICache cache)
+      : base(cache)
     {
       _analyticsService = analyticsService;
     }

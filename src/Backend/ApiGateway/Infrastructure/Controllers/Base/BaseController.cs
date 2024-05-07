@@ -2,12 +2,19 @@ using System.ComponentModel;
 using System.Net;
 using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Infrastructure.Cache;
 
 namespace ApiGateway.Infrastructure.Controllers.Base
 {
   public abstract class BaseController : Controller
   {
     const string ContentType = "application/json";
+    protected readonly ICache Cache;
+
+    public BaseController(ICache cache)
+    {
+      Cache = cache;
+    }
 
     [NonAction]
     protected async Task<IActionResult> HandleAsync(Func<Task<IActionResult>> action)
