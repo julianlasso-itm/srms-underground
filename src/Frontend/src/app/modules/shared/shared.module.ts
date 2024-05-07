@@ -7,6 +7,6 @@ import { HttpService } from './services/http.service';
   declarations: [],
   imports: [CommonModule, HttpClientModule],
   providers: [HttpService],
-  exports: [],
+  exports: [HttpClientModule],
 })
 export class SharedModule {}

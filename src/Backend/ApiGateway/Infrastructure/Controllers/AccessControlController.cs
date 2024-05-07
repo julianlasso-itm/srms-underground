@@ -16,8 +16,11 @@ namespace ApiGateway.Infrastructure.Controllers
       _accessControlService = accessControlService;
     }
 
-    [HttpPost("user/register")]
-    public async Task<IActionResult> RegisterUserAsync([FromBody] RegisterUserRequest request)
+    [HttpPost("sign-up")]
+    public async Task<IActionResult> RegisterUserAsync(
+      [FromBody] RegisterUserRequest request,
+      [FromForm] IFormFile file
+    )
     {
       return await HandleAsync(
         async () => Ok(await _accessControlService.RegisterUserAsync(request))

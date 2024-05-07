@@ -1,0 +1,46 @@
+.buttons {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 32px);
+  button {
+    margin: 4px 0;
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+}
+
+mat-dialog-content {
+  padding-bottom: 0 !important;
+}
+
+.avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: 2px solid #54595d;
+  width: 120px;
+}
+
+.container-avatar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.drag-drop-area {
+  border: 2px dashed #ccc;
+  padding: 20px;
+  text-align: center;
+  width: calc(100% - 45px);
+}
+
+.dragging {
+  border-color: green;
+}
+
+.cursor {
+  cursor: pointer;
+}
