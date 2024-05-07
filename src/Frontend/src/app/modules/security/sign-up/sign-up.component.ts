@@ -230,10 +230,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     formData.append('password', data.password);
     formData.append('avatar', data.avatar, data.avatar.name);
 
-    const headers = new HttpHeaders();
-    headers.append('Content-Type', 'application/json');
-
-    this.httpService.post<FormData, any>(URL_SIGN_UP, formData, undefined, headers).subscribe({
+    this.httpService.post<FormData, any>(URL_SIGN_UP, formData).subscribe({
       next: (response) => {
         console.log(response);
         this._snackBar.open('Usuario creado exitosamente.', 'Cerrar', {
