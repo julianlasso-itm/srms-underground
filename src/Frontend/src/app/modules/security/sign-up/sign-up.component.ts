@@ -27,6 +27,7 @@ import { Subscription } from 'rxjs';
 import { Constant } from '../../shared/constants/constants';
 import { HttpService } from '../../shared/services/http.service';
 import { SharedModule } from '../../shared/shared.module';
+import { HttpHeaders } from '@angular/common/http';
 
 const URL_SIGN_UP = `${Constant.URL_BASE}${Constant.URL_SIGN_UP}`;
 
@@ -44,7 +45,8 @@ const URL_SIGN_UP = `${Constant.URL_BASE}${Constant.URL_SIGN_UP}`;
     MatSnackBarModule,
     ReactiveFormsModule,
     SharedModule,
-  ],
+    ],
+  providers: [HttpService],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
 })
@@ -60,7 +62,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   constructor(
     private renderer: Renderer2,
     private _snackBar: MatSnackBar,
-    private httpService: HttpService
+    private readonly httpService: HttpService
   ) {
     this.frmSignUp = new FormGroup(
       {
@@ -226,7 +228,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     formData.append('name', data.name);
     formData.append('email', data.email);
     formData.append('password', data.password);
-    formData.append('avatar', data.avatar);
+    formData.append('avatar', data.avatar, data.avatar.name);
 
     this.httpService.post<FormData, any>(URL_SIGN_UP, formData).subscribe({
       next: (response) => {
