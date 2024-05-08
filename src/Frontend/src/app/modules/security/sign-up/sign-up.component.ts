@@ -27,7 +27,6 @@ import { Subscription } from 'rxjs';
 import { Constant } from '../../shared/constants/constants';
 import { HttpService } from '../../shared/services/http.service';
 import { SharedModule } from '../../shared/shared.module';
-import { HttpHeaders } from '@angular/common/http';
 
 const URL_SIGN_UP = `${Constant.URL_BASE}${Constant.URL_SIGN_UP}`;
 
@@ -45,7 +44,7 @@ const URL_SIGN_UP = `${Constant.URL_BASE}${Constant.URL_SIGN_UP}`;
     MatSnackBarModule,
     ReactiveFormsModule,
     SharedModule,
-    ],
+  ],
   providers: [HttpService],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
