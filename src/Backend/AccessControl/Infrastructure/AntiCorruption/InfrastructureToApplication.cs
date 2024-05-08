@@ -50,5 +50,16 @@ namespace AccessControl.Infrastructure.AntiCorruption
     {
       return new DeleteRoleCommand { RoleId = request.RoleId };
     }
+
+    public RegisterUserCommand ToRegisterUserCommand(RegisterUserRequest request)
+    {
+      return new RegisterUserCommand
+      {
+        Name = request.Name,
+        Email = request.Email,
+        Password = request.Password,
+        Avatar = request.Avatar,
+      };
+    }
   }
 }

@@ -4,6 +4,7 @@ using AccessControl.Application.Repositories;
 using AccessControl.Domain.Aggregates;
 using AccessControl.Infrastructure.AntiCorruption;
 using AccessControl.Infrastructure.Persistence.Models;
+using Shared.Application.Interfaces;
 using Shared.Infrastructure.Events;
 using Shared.Infrastructure.Services;
 
@@ -18,6 +19,8 @@ namespace AccessControl.Infrastructure.Services
       IUserRepository<UserModel> userRepository,
       IRoleRepository<RoleModel> roleRepository,
       MessageService messageService,
+      ICacheService cacheService,
+      IStoreService storeService,
       AntiCorruptionLayerService<AntiCorruptionLayer> antiCorruptionLayerService
     )
     {
@@ -25,6 +28,8 @@ namespace AccessControl.Infrastructure.Services
         antiCorruptionLayerService.GetAntiCorruptionLayer().GetApplicationToDomain(),
         antiCorruptionLayerService.GetAntiCorruptionLayer().GetDomainToApplication(),
         messageService,
+        cacheService,
+        storeService,
         userRepository,
         roleRepository
       )

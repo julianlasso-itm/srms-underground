@@ -66,8 +66,10 @@ namespace AccessControl.Infrastructure.AntiCorruption
       return new RegisterUserApplicationResponse
       {
         UserId = user.CredentialId,
+        Name = user.Name,
         Email = user.Email,
         Password = user.Password,
+        Photo = user.Photo,
         Disabled = user.Disabled,
       };
     }

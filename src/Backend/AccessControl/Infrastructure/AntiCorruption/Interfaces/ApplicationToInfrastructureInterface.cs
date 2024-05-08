@@ -17,5 +17,7 @@ namespace AccessControl.Infrastructure.AntiCorruption.Interfaces
     public UpdateRoleAccessControlResponse ToUpdateRoleResponse(UpdateRoleApplicationResponse data);
 
     public DeleteRoleAccessControlResponse ToDeleteRoleResponse(DeleteRoleApplicationResponse data);
+
+    public RegisterUserResponse ToRegisterUserResponse(RegisterUserApplicationResponse data);
   }
 }

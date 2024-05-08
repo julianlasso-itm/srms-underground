@@ -1,9 +1,9 @@
-namespace Shared.Infrastructure.Cache
+namespace Shared.Application.Interfaces
 {
-  public interface ICache
+  public interface ICacheService
   {
     string? Get(string key);
-    Type[]? Get<Type>(string key);
+    byte[]? GetBytes(string key);
     void Set(string key, string value);
     void Set(string key, byte[] value);
     void Remove(string key);

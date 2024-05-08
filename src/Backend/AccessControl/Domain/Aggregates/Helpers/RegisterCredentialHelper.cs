@@ -20,21 +20,31 @@ internal abstract class RegisterCredentialHelper
     ValidateStructureFields(@struct);
 
     var credential = new CredentialEntity();
-    credential.Register(@struct.Email, @struct.Password);
+    credential.Register(@struct.Name, @struct.Email, @struct.Password, @struct.Photo);
 
     return new RegisterCredentialDomainResponse
     {
       CredentialId = credential.CredentialId.Value,
+      Name = credential.Name.Value,
       Email = credential.Email.Value,
       Password = credential.Password.Value,
+      Photo = credential.Photo.Value,
       Disabled = credential.Disabled.Value,
     };
   }
 
   private static CredentialStruct GetCredentialStruct(RegisterCredentialDomainRequest registerData)
   {
+    var name = new FullNameValueObject(registerData.Name);
     var email = new EmailValueObject(registerData.Email);
     var password = new PasswordValueObject(registerData.Password);
-    return new CredentialStruct { Email = email, Password = password };
+    var photo = new PhotoValueObject(registerData.Photo);
+    return new CredentialStruct
+    {
+      Name = name,
+      Email = email,
+      Password = password,
+      Photo = photo,
+    };
   }
 }

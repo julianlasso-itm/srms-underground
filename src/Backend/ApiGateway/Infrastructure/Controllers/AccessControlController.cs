@@ -2,7 +2,7 @@ using ApiGateway.Infrastructure.Controllers.Base;
 using ApiGateway.Infrastructure.Dto;
 using ApiGateway.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Infrastructure.Cache;
+using Shared.Application.Interfaces;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
 
 namespace ApiGateway.Infrastructure.Controllers
@@ -13,8 +13,8 @@ namespace ApiGateway.Infrastructure.Controllers
   {
     private readonly AccessControlService _accessControlService;
 
-    public AccessControlController(AccessControlService accessControlService, ICache cache)
-      : base(cache)
+    public AccessControlController(AccessControlService accessControlService, ICacheService cacheService)
+      : base(cacheService)
     {
       _accessControlService = accessControlService;
     }
@@ -28,7 +28,7 @@ namespace ApiGateway.Infrastructure.Controllers
         var avatar = memoryStream.ToArray();
 
         var id = Guid.NewGuid().ToString();
-        Cache.Set(id, avatar);
+        CacheService.Set(id, avatar);
 
         var newRequest = new RegisterUserRequest
         {

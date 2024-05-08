@@ -15,8 +15,10 @@ namespace AccessControl.Infrastructure.Persistence.Repositories
       var user = new UserModel
       {
         UserId = Guid.Parse(entity.UserId),
+        Name = entity.Name,
         Email = entity.Email,
         Password = entity.Password,
+        Photo = entity.Photo,
         Disabled = entity.Disabled,
         CreatedAt = DateTime.UtcNow
       };

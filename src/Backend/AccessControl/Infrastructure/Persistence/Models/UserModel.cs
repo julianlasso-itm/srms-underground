@@ -16,6 +16,11 @@ namespace AccessControl.Infrastructure.Persistence.Models
     public Guid UserId { get; set; }
 
     [Required]
+    [Column("usr_name")]
+    [MaxLength(100)]
+    public string Name { get; set; }
+
+    [Required]
     [Column("usr_email")]
     [MaxLength(500)]
     public string Email { get; set; }
@@ -24,6 +29,11 @@ namespace AccessControl.Infrastructure.Persistence.Models
     [Column("usr_password")]
     [MaxLength(128)]
     public string Password { get; set; }
+
+    [Required]
+    [Column("usr_photo")]
+    [MaxLength(500)]
+    public string Photo { get; set; }
 
     [Required]
     [Column("usr_disabled")]

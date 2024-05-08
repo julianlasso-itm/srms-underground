@@ -1,8 +1,10 @@
+using System.Text;
+using Shared.Application.Interfaces;
 using StackExchange.Redis;
 
-namespace Shared.Infrastructure.Cache
+namespace Shared.Infrastructure.Services
 {
-  public class CacheService : ICache
+  public class CacheService : ICacheService
   {
     private readonly ConnectionMultiplexer _cache;
     private readonly IDatabase _database;
@@ -18,9 +20,9 @@ namespace Shared.Infrastructure.Cache
       return _database.StringGet(key);
     }
 
-    public Type[]? Get<Type>(string key)
+    public byte[]? GetBytes(string key)
     {
-      return [(Type)(object)_database.StringGet(key)];
+      return _database.StringGet(key);
     }
 
     public void Set(string key, string value)

@@ -27,6 +27,7 @@ namespace AccessControl.Infrastructure.Services
     )
     {
       RegisterUserHelper.SetApplication(_applicationService.GetApplication());
+      RegisterUserHelper.SetAntiCorruptionLayer(_antiCorruptionLayerService);
       return await RegisterUserHelper.RegisterUserAsync(request);
     }
 

@@ -2,18 +2,18 @@ using System.ComponentModel;
 using System.Net;
 using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Infrastructure.Cache;
+using Shared.Application.Interfaces;
 
 namespace ApiGateway.Infrastructure.Controllers.Base
 {
   public abstract class BaseController : Controller
   {
     const string ContentType = "application/json";
-    protected readonly ICache Cache;
+    protected readonly ICacheService CacheService;
 
-    public BaseController(ICache cache)
+    public BaseController(ICacheService cacheService)
     {
-      Cache = cache;
+      CacheService = cacheService;
     }
 
     [NonAction]

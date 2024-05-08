@@ -7,6 +7,7 @@ using AccessControl.Infrastructure.Persistence.Repositories;
 using AccessControl.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using ProtoBuf.Grpc.Server;
+using Shared.Application.Interfaces;
 using Shared.Infrastructure.Events;
 using Shared.Infrastructure.Interceptors;
 using Shared.Infrastructure.Services;
@@ -30,6 +31,8 @@ builder.Services.AddScoped<IRoleRepository<RoleModel>, RoleRepository>();
 builder.Services.AddScoped<MessageService>();
 builder.Services.AddScoped<ApplicationService>();
 builder.Services.AddScoped<SharedEventHandler>();
+builder.Services.AddScoped<ICacheService, CacheService>();
+builder.Services.AddScoped<IStoreService, StoreService>();
 builder.Services.AddScoped<IAntiCorruptionLayer, AntiCorruptionLayer>();
 builder.Services.AddScoped<AntiCorruptionLayerService<AntiCorruptionLayer>>();
 // =================================================

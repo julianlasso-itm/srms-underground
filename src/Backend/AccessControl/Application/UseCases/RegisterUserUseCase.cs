@@ -7,6 +7,7 @@ using AccessControl.Application.Responses;
 using AccessControl.Domain.Aggregates.Constants;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
+using Shared.Application.Interfaces;
 
 namespace AccessControl.Application.UseCases
 {
@@ -28,13 +29,20 @@ namespace AccessControl.Application.UseCases
       IUserRepository<TEntity> userRepository,
       IApplicationToDomain applicationToDomain,
       IDomainToApplication domainToApplication,
-      IMessageService messageService
+      IMessageService messageService,
+      ICacheService cacheService,
+      IStoreService storeService
     )
       : base(
         aggregateRoot,
         applicationToDomain,
         domainToApplication,
-        new Dictionary<string, object> { { "MessageService", messageService } }
+        new Dictionary<string, object>
+        {
+          { "MessageService", messageService },
+          { "CacheService", cacheService },
+          { "StoreService", storeService },
+        }
       )
     {
       _userRepository = userRepository;
@@ -42,6 +50,8 @@ namespace AccessControl.Application.UseCases
 
     public override async Task<RegisterUserApplicationResponse> Handle(RegisterUserCommand request)
     {
+      var avatar = StoreAvatar(request.Avatar);
+      request.Avatar = avatar;
       var command = AclInputMapper.ToRegisterCredentialDomainRequest(request);
       var user = AggregateRoot.RegisterCredential(command);
       var response = AclOutputMapper.ToRegisterUserApplicationResponse(user);
@@ -58,14 +68,47 @@ namespace AccessControl.Application.UseCases
       return await _userRepository.AddAsync(response);
     }
 
+    private string StoreAvatar(string avatar) {
+      if (Services == null || !Services.ContainsKey("CacheService"))
+      {
+        throw new InvalidOperationException("CacheService parameter is not set.");
+      }
+
+      Services.TryGetValue("CacheService", out var cacheServiceObj);
+      var cacheService =
+        cacheServiceObj as ICacheService
+        ?? throw new InvalidCastException(
+          "Provided cacheService object is not of type ICacheService."
+        );
+
+      // var avatarBlob = cacheService.Get<byte>(avatar);
+      var avatarBlob = cacheService.GetBytes(avatar);
+
+      if (Services == null || !Services.ContainsKey("StoreService"))
+      {
+        throw new InvalidOperationException("StoreService parameter is not set.");
+      }
+
+      Services.TryGetValue("StoreService", out var storeServiceObj);
+      var storeService =
+        storeServiceObj as IStoreService
+        ?? throw new InvalidCastException(
+          "Provided storeService object is not of type IStoreService."
+        );
+
+      var result = storeService.AddAsync(avatarBlob!);
+      cacheService.Remove(avatar);
+      return result;
+    }
+
     private void SendConfirmationEmail(RegisterUserApplicationResponse response)
     {
-      if (Parameters == null || !Parameters.ContainsKey("MessageService"))
+      if (Services == null || !Services.ContainsKey("MessageService"))
       {
         throw new InvalidOperationException("MessageService parameter is not set.");
       }
 
-      Parameters.TryGetValue("MessageService", out var messageServiceObj);
+      Services.TryGetValue("MessageService", out var messageServiceObj);
       var messageService =
         messageServiceObj as IMessageService
         ?? throw new InvalidCastException(

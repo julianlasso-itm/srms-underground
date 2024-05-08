@@ -50,9 +50,7 @@ namespace AccessControl.Infrastructure.AntiCorruption
       };
     }
 
-    public UpdateRoleAccessControlResponse ToUpdateRoleResponse(
-      UpdateRoleApplicationResponse data
-    )
+    public UpdateRoleAccessControlResponse ToUpdateRoleResponse(UpdateRoleApplicationResponse data)
     {
       return new UpdateRoleAccessControlResponse
       {
@@ -63,11 +61,21 @@ namespace AccessControl.Infrastructure.AntiCorruption
       };
     }
 
-    public DeleteRoleAccessControlResponse ToDeleteRoleResponse(
-      DeleteRoleApplicationResponse data
-    )
+    public DeleteRoleAccessControlResponse ToDeleteRoleResponse(DeleteRoleApplicationResponse data)
     {
       return new DeleteRoleAccessControlResponse { RoleId = data.RoleId };
+    }
+
+    public RegisterUserResponse ToRegisterUserResponse(RegisterUserApplicationResponse data)
+    {
+      return new RegisterUserResponse
+      {
+        UserId = data.UserId,
+        Name = data.Name,
+        Email = data.Email,
+        Photo = data.Photo,
+        Disabled = data.Disabled,
+      };
     }
   }
 }

@@ -48,8 +48,10 @@ namespace AccessControl.Infrastructure.AntiCorruption
     {
       return new RegisterCredentialDomainRequest
       {
+        Name = request.Name,
         Email = request.Email,
         Password = request.Password,
+        Photo = request.Avatar,
       };
     }
   }

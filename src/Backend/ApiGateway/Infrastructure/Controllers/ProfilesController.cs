@@ -1,7 +1,7 @@
 using ApiGateway.Infrastructure.Controllers.Base;
 using ApiGateway.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Infrastructure.Cache;
+using Shared.Application.Interfaces;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
 
 namespace ApiGateway.Infrastructure.Controllers
@@ -12,7 +12,7 @@ namespace ApiGateway.Infrastructure.Controllers
   {
     private readonly ProfilesService _profilesService;
 
-    public ProfilesController(ProfilesService profilesService, ICache cache)
+    public ProfilesController(ProfilesService profilesService, ICacheService cache)
       : base(cache)
     {
       _profilesService = profilesService;

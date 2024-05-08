@@ -6,6 +6,7 @@ using AccessControl.Application.Responses;
 using AccessControl.Application.UseCases;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
+using Shared.Application.Interfaces;
 
 namespace AccessControl.Application
 {
@@ -16,6 +17,8 @@ namespace AccessControl.Application
     where TRoleEntity : class
   {
     private readonly IMessageService _messageService;
+    private readonly ICacheService _cacheService;
+    private readonly IStoreService _storeService;
     private readonly IUserRepository<TUserEntity> _userRepository;
     private readonly IRoleRepository<TRoleEntity> _roleRepository;
 
@@ -23,12 +26,16 @@ namespace AccessControl.Application
       IApplicationToDomain applicationToDomain,
       IDomainToApplication domainToApplication,
       IMessageService messageService,
+      ICacheService cacheService,
+      IStoreService storeService,
       IUserRepository<TUserEntity> userRepository,
       IRoleRepository<TRoleEntity> roleRepository
     )
       : base(applicationToDomain, domainToApplication)
     {
       _messageService = messageService;
+      _cacheService = cacheService;
+      _storeService = storeService;
       _userRepository = userRepository;
       _roleRepository = roleRepository;
     }
@@ -40,7 +47,9 @@ namespace AccessControl.Application
         _userRepository,
         ApplicationToDomain,
         DomainToApplication,
-        _messageService
+        _messageService,
+        _cacheService,
+        _storeService
       );
       return useCase.Handle(request);
     }
