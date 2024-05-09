@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -5,6 +6,7 @@ import {
   OnInit,
   Renderer2,
   ViewChild,
+  signal,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -21,7 +23,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { Constant } from '../../shared/constants/constants';
@@ -34,13 +36,14 @@ const URL_SIGN_UP = `${Constant.URL_BASE}${Constant.URL_SIGN_UP}`;
   selector: 'srms-sign-up',
   standalone: true,
   imports: [
+    CommonModule,
     FormsModule,
     MatButtonModule,
     MatDialogModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatProgressBarModule,
+    MatProgressSpinnerModule,
     MatSnackBarModule,
     ReactiveFormsModule,
     SharedModule,
@@ -54,7 +57,10 @@ export class SignUpComponent implements OnInit, OnDestroy {
   @ViewChild('dragArea') dragArea!: ElementRef;
   @ViewChild('avatar', { static: false }) avatar!: ElementRef;
 
+  readonly AVATAR_URL = './assets/images/user-avatar.svg';
+
   frmSignUp: FormGroup;
+  creatingUser = signal(false);
 
   private frmSignUpSubscription: Subscription;
 
@@ -63,16 +69,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
     private _snackBar: MatSnackBar,
     private readonly httpService: HttpService
   ) {
-    this.frmSignUp = new FormGroup(
-      {
-        name: new FormControl('', [Validators.required]),
-        email: new FormControl('', [Validators.required, Validators.email]),
-        password: new FormControl('', [Validators.required]),
-        passwordConfirmation: new FormControl('', [Validators.required]),
-        avatar: new FormControl(null, [Validators.required]),
-      },
-      { validators: SignUpComponent.passwordsMatch }
-    );
+    this.frmSignUp = this.defineForm();
+    console.log(this.frmSignUp);
 
     this.frmSignUpSubscription = this.frmSignUp.valueChanges.subscribe(
       (value) => {
@@ -220,8 +218,9 @@ export class SignUpComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    console.log(this.frmSignUp);
+    this.creatingUser.set(true);
     const data = this.frmSignUp.value;
-    console.log(data);
 
     const formData = new FormData();
     formData.append('name', data.name);
@@ -235,9 +234,20 @@ export class SignUpComponent implements OnInit, OnDestroy {
         this._snackBar.open('Usuario creado exitosamente.', 'Cerrar', {
           duration: 5000,
         });
+        this.frmSignUp.reset({
+          name: '',
+          email: '',
+          password: '',
+          passwordConfirmation: '',
+          avatar: null,
+        });
+        this.frmSignUp = this.defineForm();
       },
       complete: () => {
         console.log('Sign up complete');
+        this.creatingUser.set(false);
+        this.avatar.nativeElement.src = this.AVATAR_URL;
+        console.log(this.frmSignUp);
       },
       error: (error) => {
         console.error(error);
@@ -246,5 +256,18 @@ export class SignUpComponent implements OnInit, OnDestroy {
         });
       },
     });
+  }
+
+  private defineForm(): FormGroup {
+    return new FormGroup(
+      {
+        name: new FormControl('', [Validators.required]),
+        email: new FormControl('', [Validators.required, Validators.email]),
+        password: new FormControl('', [Validators.required]),
+        passwordConfirmation: new FormControl('', [Validators.required]),
+        avatar: new FormControl(null, [Validators.required]),
+      },
+      { validators: SignUpComponent.passwordsMatch }
+    );
   }
 }

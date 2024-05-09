@@ -34,7 +34,8 @@
     <!-- Confirm password -->
     <mat-form-field class="width-100">
       <mat-label>Confirme su contraseña</mat-label>
-      <input matInput type="password" formControlName="passwordConfirmation" placeholder="Confirme su contraseña" required>
+      <input matInput type="password" formControlName="passwordConfirmation" placeholder="Confirme su contraseña"
+        required>
       @if (frmSignUp.get('passwordConfirmation')?.hasError('required')) {
       <mat-error>La confirmación de la contraseña es obligatoria</mat-error>
       } @else if (frmSignUp.hasError('passwordsDontMatch')) {
@@ -43,13 +44,18 @@
     </mat-form-field>
 
     <!-- Avatar -->
-    <div #dragArea class="width-100 container-avatar drag-drop-area cursor" (click)="triggerFileInput()"
-      (drop)="onDrop($event)" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" onKeyPress=""
-      onKeyDown="" onKeyUp="">
-      <mat-label>Cargue aquí su foto</mat-label>
-      <input type="file" #fileInput hidden (change)="onFileSelect($event)" accept="image/*">
-      <input type="text" formControlName="avatar" hidden>
-      <img #avatar src="./assets/images/user-avatar.svg" alt="Avatar" class="avatar">
+    <div>
+      <div #dragArea class="width-100 container-avatar drag-drop-area cursor" [ngClass]="{'disabled': creatingUser()}"
+        (click)="triggerFileInput()" (drop)="onDrop($event)" (dragover)="onDragOver($event)"
+        (dragleave)="onDragLeave($event)" onKeyPress="" onKeyDown="" onKeyUp="">
+        <mat-label>Cargue aquí su foto</mat-label>
+        <input type="file" #fileInput hidden (change)="onFileSelect($event)" accept="image/*">
+        <input type="text" formControlName="avatar" hidden>
+        <img #avatar [src]="AVATAR_URL" alt="Avatar" class="avatar">
+      </div>
+      <div class="backdoor" [ngClass]="{'hidden': !creatingUser()}">
+        <mat-spinner color="primary"></mat-spinner>
+      </div>
     </div>
 
   </form>
