@@ -13,7 +13,10 @@ namespace ApiGateway.Infrastructure.Controllers
   {
     private readonly AccessControlService _accessControlService;
 
-    public AccessControlController(AccessControlService accessControlService, ICacheService cacheService)
+    public AccessControlController(
+      AccessControlService accessControlService,
+      ICacheService cacheService
+    )
       : base(cacheService)
     {
       _accessControlService = accessControlService;
@@ -22,26 +25,24 @@ namespace ApiGateway.Infrastructure.Controllers
     [HttpPost("sign-up")]
     public async Task<IActionResult> RegisterUserAsync([FromForm] RegisterUserRequestDto request)
     {
-      using (var memoryStream = new MemoryStream())
+      using var memoryStream = new MemoryStream();
+      await request.Avatar.CopyToAsync(memoryStream);
+      var avatar = memoryStream.ToArray();
+      var id = Guid.NewGuid().ToString();
+      CacheService.Set(id, avatar);
+
+      var newRequest = new RegisterUserRequest
       {
-        await request.Avatar.CopyToAsync(memoryStream);
-        var avatar = memoryStream.ToArray();
+        Name = request.Name,
+        Email = request.Email,
+        Password = request.Password,
+        Avatar = id,
+        AvatarExtension = Path.GetExtension(request.Avatar.FileName),
+      };
 
-        var id = Guid.NewGuid().ToString();
-        CacheService.Set(id, avatar);
-
-        var newRequest = new RegisterUserRequest
-        {
-          Name = request.Name,
-          Email = request.Email,
-          Password = request.Password,
-          Avatar = id
-        };
-
-        return await HandleAsync(
-          async () => Ok(await _accessControlService.RegisterUserAsync(newRequest))
-        );
-      }
+      return await HandleAsync(
+        async () => Ok(await _accessControlService.RegisterUserAsync(newRequest))
+      );
     }
 
     [HttpPost("role")]

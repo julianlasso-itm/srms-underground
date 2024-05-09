@@ -1,18 +1,31 @@
+using Azure.Storage.Blobs;
 using Shared.Application.Interfaces;
 
 namespace Shared.Infrastructure.Services
 {
   public class StoreService : IStoreService
   {
-    public string AddAsync(byte[] data)
+    private readonly string _storeUrl =
+      "DefaultEndpointsProtocol=https;AccountName=orderszulu2024;AccountKey=aUBtiF7GTURebDNoae/2mn3BxISYUe5GzpldozWo96SI07nPU/M3XUf3JjUdtdlX/nTsJ48/8EkM+AStm/YdLA==;EndpointSuffix=core.windows.net";
+
+    public async Task<string> AddAsync(byte[] data, string extension, string containerName)
     {
-      Console.WriteLine("Adding data to store");
-      return "https://store.com/data/1";
+      var client = new BlobServiceClient(_storeUrl);
+      var containerClient = client.GetBlobContainerClient(containerName);
+      await containerClient.CreateIfNotExistsAsync();
+      var fileName = $"SRMS-{Guid.NewGuid()}{extension}";
+      var blobClient = containerClient.GetBlobClient(fileName);
+      await blobClient.UploadAsync(new MemoryStream(data), true);
+      return blobClient.Uri.ToString();
     }
 
-    public void RemoveAsync(string path)
+    public async Task RemoveAsync(string path, string containerName)
     {
-      Console.WriteLine("Removing data from store");
+      var client = new BlobServiceClient(_storeUrl);
+      var containerClient = client.GetBlobContainerClient(containerName);
+      await containerClient.CreateIfNotExistsAsync();
+      var blobClient = containerClient.GetBlobClient(path);
+      await blobClient.DeleteIfExistsAsync();
     }
   }
 }

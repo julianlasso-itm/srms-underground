@@ -59,6 +59,7 @@ namespace AccessControl.Infrastructure.AntiCorruption
         Email = request.Email,
         Password = request.Password,
         Avatar = request.Avatar,
+        AvatarExtension = request.AvatarExtension
       };
     }
   }

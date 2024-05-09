@@ -50,7 +50,7 @@ namespace AccessControl.Application.UseCases
 
     public override async Task<RegisterUserApplicationResponse> Handle(RegisterUserCommand request)
     {
-      var avatar = StoreAvatar(request.Avatar);
+      var avatar = await StoreAvatar(request.Avatar, request.AvatarExtension);
       request.Avatar = avatar;
       var command = AclInputMapper.ToRegisterCredentialDomainRequest(request);
       var user = AggregateRoot.RegisterCredential(command);
@@ -68,7 +68,8 @@ namespace AccessControl.Application.UseCases
       return await _userRepository.AddAsync(response);
     }
 
-    private string StoreAvatar(string avatar) {
+    private async Task<string> StoreAvatar(string avatar, string extension)
+    {
       if (Services == null || !Services.ContainsKey("CacheService"))
       {
         throw new InvalidOperationException("CacheService parameter is not set.");
@@ -81,7 +82,6 @@ namespace AccessControl.Application.UseCases
           "Provided cacheService object is not of type ICacheService."
         );
 
-      // var avatarBlob = cacheService.Get<byte>(avatar);
       var avatarBlob = cacheService.GetBytes(avatar);
 
       if (Services == null || !Services.ContainsKey("StoreService"))
@@ -96,7 +96,7 @@ namespace AccessControl.Application.UseCases
           "Provided storeService object is not of type IStoreService."
         );
 
-      var result = storeService.AddAsync(avatarBlob!);
+      var result = await storeService.AddAsync(avatarBlob!, extension, "users");
       cacheService.Remove(avatar);
       return result;
     }

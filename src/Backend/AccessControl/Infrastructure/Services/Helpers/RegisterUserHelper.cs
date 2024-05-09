@@ -12,27 +12,4 @@ internal class RegisterUserHelper : BaseHelperServiceInfrastructure
     var data = await Application.RegisterUser(command);
     return AclOutputMapper.ToRegisterUserResponse(data); // MapToRegisterUserResponse(data);
   }
-
-  // private static RegisterUserCommand MapToRegisterUserCommand(RegisterUserRequest request)
-  // {
-  //   return new RegisterUserCommand
-  //   {
-  //     Name = request.Name,
-  //     Email = request.Email,
-  //     Password = request.Password,
-  //     Avatar = request.Avatar,
-  //   };
-  // }
-
-  // private static RegisterUserResponse MapToRegisterUserResponse(
-  //   RegisterUserApplicationResponse data
-  // )
-  // {
-  //   return new RegisterUserResponse
-  //   {
-  //     UserId = data.UserId,
-  //     Email = data.Email,
-  //     Disabled = data.Disabled,
-  //   };
-  // }
 }

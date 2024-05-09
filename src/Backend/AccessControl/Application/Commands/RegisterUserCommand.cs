@@ -8,5 +8,6 @@ namespace AccessControl.Application.Commands
     public required string Email { get; init; }
     public required string Password { get; init; }
     public required string Avatar { get; set; }
+    public required string AvatarExtension { get; set; }
   }
 }
