@@ -21,6 +21,7 @@ namespace AccessControl.Application.UseCases
     >
     where TEntity : class
   {
+    private const string ContainerName = "users";
     private readonly IUserRepository<TEntity> _userRepository;
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventCredentialRegistered}";
 
@@ -96,7 +97,7 @@ namespace AccessControl.Application.UseCases
           "Provided storeService object is not of type IStoreService."
         );
 
-      var result = await storeService.AddAsync(avatarBlob!, extension, "users");
+      var result = await storeService.AddAsync(avatarBlob!, extension, ContainerName);
       cacheService.Remove(avatar);
       return result;
     }
