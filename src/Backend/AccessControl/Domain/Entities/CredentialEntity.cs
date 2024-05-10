@@ -9,7 +9,7 @@ internal sealed class CredentialEntity
   public FullNameValueObject Name { get; private set; }
   public EmailValueObject Email { get; private set; }
   public PasswordValueObject Password { get; private set; }
-  public PhotoValueObject Photo { get; private set; }
+  public AvatarValueObject Avatar { get; private set; }
   public DisabledValueObject Disabled { get; private set; }
 
   public CredentialEntity() { }
@@ -20,7 +20,7 @@ internal sealed class CredentialEntity
     Name = data.Name;
     Email = data.Email;
     Password = data.Password;
-    Photo = data.Photo;
+    Avatar = data.Avatar;
     Disabled = data.Disabled;
   }
 
@@ -28,14 +28,14 @@ internal sealed class CredentialEntity
     FullNameValueObject name,
     EmailValueObject email,
     PasswordValueObject password,
-    PhotoValueObject photo
+    AvatarValueObject avatar
   )
   {
     CredentialId = new CredentialIdValueObject(Guid.NewGuid().ToString());
     Name = name;
     Email = email;
     Password = password;
-    Photo = photo;
+    Avatar = avatar;
     Disabled = new DisabledValueObject(false);
   }
 
@@ -54,9 +54,9 @@ internal sealed class CredentialEntity
     Disabled = new DisabledValueObject(true);
   }
 
-  public void UpdatePhoto(PhotoValueObject photo)
+  public void UpdateAvatar(AvatarValueObject avatar)
   {
-    Photo = photo;
+    Avatar = avatar;
   }
 
   public void UpdateName(FullNameValueObject name)

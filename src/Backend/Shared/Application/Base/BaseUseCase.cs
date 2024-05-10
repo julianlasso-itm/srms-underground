@@ -14,19 +14,16 @@ namespace Shared.Application.Base
     protected readonly TAggregateRoot AggregateRoot;
     protected readonly TAclInputMapper AclInputMapper;
     protected readonly TAclOutputMapper AclOutputMapper;
-    protected readonly Dictionary<string, object>? Services;
 
     protected BaseUseCase(
       TAggregateRoot aggregateRoot,
       TAclInputMapper aclInputMapper,
-      TAclOutputMapper aclOutputMapper,
-      Dictionary<string, object>? services = null
+      TAclOutputMapper aclOutputMapper
     )
     {
       AggregateRoot = aggregateRoot;
       AclInputMapper = aclInputMapper;
       AclOutputMapper = aclOutputMapper;
-      Services = services;
     }
 
     public abstract Task<TResponse> Handle(TCommand request);

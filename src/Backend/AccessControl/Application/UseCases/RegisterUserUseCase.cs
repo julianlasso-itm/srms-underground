@@ -24,6 +24,9 @@ namespace AccessControl.Application.UseCases
     private const string ContainerName = "users";
     private readonly IUserRepository<TEntity> _userRepository;
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventCredentialRegistered}";
+    private readonly ICacheService _cacheService;
+    private readonly IStoreService _storeService;
+    private readonly IMessageService _messageService;
 
     public RegisterUserUseCase(
       ISecurityAggregateRoot aggregateRoot,
@@ -34,32 +37,29 @@ namespace AccessControl.Application.UseCases
       ICacheService cacheService,
       IStoreService storeService
     )
-      : base(
-        aggregateRoot,
-        applicationToDomain,
-        domainToApplication,
-        new Dictionary<string, object>
-        {
-          { "MessageService", messageService },
-          { "CacheService", cacheService },
-          { "StoreService", storeService },
-        }
-      )
+      : base(aggregateRoot, applicationToDomain, domainToApplication)
     {
       _userRepository = userRepository;
+      _cacheService = cacheService;
+      _storeService = storeService;
+      _messageService = messageService;
     }
 
     public override async Task<RegisterUserApplicationResponse> Handle(RegisterUserCommand request)
     {
-      var avatar = await StoreAvatar(request.Avatar, request.AvatarExtension);
-      request.Avatar = avatar;
+      request.AvatarBytes = GetAvatarBlob(request.Avatar);
+      DeleteAvatarFromCache(request.Avatar);
       var command = AclInputMapper.ToRegisterCredentialDomainRequest(request);
       var user = AggregateRoot.RegisterCredential(command);
+      if (user.Photo.Length == 0)
+      {
+        user.Photo = await StoreAvatar(user.Avatar, request.AvatarExtension);
+      }
       var response = AclOutputMapper.ToRegisterUserApplicationResponse(user);
 
       _ = await Persist(response);
-      EmitEvent(Channel, JsonSerializer.Serialize(response));
       SendConfirmationEmail(response);
+      EmitEvent(Channel, JsonSerializer.Serialize(response));
 
       return response;
     }
@@ -69,60 +69,32 @@ namespace AccessControl.Application.UseCases
       return await _userRepository.AddAsync(response);
     }
 
-    private async Task<string> StoreAvatar(string avatar, string extension)
+    private byte[] GetAvatarBlob(string avatar)
     {
-      if (Services == null || !Services.ContainsKey("CacheService"))
-      {
-        throw new InvalidOperationException("CacheService parameter is not set.");
-      }
+      var avatarBlob =
+        _cacheService.GetBytes(avatar) ?? throw new InvalidOperationException("Avatar not found.");
+      return avatarBlob;
+    }
 
-      Services.TryGetValue("CacheService", out var cacheServiceObj);
-      var cacheService =
-        cacheServiceObj as ICacheService
-        ?? throw new InvalidCastException(
-          "Provided cacheService object is not of type ICacheService."
-        );
+    private async Task<string> StoreAvatar(byte[] avatarBlob, string extension)
+    {
+      return await _storeService.AddAsync(avatarBlob, extension, ContainerName);
+    }
 
-      var avatarBlob = cacheService.GetBytes(avatar);
-
-      if (Services == null || !Services.ContainsKey("StoreService"))
-      {
-        throw new InvalidOperationException("StoreService parameter is not set.");
-      }
-
-      Services.TryGetValue("StoreService", out var storeServiceObj);
-      var storeService =
-        storeServiceObj as IStoreService
-        ?? throw new InvalidCastException(
-          "Provided storeService object is not of type IStoreService."
-        );
-
-      var result = await storeService.AddAsync(avatarBlob!, extension, ContainerName);
-      cacheService.Remove(avatar);
-      return result;
+    private void DeleteAvatarFromCache(string avatar)
+    {
+      _cacheService.Remove(avatar);
     }
 
     private void SendConfirmationEmail(RegisterUserApplicationResponse response)
     {
-      if (Services == null || !Services.ContainsKey("MessageService"))
-      {
-        throw new InvalidOperationException("MessageService parameter is not set.");
-      }
-
-      Services.TryGetValue("MessageService", out var messageServiceObj);
-      var messageService =
-        messageServiceObj as IMessageService
-        ?? throw new InvalidCastException(
-          "Provided messageService object is not of type IMessageService."
-        );
-
       // TODO: Implement token generation
       var token = string.Empty;
 
       // TODO: Persist token in database
       // await _tokenRepository.AddAsync(token);
 
-      messageService.SendConfirmationEmail(response.UserId, response.Email, token);
+      _messageService.SendConfirmationEmail(response.UserId, response.Email, token);
     }
   }
 }

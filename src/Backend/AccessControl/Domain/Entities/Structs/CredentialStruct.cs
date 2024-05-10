@@ -8,6 +8,6 @@ internal struct CredentialStruct
   public FullNameValueObject Name { get; set; }
   public EmailValueObject Email { get; set; }
   public PasswordValueObject Password { get; set; }
-  public PhotoValueObject Photo { get; set; }
+  public AvatarValueObject Avatar { get; set; }
   public DisabledValueObject Disabled { get; set; }
 }
