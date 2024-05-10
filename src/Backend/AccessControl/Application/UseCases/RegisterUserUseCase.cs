@@ -47,21 +47,22 @@ namespace AccessControl.Application.UseCases
 
     public override async Task<RegisterUserApplicationResponse> Handle(RegisterUserCommand request)
     {
-      request.AvatarBytes = GetAvatarBlob(request.Avatar);
-      DeleteAvatarFromCache(request.Avatar);
+      request = AssignAvatarBlobAndDeleteFromCache(request);
       var command = AclInputMapper.ToRegisterCredentialDomainRequest(request);
       var user = AggregateRoot.RegisterCredential(command);
-      if (user.Photo.Length == 0)
-      {
-        user.Photo = await StoreAvatar(user.Avatar, user.AvatarExtension);
-      }
+      user.Photo = await StoreAvatar(user.Avatar, user.AvatarExtension);
       var response = AclOutputMapper.ToRegisterUserApplicationResponse(user);
-
       _ = await Persist(response);
       SendConfirmationEmail(response);
       EmitEvent(Channel, JsonSerializer.Serialize(response));
-
       return response;
+    }
+
+    private RegisterUserCommand AssignAvatarBlobAndDeleteFromCache(RegisterUserCommand request)
+    {
+      request.AvatarBytes = GetAvatarBlob(request.Avatar);
+      DeleteAvatarFromCache(request.Avatar);
+      return request;
     }
 
     private async Task<TEntity> Persist(RegisterUserApplicationResponse response)
