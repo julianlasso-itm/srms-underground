@@ -53,7 +53,7 @@ namespace AccessControl.Application.UseCases
       var user = AggregateRoot.RegisterCredential(command);
       if (user.Photo.Length == 0)
       {
-        user.Photo = await StoreAvatar(user.Avatar, request.AvatarExtension);
+        user.Photo = await StoreAvatar(user.Avatar, user.AvatarExtension);
       }
       var response = AclOutputMapper.ToRegisterUserApplicationResponse(user);
 

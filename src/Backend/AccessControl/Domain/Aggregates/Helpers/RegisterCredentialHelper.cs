@@ -12,6 +12,8 @@ internal abstract class RegisterCredentialHelper
   : BaseHelper,
     IHelper<RegisterCredentialDomainRequest, RegisterCredentialDomainResponse>
 {
+  private const string AvatarExtension = ".webp";
+
   public static RegisterCredentialDomainResponse Execute(
     RegisterCredentialDomainRequest registerData
   )
@@ -29,6 +31,7 @@ internal abstract class RegisterCredentialHelper
       Email = credential.Email.Value,
       Password = credential.Password.Value,
       Avatar = credential.Avatar.Value,
+      AvatarExtension = AvatarExtension,
       Photo = "",
       Disabled = credential.Disabled.Value,
     };
