@@ -231,8 +231,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.httpService.post<FormData, any>(URL_SIGN_UP, formData).subscribe({
       next: (response) => {
         console.log(response);
-        this._snackBar.open('Usuario creado exitosamente.', 'Cerrar', {
-          duration: 5000,
+        this._snackBar.open('Usuario creado exitosamente. Revise su correo electrónico para activar su cuenta.', 'Cerrar', {
+          duration: 15000,
         });
         this.frmSignUp.reset({
           name: '',

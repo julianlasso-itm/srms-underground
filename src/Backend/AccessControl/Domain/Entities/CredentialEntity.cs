@@ -11,6 +11,7 @@ internal sealed class CredentialEntity
   public PasswordValueObject Password { get; private set; }
   public AvatarValueObject Avatar { get; private set; }
   public DisabledValueObject Disabled { get; private set; }
+  public ICollection<RoleEntity> Roles { get; private set; } = new List<RoleEntity>();
 
   public CredentialEntity() { }
 
@@ -28,7 +29,8 @@ internal sealed class CredentialEntity
     FullNameValueObject name,
     EmailValueObject email,
     PasswordValueObject password,
-    AvatarValueObject avatar
+    AvatarValueObject avatar,
+    DisabledValueObject? disabled
   )
   {
     CredentialId = new CredentialIdValueObject(Guid.NewGuid().ToString());
@@ -36,7 +38,7 @@ internal sealed class CredentialEntity
     Email = email;
     Password = password;
     Avatar = avatar;
-    Disabled = new DisabledValueObject(false);
+    Disabled = disabled ?? new DisabledValueObject(false);
   }
 
   public void UpdatePassword(PasswordValueObject password)
@@ -62,5 +64,20 @@ internal sealed class CredentialEntity
   public void UpdateName(FullNameValueObject name)
   {
     Name = name;
+  }
+
+  public void AddRole(RoleEntity role)
+  {
+    Roles.Add(role);
+  }
+
+  public void RemoveRole(RoleEntity role)
+  {
+    Roles.Remove(role);
+  }
+
+  public void ClearRoles()
+  {
+    Roles.Clear();
   }
 }

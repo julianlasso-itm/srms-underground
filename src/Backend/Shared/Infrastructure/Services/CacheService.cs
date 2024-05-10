@@ -25,14 +25,14 @@ namespace Shared.Infrastructure.Services
       return _database.StringGet(key);
     }
 
-    public void Set(string key, string value)
+    public void Set(string key, string value, TimeSpan? expiration = null)
     {
-      _database.StringSet(key, value);
+      _database.StringSet(key, value, expiration);
     }
 
-    public void Set(string key, byte[] value)
+    public void Set(string key, byte[] value, TimeSpan? expiration = null)
     {
-      _database.StringSet(key, value);
+      _database.StringSet(key, value, expiration);
     }
 
     public void Remove(string key)

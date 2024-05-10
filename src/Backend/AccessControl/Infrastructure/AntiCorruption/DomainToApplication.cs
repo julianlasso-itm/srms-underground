@@ -71,6 +71,7 @@ namespace AccessControl.Infrastructure.AntiCorruption
         Password = user.Password,
         Photo = user.Photo,
         Disabled = user.Disabled,
+        Roles = user.Roles,
       };
     }
   }

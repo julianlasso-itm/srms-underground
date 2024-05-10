@@ -4,8 +4,8 @@ namespace Shared.Application.Interfaces
   {
     string? Get(string key);
     byte[]? GetBytes(string key);
-    void Set(string key, string value);
-    void Set(string key, byte[] value);
+    void Set(string key, string value, TimeSpan? expiration = null);
+    void Set(string key, byte[] value, TimeSpan? expiration = null);
     void Remove(string key);
   }
 }

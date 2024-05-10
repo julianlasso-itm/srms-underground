@@ -13,6 +13,7 @@ internal abstract class RegisterCredentialHelper
     IHelper<RegisterCredentialDomainRequest, RegisterCredentialDomainResponse>
 {
   private const string AvatarExtension = ".webp";
+  private const string UserRoleId = "137bcadf-79bb-47f4-8622-e7381c7664ae";
 
   public static RegisterCredentialDomainResponse Execute(
     RegisterCredentialDomainRequest registerData
@@ -22,7 +23,16 @@ internal abstract class RegisterCredentialHelper
     ValidateStructureFields(@struct);
 
     var credential = new CredentialEntity();
-    credential.Register(@struct.Name, @struct.Email, @struct.Password, @struct.Avatar);
+    credential.Register(
+      @struct.Name,
+      @struct.Email,
+      @struct.Password,
+      @struct.Avatar,
+      new DisabledValueObject(true)
+    );
+    credential.AddRole(
+      new RoleEntity(new RoleStruct { RoleId = new RoleIdValueObject(UserRoleId) })
+    );
 
     return new RegisterCredentialDomainResponse
     {
@@ -33,6 +43,7 @@ internal abstract class RegisterCredentialHelper
       Avatar = credential.Avatar.Value,
       AvatarExtension = AvatarExtension,
       Photo = "",
+      Roles = credential.Roles.Select(role => role.RoleId.Value).ToArray(),
       Disabled = credential.Disabled.Value,
     };
   }

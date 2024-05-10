@@ -20,7 +20,15 @@ namespace AccessControl.Infrastructure.Persistence.Repositories
         Password = entity.Password,
         Photo = entity.Photo,
         Disabled = entity.Disabled,
-        CreatedAt = DateTime.UtcNow
+        CreatedAt = DateTime.UtcNow,
+        UserPerRoles = new List<UserPerRoleModel>(
+          entity.Roles.Select(role => new UserPerRoleModel
+          {
+            UserPerRoleId = Guid.NewGuid(),
+            UserId = Guid.Parse(entity.UserId),
+            RoleId = Guid.Parse(role)
+          })
+        )
       };
       return AddAsync(user);
     }

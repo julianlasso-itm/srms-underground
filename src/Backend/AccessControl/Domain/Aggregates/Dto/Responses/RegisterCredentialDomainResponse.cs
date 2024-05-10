@@ -9,5 +9,6 @@ public class RegisterCredentialDomainResponse
   public required byte[] Avatar { get; init; }
   public required string AvatarExtension { get; init; }
   public required string Photo { get; set; }
+  public required string[] Roles { get; init; }
   public required bool Disabled { get; init; }
 }
