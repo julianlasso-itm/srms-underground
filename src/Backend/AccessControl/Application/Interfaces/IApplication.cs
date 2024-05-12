@@ -12,5 +12,6 @@ namespace AccessControl.Application.Interfaces
     Task<UpdateRoleApplicationResponse> UpdateRole(UpdateRoleCommand request);
     Task<DeleteRoleApplicationResponse> DeleteRole(DeleteRoleCommand request);
     Task<GetRolesApplicationResponse<TRoleEntity>> GetRoles(GetRolesCommand request);
+    Task<ActivationTokenApplicationResponse> ActivateToken(ActivateTokenCommand request);
   }
 }

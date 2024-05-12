@@ -37,5 +37,11 @@ namespace Shared.Infrastructure.ProtocolBuffers.AccessControl
       GetRolesAccessControlRequest request,
       CallContext context = default
     );
+
+    [OperationContract]
+    Task<ActivationTokenAccessControlResponse> ActivateTokenAsync(
+      ActivationTokenAccessControlRequest request,
+      CallContext context = default
+    );
   }
 }

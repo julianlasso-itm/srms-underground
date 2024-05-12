@@ -22,5 +22,8 @@ namespace AccessControl.Application.AntiCorruption.Interfaces
     public DeleteRoleApplicationResponse ToDeleteRoleApplicationResponse(
       DeleteRoleDomainResponse role
     );
+    public ActivationTokenApplicationResponse ToActivationTokenApplicationResponse(
+      ActivateTokenDomainResponse response
+    );
   }
 }

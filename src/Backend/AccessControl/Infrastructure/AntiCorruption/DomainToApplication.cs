@@ -74,5 +74,12 @@ namespace AccessControl.Infrastructure.AntiCorruption
         Roles = user.Roles,
       };
     }
+
+    public ActivationTokenApplicationResponse ToActivationTokenApplicationResponse(
+      ActivateTokenDomainResponse response
+    )
+    {
+      return new ActivationTokenApplicationResponse { Token = response.ActivationToken };
+    }
   }
 }

@@ -55,5 +55,13 @@ namespace ApiGateway.Infrastructure.Services
     {
       return Client.GetRolesAsync(request, context);
     }
+
+    public Task<ActivationTokenAccessControlResponse> ActivateTokenAsync(
+      ActivationTokenAccessControlRequest request,
+      CallContext context = default
+    )
+    {
+      return Client.ActivateTokenAsync(request, context);
+    }
   }
 }

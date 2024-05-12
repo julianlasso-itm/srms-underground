@@ -81,5 +81,14 @@ namespace ApiGateway.Infrastructure.Controllers
     {
       return await HandleAsync(async () => Ok(await _accessControlService.GetRolesAsync(request)));
     }
+
+    [HttpGet("activate-token/{activationToken}")]
+    public async Task<IActionResult> ActivateTokenAsync(string activationToken)
+    {
+      var request = new ActivationTokenAccessControlRequest { ActivationToken = activationToken };
+      return await HandleAsync(
+        async () => Ok(await _accessControlService.ActivateTokenAsync(request))
+      );
+    }
   }
 }

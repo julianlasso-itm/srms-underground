@@ -11,6 +11,7 @@ namespace Shared.Domain.ValueObjects.Base
       if (string.IsNullOrWhiteSpace(Value))
       {
         AddError(new ErrorValueObject(Name, $"{Name} is required"));
+        return;
       }
     }
   }

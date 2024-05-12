@@ -90,7 +90,7 @@ namespace AccessControl.Application.UseCases
     private void SendConfirmationEmail(RegisterUserApplicationResponse response)
     {
       var token = Guid.NewGuid().ToString().Replace("-", string.Empty);
-      _cacheService.Set($"Token-{token}", response.UserId, TimeSpan.FromHours(24));
+      _cacheService.Set($"token:{token}", response.UserId, TimeSpan.FromHours(24));
       _messageService.SendConfirmationEmail(response.Name, response.Email, token);
     }
   }

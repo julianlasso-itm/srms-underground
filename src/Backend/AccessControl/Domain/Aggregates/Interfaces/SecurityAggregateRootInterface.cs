@@ -12,5 +12,11 @@ namespace AccessControl.Domain.Aggregates.Interfaces
     public RegisterRoleDomainResponse RegisterRole(RegisterRoleDomainRequest registerData);
     public UpdateRoleDomainResponse UpdateRole(UpdateRoleDomainRequest updateData);
     public DeleteRoleDomainResponse DeleteRole(DeleteRoleDomainRequest deleteData);
+    public ActivateTokenDomainResponse ValidateActivationToken(
+      ActivateTokenDomainRequest activateData
+    );
+    public ActiveCredentialDomainResponse ActiveCredential(
+      ActiveCredentialDomainRequest activeData
+    );
   }
 }

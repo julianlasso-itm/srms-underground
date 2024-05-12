@@ -62,5 +62,10 @@ namespace AccessControl.Infrastructure.AntiCorruption
         AvatarExtension = request.AvatarExtension
       };
     }
+
+    public ActivateTokenCommand ToActivateTokenCommand(ActivationTokenAccessControlRequest request)
+    {
+      return new ActivateTokenCommand { Token = request.ActivationToken };
+    }
   }
 }

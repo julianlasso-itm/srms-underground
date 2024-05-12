@@ -33,5 +33,17 @@ namespace AccessControl.Domain.Aggregates
     {
       return DeleteRoleHelper.Execute(deleteData);
     }
+
+    public ActivateTokenDomainResponse ValidateActivationToken(
+      ActivateTokenDomainRequest activateData
+    )
+    {
+      return ValidateActivationTokenHelper.Execute(activateData);
+    }
+
+    public ActiveCredentialDomainResponse ActiveCredential(ActiveCredentialDomainRequest activeData)
+    {
+      return ActiveCredentialHelper.Execute(activeData);
+    }
   }
 }

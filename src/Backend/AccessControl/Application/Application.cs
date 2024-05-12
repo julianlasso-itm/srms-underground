@@ -97,5 +97,10 @@ namespace AccessControl.Application
       );
       return useCase.Handle(request);
     }
+
+    public Task<ActivationTokenApplicationResponse> ActivateToken(ActivateTokenCommand request)
+    {
+      throw new NotImplementedException();
+    }
   }
 }

@@ -70,5 +70,13 @@ namespace AccessControl.Infrastructure.Services
       GetRolesHelper.SetAntiCorruptionLayer(_antiCorruptionLayerService);
       return await GetRolesHelper.GetRolesAsync(request);
     }
+
+    public Task<ActivationTokenAccessControlResponse> ActivateTokenAsync(
+      ActivationTokenAccessControlRequest request,
+      CallContext context = default
+    )
+    {
+      throw new NotImplementedException();
+    }
   }
 }
