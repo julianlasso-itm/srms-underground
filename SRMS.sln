@@ -20,9 +20,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Infrastructure", "src\Backend\Shared\Infrastructure\Shared.Infrastructure.csproj", "{95F2C4F7-D786-40B3-8724-67E59E11F4B1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AccessControl", "AccessControl", "{F06FF958-B52F-4BED-BC7E-AD2A4E576309}"
-	ProjectSection(SolutionItems) = preProject
-		src\Backend\Profiles\Application\UseCases\DeleteRoleDomainRequest.cs = src\Backend\Profiles\Application\UseCases\DeleteRoleDomainRequest.cs
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl.Domain", "src\Backend\AccessControl\Domain\AccessControl.Domain.csproj", "{9D1780B0-1ED6-4BAE-B6D0-2042097FCC19}"
 EndProject

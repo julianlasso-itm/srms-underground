@@ -77,5 +77,15 @@ namespace AccessControl.Infrastructure.AntiCorruption
         Disabled = data.Disabled,
       };
     }
+
+    public ActivationTokenAccessControlResponse ToActivateTokenResponse(
+      ActivationTokenApplicationResponse data
+    )
+    {
+      return new ActivationTokenAccessControlResponse
+      {
+        IsAuthorized = data.ActivationToken != null,
+      };
+    }
   }
 }

@@ -54,5 +54,15 @@ namespace AccessControl.Infrastructure.AntiCorruption
         Avatar = request.AvatarBytes ?? new byte[0],
       };
     }
+
+    public ActivateTokenDomainRequest ToActivateTokenDomainRequest(ActivateTokenCommand request)
+    {
+      return new ActivateTokenDomainRequest { ActivationToken = request.ActivationToken };
+    }
+
+    public ActiveCredentialDomainRequest ToActiveCredentialDomainRequest(ActiveUserCommand request)
+    {
+      return new ActiveCredentialDomainRequest { UserId = request.UserId };
+    }
   }
 }

@@ -2,6 +2,6 @@ namespace AccessControl.Application.Responses
 {
   public class ActivationTokenApplicationResponse
   {
-    public string Token { get; init; }
+    public string ActivationToken { get; init; }
   }
 }

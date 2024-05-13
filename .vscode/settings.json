@@ -22,6 +22,7 @@
     ".git/objects",
     ".vscode",
     ".vscode-insiders",
+    "package.json",
   ],
   "cSpell.words": [
     "ASPNETCORE",
@@ -59,8 +60,9 @@
     "DataAnnotations": "middleware",
   },
   "CodeGPT.apiKey": "CodeGPT Plus Beta",
-  "CodeGPT.Autocomplete.provider": "Ollama - llama3:8b-instruct",
-  "CodeGPT.Autocomplete.maxTokens": 500,
+  "CodeGPT.Autocomplete.provider": "CodeGPT Plus - Plus",
+  "CodeGPT.Autocomplete.maxTokens": 1250,
   "CodeGPT.Autocomplete.enabled": false,
-  "bigUML.hideUnotation": true
+  "bigUML.hideUnotation": true,
+  "CodeGPT.Autocomplete.suggestionDelay": 0
 }

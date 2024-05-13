@@ -8,8 +8,8 @@ internal class RegisterUserHelper : BaseHelperServiceInfrastructure
 {
   public static async Task<RegisterUserResponse> RegisterUserAsync(RegisterUserRequest request)
   {
-    var command = AclInputMapper.ToRegisterUserCommand(request); // MapToRegisterUserCommand(request);
+    var command = AclInputMapper.ToRegisterUserCommand(request);
     var data = await Application.RegisterUser(command);
-    return AclOutputMapper.ToRegisterUserResponse(data); // MapToRegisterUserResponse(data);
+    return AclOutputMapper.ToRegisterUserResponse(data);
   }
 }

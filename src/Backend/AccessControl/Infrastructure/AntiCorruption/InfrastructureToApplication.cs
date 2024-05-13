@@ -65,7 +65,7 @@ namespace AccessControl.Infrastructure.AntiCorruption
 
     public ActivateTokenCommand ToActivateTokenCommand(ActivationTokenAccessControlRequest request)
     {
-      return new ActivateTokenCommand { Token = request.ActivationToken };
+      return new ActivateTokenCommand { ActivationToken = request.ActivationToken };
     }
   }
 }
