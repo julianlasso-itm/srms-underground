@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Infrastructure.DataAnnotations
@@ -14,13 +13,12 @@ namespace Infrastructure.DataAnnotations
 
     public PermissionsAttribute() { }
 
-    public Task OnActionExecutionAsync(
-      ActionExecutingContext context,
-      ActionExecutionDelegate next
-    )
+    public Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
       Console.WriteLine("Data: " + Data);
-      Console.WriteLine(context.HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", ""));
+      Console.WriteLine(
+        context.HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "")
+      );
       return next();
     }
   }
