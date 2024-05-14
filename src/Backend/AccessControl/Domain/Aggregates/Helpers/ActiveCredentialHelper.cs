@@ -15,6 +15,7 @@ namespace AccessControl.Domain.Aggregates.Helpers
     public static ActiveCredentialDomainResponse Execute(ActiveCredentialDomainRequest data)
     {
       var @struct = GetCredentialStruct(data);
+      ValidateStructureFields(@struct);
       var credential = ActiveCredential(@struct);
       return MapToResponse(credential);
     }

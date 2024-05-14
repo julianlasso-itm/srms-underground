@@ -13,6 +13,8 @@ namespace AccessControl.Domain.Aggregates.Helpers
     public static ActivateTokenDomainResponse Execute(ActivateTokenDomainRequest request)
     {
       var activationToken = new ActivationTokenValueObject(request.ActivationToken);
+      var @struct = new { activationToken };
+      ValidateStructureFields(@struct);
       return MapToResponse(activationToken);
     }
 
