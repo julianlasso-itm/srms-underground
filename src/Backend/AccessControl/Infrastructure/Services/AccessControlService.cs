@@ -76,7 +76,9 @@ namespace AccessControl.Infrastructure.Services
       CallContext context = default
     )
     {
-      throw new NotImplementedException();
+      ActiveTokenHelper.SetApplication(_applicationService.GetApplication());
+      ActiveTokenHelper.SetAntiCorruptionLayer(_antiCorruptionLayerService);
+      return ActiveTokenHelper.ActivateTokenAsync(request);
     }
   }
 }

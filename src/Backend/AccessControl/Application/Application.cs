@@ -100,7 +100,14 @@ namespace AccessControl.Application
 
     public Task<ActivationTokenApplicationResponse> ActivateToken(ActivateTokenCommand request)
     {
-      throw new NotImplementedException();
+      var useCase = new ActivateTokenUseCase<TUserEntity>(
+        _userRepository,
+        _cacheService,
+        AggregateRoot,
+        ApplicationToDomain,
+        DomainToApplication
+      );
+      return useCase.Handle(request);
     }
   }
 }

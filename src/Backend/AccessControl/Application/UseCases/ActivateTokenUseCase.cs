@@ -10,7 +10,7 @@ using Shared.Application.Interfaces;
 
 namespace AccessControl.Application.UseCases
 {
-  public sealed class ActivationTokenUseCase<TEntity>
+  public sealed class ActivateTokenUseCase<TEntity>
     : BaseUseCase<
       ActivateTokenCommand,
       ActivationTokenApplicationResponse,
@@ -24,7 +24,7 @@ namespace AccessControl.Application.UseCases
     private readonly IUserRepository<TEntity> _userRepository;
     private readonly ICacheService _cacheService;
 
-    public ActivationTokenUseCase(
+    public ActivateTokenUseCase(
       IUserRepository<TEntity> userRepository,
       ICacheService cacheService,
       ISecurityAggregateRoot aggregateRoot,
