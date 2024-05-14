@@ -70,11 +70,7 @@ namespace AccessControl.Infrastructure.AntiCorruption
     {
       return new RegisterUserResponse
       {
-        UserId = data.UserId,
-        Name = data.Name,
-        Email = data.Email,
-        Photo = data.Photo,
-        Disabled = data.Disabled,
+        Success = data.UserId != null,
       };
     }
 
