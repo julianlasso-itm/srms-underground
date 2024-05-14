@@ -3,6 +3,8 @@ using System.Text.Json;
 using Grpc.Core;
 using Grpc.Core.Interceptors;
 using Shared.Domain.Exceptions;
+using Shared.Infrastructure.Exceptions;
+using ApplicationException = Shared.Application.Exceptions.ApplicationException;
 
 namespace Shared.Infrastructure.Interceptors
 {
@@ -26,15 +28,28 @@ namespace Shared.Infrastructure.Interceptors
       catch (DomainException exception)
       {
         var message = JsonSerializer.Serialize(
-          new
-          {
-            StatusCode = HttpStatusCode.BadRequest,
-            Message = exception.Message,
-            Errors = exception.DomainErrors,
-          },
-          options: new JsonSerializerOptions { WriteIndented = true, }
+          new { Message = exception.Message, Errors = exception.DomainErrors },
+          options: new JsonSerializerOptions { WriteIndented = true }
         );
-        throw new RpcException(new Status(StatusCode.InvalidArgument, message));
+        throw new RpcException(
+          new Status(
+            StatusCodeConverter.GetGrpcStatusCodeFromHttpStatusCode(HttpStatusCode.BadRequest),
+            message
+          )
+        );
+      }
+      catch (ApplicationException exception)
+      {
+        var message = JsonSerializer.Serialize(
+          new { Message = exception.Message },
+          options: new JsonSerializerOptions { WriteIndented = true }
+        );
+        throw new RpcException(
+          new Status(
+            StatusCodeConverter.GetGrpcStatusCodeFromHttpStatusCode(exception.StatusCode),
+            message
+          )
+        );
       }
       catch (Exception exception)
       {

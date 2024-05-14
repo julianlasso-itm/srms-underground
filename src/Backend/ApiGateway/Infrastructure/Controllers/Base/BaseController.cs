@@ -3,6 +3,7 @@ using System.Net;
 using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Application.Interfaces;
+using Shared.Infrastructure.Exceptions;
 
 namespace ApiGateway.Infrastructure.Controllers.Base
 {
@@ -54,7 +55,7 @@ namespace ApiGateway.Infrastructure.Controllers.Base
     {
       return HandleExceptionResponse(
         exception.Status.Detail,
-        (int)GetHttpStatusCodeFromGrpcStatus(exception.StatusCode)
+        (int)StatusCodeConverter.GetHttpStatusCodeFromGrpcStatus(exception.StatusCode)
       );
     }
 
@@ -68,30 +69,6 @@ namespace ApiGateway.Infrastructure.Controllers.Base
       var content = Content(message, ContentType);
       content.StatusCode = statusCode;
       return content;
-    }
-
-    private static HttpStatusCode GetHttpStatusCodeFromGrpcStatus(StatusCode grpcStatusCode)
-    {
-      return grpcStatusCode switch
-      {
-        Grpc.Core.StatusCode.Aborted => HttpStatusCode.Conflict,
-        Grpc.Core.StatusCode.AlreadyExists => HttpStatusCode.Conflict,
-        Grpc.Core.StatusCode.Cancelled => HttpStatusCode.GatewayTimeout,
-        Grpc.Core.StatusCode.DataLoss => HttpStatusCode.InternalServerError,
-        Grpc.Core.StatusCode.DeadlineExceeded => HttpStatusCode.GatewayTimeout,
-        Grpc.Core.StatusCode.FailedPrecondition => HttpStatusCode.PreconditionFailed,
-        Grpc.Core.StatusCode.InvalidArgument => HttpStatusCode.BadRequest,
-        Grpc.Core.StatusCode.NotFound => HttpStatusCode.NotFound,
-        Grpc.Core.StatusCode.OK => HttpStatusCode.OK,
-        Grpc.Core.StatusCode.OutOfRange => HttpStatusCode.RequestedRangeNotSatisfiable,
-        Grpc.Core.StatusCode.PermissionDenied => HttpStatusCode.Forbidden,
-        Grpc.Core.StatusCode.ResourceExhausted => HttpStatusCode.InternalServerError,
-        Grpc.Core.StatusCode.Unauthenticated => HttpStatusCode.Unauthorized,
-        Grpc.Core.StatusCode.Unavailable => HttpStatusCode.ServiceUnavailable,
-        Grpc.Core.StatusCode.Unimplemented => HttpStatusCode.NotImplemented,
-        Grpc.Core.StatusCode.Unknown => HttpStatusCode.InternalServerError,
-        _ => HttpStatusCode.InternalServerError
-      };
     }
   }
 }

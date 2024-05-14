@@ -1,3 +1,4 @@
+using System.Net;
 using System.Text.Json;
 using AccessControl.Application.AntiCorruption.Interfaces;
 using AccessControl.Application.Commands;
@@ -7,6 +8,7 @@ using AccessControl.Domain.Aggregates.Constants;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 using Shared.Application.Interfaces;
+using ApplicationException = Shared.Application.Exceptions.ApplicationException;
 
 namespace AccessControl.Application.UseCases
 {
@@ -57,7 +59,7 @@ namespace AccessControl.Application.UseCases
     private string GetUserIdFromCache(string token)
     {
       return _cacheService.Get($"token:{token}")
-        ?? throw new ApplicationException("User activation token not found.");
+        ?? throw new ApplicationException("Token not found in cache", HttpStatusCode.NotFound);
     }
 
     private async Task ChangeUserStatusInDatabase(string userId)
