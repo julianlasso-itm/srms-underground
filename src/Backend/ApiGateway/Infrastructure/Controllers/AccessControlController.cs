@@ -45,6 +45,12 @@ namespace ApiGateway.Infrastructure.Controllers
       );
     }
 
+    [HttpPost("sign-in")]
+    public async Task<IActionResult> SignInAsync([FromBody] SignInAccessControlRequest request)
+    {
+      return await HandleAsync(async () => Ok(await _accessControlService.SignInAsync(request)));
+    }
+
     [HttpPost("role")]
     public async Task<IActionResult> RegisterRoleAsync(
       [FromBody] RegisterRoleAccessControlRequest request

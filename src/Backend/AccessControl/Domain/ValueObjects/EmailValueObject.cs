@@ -12,7 +12,7 @@ namespace AccessControl.Domain.ValueObjects
       : base(value)
     {
       Name = "Email";
-      Validate();
+        Validate();
     }
 
     public override void Validate()

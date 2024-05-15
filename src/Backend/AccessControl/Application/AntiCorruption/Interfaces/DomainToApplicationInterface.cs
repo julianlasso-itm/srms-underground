@@ -1,4 +1,5 @@
 using AccessControl.Application.Responses;
+using AccessControl.Domain.Aggregates.Dto.Requests;
 using AccessControl.Domain.Aggregates.Dto.Responses;
 
 namespace AccessControl.Application.AntiCorruption.Interfaces
@@ -25,5 +26,6 @@ namespace AccessControl.Application.AntiCorruption.Interfaces
     public ActivationTokenApplicationResponse ToActivationTokenApplicationResponse(
       ActivateTokenDomainResponse response
     );
+    public SignInApplicationResponse ToSignInApplicationResponse(SignInDomainResponse response);
   }
 }

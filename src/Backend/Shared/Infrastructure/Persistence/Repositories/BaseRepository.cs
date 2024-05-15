@@ -25,6 +25,12 @@ namespace Shared.Infrastructure.Persistence.Repositories
       Context = context;
     }
 
+    public async Task<TEntity> GetFirstAsync(Expression<Func<TEntity, bool>> predicate)
+    {
+      var entities = await DbSet.Where(predicate).ToListAsync();
+      return entities.FirstOrDefault() ?? throw new Exception("Data not found");
+    }
+
     public async Task<TEntity> GetByIdAsync(Guid id)
     {
       var parameter = Expression.Parameter(typeof(TEntity), Entity);

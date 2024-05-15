@@ -43,5 +43,11 @@ namespace Shared.Infrastructure.ProtocolBuffers.AccessControl
       ActivationTokenAccessControlRequest request,
       CallContext context = default
     );
+
+    [OperationContract]
+    Task<SignInAccessControlResponse> SignInAsync(
+      SignInAccessControlRequest request,
+      CallContext context = default
+    );
   }
 }

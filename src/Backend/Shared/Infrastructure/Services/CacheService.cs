@@ -39,5 +39,19 @@ namespace Shared.Infrastructure.Services
     {
       _database.KeyDelete(key);
     }
+
+    public void AddToList(string key, string value, TimeSpan? expiration = null)
+    {
+      _database.ListRightPush(key, value);
+      if (expiration != null)
+      {
+        _database.KeyExpire(key, expiration);
+      }
+    }
+
+    public long GetListLength(string key)
+    {
+      return _database.ListLength(key);
+    }
   }
 }

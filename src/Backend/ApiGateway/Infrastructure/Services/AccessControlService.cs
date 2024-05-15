@@ -63,5 +63,13 @@ namespace ApiGateway.Infrastructure.Services
     {
       return Client.ActivateTokenAsync(request, context);
     }
+
+    public Task<SignInAccessControlResponse> SignInAsync(
+      SignInAccessControlRequest request,
+      CallContext context = default
+    )
+    {
+      return Client.SignInAsync(request, context);
+    }
   }
 }

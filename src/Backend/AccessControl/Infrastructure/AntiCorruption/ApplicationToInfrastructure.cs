@@ -68,10 +68,7 @@ namespace AccessControl.Infrastructure.AntiCorruption
 
     public RegisterUserResponse ToRegisterUserResponse(RegisterUserApplicationResponse data)
     {
-      return new RegisterUserResponse
-      {
-        Success = data.UserId != null,
-      };
+      return new RegisterUserResponse { Success = data.UserId != null, };
     }
 
     public ActivationTokenAccessControlResponse ToActivateTokenResponse(
@@ -82,6 +79,11 @@ namespace AccessControl.Infrastructure.AntiCorruption
       {
         IsAuthorized = data.ActivationToken != null,
       };
+    }
+
+    public SignInAccessControlResponse ToSignInResponse(SignInApplicationResponse data)
+    {
+      return new SignInAccessControlResponse { Token = data.Token };
     }
   }
 }

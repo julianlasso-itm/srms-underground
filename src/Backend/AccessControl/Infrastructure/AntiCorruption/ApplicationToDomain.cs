@@ -1,6 +1,7 @@
 using AccessControl.Application.AntiCorruption.Interfaces;
 using AccessControl.Application.Commands;
 using AccessControl.Domain.Aggregates.Dto.Requests;
+using AccessControl.Domain.Aggregates.Dto.Responses;
 
 namespace AccessControl.Infrastructure.AntiCorruption
 {
@@ -63,6 +64,31 @@ namespace AccessControl.Infrastructure.AntiCorruption
     public ActiveCredentialDomainRequest ToActiveCredentialDomainRequest(ActiveUserCommand request)
     {
       return new ActiveCredentialDomainRequest { UserId = request.UserId };
+    }
+
+    public SignInDataInitialsDomainRequest ToSignInInitialsDomainRequest(SignInCommand request)
+    {
+      return new SignInDataInitialsDomainRequest
+      {
+        Email = request.Email,
+        Password = request.Password,
+      };
+    }
+
+    public SignInDomainRequest ToSignInDomainRequest(
+      SignInDataInitialsDomainResponse request,
+      string userId,
+      string name,
+      string photoUrl
+    )
+    {
+      return new SignInDomainRequest
+      {
+        CredentialId = userId,
+        Name = name,
+        Email = request.Email,
+        Photo = photoUrl,
+      };
     }
   }
 }

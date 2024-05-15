@@ -16,11 +16,14 @@ public sealed class PasswordValueObject : BaseStringValueObject
   private const int MinLength = 8;
   private const string PasswordRegex = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$";
 
-  public PasswordValueObject(string value)
+  public PasswordValueObject(string value, bool validate = true)
     : base(value)
   {
     Name = "Password";
-    Validate();
+    if (validate)
+    {
+      Validate();
+    }
   }
 
   public override void Validate()

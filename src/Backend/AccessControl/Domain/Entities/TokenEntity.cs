@@ -1,4 +1,5 @@
 using AccessControl.Domain.Entities.Structs;
+using AccessControl.Domain.Utils;
 using AccessControl.Domain.ValueObjects;
 
 namespace AccessControl.Domain.Entities
@@ -12,6 +13,7 @@ namespace AccessControl.Domain.Entities
     public EmailValueObject Email { get; internal set; }
     public PhotoValueObject Photo { get; internal set; }
     public ExpirationValueObject Expiration { get; internal set; }
+    public SecretKeyValueObject SecretKey { get; internal set; }
 
     public TokenEntity() { }
 
@@ -23,6 +25,7 @@ namespace AccessControl.Domain.Entities
       Email = data.Email;
       Photo = data.Photo;
       Expiration = data.Expiration;
+      SecretKey = data.SecretKey;
     }
 
     public void Register(
@@ -31,8 +34,17 @@ namespace AccessControl.Domain.Entities
       PhotoValueObject photo
     )
     {
-      TokenId = new TokenIdValueObject(Guid.NewGuid().ToString());
-      // Jwt = jwt; // TODO: Implement JWT generation
+      var jwt = new JwtHandler(SecretKey.Value);
+      var jwtPayload = new JwtPayload
+      {
+        TokenId = Guid.NewGuid().ToString(),
+        FullName = fullName.Value,
+        Email = email.Value,
+        Photo = photo.Value,
+        Expiration = DateTime.UtcNow.AddHours(1),
+      };
+      TokenId = new TokenIdValueObject(jwtPayload.TokenId);
+      Jwt = new JwtValueObject(jwt.GenerateToken(jwtPayload));
       FullName = fullName;
       Email = email;
       Photo = photo;

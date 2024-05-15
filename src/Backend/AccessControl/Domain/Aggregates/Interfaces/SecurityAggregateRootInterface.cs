@@ -18,5 +18,9 @@ namespace AccessControl.Domain.Aggregates.Interfaces
     public ActiveCredentialDomainResponse ActiveCredential(
       ActiveCredentialDomainRequest activeData
     );
+    public SignInDataInitialsDomainResponse ValidateEmailAndEncryptPassword(
+      SignInDataInitialsDomainRequest signInData
+    );
+    public SignInDomainResponse GenerateTokenForSignIn(SignInDomainRequest signInData);
   }
 }

@@ -109,5 +109,17 @@ namespace AccessControl.Application
       );
       return useCase.Handle(request);
     }
+
+    public Task<SignInApplicationResponse> SignIn(SignInCommand request)
+    {
+      var useCase = new SignInUseCase<TUserEntity>(
+        _userRepository,
+        _cacheService,
+        AggregateRoot,
+        ApplicationToDomain,
+        DomainToApplication
+      );
+      return useCase.Handle(request);
+    }
   }
 }

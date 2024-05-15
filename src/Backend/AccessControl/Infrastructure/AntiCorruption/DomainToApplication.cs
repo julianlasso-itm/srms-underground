@@ -81,5 +81,10 @@ namespace AccessControl.Infrastructure.AntiCorruption
     {
       return new ActivationTokenApplicationResponse { ActivationToken = response.ActivationToken };
     }
+
+    public SignInApplicationResponse ToSignInApplicationResponse(SignInDomainResponse response)
+    {
+      return new SignInApplicationResponse { Token = response.Token };
+    }
   }
 }

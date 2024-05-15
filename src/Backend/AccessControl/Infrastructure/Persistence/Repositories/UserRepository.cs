@@ -1,6 +1,8 @@
+using System.Linq.Expressions;
 using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
 using AccessControl.Infrastructure.Persistence.Models;
+using AccessControlApplication.Dto;
 using Shared.Infrastructure.Persistence.Repositories;
 
 namespace AccessControl.Infrastructure.Persistence.Repositories
@@ -31,6 +33,25 @@ namespace AccessControl.Infrastructure.Persistence.Repositories
         )
       };
       return AddAsync(user);
+    }
+
+    public async Task<UserDataForSigInDto> GetByEmailAndPassword(
+      string email,
+      string password
+    )
+    {
+      Expression<Func<UserModel, bool>> expression = user =>
+        user.Email == email
+        && user.Password == password
+        && user.Disabled == false
+        && user.DeletedAt == null;
+      var data = await GetFirstAsync(expression);
+      return new UserDataForSigInDto
+      {
+        UserId = data.UserId.ToString(),
+        Name = data.Name,
+        Photo = data.Photo,
+      };
     }
 
     public Task<UserModel> UpdateAsync(Guid id, UpdateUserApplicationResponse entity)

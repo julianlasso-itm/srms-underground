@@ -9,7 +9,7 @@ namespace AccessControl.Domain.Utils
 
     public JwtHandler(string secretKey)
     {
-      this._secretKey = secretKey;
+      _secretKey = secretKey;
     }
 
     public string GenerateToken(JwtPayload payload)

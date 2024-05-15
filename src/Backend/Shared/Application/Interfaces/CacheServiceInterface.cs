@@ -7,5 +7,7 @@ namespace Shared.Application.Interfaces
     void Set(string key, string value, TimeSpan? expiration = null);
     void Set(string key, byte[] value, TimeSpan? expiration = null);
     void Remove(string key);
+    void AddToList(string key, string value, TimeSpan? expiration = null);
+    long GetListLength(string key);
   }
 }

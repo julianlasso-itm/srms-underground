@@ -67,5 +67,10 @@ namespace AccessControl.Infrastructure.AntiCorruption
     {
       return new ActivateTokenCommand { ActivationToken = request.ActivationToken };
     }
+
+    public SignInCommand ToSignInCommand(SignInAccessControlRequest request)
+    {
+      return new SignInCommand { Email = request.Email, Password = request.Password };
+    }
   }
 }

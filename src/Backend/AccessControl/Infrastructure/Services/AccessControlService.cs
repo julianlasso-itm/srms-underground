@@ -80,5 +80,15 @@ namespace AccessControl.Infrastructure.Services
       ActiveTokenHelper.SetAntiCorruptionLayer(_antiCorruptionLayerService);
       return ActiveTokenHelper.ActivateTokenAsync(request);
     }
+
+    public Task<SignInAccessControlResponse> SignInAsync(
+      SignInAccessControlRequest request,
+      CallContext context = default
+    )
+    {
+      SignInHelper.SetApplication(_applicationService.GetApplication());
+      SignInHelper.SetAntiCorruptionLayer(_antiCorruptionLayerService);
+      return SignInHelper.SignInAsync(request);
+    }
   }
 }

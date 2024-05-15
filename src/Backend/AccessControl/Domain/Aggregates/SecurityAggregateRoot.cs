@@ -45,5 +45,17 @@ namespace AccessControl.Domain.Aggregates
     {
       return ActiveCredentialHelper.Execute(activeData);
     }
+
+    public SignInDataInitialsDomainResponse ValidateEmailAndEncryptPassword(
+      SignInDataInitialsDomainRequest signInData
+    )
+    {
+      return ValidateEmailAndEncryptPasswordHelper.Execute(signInData);
+    }
+
+    public SignInDomainResponse GenerateTokenForSignIn(SignInDomainRequest signInData)
+    {
+      return GenerateTokenForSignInHelper.Execute(signInData);
+    }
   }
 }

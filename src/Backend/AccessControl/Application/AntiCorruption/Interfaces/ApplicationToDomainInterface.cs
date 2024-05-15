@@ -1,5 +1,6 @@
 using AccessControl.Application.Commands;
 using AccessControl.Domain.Aggregates.Dto.Requests;
+using AccessControl.Domain.Aggregates.Dto.Responses;
 
 namespace AccessControl.Application.AntiCorruption.Interfaces
 {
@@ -13,5 +14,12 @@ namespace AccessControl.Application.AntiCorruption.Interfaces
     public DeleteRoleDomainRequest ToDeleteRoleDomainRequest(DeleteRoleCommand request);
     public ActivateTokenDomainRequest ToActivateTokenDomainRequest(ActivateTokenCommand request);
     public ActiveCredentialDomainRequest ToActiveCredentialDomainRequest(ActiveUserCommand request);
+    public SignInDataInitialsDomainRequest ToSignInInitialsDomainRequest(SignInCommand request);
+    public SignInDomainRequest ToSignInDomainRequest(
+      SignInDataInitialsDomainResponse request,
+      string userId,
+      string name,
+      string photoUrl
+    );
   }
 }

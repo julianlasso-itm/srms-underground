@@ -11,5 +11,6 @@ namespace AccessControl.Infrastructure.AntiCorruption.Interfaces
     public DeleteRoleCommand ToDeleteRoleCommand(DeleteRoleAccessControlRequest request);
     public RegisterUserCommand ToRegisterUserCommand(RegisterUserRequest request);
     public ActivateTokenCommand ToActivateTokenCommand(ActivationTokenAccessControlRequest request);
+    public SignInCommand ToSignInCommand(SignInAccessControlRequest request);
   }
 }
