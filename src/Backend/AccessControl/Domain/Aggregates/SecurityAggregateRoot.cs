@@ -57,5 +57,10 @@ namespace AccessControl.Domain.Aggregates
     {
       return GenerateTokenForSignInHelper.Execute(signInData);
     }
+
+    public VerifyTokenDomainResponse VerifyToken(VerifyTokenDomainRequest verifyData)
+    {
+      throw new NotImplementedException("Method not implemented in SecurityAggregateRoot");
+    }
   }
 }

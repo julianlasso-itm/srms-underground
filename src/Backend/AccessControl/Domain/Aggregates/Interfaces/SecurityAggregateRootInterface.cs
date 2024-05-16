@@ -22,5 +22,6 @@ namespace AccessControl.Domain.Aggregates.Interfaces
       SignInDataInitialsDomainRequest signInData
     );
     public SignInDomainResponse GenerateTokenForSignIn(SignInDomainRequest signInData);
+    public VerifyTokenDomainResponse VerifyToken(VerifyTokenDomainRequest verifyData);
   }
 }
