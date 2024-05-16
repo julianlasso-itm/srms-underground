@@ -15,6 +15,7 @@ namespace AccessControl.Domain.Aggregates.Helpers
     public static SignInDomainResponse Execute(SignInDomainRequest request)
     {
       var @struct = TokenStruct(request);
+      ValidateStructureFields(@struct);
       var token = new TokenEntity(@struct);
       token.Register(@struct.FullName, @struct.Email, @struct.Photo);
       return new SignInDomainResponse { Token = token.Jwt.Value };
@@ -27,7 +28,8 @@ namespace AccessControl.Domain.Aggregates.Helpers
         FullName = new FullNameValueObject(request.Name),
         Email = new EmailValueObject(request.Email),
         Photo = new PhotoValueObject(request.Photo),
-        SecretKey = new SecretKeyValueObject("secret-key"),
+        PrivateKeyPath = new PrivateKeyPathValueObject(request.PrivateKeyPath),
+        PublicKeyPath = new PublicKeyPathValueObject(request.PublicKeyPath),
       };
     }
   }

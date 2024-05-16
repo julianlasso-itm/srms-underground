@@ -1,12 +1,14 @@
 using ApiGateway.Infrastructure.Controllers.Base;
 using ApiGateway.Infrastructure.Dto;
 using ApiGateway.Infrastructure.Services;
+using Infrastructure.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Application.Interfaces;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
 
 namespace ApiGateway.Infrastructure.Controllers
 {
+  [Permissions(Data = "admin")]
   [ApiController]
   [Route("api/access-control")]
   public class AccessControlController : BaseController

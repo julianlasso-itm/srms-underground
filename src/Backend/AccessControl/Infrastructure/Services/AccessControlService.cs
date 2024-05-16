@@ -1,6 +1,7 @@
 using AccessControl.Infrastructure.AntiCorruption.Interfaces;
 using AccessControl.Infrastructure.Services.Helpers;
 using ProtoBuf.Grpc;
+using Shared.Application.Interfaces;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses;
@@ -11,14 +12,17 @@ namespace AccessControl.Infrastructure.Services
   {
     private readonly ApplicationService _applicationService;
     private readonly IAntiCorruptionLayer _antiCorruptionLayerService;
+    private readonly IEnvironment _environmentService;
 
     public AccessControlService(
       ApplicationService applicationService,
-      IAntiCorruptionLayer antiCorruptionLayer
+      IAntiCorruptionLayer antiCorruptionLayer,
+      IEnvironment environmentService
     )
     {
       _applicationService = applicationService;
       _antiCorruptionLayerService = antiCorruptionLayer;
+      _environmentService = environmentService;
     }
 
     public async Task<RegisterUserResponse> RegisterUserAsync(
@@ -88,6 +92,7 @@ namespace AccessControl.Infrastructure.Services
     {
       SignInHelper.SetApplication(_applicationService.GetApplication());
       SignInHelper.SetAntiCorruptionLayer(_antiCorruptionLayerService);
+      SignInHelper.SetEnvironments(_environmentService);
       return SignInHelper.SignInAsync(request);
     }
   }

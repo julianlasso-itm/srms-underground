@@ -72,6 +72,8 @@ namespace AccessControl.Infrastructure.AntiCorruption
       {
         Email = request.Email,
         Password = request.Password,
+        PrivateKeyPath = request.PrivateKeyPath,
+        PublicKeyPath = request.PublicKeyPath,
       };
     }
 
@@ -79,7 +81,9 @@ namespace AccessControl.Infrastructure.AntiCorruption
       SignInDataInitialsDomainResponse request,
       string userId,
       string name,
-      string photoUrl
+      string photoUrl,
+      string privateKeyPath,
+      string publicKeyPath
     )
     {
       return new SignInDomainRequest
@@ -88,6 +92,8 @@ namespace AccessControl.Infrastructure.AntiCorruption
         Name = name,
         Email = request.Email,
         Photo = photoUrl,
+        PrivateKeyPath = privateKeyPath,
+        PublicKeyPath = publicKeyPath,
       };
     }
   }

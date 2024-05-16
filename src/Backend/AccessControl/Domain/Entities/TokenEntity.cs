@@ -6,49 +6,39 @@ namespace AccessControl.Domain.Entities
 {
   internal sealed class TokenEntity
   {
-    private const string Format = "yyyy-MM-dd HH:mm:ss.ffffff zzz";
-    public TokenIdValueObject TokenId { get; internal set; }
+    private const int ExpirationInHours = 1;
     public JwtValueObject Jwt { get; internal set; }
-    public FullNameValueObject FullName { get; internal set; }
-    public EmailValueObject Email { get; internal set; }
-    public PhotoValueObject Photo { get; internal set; }
-    public ExpirationValueObject Expiration { get; internal set; }
-    public SecretKeyValueObject SecretKey { get; internal set; }
+    public PrivateKeyPathValueObject PrivateKeyPath { get; internal set; }
+    public PublicKeyPathValueObject PublicKeyPath { get; internal set; }
 
     public TokenEntity() { }
 
     public TokenEntity(TokenStruct data)
     {
-      TokenId = data.TokenId;
       Jwt = data.Jwt;
-      FullName = data.FullName;
-      Email = data.Email;
-      Photo = data.Photo;
-      Expiration = data.Expiration;
-      SecretKey = data.SecretKey;
+      PrivateKeyPath = data.PrivateKeyPath;
+      PublicKeyPath = data.PublicKeyPath;
     }
 
-    public void Register(
-      FullNameValueObject fullName,
-      EmailValueObject email,
-      PhotoValueObject photo
-    )
+    public void Register(FullNameValueObject name, EmailValueObject email, PhotoValueObject photo)
     {
-      var jwt = new JwtHandler(SecretKey.Value);
+      var jwt = new JwtHandler(PrivateKeyPath.Value, PublicKeyPath.Value);
       var jwtPayload = new JwtPayload
       {
-        TokenId = Guid.NewGuid().ToString(),
-        FullName = fullName.Value,
+        TokenId = new TokenIdValueObject(Guid.NewGuid().ToString()).Value,
+        Name = name.Value,
         Email = email.Value,
         Photo = photo.Value,
-        Expiration = DateTime.UtcNow.AddHours(1),
+        Expiration = new ExpirationValueObject(GetExpirationInMilliseconds()).Value
       };
-      TokenId = new TokenIdValueObject(jwtPayload.TokenId);
       Jwt = new JwtValueObject(jwt.GenerateToken(jwtPayload));
-      FullName = fullName;
-      Email = email;
-      Photo = photo;
-      Expiration = new ExpirationValueObject(DateTime.UtcNow.AddHours(1).ToString(Format));
+    }
+
+    private static long GetExpirationInMilliseconds()
+    {
+      var expirationTime = DateTime.UtcNow.AddHours(ExpirationInHours);
+      var unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+      return (long)(expirationTime - unixEpoch).TotalSeconds;
     }
   }
 }

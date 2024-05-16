@@ -35,6 +35,7 @@ builder.Services.AddScoped<ICacheService, CacheService>();
 builder.Services.AddScoped<IStoreService, StoreService>();
 builder.Services.AddScoped<IAntiCorruptionLayer, AntiCorruptionLayer>();
 builder.Services.AddScoped<AntiCorruptionLayerService<AntiCorruptionLayer>>();
+builder.Services.AddScoped<IEnvironment, EnvironmentService>();
 // =================================================
 
 // == Configure interceptors for gRPC services ==

@@ -10,6 +10,8 @@ namespace AccessControl.Infrastructure.Services.Helpers
       SignInAccessControlRequest request
     )
     {
+      request.PublicKeyPath = Configuration.GetVariable("PUBLIC_KEY_PATH");
+      request.PrivateKeyPath = Configuration.GetVariable("PRIVATE_KEY_PATH");
       var command = AclInputMapper.ToSignInCommand(request);
       var data = await Application.SignIn(command);
       return AclOutputMapper.ToSignInResponse(data);

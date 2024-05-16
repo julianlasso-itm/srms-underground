@@ -19,7 +19,9 @@ namespace AccessControl.Application.AntiCorruption.Interfaces
       SignInDataInitialsDomainResponse request,
       string userId,
       string name,
-      string photoUrl
+      string photoUrl,
+      string privateKeyPath,
+      string publicKeyPath
     );
   }
 }

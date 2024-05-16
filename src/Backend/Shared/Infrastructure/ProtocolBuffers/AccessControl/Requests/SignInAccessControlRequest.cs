@@ -10,5 +10,11 @@ namespace Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests
 
     [DataMember(Order = 2)]
     public required string Password { get; set; }
+
+    [DataMember(Order = 3, IsRequired = false)]
+    public string? PrivateKeyPath { get; set; }
+
+    [DataMember(Order = 4, IsRequired = false)]
+    public string? PublicKeyPath { get; set; }
   }
 }

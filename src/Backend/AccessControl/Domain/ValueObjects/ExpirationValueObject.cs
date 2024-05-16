@@ -3,11 +3,9 @@ using Shared.Domain.ValueObjects.Base;
 
 namespace AccessControl.Domain.ValueObjects
 {
-  public sealed class ExpirationValueObject : BaseStringValueObject
+  public sealed class ExpirationValueObject : BaseValueObject<long>
   {
-    private const int MaxLength = 33;
-
-    public ExpirationValueObject(string value)
+    public ExpirationValueObject(long value)
       : base(value)
     {
       Name = "Expiration";
@@ -16,16 +14,15 @@ namespace AccessControl.Domain.ValueObjects
 
     public sealed override void Validate()
     {
-      base.Validate();
-      if (!IsLengthValid(Value))
+      if (!IsValueValid(Value))
       {
-        AddError(new ErrorValueObject(Name, $"{Name} must be less than {MaxLength} characters"));
+        AddError(new ErrorValueObject(Name, $"{Name} is required"));
       }
     }
 
-    private static bool IsLengthValid(string value)
+    private static bool IsValueValid(long value)
     {
-      return value.Length <= MaxLength;
+      return value > 0;
     }
   }
 }

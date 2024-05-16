@@ -17,7 +17,7 @@ namespace Infrastructure.DataAnnotations
     {
       Console.WriteLine("Data: " + Data);
       Console.WriteLine(
-        context.HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "")
+        context.HttpContext.Request.Headers.Authorization.ToString().Replace("Bearer ", "")
       );
       return next();
     }

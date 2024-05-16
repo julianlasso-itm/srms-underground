@@ -48,7 +48,9 @@ namespace AccessControl.Application.UseCases
         user,
         data.UserId,
         data.Name,
-        data.Photo
+        data.Photo,
+        command.PrivateKeyPath,
+        command.PublicKeyPath
       );
       var response = AggregateRoot.GenerateTokenForSignIn(signInData);
       return AclOutputMapper.ToSignInApplicationResponse(response);

@@ -70,7 +70,15 @@ namespace AccessControl.Infrastructure.AntiCorruption
 
     public SignInCommand ToSignInCommand(SignInAccessControlRequest request)
     {
-      return new SignInCommand { Email = request.Email, Password = request.Password };
+      return new SignInCommand
+      {
+        Email = request.Email,
+        Password = request.Password,
+        PrivateKeyPath =
+          request.PrivateKeyPath ?? throw new ArgumentNullException(nameof(request.PrivateKeyPath)),
+        PublicKeyPath =
+          request.PublicKeyPath ?? throw new ArgumentNullException(nameof(request.PublicKeyPath))
+      };
     }
   }
 }
