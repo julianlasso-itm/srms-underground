@@ -90,7 +90,12 @@ namespace AccessControl.Infrastructure.AntiCorruption
       VerifyTokenApplicationResponse data
     )
     {
-      return new VerifyTokenAccessControlResponse { Roles = data.Roles };
+      return new VerifyTokenAccessControlResponse
+      {
+        UserId = data.UserId,
+        Email = data.Email,
+        Roles = data.Roles
+      };
     }
   }
 }

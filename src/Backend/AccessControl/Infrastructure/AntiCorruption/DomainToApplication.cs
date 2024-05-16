@@ -88,10 +88,16 @@ namespace AccessControl.Infrastructure.AntiCorruption
     }
 
     public VerifyTokenApplicationResponse ToVerifyTokenApplicationResponse(
-      VerifyTokenDomainResponse response
+      VerifyTokenDomainResponse response,
+      string userId
     )
     {
-      return new VerifyTokenApplicationResponse { Roles = response.Roles };
+      return new VerifyTokenApplicationResponse
+      {
+        UserId = userId,
+        Email = response.Email,
+        Roles = response.Roles
+      };
     }
   }
 }

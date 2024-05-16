@@ -65,6 +65,14 @@ namespace AccessControl.Infrastructure.Persistence.Repositories
       };
     }
 
+    public async Task<string> GetIdByEmail(string email)
+    {
+      Expression<Func<UserModel, bool>> expression = user =>
+        user.Email == email && !user.Disabled && user.DeletedAt == null;
+      var data = await GetFirstAsync(expression);
+      return data.UserId.ToString();
+    }
+
     public Task<UserModel> UpdateAsync(Guid id, UpdateUserApplicationResponse entity)
     {
       var user = new UserModel { UserId = id };

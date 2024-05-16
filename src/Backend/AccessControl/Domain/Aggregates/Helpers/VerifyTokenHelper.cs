@@ -34,7 +34,7 @@ namespace AccessControl.Domain.Aggregates.Helpers
           new List<ErrorValueObject> { new ErrorValueObject("token", "Expired token") }
         );
       }
-      return new VerifyTokenDomainResponse { Roles = data.Roles };
+      return new VerifyTokenDomainResponse { Email = data.Email, Roles = data.Roles };
     }
 
     private static VerifyTokenStruct GetTokenStruct(VerifyTokenDomainRequest request)

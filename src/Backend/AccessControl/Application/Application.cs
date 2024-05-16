@@ -124,7 +124,12 @@ namespace AccessControl.Application
 
     public Task<VerifyTokenApplicationResponse> VerifyToken(VerifyTokenCommand request)
     {
-      var useCase = new VerifyTokenUseCase(AggregateRoot, ApplicationToDomain, DomainToApplication);
+      var useCase = new VerifyTokenUseCase<TUserEntity>(
+        _userRepository,
+        AggregateRoot,
+        ApplicationToDomain,
+        DomainToApplication
+      );
       return useCase.Handle(request);
     }
   }
