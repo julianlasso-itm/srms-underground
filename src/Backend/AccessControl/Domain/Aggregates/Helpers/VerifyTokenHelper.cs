@@ -50,8 +50,7 @@ namespace AccessControl.Domain.Aggregates.Helpers
     private static bool IsTokenExpired(long expiration)
     {
       var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-      var expirationDate = epoch.AddMilliseconds(expiration);
-
+      var expirationDate = epoch.AddMilliseconds(expiration * 1000);
       return DateTime.UtcNow >= expirationDate;
     }
   }

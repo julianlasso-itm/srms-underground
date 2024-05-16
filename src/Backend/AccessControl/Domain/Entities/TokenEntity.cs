@@ -6,7 +6,7 @@ namespace AccessControl.Domain.Entities
 {
   internal sealed class TokenEntity
   {
-    private const int ExpirationInHours = 1;
+    private const int ExpirationInHours = 8;
     public JwtValueObject Jwt { get; internal set; }
     public PrivateKeyPathValueObject PrivateKeyPath { get; internal set; }
     public PublicKeyPathValueObject PublicKeyPath { get; internal set; }
@@ -35,12 +35,12 @@ namespace AccessControl.Domain.Entities
         Email = email.Value,
         Photo = photo.Value,
         Roles = roles.Select(role => role.Name.Value).ToList(),
-        Expiration = new ExpirationValueObject(GetExpirationInMilliseconds()).Value
+        Expiration = new ExpirationValueObject(GetExpirationInSeconds()).Value
       };
       Jwt = new JwtValueObject(jwt.GenerateToken(jwtPayload));
     }
 
-    private static long GetExpirationInMilliseconds()
+    private static long GetExpirationInSeconds()
     {
       var expirationTime = DateTime.UtcNow.AddHours(ExpirationInHours);
       var unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);

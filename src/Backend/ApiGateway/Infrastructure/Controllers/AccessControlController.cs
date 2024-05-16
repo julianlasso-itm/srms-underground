@@ -8,7 +8,6 @@ using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
 
 namespace ApiGateway.Infrastructure.Controllers
 {
-  [Permissions(Data = "admin")]
   [ApiController]
   [Route("api/access-control")]
   public class AccessControlController : BaseController
@@ -84,6 +83,7 @@ namespace ApiGateway.Infrastructure.Controllers
       );
     }
 
+    [Permissions("User")]
     [HttpGet("roles")]
     public async Task<IActionResult> GetRolesAsync([FromQuery] GetRolesAccessControlRequest request)
     {

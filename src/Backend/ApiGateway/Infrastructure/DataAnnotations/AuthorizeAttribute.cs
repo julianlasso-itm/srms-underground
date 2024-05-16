@@ -1,3 +1,5 @@
+using System.Linq;
+using System.Text.Json;
 using ApiGateway.Infrastructure.Services;
 using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
@@ -14,8 +16,15 @@ namespace Infrastructure.DataAnnotations
   )]
   public class PermissionsAttribute : Attribute, IAsyncActionFilter
   {
-    public string? Data { get; set; }
+    public string[]? Data { get; set; }
     const string ContentType = "application/json";
+
+    public PermissionsAttribute() { }
+
+    public PermissionsAttribute(params string[] data)
+    {
+      Data = data;
+    }
 
     public async Task OnActionExecutionAsync(
       ActionExecutingContext context,
@@ -33,10 +42,19 @@ namespace Infrastructure.DataAnnotations
           new VerifyTokenAccessControlRequest { Token = token }
         );
 
-        if (Data != null && data.Roles.Contains(Data))
+        if (Data != null && !Data.Contains(data.Roles.FirstOrDefault()))
         {
-          await next();
+          context.Result = new ContentResult
+          {
+            Content = JsonSerializer.Serialize(
+              new { Message = "Unauthorized" }
+            ),
+            StatusCode = StatusCodes.Status401Unauthorized,
+            ContentType = ContentType
+          };
+          return;
         }
+        await next();
       }
       catch (RpcException e)
       {

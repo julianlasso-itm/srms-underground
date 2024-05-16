@@ -7,7 +7,6 @@ using Shared.Infrastructure.ProtocolBuffers.Analytics.Requests;
 
 namespace ApiGateway.Infrastructure.Controllers
 {
-  [Permissions(Data = "admin")]
   [ApiController]
   [Route("api/access-control")]
   public class AnalyticsController : BaseController
