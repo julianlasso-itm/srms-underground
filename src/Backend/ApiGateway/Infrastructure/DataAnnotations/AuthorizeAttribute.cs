@@ -1,6 +1,8 @@
 using ApiGateway.Infrastructure.Services;
+using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Shared.Infrastructure.Exceptions;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
 
 namespace Infrastructure.DataAnnotations
@@ -13,6 +15,7 @@ namespace Infrastructure.DataAnnotations
   public class PermissionsAttribute : Attribute, IAsyncActionFilter
   {
     public string? Data { get; set; }
+    const string ContentType = "application/json";
 
     public async Task OnActionExecutionAsync(
       ActionExecutingContext context,
@@ -24,16 +27,25 @@ namespace Infrastructure.DataAnnotations
       var token = context
         .HttpContext.Request.Headers.Authorization.ToString()
         .Replace("Bearer ", "");
-      var data = await accessControlServices.VerifyTokenAsync(
-        new VerifyTokenAccessControlRequest { Token = token }
-      );
-      if (Data != null && data.Roles.Contains(Data))
+      try
       {
-        await next();
+        var data = await accessControlServices.VerifyTokenAsync(
+          new VerifyTokenAccessControlRequest { Token = token }
+        );
+
+        if (Data != null && data.Roles.Contains(Data))
+        {
+          await next();
+        }
       }
-      else
+      catch (RpcException e)
       {
-        context.Result = new UnauthorizedResult();
+        context.Result = new ContentResult
+        {
+          Content = e.Status.Detail,
+          StatusCode = (int)StatusCodeConverter.GetHttpStatusCodeFromGrpcStatus(e.StatusCode),
+          ContentType = ContentType
+        };
       }
     }
   }
