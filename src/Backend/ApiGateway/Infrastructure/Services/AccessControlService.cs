@@ -71,5 +71,13 @@ namespace ApiGateway.Infrastructure.Services
     {
       return Client.SignInAsync(request, context);
     }
+
+    public Task<VerifyTokenAccessControlResponse> VerifyTokenAsync(
+      VerifyTokenAccessControlRequest request,
+      CallContext context = default
+    )
+    {
+      return Client.VerifyTokenAsync(request, context);
+    }
   }
 }

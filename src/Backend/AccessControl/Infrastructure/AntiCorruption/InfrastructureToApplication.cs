@@ -77,7 +77,19 @@ namespace AccessControl.Infrastructure.AntiCorruption
         PrivateKeyPath =
           request.PrivateKeyPath ?? throw new ArgumentNullException(nameof(request.PrivateKeyPath)),
         PublicKeyPath =
-          request.PublicKeyPath ?? throw new ArgumentNullException(nameof(request.PublicKeyPath))
+          request.PublicKeyPath ?? throw new ArgumentNullException(nameof(request.PublicKeyPath)),
+      };
+    }
+
+    public VerifyTokenCommand ToVerifyTokenCommand(VerifyTokenAccessControlRequest request)
+    {
+      return new VerifyTokenCommand
+      {
+        Token = request.Token,
+        PrivateKeyPath =
+          request.PrivateKeyPath ?? throw new ArgumentNullException(nameof(request.PrivateKeyPath)),
+        PublicKeyPath =
+          request.PublicKeyPath ?? throw new ArgumentNullException(nameof(request.PublicKeyPath)),
       };
     }
   }

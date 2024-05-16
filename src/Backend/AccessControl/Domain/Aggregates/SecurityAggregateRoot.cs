@@ -60,7 +60,7 @@ namespace AccessControl.Domain.Aggregates
 
     public VerifyTokenDomainResponse VerifyToken(VerifyTokenDomainRequest verifyData)
     {
-      throw new NotImplementedException("Method not implemented in SecurityAggregateRoot");
+      return VerifyTokenHelper.Execute(verifyData);
     }
   }
 }

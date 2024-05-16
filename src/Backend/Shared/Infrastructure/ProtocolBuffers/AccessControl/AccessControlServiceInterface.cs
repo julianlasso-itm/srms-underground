@@ -49,5 +49,11 @@ namespace Shared.Infrastructure.ProtocolBuffers.AccessControl
       SignInAccessControlRequest request,
       CallContext context = default
     );
+
+    [OperationContract]
+    Task<VerifyTokenAccessControlResponse> VerifyTokenAsync(
+      VerifyTokenAccessControlRequest request,
+      CallContext context = default
+    );
   }
 }

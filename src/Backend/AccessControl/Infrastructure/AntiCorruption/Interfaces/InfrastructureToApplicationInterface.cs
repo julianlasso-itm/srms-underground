@@ -12,5 +12,6 @@ namespace AccessControl.Infrastructure.AntiCorruption.Interfaces
     public RegisterUserCommand ToRegisterUserCommand(RegisterUserRequest request);
     public ActivateTokenCommand ToActivateTokenCommand(ActivationTokenAccessControlRequest request);
     public SignInCommand ToSignInCommand(SignInAccessControlRequest request);
+    public VerifyTokenCommand ToVerifyTokenCommand(VerifyTokenAccessControlRequest request);
   }
 }

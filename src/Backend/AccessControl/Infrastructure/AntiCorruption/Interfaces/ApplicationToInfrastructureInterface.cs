@@ -19,5 +19,8 @@ namespace AccessControl.Infrastructure.AntiCorruption.Interfaces
       ActivationTokenApplicationResponse data
     );
     public SignInAccessControlResponse ToSignInResponse(SignInApplicationResponse data);
+    public VerifyTokenAccessControlResponse ToVerifyTokenResponse(
+      VerifyTokenApplicationResponse data
+    );
   }
 }

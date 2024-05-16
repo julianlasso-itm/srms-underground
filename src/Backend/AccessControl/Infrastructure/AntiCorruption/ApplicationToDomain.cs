@@ -98,5 +98,15 @@ namespace AccessControl.Infrastructure.AntiCorruption
         PublicKeyPath = publicKeyPath,
       };
     }
+
+    public VerifyTokenDomainRequest ToVerifyTokenDomainRequest(VerifyTokenCommand request)
+    {
+      return new VerifyTokenDomainRequest
+      {
+        Token = request.Token,
+        PrivateKeyPath = request.PrivateKeyPath,
+        PublicKeyPath = request.PublicKeyPath,
+      };
+    }
   }
 }

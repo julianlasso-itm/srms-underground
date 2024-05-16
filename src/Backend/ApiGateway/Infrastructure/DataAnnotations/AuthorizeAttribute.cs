@@ -1,4 +1,7 @@
+using ApiGateway.Infrastructure.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
 
 namespace Infrastructure.DataAnnotations
 {
@@ -11,15 +14,27 @@ namespace Infrastructure.DataAnnotations
   {
     public string? Data { get; set; }
 
-    public PermissionsAttribute() { }
-
-    public Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+    public async Task OnActionExecutionAsync(
+      ActionExecutingContext context,
+      ActionExecutionDelegate next
+    )
     {
-      Console.WriteLine("Data: " + Data);
-      Console.WriteLine(
-        context.HttpContext.Request.Headers.Authorization.ToString().Replace("Bearer ", "")
+      var accessControlServices =
+        context.HttpContext.RequestServices.GetRequiredService<AccessControlService>();
+      var token = context
+        .HttpContext.Request.Headers.Authorization.ToString()
+        .Replace("Bearer ", "");
+      var data = await accessControlServices.VerifyTokenAsync(
+        new VerifyTokenAccessControlRequest { Token = token }
       );
-      return next();
+      if (Data != null && data.Roles.Contains(Data))
+      {
+        await next();
+      }
+      else
+      {
+        context.Result = new UnauthorizedResult();
+      }
     }
   }
 }

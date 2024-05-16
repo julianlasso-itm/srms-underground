@@ -121,5 +121,11 @@ namespace AccessControl.Application
       );
       return useCase.Handle(request);
     }
+
+    public Task<VerifyTokenApplicationResponse> VerifyToken(VerifyTokenCommand request)
+    {
+      var useCase = new VerifyTokenUseCase(AggregateRoot, ApplicationToDomain, DomainToApplication);
+      return useCase.Handle(request);
+    }
   }
 }

@@ -14,5 +14,6 @@ namespace AccessControl.Application.Interfaces
     Task<GetRolesApplicationResponse<TRoleEntity>> GetRoles(GetRolesCommand request);
     Task<ActivationTokenApplicationResponse> ActivateToken(ActivateTokenCommand request);
     Task<SignInApplicationResponse> SignIn(SignInCommand request);
+    Task<VerifyTokenApplicationResponse> VerifyToken(VerifyTokenCommand request);
   }
 }

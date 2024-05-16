@@ -95,5 +95,16 @@ namespace AccessControl.Infrastructure.Services
       SignInHelper.SetEnvironments(_environmentService);
       return SignInHelper.SignInAsync(request);
     }
+
+    public Task<VerifyTokenAccessControlResponse> VerifyTokenAsync(
+      VerifyTokenAccessControlRequest request,
+      CallContext context = default
+    )
+    {
+      VerifyTokenHelper.SetApplication(_applicationService.GetApplication());
+      VerifyTokenHelper.SetAntiCorruptionLayer(_antiCorruptionLayerService);
+      VerifyTokenHelper.SetEnvironments(_environmentService);
+      return VerifyTokenHelper.VerifyTokenAsync(request);
+    }
   }
 }

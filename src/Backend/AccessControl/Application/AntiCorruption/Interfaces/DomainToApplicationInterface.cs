@@ -27,5 +27,8 @@ namespace AccessControl.Application.AntiCorruption.Interfaces
       ActivateTokenDomainResponse response
     );
     public SignInApplicationResponse ToSignInApplicationResponse(SignInDomainResponse response);
+    public VerifyTokenApplicationResponse ToVerifyTokenApplicationResponse(
+      VerifyTokenDomainResponse response
+    );
   }
 }

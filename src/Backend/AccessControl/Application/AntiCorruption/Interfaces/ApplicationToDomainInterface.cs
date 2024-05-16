@@ -24,5 +24,6 @@ namespace AccessControl.Application.AntiCorruption.Interfaces
       string privateKeyPath,
       string publicKeyPath
     );
+    public VerifyTokenDomainRequest ToVerifyTokenDomainRequest(VerifyTokenCommand request);
   }
 }

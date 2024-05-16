@@ -1,5 +1,8 @@
 using ApiGateway.Infrastructure.Services;
 using Shared.Application.Interfaces;
+using Shared.Infrastructure.ProtocolBuffers.AccessControl;
+using Shared.Infrastructure.ProtocolBuffers.Analytics;
+using Shared.Infrastructure.ProtocolBuffers.Profiles;
 using Shared.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,9 +36,9 @@ if (builder.Environment.IsDevelopment())
 }
 else
 {
-  builder.Services.AddSingleton<AccessControlService>();
-  builder.Services.AddSingleton<ProfilesService>();
-  builder.Services.AddSingleton<AnalyticsService>();
+  builder.Services.AddSingleton<IAccessControlServices, AccessControlService>();
+  builder.Services.AddSingleton<IProfilesServices, ProfilesService>();
+  builder.Services.AddSingleton<IAnalyticsServices, AnalyticsService>();
   builder.Services.AddSingleton<ICacheService, CacheService>();
 }
 

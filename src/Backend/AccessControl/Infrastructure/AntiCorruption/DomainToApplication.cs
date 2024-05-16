@@ -86,5 +86,12 @@ namespace AccessControl.Infrastructure.AntiCorruption
     {
       return new SignInApplicationResponse { Token = response.Token };
     }
+
+    public VerifyTokenApplicationResponse ToVerifyTokenApplicationResponse(
+      VerifyTokenDomainResponse response
+    )
+    {
+      return new VerifyTokenApplicationResponse { Roles = response.Roles };
+    }
   }
 }
