@@ -24,6 +24,9 @@ namespace AccessControl.Application.UseCases
     // private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventCredentialActivated}";
     private readonly IUserRepository<TEntity> _userRepository;
     private readonly ICacheService _cacheService;
+    private const int MaxAttempts = 3;
+    private const int MaxAttemptsMinutes = 5;
+    private const int MaxBlockMinutes = 5;
 
     public SignInUseCase(
       IUserRepository<TEntity> userRepository,
@@ -67,7 +70,11 @@ namespace AccessControl.Application.UseCases
 
     private void BlockUserTemporarily(string email)
     {
-      _cacheService.Set($"{email}_temporarily_blocked", email, TimeSpan.FromMinutes(5));
+      _cacheService.Set(
+        $"{email}_temporarily_blocked",
+        email,
+        TimeSpan.FromMinutes(MaxBlockMinutes)
+      );
       throw new ApplicationException("User is temporarily blocked", HttpStatusCode.Forbidden);
     }
 
@@ -75,13 +82,23 @@ namespace AccessControl.Application.UseCases
     {
       try
       {
-        return await _userRepository.GetByEmailAndPassword(email, password);
+        var data = await _userRepository.GetByEmailAndPassword(email, password);
+        DeletePreviousAttempts(email);
+        return data;
       }
-      catch (ApplicationException)
+      catch (Exception)
       {
         VerifyPreviousAttempts(email);
-        throw new ApplicationException("Invalid credentials", HttpStatusCode.Unauthorized);
+        throw new ApplicationException(
+          "User not found or credentials incorrect!",
+          HttpStatusCode.Unauthorized
+        );
       }
+    }
+
+    private void DeletePreviousAttempts(string email)
+    {
+      _cacheService.Remove($"{email}_attempts");
     }
 
     private void VerifyPreviousAttempts(string email)
@@ -91,17 +108,17 @@ namespace AccessControl.Application.UseCases
 
       if (attempts == 0)
       {
-        _cacheService.AddToList(path, "strike", TimeSpan.FromMinutes(5));
+        _cacheService.AddToList(path, "strike", TimeSpan.FromMinutes(MaxAttemptsMinutes));
         return;
       }
 
-      if (attempts < 3)
+      if (attempts < MaxAttempts - 1)
       {
         _cacheService.AddToList(path, "strike");
         return;
       }
 
-      if (attempts == 3)
+      if (attempts == MaxAttempts - 1)
       {
         _cacheService.Remove(path);
         BlockUserTemporarily(email);
