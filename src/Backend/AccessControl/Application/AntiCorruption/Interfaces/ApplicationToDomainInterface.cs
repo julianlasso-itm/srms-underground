@@ -20,6 +20,7 @@ namespace AccessControl.Application.AntiCorruption.Interfaces
       string userId,
       string name,
       string photoUrl,
+      List<string> roles,
       string privateKeyPath,
       string publicKeyPath
     );

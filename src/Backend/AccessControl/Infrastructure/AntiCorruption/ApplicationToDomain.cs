@@ -82,6 +82,7 @@ namespace AccessControl.Infrastructure.AntiCorruption
       string userId,
       string name,
       string photoUrl,
+      List<string> roles,
       string privateKeyPath,
       string publicKeyPath
     )
@@ -92,6 +93,7 @@ namespace AccessControl.Infrastructure.AntiCorruption
         Name = name,
         Email = request.Email,
         Photo = photoUrl,
+        Roles = roles,
         PrivateKeyPath = privateKeyPath,
         PublicKeyPath = publicKeyPath,
       };

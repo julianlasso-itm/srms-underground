@@ -20,7 +20,12 @@ namespace AccessControl.Domain.Entities
       PublicKeyPath = data.PublicKeyPath;
     }
 
-    public void Register(FullNameValueObject name, EmailValueObject email, PhotoValueObject photo)
+    public void Register(
+      FullNameValueObject name,
+      EmailValueObject email,
+      PhotoValueObject photo,
+      List<RoleStruct> roles
+    )
     {
       var jwt = new JwtHandler(PrivateKeyPath.Value, PublicKeyPath.Value);
       var jwtPayload = new JwtPayload
@@ -29,6 +34,7 @@ namespace AccessControl.Domain.Entities
         Name = name.Value,
         Email = email.Value,
         Photo = photo.Value,
+        Roles = roles.Select(role => role.Name.Value).ToList(),
         Expiration = new ExpirationValueObject(GetExpirationInMilliseconds()).Value
       };
       Jwt = new JwtValueObject(jwt.GenerateToken(jwtPayload));

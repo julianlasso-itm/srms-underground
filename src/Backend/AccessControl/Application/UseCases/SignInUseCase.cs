@@ -49,6 +49,7 @@ namespace AccessControl.Application.UseCases
         data.UserId,
         data.Name,
         data.Photo,
+        data.Roles,
         command.PrivateKeyPath,
         command.PublicKeyPath
       );

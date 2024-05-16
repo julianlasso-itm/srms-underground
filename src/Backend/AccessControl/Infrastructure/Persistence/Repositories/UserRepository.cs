@@ -3,6 +3,7 @@ using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
 using AccessControl.Infrastructure.Persistence.Models;
 using AccessControlApplication.Dto;
+using Microsoft.EntityFrameworkCore;
 using Shared.Infrastructure.Persistence.Repositories;
 
 namespace AccessControl.Infrastructure.Persistence.Repositories
@@ -35,22 +36,32 @@ namespace AccessControl.Infrastructure.Persistence.Repositories
       return AddAsync(user);
     }
 
-    public async Task<UserDataForSigInDto> GetByEmailAndPassword(
-      string email,
-      string password
-    )
+    public async Task<UserDataForSigInDto> GetByEmailAndPassword(string email, string password)
     {
       Expression<Func<UserModel, bool>> expression = user =>
         user.Email == email
         && user.Password == password
-        && user.Disabled == false
+        && !user.Disabled
         && user.DeletedAt == null;
-      var data = await GetFirstAsync(expression);
+
+      var data =
+        await Context
+          .Set<UserModel>()
+          .Include(user => user.UserPerRoles)
+          .ThenInclude(userPerRole => userPerRole.Role)
+          .FirstOrDefaultAsync(expression)
+        ?? throw new Exception("User not found or credentials incorrect.");
+
+      data.UserPerRoles = data
+        .UserPerRoles.Where(role => !role.Role.Disabled && role.Role.DeletedAt == null)
+        .ToList();
+
       return new UserDataForSigInDto
       {
         UserId = data.UserId.ToString(),
         Name = data.Name,
         Photo = data.Photo,
+        Roles = data.UserPerRoles.Select(role => role.Role.Name).ToList()
       };
     }
 
