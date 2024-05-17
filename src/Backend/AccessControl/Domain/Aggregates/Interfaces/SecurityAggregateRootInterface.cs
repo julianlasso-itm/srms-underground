@@ -24,6 +24,8 @@ namespace AccessControl.Domain.Aggregates.Interfaces
     public SignInDomainResponse GenerateTokenForSignIn(SignInDomainRequest signInData);
     public VerifyTokenDomainResponse VerifyToken(VerifyTokenDomainRequest verifyData);
     public ChangePasswordDomainResponse ChangePassword(ChangePasswordDomainRequest changeData);
-    public PasswordRecoveryDomainResponse PasswordRecovery(PasswordRecoveryDomainRequest recoveryData);
+    public PasswordRecoveryDomainResponse PasswordRecovery(
+      PasswordRecoveryDomainRequest recoveryData
+    );
   }
 }

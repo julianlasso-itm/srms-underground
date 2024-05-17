@@ -45,9 +45,7 @@ namespace Infrastructure.DataAnnotations
         {
           context.Result = new ContentResult
           {
-            Content = JsonSerializer.Serialize(
-              new { Message = "Unauthorized" }
-            ),
+            Content = JsonSerializer.Serialize(new { Message = "Unauthorized" }),
             StatusCode = StatusCodes.Status401Unauthorized,
             ContentType = ContentType
           };
