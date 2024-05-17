@@ -30,21 +30,23 @@ namespace AccessControl.Application.UseCases
       _userRepository = userRepository;
     }
 
-    public override Task<ChangePasswordApplicationResponse> Handle(ChangePasswordCommand request)
+    public override async Task<ChangePasswordApplicationResponse> Handle(
+      ChangePasswordCommand request
+    )
     {
       var command = AclInputMapper.ToChangePasswordDomainRequest(request);
       var user = AggregateRoot.ChangePassword(command);
-      VerifyCurrentPassword(user.CredentialId, user.OldPassword);
-      UpdatePasswordInDatabase(user.CredentialId, user.NewPassword);
-      return Task.FromResult(AclOutputMapper.ToChangePasswordApplicationResponse());
+      await VerifyCurrentPassword(user.CredentialId, user.OldPassword);
+      await UpdatePasswordInDatabase(user.CredentialId, user.NewPassword);
+      return AclOutputMapper.ToChangePasswordApplicationResponse();
     }
 
-    private async void VerifyCurrentPassword(string userId, string password)
+    private async Task VerifyCurrentPassword(string userId, string password)
     {
       _ = await _userRepository.VerifyPassword(userId, password);
     }
 
-    private async void UpdatePasswordInDatabase(string userId, string password)
+    private async Task UpdatePasswordInDatabase(string userId, string password)
     {
       _ = await _userRepository.UpdatePassword(userId, password);
     }
