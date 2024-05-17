@@ -1,8 +1,8 @@
 using AccessControl.Domain.ValueObjects;
 
-namespace AccessControl.Domain.Entities.Structs
+namespace AccessControl.Domain.Entities.Records
 {
-  public struct VerifyTokenStruct
+  public record VerifyTokenRecord
   {
     public TokenValueObject Token { get; set; }
     public required PrivateKeyPathValueObject PrivateKeyPath { get; set; }

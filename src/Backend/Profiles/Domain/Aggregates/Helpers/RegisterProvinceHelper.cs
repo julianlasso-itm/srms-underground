@@ -1,7 +1,7 @@
 using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Entities;
-using Profiles.Domain.Entities.Structs;
+using Profiles.Domain.Entities.Records;
 using Profiles.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
@@ -14,21 +14,21 @@ namespace Profiles.Domain.Aggregates.Helpers
   {
     public static RegisterProvinceDomainResponse Execute(RegisterProvinceDomainRequest data)
     {
-      var @struct = GetProvinceStruct(data);
-      ValidateStructureFields(@struct);
+      var record = GetProvinceRecord(data);
+      ValidateRecordFields(record);
 
       var province = new ProvinceEntity();
-      province.Register(@struct.CountryId, @struct.Name);
+      province.Register(record.CountryId, record.Name);
 
       return MapToResponse(province);
     }
 
-    private static ProvinceStruct GetProvinceStruct(RegisterProvinceDomainRequest request)
+    private static ProvinceRecord GetProvinceRecord(RegisterProvinceDomainRequest request)
     {
       var name = new NameValueObject(request.Name);
       var countryId = new CountryIdValueObject(request.CountryId);
 
-      return new ProvinceStruct { Name = name, CountryId = countryId };
+      return new ProvinceRecord { Name = name, CountryId = countryId };
     }
 
     private static RegisterProvinceDomainResponse MapToResponse(ProvinceEntity country)

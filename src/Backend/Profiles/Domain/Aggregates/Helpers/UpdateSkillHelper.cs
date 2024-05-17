@@ -1,7 +1,7 @@
 ﻿using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Entities;
-using Profiles.Domain.Entities.Structs;
+using Profiles.Domain.Entities.Records;
 using Profiles.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
@@ -16,8 +16,8 @@ namespace Profiles.Domain.Aggregates.Helpers
   {
     public static UpdateSkillDomainResponse Execute(UpdateSkillDomainRequest data)
     {
-      var @struct = GetSkillStruct(data);
-      var skill = new SkillEntity(@struct);
+      var record = GetSkillRecord(data);
+      var skill = new SkillEntity(record);
       var response = new UpdateSkillDomainResponse { SkillId = skill.SkillId.Value };
 
       if (data.Name != null)
@@ -40,7 +40,7 @@ namespace Profiles.Domain.Aggregates.Helpers
         response.Disabled = skill.Disabled.Value;
       }
 
-      ValidateStructureFields(skill);
+      ValidateRecordFields(skill);
       ValidateAmountDataToBeUpdated(response);
 
       return response;
@@ -58,10 +58,10 @@ namespace Profiles.Domain.Aggregates.Helpers
       }
     }
 
-    private static SkillStruct GetSkillStruct(UpdateSkillDomainRequest data)
+    private static SkillRecord GetSkillRecord(UpdateSkillDomainRequest data)
     {
       var id = new SkillIdValueObject(data.SkillId);
-      return new SkillStruct { SkillId = id };
+      return new SkillRecord { SkillId = id };
     }
   }
 }

@@ -1,7 +1,7 @@
 using Analytics.Domain.Aggregates.Dto.Requests;
 using Analytics.Domain.Aggregates.Dto.Responses;
 using Analytics.Domain.Entities;
-using Analytics.Domain.Entities.Structs;
+using Analytics.Domain.Entities.Records;
 using Analytics.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
@@ -14,22 +14,22 @@ namespace Analytics.Domain.Aggregates.Helpers
   {
     public static RegisterLevelDomainResponse Execute(RegisterLevelDomainRequest request)
     {
-      var @struct = GetLevelStruct(request);
-      ValidateStructureFields(@struct);
+      var record = GetLevelRecord(request);
+      ValidateRecordFields(record);
 
       var Level = new LevelEntity();
-      Level.Register(@struct.Name, @struct.Description);
+      Level.Register(record.Name, record.Description);
 
       return MapToResponse(Level);
     }
 
-    private static LevelStruct GetLevelStruct(RegisterLevelDomainRequest request)
+    private static LevelRecords GetLevelRecord(RegisterLevelDomainRequest request)
     {
       var name = new NameValueObject(request.Name);
       var description =
         request.Description != null ? new DescriptionValueObject(request.Description) : null;
 
-      return new LevelStruct { Name = name, Description = description };
+      return new LevelRecords { Name = name, Description = description };
     }
 
     private static RegisterLevelDomainResponse MapToResponse(LevelEntity Level)

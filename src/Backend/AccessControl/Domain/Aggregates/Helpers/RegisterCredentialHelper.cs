@@ -1,7 +1,7 @@
 using AccessControl.Domain.Aggregates.Dto.Requests;
 using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Entities;
-using AccessControl.Domain.Entities.Structs;
+using AccessControl.Domain.Entities.Records;
 using AccessControl.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
@@ -19,19 +19,19 @@ namespace AccessControl.Domain.Aggregates.Helpers
       RegisterCredentialDomainRequest registerData
     )
     {
-      var @struct = GetCredentialStruct(registerData);
-      ValidateStructureFields(@struct);
+      var record = GetCredentialRecord(registerData);
+      ValidateRecordFields(record);
 
       var credential = new CredentialEntity();
       credential.Register(
-        @struct.Name,
-        @struct.Email,
-        @struct.Password,
-        @struct.Avatar,
+        record.Name,
+        record.Email,
+        record.Password,
+        record.Avatar,
         new DisabledValueObject(true)
       );
       credential.AddRole(
-        new RoleEntity(new RoleStruct { RoleId = new RoleIdValueObject(UserRoleId) })
+        new RoleEntity(new RoleRecord { RoleId = new RoleIdValueObject(UserRoleId) })
       );
 
       return new RegisterCredentialDomainResponse
@@ -48,7 +48,7 @@ namespace AccessControl.Domain.Aggregates.Helpers
       };
     }
 
-    private static CredentialStruct GetCredentialStruct(
+    private static CredentialRecord GetCredentialRecord(
       RegisterCredentialDomainRequest registerData
     )
     {
@@ -56,7 +56,7 @@ namespace AccessControl.Domain.Aggregates.Helpers
       var email = new EmailValueObject(registerData.Email);
       var password = new PasswordValueObject(registerData.Password);
       var avatar = new AvatarValueObject(registerData.Avatar);
-      return new CredentialStruct
+      return new CredentialRecord
       {
         Name = name,
         Email = email,

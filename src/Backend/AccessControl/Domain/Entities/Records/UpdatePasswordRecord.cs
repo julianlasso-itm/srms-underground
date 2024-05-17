@@ -1,8 +1,8 @@
 using AccessControl.Domain.ValueObjects;
 
-namespace AccessControl.Domain.Entities.Structs
+namespace AccessControl.Domain.Entities.Records
 {
-  public struct UpdatePasswordStruct
+  public record UpdatePasswordRecord
   {
     public CredentialIdValueObject CredentialId { get; set; }
     public PasswordValueObject OldPassword { get; set; }

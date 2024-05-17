@@ -1,4 +1,4 @@
-﻿using QueryBank.Domain.Entities.Structs;
+﻿using QueryBank.Domain.Entities.Records;
 using QueryBank.Domain.ValueObjects;
 
 namespace QueryBank.Domain.Entities
@@ -12,7 +12,7 @@ namespace QueryBank.Domain.Entities
 
     public SkillEntity() { }
 
-    public SkillEntity(SkillStruct data)
+    public SkillEntity(SkillRecord data)
     {
       SkillId = data.SkillId;
       SubSkillId = data.SubSkillId;

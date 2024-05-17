@@ -1,7 +1,7 @@
 using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Entities;
-using Profiles.Domain.Entities.Structs;
+using Profiles.Domain.Entities.Records;
 using Profiles.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
@@ -16,8 +16,8 @@ namespace Profiles.Domain.Aggregates.Helpers
   {
     public static UpdateProvinceDomainResponse Execute(UpdateProvinceDomainRequest data)
     {
-      var @struct = GetProvinceStruct(data);
-      var province = new ProvinceEntity(@struct);
+      var record = GetProvinceRecord(data);
+      var province = new ProvinceEntity(record);
       var response = new UpdateProvinceDomainResponse { ProvinceId = province.ProvinceId.Value };
 
       if (data.CountryId != null)
@@ -47,16 +47,16 @@ namespace Profiles.Domain.Aggregates.Helpers
         response.Disabled = province.Disabled.Value;
       }
 
-      ValidateStructureFields(province);
+      ValidateRecordFields(province);
       ValidateAmountDataToBeUpdated(response);
 
       return response;
     }
 
-    private static ProvinceStruct GetProvinceStruct(UpdateProvinceDomainRequest data)
+    private static ProvinceRecord GetProvinceRecord(UpdateProvinceDomainRequest data)
     {
       var id = new ProvinceIdValueObject(data.ProvinceId);
-      return new ProvinceStruct { ProvinceId = id };
+      return new ProvinceRecord { ProvinceId = id };
     }
 
     private static void ValidateAmountDataToBeUpdated(UpdateProvinceDomainResponse response)

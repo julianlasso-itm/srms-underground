@@ -1,7 +1,7 @@
 ﻿using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Entities;
-using Profiles.Domain.Entities.Structs;
+using Profiles.Domain.Entities.Records;
 using Profiles.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
@@ -14,11 +14,11 @@ namespace Profiles.Domain.Aggregates.Helpers
   {
     public static RegisterSkillDomainResponse Execute(RegisterSkillDomainRequest data)
     {
-      var @struct = GetSkillRole(data);
-      ValidateStructureFields(@struct);
+      var record = GetSkillRole(data);
+      ValidateRecordFields(record);
 
       var skill = new SkillEntity();
-      skill.Register(@struct.Name);
+      skill.Register(record.Name);
 
       return new RegisterSkillDomainResponse
       {
@@ -28,11 +28,11 @@ namespace Profiles.Domain.Aggregates.Helpers
       };
     }
 
-    private static SkillStruct GetSkillRole(RegisterSkillDomainRequest data)
+    private static SkillRecord GetSkillRole(RegisterSkillDomainRequest data)
     {
       var name = new NameValueObject(data.Name);
 
-      return new SkillStruct { Name = name };
+      return new SkillRecord { Name = name };
     }
   }
 }

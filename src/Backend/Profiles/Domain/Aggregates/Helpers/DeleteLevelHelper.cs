@@ -1,6 +1,6 @@
 using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
-using Profiles.Domain.Entities.Structs;
+using Profiles.Domain.Entities.Records;
 using Profiles.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
@@ -13,18 +13,18 @@ namespace Profiles.Domain.Aggregates.Helpers
   {
     public static DeleteLevelDomainResponse Execute(DeleteLevelDomainRequest request)
     {
-      var @struct = GetLevelStruct(request);
-      ValidateStructureFields(@struct);
-      return MapToResponse(@struct);
+      var record = GetLevelRecord(request);
+      ValidateRecordFields(record);
+      return MapToResponse(record);
     }
 
-    private static LevelStruct GetLevelStruct(DeleteLevelDomainRequest request)
+    private static LevelRecord GetLevelRecord(DeleteLevelDomainRequest request)
     {
       var id = new LevelIdValueObject(request.LevelId);
-      return new LevelStruct { LevelId = id };
+      return new LevelRecord { LevelId = id };
     }
 
-    private static DeleteLevelDomainResponse MapToResponse(LevelStruct Level)
+    private static DeleteLevelDomainResponse MapToResponse(LevelRecord Level)
     {
       return new DeleteLevelDomainResponse { LevelId = Level.LevelId.Value };
     }

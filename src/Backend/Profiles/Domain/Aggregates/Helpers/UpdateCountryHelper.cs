@@ -1,7 +1,7 @@
 using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Entities;
-using Profiles.Domain.Entities.Structs;
+using Profiles.Domain.Entities.Records;
 using Profiles.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
@@ -16,8 +16,8 @@ namespace Profiles.Domain.Aggregates.Helpers
   {
     public static UpdateCountryDomainResponse Execute(UpdateCountryDomainRequest data)
     {
-      var @struct = GetCountryStruct(data);
-      var country = new CountryEntity(@struct);
+      var record = GetCountryRecord(data);
+      var country = new CountryEntity(record);
       var response = new UpdateCountryDomainResponse { CountryId = country.CountryId.Value };
 
       if (data.Name != null)
@@ -40,16 +40,16 @@ namespace Profiles.Domain.Aggregates.Helpers
         response.Disabled = country.Disabled.Value;
       }
 
-      ValidateStructureFields(country);
+      ValidateRecordFields(country);
       ValidateAmountDataToBeUpdated(response);
 
       return response;
     }
 
-    private static CountryStruct GetCountryStruct(UpdateCountryDomainRequest data)
+    private static CountryRecord GetCountryRecord(UpdateCountryDomainRequest data)
     {
       var id = new CountryIdValueObject(data.CountryId);
-      return new CountryStruct { CountryId = id };
+      return new CountryRecord { CountryId = id };
     }
 
     private static void ValidateAmountDataToBeUpdated(UpdateCountryDomainResponse response)

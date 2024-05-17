@@ -1,8 +1,8 @@
-using Analytics.Domain.ValueObjects;
+using Profiles.Domain.ValueObjects;
 
-namespace Analytics.Domain.Entities.Structs
+namespace Profiles.Domain.Entities.Records
 {
-  internal struct LevelStruct
+  internal struct LevelRecord
   {
     public LevelIdValueObject LevelId { get; set; }
     public NameValueObject Name { get; set; }

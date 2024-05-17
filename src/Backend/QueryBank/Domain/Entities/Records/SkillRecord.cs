@@ -1,8 +1,8 @@
 ﻿using QueryBank.Domain.ValueObjects;
 
-namespace QueryBank.Domain.Entities.Structs
+namespace QueryBank.Domain.Entities.Records
 {
-  internal struct SkillStruct
+  internal struct SkillRecord
   {
     public SkillIdValueObject SkillId { get; set; }
     public SkillIdValueObject? SubSkillId { get; set; }

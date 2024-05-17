@@ -6,7 +6,7 @@ namespace Shared.Domain.Aggregate.Helpers
 {
   public abstract class BaseHelper
   {
-    protected static bool ValidateStructureFields(object data)
+    protected static bool ValidateRecordFields(object data)
     {
       var errors = new List<ErrorValueObject>();
       var type = data.GetType();

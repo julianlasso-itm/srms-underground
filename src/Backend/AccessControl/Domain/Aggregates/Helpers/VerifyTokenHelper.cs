@@ -1,6 +1,6 @@
 using AccessControl.Domain.Aggregates.Dto.Requests;
 using AccessControl.Domain.Aggregates.Dto.Responses;
-using AccessControl.Domain.Entities.Structs;
+using AccessControl.Domain.Entities.Records;
 using AccessControl.Domain.Utils;
 using AccessControl.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
@@ -16,17 +16,17 @@ namespace AccessControl.Domain.Aggregates.Helpers
   {
     public static VerifyTokenDomainResponse Execute(VerifyTokenDomainRequest request)
     {
-      var @struct = GetTokenStruct(request);
-      ValidateStructureFields(@struct);
-      var jwt = new JwtHandler(@struct.PrivateKeyPath.Value, @struct.PublicKeyPath.Value);
-      if (!jwt.VerifyToken(@struct.Token.Value))
+      var record = GetTokenRecord(request);
+      ValidateRecordFields(record);
+      var jwt = new JwtHandler(record.PrivateKeyPath.Value, record.PublicKeyPath.Value);
+      if (!jwt.VerifyToken(record.Token.Value))
       {
         throw new DomainException(
           "Invalid token",
           new List<ErrorValueObject> { new ErrorValueObject("token", "Invalid token") }
         );
       }
-      var data = jwt.DecodeToken(@struct.Token.Value);
+      var data = jwt.DecodeToken(record.Token.Value);
       if (IsTokenExpired(data.Expiration))
       {
         throw new DomainException(
@@ -37,9 +37,9 @@ namespace AccessControl.Domain.Aggregates.Helpers
       return new VerifyTokenDomainResponse { Email = data.Email, Roles = data.Roles };
     }
 
-    private static VerifyTokenStruct GetTokenStruct(VerifyTokenDomainRequest request)
+    private static VerifyTokenRecord GetTokenRecord(VerifyTokenDomainRequest request)
     {
-      return new VerifyTokenStruct
+      return new VerifyTokenRecord
       {
         Token = new TokenValueObject(request.Token),
         PrivateKeyPath = new PrivateKeyPathValueObject(request.PrivateKeyPath),

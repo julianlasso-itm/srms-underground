@@ -1,7 +1,7 @@
 ﻿using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Entities;
-using Profiles.Domain.Entities.Structs;
+using Profiles.Domain.Entities.Records;
 using Profiles.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
@@ -14,11 +14,11 @@ namespace Profiles.Domain.Aggregates.Helpers
   {
     public static RegisterProfessionalDomainResponse Execute(RegisterProfessionalDomainRequest data)
     {
-      var @struct = GetProfessional(data);
-      ValidateStructureFields(@struct);
+      var record = GetProfessional(data);
+      ValidateRecordFields(record);
 
       var professional = new ProfessionalEntity();
-      professional.Register(@struct.Name, @struct.Email);
+      professional.Register(record.Name, record.Email);
 
       return new RegisterProfessionalDomainResponse
       {
@@ -29,12 +29,12 @@ namespace Profiles.Domain.Aggregates.Helpers
       };
     }
 
-    private static ProfessionalStruct GetProfessional(RegisterProfessionalDomainRequest data)
+    private static ProfessionalRecord GetProfessional(RegisterProfessionalDomainRequest data)
     {
       var name = new NameValueObject(data.Name);
       var email = new EmailValueObject(data.Email);
 
-      return new ProfessionalStruct { Name = name, Email = email };
+      return new ProfessionalRecord { Name = name, Email = email };
     }
   }
 }

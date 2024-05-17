@@ -1,8 +1,8 @@
 using AccessControl.Domain.ValueObjects;
 
-namespace AccessControl.Domain.Entities.Structs;
+namespace AccessControl.Domain.Entities.Records;
 
-internal struct CredentialStruct
+internal record CredentialRecord
 {
   public CredentialIdValueObject CredentialId { get; set; }
   public FullNameValueObject Name { get; set; }

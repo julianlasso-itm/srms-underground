@@ -1,6 +1,6 @@
 ﻿using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Entities;
-using Profiles.Domain.Entities.Structs;
+using Profiles.Domain.Entities.Records;
 using Profiles.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
@@ -15,8 +15,8 @@ namespace Profiles.Domain.Aggregates.Helpers
   {
     public static UpdateProfessionalDomainResponse Execute(UpdateProfessionalDomainRequest data)
     {
-      var @struct = GetProfessionalStruct(data);
-      var professional = new ProfessionalEntity(@struct);
+      var record = GetProfessionalRecord(data);
+      var professional = new ProfessionalEntity(record);
       var response = new UpdateProfessionalDomainResponse
       {
         ProfessionalId = professional.ProfessionalId.Value
@@ -48,7 +48,7 @@ namespace Profiles.Domain.Aggregates.Helpers
         response.Disabled = professional.Disabled.Value;
       }
 
-      ValidateStructureFields(professional);
+      ValidateRecordFields(professional);
       ValidateAmountDataToBeUpdated(response);
 
       return response;
@@ -66,10 +66,10 @@ namespace Profiles.Domain.Aggregates.Helpers
       }
     }
 
-    private static ProfessionalStruct GetProfessionalStruct(UpdateProfessionalDomainRequest data)
+    private static ProfessionalRecord GetProfessionalRecord(UpdateProfessionalDomainRequest data)
     {
       var id = new ProfessionalIdValueObject(data.ProfessionalId);
-      return new ProfessionalStruct { ProfessionalId = id };
+      return new ProfessionalRecord { ProfessionalId = id };
     }
   }
 }

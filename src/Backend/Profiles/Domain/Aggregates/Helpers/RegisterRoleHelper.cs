@@ -1,7 +1,7 @@
 ﻿using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Entities;
-using Profiles.Domain.Entities.Structs;
+using Profiles.Domain.Entities.Records;
 using Profiles.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
@@ -14,11 +14,11 @@ namespace Profiles.Domain.Aggregates.Helpers
   {
     public static RegisterRoleDomainResponse Execute(RegisterRoleDomainRequest request)
     {
-      var @struct = GetRoleStruct(request);
-      ValidateStructureFields(@struct);
+      var record = GetRoleRecord(request);
+      ValidateRecordFields(record);
 
       var role = new RoleEntity();
-      role.Register(@struct.Name, @struct.Description);
+      role.Register(record.Name, record.Description);
 
       return new RegisterRoleDomainResponse
       {
@@ -29,13 +29,13 @@ namespace Profiles.Domain.Aggregates.Helpers
       };
     }
 
-    private static RoleStruct GetRoleStruct(RegisterRoleDomainRequest request)
+    private static RoleRecord GetRoleRecord(RegisterRoleDomainRequest request)
     {
       var name = new NameValueObject(request.Name);
       var description =
         request.Description != null ? new DescriptionValueObject(request.Description) : null;
 
-      return new RoleStruct { Name = name, Description = description };
+      return new RoleRecord { Name = name, Description = description };
     }
   }
 }

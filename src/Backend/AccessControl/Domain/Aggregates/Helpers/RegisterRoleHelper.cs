@@ -1,7 +1,7 @@
 using AccessControl.Domain.Aggregates.Dto.Requests;
 using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Entities;
-using AccessControl.Domain.Entities.Structs;
+using AccessControl.Domain.Entities.Records;
 using AccessControl.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
@@ -14,22 +14,22 @@ namespace AccessControl.Domain.Aggregates.Helpers
   {
     public static RegisterRoleDomainResponse Execute(RegisterRoleDomainRequest request)
     {
-      var @struct = GetRoleStruct(request);
-      ValidateStructureFields(@struct);
+      var record = GetRoleRecord(request);
+      ValidateRecordFields(record);
 
       var role = new RoleEntity();
-      role.Register(@struct.Name, @struct.Description);
+      role.Register(record.Name, record.Description);
 
       return MapToResponse(role);
     }
 
-    private static RoleStruct GetRoleStruct(RegisterRoleDomainRequest request)
+    private static RoleRecord GetRoleRecord(RegisterRoleDomainRequest request)
     {
       var name = new NameValueObject(request.Name);
       var description =
         request.Description != null ? new DescriptionValueObject(request.Description) : null;
 
-      return new RoleStruct { Name = name, Description = description };
+      return new RoleRecord { Name = name, Description = description };
     }
 
     private static RegisterRoleDomainResponse MapToResponse(RoleEntity role)

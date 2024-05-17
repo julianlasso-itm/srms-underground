@@ -1,4 +1,4 @@
-using Profiles.Domain.Entities.Structs;
+using Profiles.Domain.Entities.Records;
 using Profiles.Domain.ValueObjects;
 
 namespace Profiles.Domain.Entities
@@ -11,7 +11,7 @@ namespace Profiles.Domain.Entities
 
     public CountryEntity() { }
 
-    public CountryEntity(CountryStruct data)
+    public CountryEntity(CountryRecord data)
     {
       CountryId = data.CountryId;
       Name = data.Name;

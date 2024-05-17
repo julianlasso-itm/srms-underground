@@ -1,4 +1,4 @@
-using AccessControl.Domain.Entities.Structs;
+using AccessControl.Domain.Entities.Records;
 using AccessControl.Domain.Utils;
 using AccessControl.Domain.ValueObjects;
 
@@ -13,7 +13,7 @@ namespace AccessControl.Domain.Entities
 
     public TokenEntity() { }
 
-    public TokenEntity(TokenStruct data)
+    public TokenEntity(TokenRecord data)
     {
       Jwt = data.Jwt;
       PrivateKeyPath = data.PrivateKeyPath;
@@ -24,7 +24,7 @@ namespace AccessControl.Domain.Entities
       FullNameValueObject name,
       EmailValueObject email,
       PhotoValueObject photo,
-      List<RoleStruct> roles
+      List<RoleRecord> roles
     )
     {
       var jwt = new JwtHandler(PrivateKeyPath.Value, PublicKeyPath.Value);

@@ -1,6 +1,6 @@
 using AccessControl.Domain.Aggregates.Dto.Requests;
 using AccessControl.Domain.Aggregates.Dto.Responses;
-using AccessControl.Domain.Entities.Structs;
+using AccessControl.Domain.Entities.Records;
 using AccessControl.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
@@ -13,18 +13,18 @@ namespace AccessControl.Domain.Aggregates.Helpers
   {
     public static DeleteRoleDomainResponse Execute(DeleteRoleDomainRequest request)
     {
-      var @struct = GetRoleStruct(request);
-      ValidateStructureFields(@struct);
-      return MapToResponse(@struct);
+      var record = GetRoleRecord(request);
+      ValidateRecordFields(record);
+      return MapToResponse(record);
     }
 
-    private static RoleStruct GetRoleStruct(DeleteRoleDomainRequest request)
+    private static RoleRecord GetRoleRecord(DeleteRoleDomainRequest request)
     {
       var id = new RoleIdValueObject(request.RoleId);
-      return new RoleStruct { RoleId = id };
+      return new RoleRecord { RoleId = id };
     }
 
-    private static DeleteRoleDomainResponse MapToResponse(RoleStruct role)
+    private static DeleteRoleDomainResponse MapToResponse(RoleRecord role)
     {
       return new DeleteRoleDomainResponse { RoleId = role.RoleId.Value };
     }

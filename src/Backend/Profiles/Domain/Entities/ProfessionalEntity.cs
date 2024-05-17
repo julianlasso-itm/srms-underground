@@ -1,4 +1,4 @@
-﻿using Profiles.Domain.Entities.Structs;
+﻿using Profiles.Domain.Entities.Records;
 using Profiles.Domain.ValueObjects;
 
 namespace Profiles.Domain.Entities
@@ -12,7 +12,7 @@ namespace Profiles.Domain.Entities
 
     public ProfessionalEntity() { }
 
-    public ProfessionalEntity(ProfessionalStruct data)
+    public ProfessionalEntity(ProfessionalRecord data)
     {
       ProfessionalId = data.ProfessionalId;
       Name = data.Name;

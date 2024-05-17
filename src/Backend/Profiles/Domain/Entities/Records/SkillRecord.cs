@@ -1,8 +1,8 @@
 ﻿using Profiles.Domain.ValueObjects;
 
-namespace Profiles.Domain.Entities.Structs
+namespace Profiles.Domain.Entities.Records
 {
-  internal struct SkillStruct
+  internal struct SkillRecord
   {
     public SkillIdValueObject SkillId { get; set; }
     public NameValueObject Name { get; set; }

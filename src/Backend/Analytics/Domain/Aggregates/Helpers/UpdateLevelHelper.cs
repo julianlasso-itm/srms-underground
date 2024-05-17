@@ -1,7 +1,7 @@
 using Analytics.Domain.Aggregates.Dto.Requests;
 using Analytics.Domain.Aggregates.Dto.Responses;
 using Analytics.Domain.Entities;
-using Analytics.Domain.Entities.Structs;
+using Analytics.Domain.Entities.Records;
 using Analytics.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
@@ -16,8 +16,8 @@ namespace Analytics.Domain.Aggregates.Helpers
   {
     public static UpdateLevelDomainResponse Execute(UpdateLevelDomainRequest data)
     {
-      var @struct = GetLevelStruct(data);
-      var Level = new LevelEntity(@struct);
+      var record = GetLevelRecord(data);
+      var Level = new LevelEntity(record);
       var response = new UpdateLevelDomainResponse { LevelId = Level.LevelId.Value };
 
       if (data.Name != null)
@@ -47,16 +47,16 @@ namespace Analytics.Domain.Aggregates.Helpers
         response.Disabled = Level.Disabled.Value;
       }
 
-      ValidateStructureFields(Level);
+      ValidateRecordFields(Level);
       ValidateAmountDataToBeUpdated(response);
 
       return response;
     }
 
-    private static LevelStruct GetLevelStruct(UpdateLevelDomainRequest data)
+    private static LevelRecords GetLevelRecord(UpdateLevelDomainRequest data)
     {
       var id = new LevelIdValueObject(data.LevelId);
-      return new LevelStruct { LevelId = id };
+      return new LevelRecords { LevelId = id };
     }
 
     private static void ValidateAmountDataToBeUpdated(UpdateLevelDomainResponse response)

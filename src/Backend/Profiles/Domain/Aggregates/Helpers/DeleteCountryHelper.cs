@@ -1,6 +1,6 @@
 using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
-using Profiles.Domain.Entities.Structs;
+using Profiles.Domain.Entities.Records;
 using Profiles.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
@@ -13,18 +13,18 @@ namespace Profiles.Domain.Aggregates.Helpers
   {
     public static DeleteCountryDomainResponse Execute(DeleteCountryDomainRequest data)
     {
-      var @struct = GetCountryStruct(data);
-      ValidateStructureFields(@struct);
-      return MapToResponse(@struct);
+      var record = GetCountryRecord(data);
+      ValidateRecordFields(record);
+      return MapToResponse(record);
     }
 
-    private static CountryStruct GetCountryStruct(DeleteCountryDomainRequest data)
+    private static CountryRecord GetCountryRecord(DeleteCountryDomainRequest data)
     {
       var id = new CountryIdValueObject(data.CountryId);
-      return new CountryStruct { CountryId = id };
+      return new CountryRecord { CountryId = id };
     }
 
-    private static DeleteCountryDomainResponse MapToResponse(CountryStruct country)
+    private static DeleteCountryDomainResponse MapToResponse(CountryRecord country)
     {
       return new DeleteCountryDomainResponse { CountryId = country.CountryId.Value };
     }

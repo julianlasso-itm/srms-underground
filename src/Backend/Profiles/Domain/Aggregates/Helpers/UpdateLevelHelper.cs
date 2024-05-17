@@ -1,7 +1,7 @@
 using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Entities;
-using Profiles.Domain.Entities.Structs;
+using Profiles.Domain.Entities.Records;
 using Profiles.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
@@ -16,8 +16,8 @@ namespace Profiles.Domain.Aggregates.Helpers
   {
     public static UpdateLevelDomainResponse Execute(UpdateLevelDomainRequest data)
     {
-      var @struct = GetLevelStruct(data);
-      var level = new LevelEntity(@struct);
+      var record = GetLevelRecord(data);
+      var level = new LevelEntity(record);
       var response = new UpdateLevelDomainResponse { LevelId = level.LevelId.Value };
 
       if (data.Name != null)
@@ -47,16 +47,16 @@ namespace Profiles.Domain.Aggregates.Helpers
         response.Disabled = level.Disabled.Value;
       }
 
-      ValidateStructureFields(level);
+      ValidateRecordFields(level);
       ValidateAmountDataToBeUpdated(response);
 
       return response;
     }
 
-    private static LevelStruct GetLevelStruct(UpdateLevelDomainRequest data)
+    private static LevelRecord GetLevelRecord(UpdateLevelDomainRequest data)
     {
       var id = new LevelIdValueObject(data.LevelId);
-      return new LevelStruct { LevelId = id };
+      return new LevelRecord { LevelId = id };
     }
 
     private static void ValidateAmountDataToBeUpdated(UpdateLevelDomainResponse response)

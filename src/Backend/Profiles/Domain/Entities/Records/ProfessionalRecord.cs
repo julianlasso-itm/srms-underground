@@ -1,8 +1,8 @@
 ﻿using Profiles.Domain.ValueObjects;
 
-namespace Profiles.Domain.Entities.Structs
+namespace Profiles.Domain.Entities.Records
 {
-  internal struct ProfessionalStruct
+  internal struct ProfessionalRecord
   {
     public ProfessionalIdValueObject ProfessionalId { get; set; }
     public DisabledValueObject Disabled { get; set; }

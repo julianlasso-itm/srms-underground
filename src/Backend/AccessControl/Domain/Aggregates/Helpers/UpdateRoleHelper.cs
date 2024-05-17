@@ -1,7 +1,7 @@
 using AccessControl.Domain.Aggregates.Dto.Requests;
 using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Entities;
-using AccessControl.Domain.Entities.Structs;
+using AccessControl.Domain.Entities.Records;
 using AccessControl.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
@@ -16,8 +16,8 @@ namespace AccessControl.Domain.Aggregates.Helpers
   {
     public static UpdateRoleDomainResponse Execute(UpdateRoleDomainRequest data)
     {
-      var @struct = GetRoleStruct(data);
-      var role = new RoleEntity(@struct);
+      var record = GetRoleRecord(data);
+      var role = new RoleEntity(record);
       var response = new UpdateRoleDomainResponse { RoleId = role.RoleId.Value };
 
       if (data.Name != null)
@@ -47,16 +47,16 @@ namespace AccessControl.Domain.Aggregates.Helpers
         response.Disabled = role.Disabled.Value;
       }
 
-      ValidateStructureFields(role);
+      ValidateRecordFields(role);
       ValidateAmountDataToBeUpdated(response);
 
       return response;
     }
 
-    private static RoleStruct GetRoleStruct(UpdateRoleDomainRequest data)
+    private static RoleRecord GetRoleRecord(UpdateRoleDomainRequest data)
     {
       var id = new RoleIdValueObject(data.RoleId);
-      return new RoleStruct { RoleId = id };
+      return new RoleRecord { RoleId = id };
     }
 
     private static void ValidateAmountDataToBeUpdated(UpdateRoleDomainResponse response)

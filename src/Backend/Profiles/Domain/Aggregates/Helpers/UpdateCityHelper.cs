@@ -1,7 +1,7 @@
 using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Entities;
-using Profiles.Domain.Entities.Structs;
+using Profiles.Domain.Entities.Records;
 using Profiles.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
@@ -16,8 +16,8 @@ namespace Profiles.Domain.Aggregates.Helpers
   {
     public static UpdateCityDomainResponse Execute(UpdateCityDomainRequest data)
     {
-      var @struct = GetCityStruct(data);
-      var city = new CityEntity(@struct);
+      var record = GetCityRecord(data);
+      var city = new CityEntity(record);
       var response = new UpdateCityDomainResponse { CityId = city.CityId.Value };
 
       if (data.ProvinceId != null)
@@ -47,16 +47,16 @@ namespace Profiles.Domain.Aggregates.Helpers
         response.Disabled = city.Disabled.Value;
       }
 
-      ValidateStructureFields(city);
+      ValidateRecordFields(city);
       ValidateAmountDataToBeUpdated(response);
 
       return response;
     }
 
-    private static CityStruct GetCityStruct(UpdateCityDomainRequest data)
+    private static CityRecord GetCityRecord(UpdateCityDomainRequest data)
     {
       var id = new CityIdValueObject(data.CityId);
-      return new CityStruct { CityId = id };
+      return new CityRecord { CityId = id };
     }
 
     private static void ValidateAmountDataToBeUpdated(UpdateCityDomainResponse response)

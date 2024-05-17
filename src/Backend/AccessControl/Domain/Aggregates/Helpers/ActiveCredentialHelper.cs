@@ -1,7 +1,7 @@
 using AccessControl.Domain.Aggregates.Dto.Requests;
 using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Entities;
-using AccessControl.Domain.Entities.Structs;
+using AccessControl.Domain.Entities.Records;
 using AccessControl.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
@@ -14,20 +14,20 @@ namespace AccessControl.Domain.Aggregates.Helpers
   {
     public static ActiveCredentialDomainResponse Execute(ActiveCredentialDomainRequest data)
     {
-      var @struct = GetCredentialStruct(data);
-      ValidateStructureFields(@struct);
-      var credential = ActiveCredential(@struct);
+      var record = GetCredentialRecord(data);
+      ValidateRecordFields(record);
+      var credential = ActiveCredential(record);
       return MapToResponse(credential);
     }
 
-    private static CredentialStruct GetCredentialStruct(ActiveCredentialDomainRequest data)
+    private static CredentialRecord GetCredentialRecord(ActiveCredentialDomainRequest data)
     {
-      return new CredentialStruct { CredentialId = new CredentialIdValueObject(data.CredentialId) };
+      return new CredentialRecord { CredentialId = new CredentialIdValueObject(data.CredentialId) };
     }
 
-    private static CredentialEntity ActiveCredential(CredentialStruct @struct)
+    private static CredentialEntity ActiveCredential(CredentialRecord record)
     {
-      var credential = new CredentialEntity(@struct);
+      var credential = new CredentialEntity(record);
       credential.Enable();
       return credential;
     }

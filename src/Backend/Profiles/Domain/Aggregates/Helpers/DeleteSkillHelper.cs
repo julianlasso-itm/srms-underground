@@ -1,6 +1,6 @@
 ﻿using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
-using Profiles.Domain.Entities.Structs;
+using Profiles.Domain.Entities.Records;
 using Profiles.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
@@ -13,15 +13,15 @@ namespace Profiles.Domain.Aggregates.Helpers
   {
     public static DeleteSkillDomainResponse Execute(DeleteSkillDomainRequest request)
     {
-      var @struct = GetSkillStruct(request);
-      ValidateStructureFields(@struct);
-      return new DeleteSkillDomainResponse { SkillId = @struct.SkillId.Value };
+      var record = GetSkillRecord(request);
+      ValidateRecordFields(record);
+      return new DeleteSkillDomainResponse { SkillId = record.SkillId.Value };
     }
 
-    private static SkillStruct GetSkillStruct(DeleteSkillDomainRequest request)
+    private static SkillRecord GetSkillRecord(DeleteSkillDomainRequest request)
     {
       var id = new SkillIdValueObject(request.SkillId);
-      return new SkillStruct { SkillId = id };
+      return new SkillRecord { SkillId = id };
     }
   }
 }

@@ -1,10 +1,10 @@
-using Profiles.Domain.ValueObjects;
+using AccessControl.Domain.ValueObjects;
 
-namespace Profiles.Domain.Entities.Structs
+namespace AccessControl.Domain.Entities.Records
 {
-  internal struct LevelStruct
+  internal record RoleRecord
   {
-    public LevelIdValueObject LevelId { get; set; }
+    public RoleIdValueObject RoleId { get; set; }
     public NameValueObject Name { get; set; }
     public DescriptionValueObject? Description { get; set; }
     public DisabledValueObject Disabled { get; set; }

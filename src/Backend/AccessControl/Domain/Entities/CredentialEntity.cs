@@ -1,4 +1,4 @@
-using AccessControl.Domain.Entities.Structs;
+using AccessControl.Domain.Entities.Records;
 using AccessControl.Domain.ValueObjects;
 
 namespace AccessControl.Domain.Entities
@@ -15,7 +15,7 @@ namespace AccessControl.Domain.Entities
 
     public CredentialEntity() { }
 
-    public CredentialEntity(CredentialStruct data)
+    public CredentialEntity(CredentialRecord data)
     {
       CredentialId = data.CredentialId;
       Name = data.Name;

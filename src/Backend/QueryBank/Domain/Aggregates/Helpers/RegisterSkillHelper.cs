@@ -1,7 +1,7 @@
 ﻿using QueryBank.Domain.Aggregates.Dto.Requests;
 using QueryBank.Domain.Aggregates.Dto.Responses;
 using QueryBank.Domain.Entities;
-using QueryBank.Domain.Entities.Structs;
+using QueryBank.Domain.Entities.Records;
 using QueryBank.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
@@ -14,16 +14,16 @@ namespace QueryBank.Domain.Aggregates.Helpers
   {
     public static RegisterSkillDomainResponse Execute(RegisterSkillDomainRequest data)
     {
-      var @struct = GetSkillRole(data);
-      ValidateStructureFields(@struct);
+      var record = GetSkillRole(data);
+      ValidateRecordFields(record);
 
       var skill = new SkillEntity();
-      skill.Register(@struct.Name, @struct.SkillId, @struct.SubSkillId, @struct.Disabled);
+      skill.Register(record.Name, record.SkillId, record.SubSkillId, record.Disabled);
 
       return MapToResponse(skill);
     }
 
-    private static SkillStruct GetSkillRole(RegisterSkillDomainRequest data)
+    private static SkillRecord GetSkillRole(RegisterSkillDomainRequest data)
     {
       var id = new SkillIdValueObject(data.SkillId);
       var name = new NameValueObject(data.Name);
@@ -31,7 +31,7 @@ namespace QueryBank.Domain.Aggregates.Helpers
       if (data.SubSkillId != null)
       {
         var subSkillId = new SkillIdValueObject(data.SubSkillId);
-        return new SkillStruct
+        return new SkillRecord
         {
           SkillId = id,
           SubSkillId = subSkillId,
@@ -39,7 +39,7 @@ namespace QueryBank.Domain.Aggregates.Helpers
           Disabled = disabled,
         };
       }
-      return new SkillStruct
+      return new SkillRecord
       {
         SkillId = id,
         Name = name,

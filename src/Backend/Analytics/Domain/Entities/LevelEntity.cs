@@ -1,4 +1,4 @@
-using Analytics.Domain.Entities.Structs;
+using Analytics.Domain.Entities.Records;
 using Analytics.Domain.ValueObjects;
 
 namespace Analytics.Domain.Entities
@@ -12,7 +12,7 @@ namespace Analytics.Domain.Entities
 
     public LevelEntity() { }
 
-    public LevelEntity(LevelStruct data)
+    public LevelEntity(LevelRecords data)
     {
       LevelId = data.LevelId;
       Name = data.Name;

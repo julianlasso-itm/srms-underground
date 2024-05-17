@@ -1,7 +1,7 @@
 using AccessControl.Domain.Aggregates.Dto.Requests;
 using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Entities;
-using AccessControl.Domain.Entities.Structs;
+using AccessControl.Domain.Entities.Records;
 using AccessControl.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
@@ -14,18 +14,18 @@ namespace AccessControl.Domain.Aggregates.Helpers
   {
     public static ChangePasswordDomainResponse Execute(ChangePasswordDomainRequest data)
     {
-      var @struct = GetUpdatePasswordStruct(data);
-      ValidateStructureFields(@struct);
+      var record = GetUpdatePasswordRecord(data);
+      ValidateRecordFields(record);
       var credential = new CredentialEntity(
-        new CredentialStruct { CredentialId = @struct.CredentialId }
+        new CredentialRecord { CredentialId = record.CredentialId }
       );
-      credential.UpdatePassword(@struct.NewPassword);
-      return MapToResponse(credential, @struct.OldPassword.Value);
+      credential.UpdatePassword(record.NewPassword);
+      return MapToResponse(credential, record.OldPassword.Value);
     }
 
-    private static UpdatePasswordStruct GetUpdatePasswordStruct(ChangePasswordDomainRequest data)
+    private static UpdatePasswordRecord GetUpdatePasswordRecord(ChangePasswordDomainRequest data)
     {
-      return new UpdatePasswordStruct
+      return new UpdatePasswordRecord
       {
         CredentialId = new CredentialIdValueObject(data.CredentialId),
         OldPassword = new PasswordValueObject(data.OldPassword, false),

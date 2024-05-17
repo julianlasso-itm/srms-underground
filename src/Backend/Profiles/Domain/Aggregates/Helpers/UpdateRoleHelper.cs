@@ -1,7 +1,7 @@
 ﻿using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Entities;
-using Profiles.Domain.Entities.Structs;
+using Profiles.Domain.Entities.Records;
 using Profiles.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
@@ -16,8 +16,8 @@ namespace Profiles.Domain.Aggregates.Helpers
   {
     public static UpdateRoleDomainResponse Execute(UpdateRoleDomainRequest data)
     {
-      var @struct = GetRoleStruct(data);
-      var role = new RoleEntity(@struct);
+      var record = GetRoleRecord(data);
+      var role = new RoleEntity(record);
       var response = new UpdateRoleDomainResponse { RoleId = role.RoleId.Value };
 
       if (data.Name != null)
@@ -47,16 +47,16 @@ namespace Profiles.Domain.Aggregates.Helpers
         response.Disabled = role.Disabled.Value;
       }
 
-      ValidateStructureFields(role);
+      ValidateRecordFields(role);
       ValidateAmountDataToBeUpdated(response);
 
       return response;
     }
 
-    private static RoleStruct GetRoleStruct(UpdateRoleDomainRequest data)
+    private static RoleRecord GetRoleRecord(UpdateRoleDomainRequest data)
     {
       var id = new RoleIdValueObject(data.RoleId);
-      return new RoleStruct { RoleId = id };
+      return new RoleRecord { RoleId = id };
     }
 
     private static void ValidateAmountDataToBeUpdated(UpdateRoleDomainResponse response)

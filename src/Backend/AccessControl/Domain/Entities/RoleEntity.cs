@@ -1,4 +1,4 @@
-using AccessControl.Domain.Entities.Structs;
+using AccessControl.Domain.Entities.Records;
 using AccessControl.Domain.ValueObjects;
 
 namespace AccessControl.Domain.Entities
@@ -12,7 +12,7 @@ namespace AccessControl.Domain.Entities
 
     public RoleEntity() { }
 
-    public RoleEntity(RoleStruct data)
+    public RoleEntity(RoleRecord data)
     {
       RoleId = data.RoleId;
       Name = data.Name;

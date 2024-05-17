@@ -1,7 +1,7 @@
 using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Entities;
-using Profiles.Domain.Entities.Structs;
+using Profiles.Domain.Entities.Records;
 using Profiles.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
@@ -14,16 +14,16 @@ namespace Profiles.Domain.Aggregates.Helpers
   {
     public static RegisterLevelDomainResponse Execute(RegisterLevelDomainRequest request)
     {
-      var @struct = GetLevelStruct(request);
-      ValidateStructureFields(@struct);
+      var record = GetLevelRecord(request);
+      ValidateRecordFields(record);
 
       var level = new LevelEntity();
-      level.Register(@struct.Name, @struct.Description, @struct.LevelId, @struct.Disabled);
+      level.Register(record.Name, record.Description, record.LevelId, record.Disabled);
 
       return MapToResponse(level);
     }
 
-    private static LevelStruct GetLevelStruct(RegisterLevelDomainRequest request)
+    private static LevelRecord GetLevelRecord(RegisterLevelDomainRequest request)
     {
       var name = new NameValueObject(request.Name);
       var description =
@@ -33,7 +33,7 @@ namespace Profiles.Domain.Aggregates.Helpers
       {
         var id = new LevelIdValueObject(request.LevelId);
         var disabled = new DisabledValueObject(request.Disabled.Value);
-        return new LevelStruct
+        return new LevelRecord
         {
           LevelId = id,
           Name = name,
@@ -41,7 +41,7 @@ namespace Profiles.Domain.Aggregates.Helpers
           Disabled = disabled
         };
       }
-      return new LevelStruct { Name = name, Description = description };
+      return new LevelRecord { Name = name, Description = description };
     }
 
     private static RegisterLevelDomainResponse MapToResponse(LevelEntity level)

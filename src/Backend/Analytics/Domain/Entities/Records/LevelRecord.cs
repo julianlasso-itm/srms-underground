@@ -1,10 +1,10 @@
-using AccessControl.Domain.ValueObjects;
+using Analytics.Domain.ValueObjects;
 
-namespace AccessControl.Domain.Entities.Structs
+namespace Analytics.Domain.Entities.Records
 {
-  internal struct RoleStruct
+  internal struct LevelRecords
   {
-    public RoleIdValueObject RoleId { get; set; }
+    public LevelIdValueObject LevelId { get; set; }
     public NameValueObject Name { get; set; }
     public DescriptionValueObject? Description { get; set; }
     public DisabledValueObject Disabled { get; set; }

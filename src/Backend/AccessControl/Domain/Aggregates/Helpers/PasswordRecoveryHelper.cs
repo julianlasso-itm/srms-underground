@@ -1,6 +1,6 @@
 using AccessControl.Domain.Aggregates.Dto.Requests;
 using AccessControl.Domain.Aggregates.Dto.Responses;
-using AccessControl.Domain.Entities.Structs;
+using AccessControl.Domain.Entities.Records;
 using AccessControl.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
@@ -13,17 +13,17 @@ namespace AccessControl.Domain.Aggregates.Helpers
   {
     public static PasswordRecoveryDomainResponse Execute(PasswordRecoveryDomainRequest request)
     {
-      var @struct = GetCredentialStruct(request);
-      ValidateStructureFields(@struct);
-      return MapStructToResponse(@struct);
+      var record = GetCredentialRecord(request);
+      ValidateRecordFields(record);
+      return MapStructToResponse(record);
     }
 
-    private static CredentialStruct GetCredentialStruct(PasswordRecoveryDomainRequest request)
+    private static CredentialRecord GetCredentialRecord(PasswordRecoveryDomainRequest request)
     {
-      return new CredentialStruct { Email = new EmailValueObject(request.Email) };
+      return new CredentialRecord { Email = new EmailValueObject(request.Email) };
     }
 
-    private static PasswordRecoveryDomainResponse MapStructToResponse(CredentialStruct credential)
+    private static PasswordRecoveryDomainResponse MapStructToResponse(CredentialRecord credential)
     {
       return new PasswordRecoveryDomainResponse { Email = credential.Email.Value };
     }

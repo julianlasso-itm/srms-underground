@@ -1,7 +1,7 @@
 using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Entities;
-using Profiles.Domain.Entities.Structs;
+using Profiles.Domain.Entities.Records;
 using Profiles.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
@@ -14,20 +14,20 @@ namespace Profiles.Domain.Aggregates.Helpers
   {
     public static RegisterCountryDomainResponse Execute(RegisterCountryDomainRequest data)
     {
-      var @struct = GetCountryStruct(data);
-      ValidateStructureFields(@struct);
+      var record = GetCountryRecord(data);
+      ValidateRecordFields(record);
 
       var country = new CountryEntity();
-      country.Register(@struct.Name);
+      country.Register(record.Name);
 
       return MapToResponse(country);
     }
 
-    private static CountryStruct GetCountryStruct(RegisterCountryDomainRequest request)
+    private static CountryRecord GetCountryRecord(RegisterCountryDomainRequest request)
     {
       var name = new NameValueObject(request.Name);
 
-      return new CountryStruct { Name = name };
+      return new CountryRecord { Name = name };
     }
 
     private static RegisterCountryDomainResponse MapToResponse(CountryEntity country)
