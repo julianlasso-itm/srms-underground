@@ -55,5 +55,11 @@ namespace Shared.Infrastructure.ProtocolBuffers.AccessControl
       VerifyTokenAccessControlRequest request,
       CallContext context = default
     );
+
+    [OperationContract]
+    Task<ChangePasswordAccessControlResponse> ChangePasswordAsync(
+      ChangePasswordAccessControlRequest request,
+      CallContext context = default
+    );
   }
 }

@@ -97,5 +97,12 @@ namespace AccessControl.Infrastructure.AntiCorruption
         Roles = data.Roles
       };
     }
+
+    public ChangePasswordAccessControlResponse ToChangePasswordResponse(
+      ChangePasswordApplicationResponse data
+    )
+    {
+      return new ChangePasswordAccessControlResponse { Success = data.Success };
+    }
   }
 }

@@ -15,5 +15,6 @@ namespace AccessControl.Application.Interfaces
     Task<ActivationTokenApplicationResponse> ActivateToken(ActivateTokenCommand request);
     Task<SignInApplicationResponse> SignIn(SignInCommand request);
     Task<VerifyTokenApplicationResponse> VerifyToken(VerifyTokenCommand request);
+    Task<ChangePasswordApplicationResponse> ChangePassword(ChangePasswordCommand request);
   }
 }

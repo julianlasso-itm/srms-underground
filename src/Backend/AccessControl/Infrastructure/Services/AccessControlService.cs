@@ -106,5 +106,15 @@ namespace AccessControl.Infrastructure.Services
       VerifyTokenHelper.SetEnvironments(_environmentService);
       return VerifyTokenHelper.VerifyTokenAsync(request);
     }
+
+    public Task<ChangePasswordAccessControlResponse> ChangePasswordAsync(
+      ChangePasswordAccessControlRequest request,
+      CallContext context = default
+    )
+    {
+      ChangePasswordHelper.SetApplication(_applicationService.GetApplication());
+      ChangePasswordHelper.SetAntiCorruptionLayer(_antiCorruptionLayerService);
+      return ChangePasswordHelper.ChangePasswordAsync(request);
+    }
   }
 }

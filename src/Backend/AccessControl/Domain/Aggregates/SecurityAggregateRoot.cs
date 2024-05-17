@@ -62,5 +62,10 @@ namespace AccessControl.Domain.Aggregates
     {
       return VerifyTokenHelper.Execute(verifyData);
     }
+
+    public ChangePasswordDomainResponse ChangePassword(ChangePasswordDomainRequest changeData)
+    {
+      return ChangePasswordHelper.Execute(changeData);
+    }
   }
 }

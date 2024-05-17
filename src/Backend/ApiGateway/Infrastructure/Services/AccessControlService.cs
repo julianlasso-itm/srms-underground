@@ -79,5 +79,13 @@ namespace ApiGateway.Infrastructure.Services
     {
       return Client.VerifyTokenAsync(request, context);
     }
+
+    public Task<ChangePasswordAccessControlResponse> ChangePasswordAsync(
+      ChangePasswordAccessControlRequest request,
+      CallContext context = default
+    )
+    {
+      return Client.ChangePasswordAsync(request, context);
+    }
   }
 }

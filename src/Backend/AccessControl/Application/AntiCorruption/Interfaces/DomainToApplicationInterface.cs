@@ -31,5 +31,6 @@ namespace AccessControl.Application.AntiCorruption.Interfaces
       VerifyTokenDomainResponse response,
       string userId
     );
+    public ChangePasswordApplicationResponse ToChangePasswordApplicationResponse();
   }
 }

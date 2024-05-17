@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Text.Json;
 using ApiGateway.Infrastructure.Services;
 using Grpc.Core;
@@ -54,6 +53,7 @@ namespace Infrastructure.DataAnnotations
           };
           return;
         }
+        context.HttpContext.Items.Add("UserId", data.UserId);
         await next();
       }
       catch (RpcException e)

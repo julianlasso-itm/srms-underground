@@ -4,7 +4,6 @@ using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
-using Shared.Application.Interfaces;
 
 namespace AccessControl.Application.UseCases
 {

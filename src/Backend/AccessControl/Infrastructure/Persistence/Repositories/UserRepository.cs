@@ -90,5 +90,22 @@ namespace AccessControl.Infrastructure.Persistence.Repositories
       }
       return UpdateAsync(id, user);
     }
+
+    public Task<UserModel> UpdatePassword(string userId, string password)
+    {
+      var id = Guid.Parse(userId);
+      var user = new UserModel { UserId = id, Password = password };
+      return UpdateAsync(id, user);
+    }
+
+    public Task<UserModel> VerifyPassword(string userId, string password)
+    {
+      Expression<Func<UserModel, bool>> expression = user =>
+        user.UserId == Guid.Parse(userId)
+        && user.Password == password
+        && !user.Disabled
+        && user.DeletedAt == null;
+      return GetFirstAsync(expression);
+    }
   }
 }

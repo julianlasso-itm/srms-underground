@@ -132,5 +132,16 @@ namespace AccessControl.Application
       );
       return useCase.Handle(request);
     }
+
+    public Task<ChangePasswordApplicationResponse> ChangePassword(ChangePasswordCommand request)
+    {
+      var useCase = new ChangePasswordUseCase<TUserEntity>(
+        _userRepository,
+        AggregateRoot,
+        ApplicationToDomain,
+        DomainToApplication
+      );
+      return useCase.Handle(request);
+    }
   }
 }

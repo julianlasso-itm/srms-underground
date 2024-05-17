@@ -22,5 +22,8 @@ namespace AccessControl.Infrastructure.AntiCorruption.Interfaces
     public VerifyTokenAccessControlResponse ToVerifyTokenResponse(
       VerifyTokenApplicationResponse data
     );
+    public ChangePasswordAccessControlResponse ToChangePasswordResponse(
+      ChangePasswordApplicationResponse data
+    );
   }
 }

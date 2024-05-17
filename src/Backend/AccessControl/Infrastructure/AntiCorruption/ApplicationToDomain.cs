@@ -108,5 +108,15 @@ namespace AccessControl.Infrastructure.AntiCorruption
         PublicKeyPath = request.PublicKeyPath,
       };
     }
+
+    public ChangePasswordDomainRequest ToChangePasswordDomainRequest(ChangePasswordCommand request)
+    {
+      return new ChangePasswordDomainRequest
+      {
+        CredentialId = request.UserId,
+        OldPassword = request.OldPassword,
+        NewPassword = request.NewPassword,
+      };
+    }
   }
 }

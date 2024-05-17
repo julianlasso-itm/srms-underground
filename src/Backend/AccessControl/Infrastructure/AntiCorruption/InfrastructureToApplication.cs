@@ -92,5 +92,15 @@ namespace AccessControl.Infrastructure.AntiCorruption
           request.PublicKeyPath ?? throw new ArgumentNullException(nameof(request.PublicKeyPath)),
       };
     }
+
+    public ChangePasswordCommand ToChangePasswordCommand(ChangePasswordAccessControlRequest request)
+    {
+      return new ChangePasswordCommand
+      {
+        UserId = request.UserId!,
+        OldPassword = request.OldPassword,
+        NewPassword = request.NewPassword,
+      };
+    }
   }
 }

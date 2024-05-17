@@ -98,5 +98,17 @@ namespace ApiGateway.Infrastructure.Controllers
         async () => Ok(await _accessControlService.ActivateTokenAsync(request))
       );
     }
+
+    [Permissions]
+    [HttpPost("change-password")]
+    public async Task<IActionResult> ChangePasswordAsync(
+      [FromBody] ChangePasswordAccessControlRequest request
+    )
+    {
+      request.UserId = HttpContext.Items["UserId"]?.ToString();
+      return await HandleAsync(
+        async () => Ok(await _accessControlService.ChangePasswordAsync(request))
+      );
+    }
   }
 }
