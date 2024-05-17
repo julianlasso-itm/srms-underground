@@ -63,7 +63,7 @@ namespace AccessControl.Infrastructure.AntiCorruption
 
     public ActiveCredentialDomainRequest ToActiveCredentialDomainRequest(ActiveUserCommand request)
     {
-      return new ActiveCredentialDomainRequest { UserId = request.UserId };
+      return new ActiveCredentialDomainRequest { CredentialId = request.UserId };
     }
 
     public SignInDataInitialsDomainRequest ToSignInInitialsDomainRequest(SignInCommand request)

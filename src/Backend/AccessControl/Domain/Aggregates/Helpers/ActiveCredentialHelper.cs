@@ -22,7 +22,7 @@ namespace AccessControl.Domain.Aggregates.Helpers
 
     private static CredentialStruct GetCredentialStruct(ActiveCredentialDomainRequest data)
     {
-      return new CredentialStruct { CredentialId = new CredentialIdValueObject(data.UserId) };
+      return new CredentialStruct { CredentialId = new CredentialIdValueObject(data.CredentialId) };
     }
 
     private static CredentialEntity ActiveCredential(CredentialStruct @struct)
@@ -36,7 +36,7 @@ namespace AccessControl.Domain.Aggregates.Helpers
     {
       return new ActiveCredentialDomainResponse
       {
-        UserId = credential.CredentialId.Value,
+        CredentialId = credential.CredentialId.Value,
         Disabled = credential.Disabled.Value,
       };
     }
