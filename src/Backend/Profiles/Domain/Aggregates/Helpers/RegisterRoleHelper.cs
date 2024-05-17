@@ -8,7 +8,7 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace Profiles.Domain.Aggregates.Helpers
 {
-  internal abstract class RegisterRoleHelper
+  internal class RegisterRoleHelper
     : BaseHelper,
       IHelper<RegisterRoleDomainRequest, RegisterRoleDomainResponse>
   {

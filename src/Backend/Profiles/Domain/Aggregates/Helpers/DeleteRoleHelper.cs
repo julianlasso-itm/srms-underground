@@ -7,7 +7,7 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace Profiles.Domain.Aggregates.Helpers
 {
-  internal abstract class DeleteRoleHelper
+  internal class DeleteRoleHelper
     : BaseHelper,
       IHelper<DeleteRoleDomainRequest, DeleteRoleDomainResponse>
   {

@@ -10,7 +10,7 @@ using Shared.Domain.ValueObjects;
 
 namespace Profiles.Domain.Aggregates.Helpers
 {
-  internal abstract class UpdateProvinceHelper
+  internal class UpdateProvinceHelper
     : BaseHelper,
       IHelper<UpdateProvinceDomainRequest, UpdateProvinceDomainResponse>
   {

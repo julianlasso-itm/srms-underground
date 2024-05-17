@@ -8,7 +8,7 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace Profiles.Domain.Aggregates.Helpers
 {
-  internal abstract class RegisterCityHelper
+  internal class RegisterCityHelper
     : BaseHelper,
       IHelper<RegisterCityDomainRequest, RegisterCityDomainResponse>
   {

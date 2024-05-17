@@ -10,7 +10,7 @@ using Shared.Domain.ValueObjects;
 
 namespace AccessControl.Domain.Aggregates.Helpers
 {
-  public class VerifyTokenHelper
+  internal class VerifyTokenHelper
     : BaseHelper,
       IHelper<VerifyTokenDomainRequest, VerifyTokenDomainResponse>
   {

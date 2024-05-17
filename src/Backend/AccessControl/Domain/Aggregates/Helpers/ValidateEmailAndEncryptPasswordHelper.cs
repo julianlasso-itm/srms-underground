@@ -7,7 +7,7 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Helpers
 {
-  public class ValidateEmailAndEncryptPasswordHelper
+  internal class ValidateEmailAndEncryptPasswordHelper
     : BaseHelper,
       IHelper<SignInDataInitialsDomainRequest, SignInDataInitialsDomainResponse>
   {

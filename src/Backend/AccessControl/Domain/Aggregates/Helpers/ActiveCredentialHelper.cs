@@ -8,7 +8,7 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Helpers
 {
-  public class ActiveCredentialHelper
+  internal class ActiveCredentialHelper
     : BaseHelper,
       IHelper<ActiveCredentialDomainRequest, ActiveCredentialDomainResponse>
   {

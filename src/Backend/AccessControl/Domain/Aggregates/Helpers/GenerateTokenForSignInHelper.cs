@@ -8,7 +8,7 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Helpers
 {
-  public class GenerateTokenForSignInHelper
+  internal class GenerateTokenForSignInHelper
     : BaseHelper,
       IHelper<SignInDomainRequest, SignInDomainResponse>
   {

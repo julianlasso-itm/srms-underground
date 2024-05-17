@@ -10,7 +10,7 @@ using Shared.Domain.ValueObjects;
 
 namespace AccessControl.Domain.Aggregates.Helpers
 {
-  internal abstract class UpdateRoleHelper
+  internal class UpdateRoleHelper
     : BaseHelper,
       IHelper<UpdateRoleDomainRequest, UpdateRoleDomainResponse>
   {

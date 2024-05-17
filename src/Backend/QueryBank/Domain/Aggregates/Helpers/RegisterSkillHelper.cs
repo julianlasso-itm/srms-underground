@@ -8,7 +8,7 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace QueryBank.Domain.Aggregates.Helpers
 {
-  public class RegisterSkillHelper
+  internal class RegisterSkillHelper
     : BaseHelper,
       IHelper<RegisterSkillDomainRequest, RegisterSkillDomainResponse>
   {

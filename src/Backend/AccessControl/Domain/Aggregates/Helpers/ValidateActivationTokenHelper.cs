@@ -6,7 +6,7 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Helpers
 {
-  internal abstract class ValidateActivationTokenHelper
+  internal class ValidateActivationTokenHelper
     : BaseHelper,
       IHelper<ActivateTokenDomainRequest, ActivateTokenDomainResponse>
   {

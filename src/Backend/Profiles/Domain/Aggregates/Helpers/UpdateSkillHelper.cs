@@ -10,7 +10,7 @@ using Shared.Domain.ValueObjects;
 
 namespace Profiles.Domain.Aggregates.Helpers
 {
-  internal abstract class UpdateSkillHelper
+  internal class UpdateSkillHelper
     : BaseHelper,
       IHelper<UpdateSkillDomainRequest, UpdateSkillDomainResponse>
   {
