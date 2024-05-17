@@ -1,4 +1,4 @@
-namespace AccessControlApplication.Dto
+namespace AccessControl.Application.Dto
 {
   public class UserDataForSigInDto
   {

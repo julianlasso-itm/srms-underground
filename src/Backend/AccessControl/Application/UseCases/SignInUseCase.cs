@@ -1,10 +1,10 @@
 using System.Net;
 using AccessControl.Application.AntiCorruption.Interfaces;
 using AccessControl.Application.Commands;
+using AccessControl.Application.Dto;
 using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
 using AccessControl.Domain.Aggregates.Interfaces;
-using AccessControlApplication.Dto;
 using Shared.Application.Base;
 using Shared.Application.Interfaces;
 using ApplicationException = Shared.Application.Exceptions.ApplicationException;

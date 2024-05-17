@@ -1,5 +1,5 @@
+using AccessControl.Application.Dto;
 using AccessControl.Application.Responses;
-using AccessControlApplication.Dto;
 using Shared.Application.Interfaces;
 
 namespace AccessControl.Application.Repositories
