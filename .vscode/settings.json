@@ -12,7 +12,8 @@
     "**/node_modules": true,
     "**/.angular": true,
     "**/*.Tests": true,
-    "**/*.unotation": true
+    "**/*.unotation": true,
+    // "**/*Migrations": true,
   },
   "cSpell.language": "en",
   "cSpell.ignorePaths": [
