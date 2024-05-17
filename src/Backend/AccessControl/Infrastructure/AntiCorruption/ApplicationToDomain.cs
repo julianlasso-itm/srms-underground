@@ -118,5 +118,12 @@ namespace AccessControl.Infrastructure.AntiCorruption
         NewPassword = request.NewPassword,
       };
     }
+
+    public PasswordRecoveryDomainRequest ToPasswordRecoveryDomainRequest(
+      PasswordRecoveryCommand request
+    )
+    {
+      return new PasswordRecoveryDomainRequest { Email = request.Email };
+    }
   }
 }

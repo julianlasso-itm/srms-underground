@@ -1,5 +1,4 @@
 using AccessControl.Application.Responses;
-using AccessControl.Domain.Aggregates.Dto.Requests;
 using AccessControl.Domain.Aggregates.Dto.Responses;
 
 namespace AccessControl.Application.AntiCorruption.Interfaces
@@ -32,5 +31,6 @@ namespace AccessControl.Application.AntiCorruption.Interfaces
       string userId
     );
     public ChangePasswordApplicationResponse ToChangePasswordApplicationResponse();
+    public PasswordRecoveryApplicationResponse ToPasswordRecoveryApplicationResponse();
   }
 }

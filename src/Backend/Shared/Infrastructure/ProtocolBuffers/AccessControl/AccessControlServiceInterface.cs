@@ -61,5 +61,11 @@ namespace Shared.Infrastructure.ProtocolBuffers.AccessControl
       ChangePasswordAccessControlRequest request,
       CallContext context = default
     );
+
+    [OperationContract]
+    Task<PasswordRecoveryAccessControlResponse> PasswordRecoveryAsync(
+      PasswordRecoveryAccessControlRequest request,
+      CallContext context = default
+    );
   }
 }

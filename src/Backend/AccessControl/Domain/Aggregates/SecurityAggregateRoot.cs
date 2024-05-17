@@ -67,5 +67,12 @@ namespace AccessControl.Domain.Aggregates
     {
       return ChangePasswordHelper.Execute(changeData);
     }
+
+    public PasswordRecoveryDomainResponse PasswordRecovery(
+      PasswordRecoveryDomainRequest recoveryData
+    )
+    {
+      return PasswordRecoveryHelper.Execute(recoveryData);
+    }
   }
 }

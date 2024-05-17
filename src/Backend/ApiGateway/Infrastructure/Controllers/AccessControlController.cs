@@ -110,5 +110,15 @@ namespace ApiGateway.Infrastructure.Controllers
         async () => Ok(await _accessControlService.ChangePasswordAsync(request))
       );
     }
+
+    [HttpPost("password-recovery")]
+    public async Task<IActionResult> PasswordRecoveryAsync(
+      [FromBody] PasswordRecoveryAccessControlRequest request
+    )
+    {
+      return await HandleAsync(
+        async () => Ok(await _accessControlService.PasswordRecoveryAsync(request))
+      );
+    }
   }
 }

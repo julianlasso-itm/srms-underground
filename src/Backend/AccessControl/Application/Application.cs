@@ -143,5 +143,20 @@ namespace AccessControl.Application
       );
       return useCase.Handle(request);
     }
+
+    public Task<PasswordRecoveryApplicationResponse> PasswordRecovery(
+      PasswordRecoveryCommand request
+    )
+    {
+      var useCase = new PasswordRecoveryUseCase<TUserEntity>(
+        _userRepository,
+        _cacheService,
+        _messageService,
+        AggregateRoot,
+        ApplicationToDomain,
+        DomainToApplication
+      );
+      return useCase.Handle(request);
+    }
   }
 }

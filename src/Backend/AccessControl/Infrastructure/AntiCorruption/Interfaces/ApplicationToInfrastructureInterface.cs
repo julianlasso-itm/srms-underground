@@ -25,5 +25,8 @@ namespace AccessControl.Infrastructure.AntiCorruption.Interfaces
     public ChangePasswordAccessControlResponse ToChangePasswordResponse(
       ChangePasswordApplicationResponse data
     );
+    public PasswordRecoveryAccessControlResponse ToPasswordRecoveryResponse(
+      PasswordRecoveryApplicationResponse data
+    );
   }
 }

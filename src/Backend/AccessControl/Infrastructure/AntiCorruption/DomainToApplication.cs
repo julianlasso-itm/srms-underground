@@ -104,5 +104,10 @@ namespace AccessControl.Infrastructure.AntiCorruption
     {
       return new ChangePasswordApplicationResponse { Success = true };
     }
+
+    public PasswordRecoveryApplicationResponse ToPasswordRecoveryApplicationResponse()
+    {
+      return new PasswordRecoveryApplicationResponse { Success = true };
+    }
   }
 }
