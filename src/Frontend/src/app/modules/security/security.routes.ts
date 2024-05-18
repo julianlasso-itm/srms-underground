@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from '../shared/guards/auth.guard';
 
 export const securityRoutes: Routes = [
   {
@@ -34,6 +35,7 @@ export const securityRoutes: Routes = [
   },
   {
     path: 'sign-out',
+    canActivate: [authGuard],
     loadComponent: () =>
       import('./sign-out/sign-out.component').then((m) => m.SignOutComponent),
   },

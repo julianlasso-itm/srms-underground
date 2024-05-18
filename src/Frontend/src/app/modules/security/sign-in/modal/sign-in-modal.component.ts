@@ -13,10 +13,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import { HttpService } from '../../../shared/services/http.service';
 import { SharedModule } from '../../../shared/shared.module';
+import { Constant } from '../../../shared/constants/constants';
+import { StoreService } from '../../../shared/services/store.service';
+import { TokenDto } from './token.dto';
+
+const URL_ROLE = `${Constant.URL_BASE}${Constant.URL_SIGN_IN}`;
 
 @Component({
   selector: 'srms-sign-in-modal',
@@ -35,19 +40,51 @@ import { SharedModule } from '../../../shared/shared.module';
     SharedModule,
     RouterModule,
   ],
-  providers: [HttpService],
+  providers: [HttpService, StoreService],
   templateUrl: './sign-in-modal.component.html',
   styleUrl: './sign-in-modal.component.scss',
 })
 export class SignInModalComponent {
   frmSignIn: FormGroup;
 
-  constructor(private readonly httpService: HttpService) {
+  constructor(
+    private readonly httpService: HttpService,
+    private readonly _snackBar: MatSnackBar,
+    private readonly _storeService: StoreService,
+  ) {
     this.frmSignIn = this.defineForm();
   }
 
   onSubmit(): void {
-    console.log(this.frmSignIn.value);
+    this.httpService.post<any, TokenDto>(URL_ROLE, this.frmSignIn.value).subscribe({
+      next: (response) => {
+        this._storeService.setToken(response.token);
+        console.log(response);
+      },
+      error: (error) => {
+        if (error.status === 401) {
+          this._snackBar.open('Datos de acceso incorrectos', 'Cerrar', {
+            duration: 5000,
+          });
+          return;
+        }
+
+        if (error.status === 403) {
+          this._snackBar.open(
+            'El usuario fue bloqueado por 5 minutos',
+            'Cerrar',
+            {
+              duration: 5000,
+            }
+          );
+          return;
+        }
+
+        this._snackBar.open(error.message, 'Close', {
+          duration: 5000,
+        });
+      },
+    });
   }
 
   private defineForm(): FormGroup {

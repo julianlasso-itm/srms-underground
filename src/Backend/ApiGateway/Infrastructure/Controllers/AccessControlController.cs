@@ -161,5 +161,14 @@ namespace ApiGateway.Infrastructure.Controllers
         async () => Ok(await _accessControlService.UpdateUserAsync(newRequest))
       );
     }
+
+    [HttpPost("verify-token")]
+    public async Task<IActionResult> VerifyTokenAsync([FromBody] VerifyTokeDto request)
+    {
+      await _accessControlService.VerifyTokenAsync(
+        new VerifyTokenAccessControlRequest { Token = request.Token }
+      );
+      return Ok(new { message = "Token is valid" });
+    }
   }
 }

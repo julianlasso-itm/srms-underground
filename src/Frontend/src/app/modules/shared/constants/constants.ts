@@ -15,4 +15,6 @@ export enum Constant {
   URL_SKILL = '/api/profiles/skill',
   URL_GET_PROFESSIONALS = "/api/profiles/professionals",
   URL_PROFESSIONAL = '/api/profiles/professional',
+  URL_SIGN_IN = '/api/access-control/sign-in',
+  URL_VERIFY_TOKEN = '/api/access-control/verify-token',
 }

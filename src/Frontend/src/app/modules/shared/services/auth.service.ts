@@ -1,5 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Subject } from 'rxjs';
+import { HttpService } from './http.service';
+import { StoreService } from './store.service';
+import { Constant } from '../constants/constants';
+
+const URL_VERIFY_TOKEN = `${Constant.URL_BASE}${Constant.URL_VERIFY_TOKEN}`;
 
 @Injectable({
   providedIn: 'root',
@@ -7,14 +12,36 @@ import { Subject } from 'rxjs';
 export class AuthService {
   private changeAuthSubject = new Subject<boolean>();
   public isAuthSubject = this.changeAuthSubject.asObservable();
-  public isAuth = true; // TODO: Change to false
+  private isAuth = false;
+
+  private readonly storeService = inject(StoreService);
+  private readonly httpService = inject(HttpService);
 
   constructor() {
-    // TODO: Call API to check if user is authenticated with a token
+    const token = this.storeService.getToken();
+    if (token.length > 0) {
+      this.httpService.post(URL_VERIFY_TOKEN, { token }).subscribe({
+        next: (response) => {
+          this.ChangeIsAuth();
+        },
+        error: (error) => {
+          this.ChangeIsNotAuth();
+        },
+      });
+    }
   }
 
-  reload() {
+  isAuthenticated() {
+    return this.isAuth;
+  }
+
+  ChangeIsAuth() {
     this.isAuth = true;
+    this.changeAuthSubject.next(this.isAuth);
+  }
+
+  ChangeIsNotAuth() {
+    this.isAuth = false;
     this.changeAuthSubject.next(this.isAuth);
   }
 }

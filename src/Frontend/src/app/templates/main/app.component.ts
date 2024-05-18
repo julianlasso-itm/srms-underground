@@ -31,19 +31,15 @@ export class AppComponent implements OnInit {
   private authObservable!: Subscription;
 
   constructor(private authService: AuthService, private route: Router) {
-    this.isAuth = this.authService.isAuth;
+    this.isAuth = this.authService.isAuthenticated();
   }
 
   ngOnInit() {
     this.authObservable = this.authService.isAuthSubject.subscribe((isAuth) => {
       this.isAuth = isAuth;
       if (!isAuth) {
-        this.redirectToSignIn();
+        this.route.navigate(['./security/sign-in']);
       }
     });
-  }
-
-  redirectToSignIn() {
-    this.route.navigate(['./security/sign-in']);
   }
 }
