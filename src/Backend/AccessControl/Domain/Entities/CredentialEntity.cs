@@ -66,6 +66,11 @@ namespace AccessControl.Domain.Entities
       Name = name;
     }
 
+    public void UpdateEmail(EmailValueObject email)
+    {
+      Email = email;
+    }
+
     public void AddRole(RoleEntity role)
     {
       Roles.Add(role);

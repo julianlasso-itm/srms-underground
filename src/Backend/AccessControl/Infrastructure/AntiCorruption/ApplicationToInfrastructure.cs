@@ -111,5 +111,16 @@ namespace AccessControl.Infrastructure.AntiCorruption
     {
       return new PasswordRecoveryAccessControlResponse { Success = data.Success };
     }
+
+    public UpdateUserAccessControlResponse ToUpdateUserResponse(UpdateUserApplicationResponse data)
+    {
+      return new UpdateUserAccessControlResponse
+      {
+        UserId = data.UserId,
+        Name = data.Name,
+        Photo = data.Photo,
+        Disabled = data.Disabled,
+      };
+    }
   }
 }

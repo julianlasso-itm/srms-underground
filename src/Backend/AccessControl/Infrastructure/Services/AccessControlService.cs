@@ -126,5 +126,15 @@ namespace AccessControl.Infrastructure.Services
       PasswordRecoveryHelper.SetAntiCorruptionLayer(_antiCorruptionLayerService);
       return PasswordRecoveryHelper.PasswordRecoveryAsync(request);
     }
+
+    public Task<UpdateUserAccessControlResponse> UpdateUserAsync(
+      UpdateUserAccessControlRequest request,
+      CallContext context = default
+    )
+    {
+      UpdateUserHelper.SetApplication(_applicationService.GetApplication());
+      UpdateUserHelper.SetAntiCorruptionLayer(_antiCorruptionLayerService);
+      return UpdateUserHelper.UpdateUserAsync(request);
+    }
   }
 }

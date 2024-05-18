@@ -5,6 +5,7 @@ using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
 using AccessControl.Application.UseCases;
 using AccessControl.Domain.Aggregates.Interfaces;
+using Application.UseCases;
 using Shared.Application.Base;
 using Shared.Application.Interfaces;
 
@@ -152,6 +153,19 @@ namespace AccessControl.Application
         _userRepository,
         _cacheService,
         _messageService,
+        AggregateRoot,
+        ApplicationToDomain,
+        DomainToApplication
+      );
+      return useCase.Handle(request);
+    }
+
+    public Task<UpdateUserApplicationResponse> UpdateUser(UpdateUserCommand request)
+    {
+      var useCase = new UpdateUserUseCase<TUserEntity>(
+        _userRepository,
+        _cacheService,
+        _storeService,
         AggregateRoot,
         ApplicationToDomain,
         DomainToApplication

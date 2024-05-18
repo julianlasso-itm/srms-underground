@@ -29,5 +29,6 @@ namespace AccessControl.Application.AntiCorruption.Interfaces
     public PasswordRecoveryDomainRequest ToPasswordRecoveryDomainRequest(
       PasswordRecoveryCommand request
     );
+    public UpdateCredentialDomainRequest ToUpdateUserDomainRequest(UpdateUserCommand request);
   }
 }

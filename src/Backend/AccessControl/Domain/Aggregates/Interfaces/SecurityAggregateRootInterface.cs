@@ -27,5 +27,8 @@ namespace AccessControl.Domain.Aggregates.Interfaces
     public PasswordRecoveryDomainResponse PasswordRecovery(
       PasswordRecoveryDomainRequest recoveryData
     );
+    public UpdateCredentialDomainResponse UpdateCredential(
+      UpdateCredentialDomainRequest updateData
+    );
   }
 }

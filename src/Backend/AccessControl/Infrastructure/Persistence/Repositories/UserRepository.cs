@@ -88,13 +88,13 @@ namespace AccessControl.Infrastructure.Persistence.Repositories
     public Task<UserModel> UpdateAsync(Guid id, UpdateUserApplicationResponse entity)
     {
       var user = new UserModel { UserId = id };
-      if (entity.Email != null)
+      if (entity.Name != null)
       {
-        user.Email = entity.Email;
+        user.Name = entity.Name;
       }
-      if (entity.Password != null)
+      if (entity.Photo != null)
       {
-        user.Password = entity.Password;
+        user.Photo = entity.Photo;
       }
       if (entity.Disabled != null)
       {

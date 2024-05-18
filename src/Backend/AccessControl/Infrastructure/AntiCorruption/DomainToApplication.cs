@@ -109,5 +109,18 @@ namespace AccessControl.Infrastructure.AntiCorruption
     {
       return new PasswordRecoveryApplicationResponse { Success = true };
     }
+
+    public UpdateUserApplicationResponse ToUpdateUserApplicationResponse(
+      UpdateCredentialDomainResponse response
+    )
+    {
+      return new UpdateUserApplicationResponse
+      {
+        UserId = response.CredentialId,
+        Name = response.Name,
+        Photo = response.Photo,
+        Disabled = response.Disabled,
+      };
+    }
   }
 }

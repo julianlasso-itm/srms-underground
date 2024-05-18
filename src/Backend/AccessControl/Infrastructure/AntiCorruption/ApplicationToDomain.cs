@@ -125,5 +125,17 @@ namespace AccessControl.Infrastructure.AntiCorruption
     {
       return new PasswordRecoveryDomainRequest { Email = request.Email };
     }
+
+    public UpdateCredentialDomainRequest ToUpdateUserDomainRequest(UpdateUserCommand request)
+    {
+      return new UpdateCredentialDomainRequest
+      {
+        CredentialId = request.UserId,
+        Name = request.Name,
+        Avatar = request.AvatarBytes,
+        AvatarExtension = request.AvatarExtension,
+        Disabled = request.Disabled,
+      };
+    }
   }
 }

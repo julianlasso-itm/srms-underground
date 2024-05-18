@@ -95,5 +95,13 @@ namespace ApiGateway.Infrastructure.Services
     {
       return Client.PasswordRecoveryAsync(request, context);
     }
+
+    public Task<UpdateUserAccessControlResponse> UpdateUserAsync(
+      UpdateUserAccessControlRequest request,
+      CallContext context = default
+    )
+    {
+      return Client.UpdateUserAsync(request, context);
+    }
   }
 }

@@ -109,5 +109,17 @@ namespace AccessControl.Infrastructure.AntiCorruption
     {
       return new PasswordRecoveryCommand { Email = request.Email };
     }
+
+    public UpdateUserCommand ToUpdateUserCommand(UpdateUserAccessControlRequest request)
+    {
+      return new UpdateUserCommand
+      {
+        UserId = request.UserId,
+        Name = request.Name,
+        Avatar = request.Avatar,
+        AvatarExtension = request.AvatarExtension,
+        Disabled = request.Disabled
+      };
+    }
   }
 }

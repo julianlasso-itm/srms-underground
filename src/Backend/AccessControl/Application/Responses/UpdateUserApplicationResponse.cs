@@ -3,8 +3,8 @@ namespace AccessControl.Application.Responses
   public sealed class UpdateUserApplicationResponse
   {
     public required string UserId { get; init; }
-    public string? Email { get; init; }
-    public string? Password { get; init; }
+    public string? Name { get; init; }
+    public string? Photo { get; init; }
     public bool? Disabled { get; init; }
   }
 }

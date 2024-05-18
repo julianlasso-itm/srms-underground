@@ -32,5 +32,8 @@ namespace AccessControl.Application.AntiCorruption.Interfaces
     );
     public ChangePasswordApplicationResponse ToChangePasswordApplicationResponse();
     public PasswordRecoveryApplicationResponse ToPasswordRecoveryApplicationResponse();
+    public UpdateUserApplicationResponse ToUpdateUserApplicationResponse(
+      UpdateCredentialDomainResponse response
+    );
   }
 }

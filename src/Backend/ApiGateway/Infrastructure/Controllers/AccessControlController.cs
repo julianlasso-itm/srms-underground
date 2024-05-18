@@ -29,15 +29,15 @@ namespace ApiGateway.Infrastructure.Controllers
       using var memoryStream = new MemoryStream();
       await request.Avatar.CopyToAsync(memoryStream);
       var avatar = memoryStream.ToArray();
-      var id = Guid.NewGuid().ToString();
-      CacheService.Set(id, avatar);
+      var idAvatar = Guid.NewGuid().ToString();
+      CacheService.Set(idAvatar, avatar);
 
       var newRequest = new RegisterUserRequest
       {
         Name = request.Name,
         Email = request.Email,
         Password = request.Password,
-        Avatar = id,
+        Avatar = idAvatar,
         AvatarExtension = Path.GetExtension(request.Avatar.FileName),
       };
 
@@ -118,6 +118,46 @@ namespace ApiGateway.Infrastructure.Controllers
     {
       return await HandleAsync(
         async () => Ok(await _accessControlService.PasswordRecoveryAsync(request))
+      );
+    }
+
+    [Permissions]
+    [HttpPost("update-user")]
+    public async Task<IActionResult> UpdateUserAsync([FromForm] UpdateUserRequestDto request)
+    {
+      var idAvatar = Guid.NewGuid().ToString();
+
+      if (request.Avatar is not null)
+      {
+        using var memoryStream = new MemoryStream();
+        await request.Avatar.CopyToAsync(memoryStream);
+        var avatar = memoryStream.ToArray();
+        CacheService.Set(idAvatar, avatar);
+      }
+
+      var newRequest = new UpdateUserAccessControlRequest
+      {
+        UserId = HttpContext.Items["UserId"]?.ToString()!
+      };
+
+      if (request.Name is not null)
+      {
+        newRequest.Name = request.Name;
+      }
+
+      if (request.Avatar is not null)
+      {
+        newRequest.Avatar = idAvatar;
+        newRequest.AvatarExtension = Path.GetExtension(request.Avatar.FileName);
+      }
+
+      if (request.Disabled is not null)
+      {
+        newRequest.Disabled = request.Disabled;
+      }
+
+      return await HandleAsync(
+        async () => Ok(await _accessControlService.UpdateUserAsync(newRequest))
       );
     }
   }

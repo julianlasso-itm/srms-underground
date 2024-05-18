@@ -74,5 +74,10 @@ namespace AccessControl.Domain.Aggregates
     {
       return PasswordRecoveryHelper.Execute(recoveryData);
     }
+
+    public UpdateCredentialDomainResponse UpdateCredential(UpdateCredentialDomainRequest updateData)
+    {
+      return UpdateCredentialHelper.Execute(updateData);
+    }
   }
 }
