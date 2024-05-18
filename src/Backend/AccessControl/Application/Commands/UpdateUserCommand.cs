@@ -9,6 +9,7 @@ namespace AccessControl.Application.Commands
     public string? Avatar { get; set; }
     public byte[]? AvatarBytes { get; set; }
     public string? AvatarExtension { get; set; }
+    public string? OldPhoto { get; set; }
     public bool? Disabled { get; set; }
   }
 }

@@ -28,7 +28,8 @@ namespace AccessControl.Application.AntiCorruption.Interfaces
     public SignInApplicationResponse ToSignInApplicationResponse(SignInDomainResponse response);
     public VerifyTokenApplicationResponse ToVerifyTokenApplicationResponse(
       VerifyTokenDomainResponse response,
-      string userId
+      string userId,
+      string photo
     );
     public ChangePasswordApplicationResponse ToChangePasswordApplicationResponse();
     public PasswordRecoveryApplicationResponse ToPasswordRecoveryApplicationResponse();

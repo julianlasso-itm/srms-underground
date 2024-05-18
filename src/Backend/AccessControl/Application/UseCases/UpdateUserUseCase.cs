@@ -49,6 +49,7 @@ namespace Application.UseCases
       if (request.Avatar is not null && request.AvatarExtension is not null)
       {
         user.Photo = await StoreAvatar(user.Avatar!, user.AvatarExtension!);
+        await RemoveOldPhoto(request.OldPhoto!);
       }
       var response = AclOutputMapper.ToUpdateUserApplicationResponse(user);
       _ = await Persistence(response);
@@ -77,6 +78,11 @@ namespace Application.UseCases
     private async Task<string> StoreAvatar(byte[] avatarBlob, string extension)
     {
       return await _storeService.AddAsync(avatarBlob, extension, ContainerName);
+    }
+
+    private async Task RemoveOldPhoto(string photo)
+    {
+      await _storeService.RemoveAsync(photo, ContainerName);
     }
 
     private async Task<TEntity> Persistence(UpdateUserApplicationResponse response)

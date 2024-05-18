@@ -52,6 +52,7 @@ namespace Infrastructure.DataAnnotations
           return;
         }
         context.HttpContext.Items.Add("UserId", data.UserId);
+        context.HttpContext.Items.Add("Photo", data.Photo);
         await next();
       }
       catch (RpcException e)

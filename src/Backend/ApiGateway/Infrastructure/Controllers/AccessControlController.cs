@@ -149,6 +149,7 @@ namespace ApiGateway.Infrastructure.Controllers
       {
         newRequest.Avatar = idAvatar;
         newRequest.AvatarExtension = Path.GetExtension(request.Avatar.FileName);
+        newRequest.OldPhoto = HttpContext.Items["Photo"]?.ToString();
       }
 
       if (request.Disabled is not null)

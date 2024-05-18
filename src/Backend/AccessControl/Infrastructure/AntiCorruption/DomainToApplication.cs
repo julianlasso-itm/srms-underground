@@ -89,13 +89,15 @@ namespace AccessControl.Infrastructure.AntiCorruption
 
     public VerifyTokenApplicationResponse ToVerifyTokenApplicationResponse(
       VerifyTokenDomainResponse response,
-      string userId
+      string userId,
+      string photo
     )
     {
       return new VerifyTokenApplicationResponse
       {
         UserId = userId,
         Email = response.Email,
+        Photo = photo,
         Roles = response.Roles
       };
     }

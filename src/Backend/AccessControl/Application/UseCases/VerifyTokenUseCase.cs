@@ -17,7 +17,7 @@ namespace AccessControl.Application.UseCases
     >
     where TEntity : class
   {
-    private readonly IUserRepository<TEntity> userRepository;
+    private readonly IUserRepository<TEntity> _userRepository;
 
     public VerifyTokenUseCase(
       IUserRepository<TEntity> userRepository,
@@ -27,15 +27,15 @@ namespace AccessControl.Application.UseCases
     )
       : base(aggregateRoot, aclInputMapper, aclOutputMapper)
     {
-      this.userRepository = userRepository;
+      _userRepository = userRepository;
     }
 
     public override async Task<VerifyTokenApplicationResponse> Handle(VerifyTokenCommand request)
     {
       var token = AclInputMapper.ToVerifyTokenDomainRequest(request);
       var response = AggregateRoot.VerifyToken(token);
-      var userId = await userRepository.GetIdByEmail(response.Email);
-      return AclOutputMapper.ToVerifyTokenApplicationResponse(response, userId);
+      var userId = await _userRepository.GetIdByEmail(response.Email);
+      return AclOutputMapper.ToVerifyTokenApplicationResponse(response, userId, response.Photo);
     }
   }
 }

@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using AccessControl.Domain.Aggregates.Dto.Requests;
 using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Entities.Records;
@@ -10,10 +11,13 @@ using Shared.Domain.ValueObjects;
 
 namespace AccessControl.Domain.Aggregates.Helpers
 {
-  internal class VerifyTokenHelper
+  internal partial class VerifyTokenHelper
     : BaseHelper,
       IHelper<VerifyTokenDomainRequest, VerifyTokenDomainResponse>
   {
+    [GeneratedRegex(@"[^/]+$")]
+    private static partial Regex ExtractNameFile();
+
     public static VerifyTokenDomainResponse Execute(VerifyTokenDomainRequest request)
     {
       var record = GetTokenRecord(request);
@@ -34,7 +38,12 @@ namespace AccessControl.Domain.Aggregates.Helpers
           new List<ErrorValueObject> { new ErrorValueObject("token", "Expired token") }
         );
       }
-      return new VerifyTokenDomainResponse { Email = data.Email, Roles = data.Roles };
+      return new VerifyTokenDomainResponse
+      {
+        Email = data.Email,
+        Photo = ExtractNameFile().Match(data.Photo).Value,
+        Roles = data.Roles
+      };
     }
 
     private static VerifyTokenRecord GetTokenRecord(VerifyTokenDomainRequest request)

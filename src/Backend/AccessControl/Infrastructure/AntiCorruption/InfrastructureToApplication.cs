@@ -118,6 +118,7 @@ namespace AccessControl.Infrastructure.AntiCorruption
         Name = request.Name,
         Avatar = request.Avatar,
         AvatarExtension = request.AvatarExtension,
+        OldPhoto = request.OldPhoto,
         Disabled = request.Disabled
       };
     }

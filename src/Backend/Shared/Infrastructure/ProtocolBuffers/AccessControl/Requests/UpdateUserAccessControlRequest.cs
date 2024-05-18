@@ -18,6 +18,9 @@ namespace Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests
     public string? AvatarExtension { get; set; }
 
     [DataMember(Order = 5, IsRequired = false)]
+    public string? OldPhoto { get; set; }
+
+    [DataMember(Order = 6, IsRequired = false)]
     public bool? Disabled { get; set; }
   }
 }

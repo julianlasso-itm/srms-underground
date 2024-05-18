@@ -94,6 +94,7 @@ namespace AccessControl.Infrastructure.AntiCorruption
       {
         UserId = data.UserId,
         Email = data.Email,
+        Photo = data.Photo,
         Roles = data.Roles
       };
     }
