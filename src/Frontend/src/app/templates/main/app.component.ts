@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../modules/shared/services/auth.service';
-import { MatDialog } from '@angular/material/dialog';
-import { SignUpComponent } from '../../modules/security/sign-up/sign-up.component';
 
 @Component({
   selector: 'srms-root',
@@ -19,33 +19,31 @@ import { SignUpComponent } from '../../modules/security/sign-up/sign-up.componen
     MatListModule,
     MatIconModule,
     RouterModule,
+    MatDividerModule,
+    MatMenuModule,
   ],
   providers: [],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  isAuth = false;
+  isAuth: boolean;
   private authObservable!: Subscription;
 
-  constructor(
-    private authService: AuthService,
-    private route: Router,
-    private dialog: MatDialog
-  ) {}
+  constructor(private authService: AuthService, private route: Router) {
+    this.isAuth = this.authService.isAuth;
+  }
 
   ngOnInit() {
-    this.authObservable = this.authService.isAuth.subscribe((isAuth) => {
+    this.authObservable = this.authService.isAuthSubject.subscribe((isAuth) => {
       this.isAuth = isAuth;
       if (!isAuth) {
-        this.route.navigate(['/']);
+        this.redirectToSignIn();
       }
     });
-    if (!this.isAuth) {
-      this.dialog.open(SignUpComponent, {
-        width: '450px',
-        disableClose: true,
-      });
-    }
+  }
+
+  redirectToSignIn() {
+    this.route.navigate(['./security/sign-in']);
   }
 }

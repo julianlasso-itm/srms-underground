@@ -26,14 +26,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
-import { Constant } from '../../shared/constants/constants';
-import { HttpService } from '../../shared/services/http.service';
-import { SharedModule } from '../../shared/shared.module';
+import { Constant } from '../../../shared/constants/constants';
+import { HttpService } from '../../../shared/services/http.service';
+import { SharedModule } from '../../../shared/shared.module';
+import { RouterModule } from '@angular/router';
 
 const URL_SIGN_UP = `${Constant.URL_BASE}${Constant.URL_SIGN_UP}`;
 
 @Component({
-  selector: 'srms-sign-up',
+  selector: 'srms-sign-up-modal',
   standalone: true,
   imports: [
     CommonModule,
@@ -47,12 +48,13 @@ const URL_SIGN_UP = `${Constant.URL_BASE}${Constant.URL_SIGN_UP}`;
     MatSnackBarModule,
     ReactiveFormsModule,
     SharedModule,
+    RouterModule,
   ],
   providers: [HttpService],
-  templateUrl: './sign-up.component.html',
-  styleUrl: './sign-up.component.scss',
+  templateUrl: './sign-up-modal.component.html',
+  styleUrl: './sign-up-modal.component.scss',
 })
-export class SignUpComponent implements OnInit, OnDestroy {
+export class SignUpModalComponent implements OnInit, OnDestroy {
   @ViewChild('fileInput') fileInput!: ElementRef;
   @ViewChild('dragArea') dragArea!: ElementRef;
   @ViewChild('avatar', { static: false }) avatar!: ElementRef;
@@ -62,7 +64,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   frmSignUp: FormGroup;
   creatingUser = signal(false);
 
-  private frmSignUpSubscription: Subscription;
+  private frmSignUpSubscription!: Subscription;
 
   constructor(
     private renderer: Renderer2,
@@ -70,8 +72,9 @@ export class SignUpComponent implements OnInit, OnDestroy {
     private readonly httpService: HttpService
   ) {
     this.frmSignUp = this.defineForm();
-    console.log(this.frmSignUp);
+  }
 
+  ngOnInit(): void {
     this.frmSignUpSubscription = this.frmSignUp.valueChanges.subscribe(
       (value) => {
         if (this.frmSignUp.hasError('passwordsDontMatch')) {
@@ -95,10 +98,6 @@ export class SignUpComponent implements OnInit, OnDestroy {
         }
       }
     );
-  }
-
-  ngOnInit(): void {
-    // Empty
   }
 
   ngOnDestroy(): void {
@@ -231,9 +230,13 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.httpService.post<FormData, any>(URL_SIGN_UP, formData).subscribe({
       next: (response) => {
         console.log(response);
-        this._snackBar.open('Usuario creado exitosamente. Revise su correo electrónico para activar su cuenta.', 'Cerrar', {
-          duration: 15000,
-        });
+        this._snackBar.open(
+          'Usuario creado exitosamente. Revise su correo electrónico para activar su cuenta.',
+          'Cerrar',
+          {
+            duration: 15000,
+          }
+        );
         this.frmSignUp.reset({
           name: '',
           email: '',
@@ -267,7 +270,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
         passwordConfirmation: new FormControl('', [Validators.required]),
         avatar: new FormControl(null, [Validators.required]),
       },
-      { validators: SignUpComponent.passwordsMatch }
+      { validators: SignUpModalComponent.passwordsMatch }
     );
   }
 }

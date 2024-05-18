@@ -14,4 +14,17 @@ export const routes: Routes = [
         (m) => m.ProfilesModule
       ),
   },
+  {
+    path: 'security',
+    loadChildren: () =>
+      import('./modules/security/security.module').then(
+        (m) => m.SecurityModule
+      ),
+  },
+  {
+    path: 'user',
+    loadChildren: () =>
+      import('./modules/user/user.module').then((m) => m.UserModule),
+  },
+  // { path: '**', redirectTo: 'not-found' },
 ];

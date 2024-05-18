@@ -1,0 +1,110 @@
+<h3 class="title"><mat-icon class="icon">account_circle</mat-icon> Perfil</h3>
+<mat-divider class="margin-divider"></mat-divider>
+<div class="profile-container">
+  <div class="avatar">
+    <img src="https://orderszulu2024.blob.core.windows.net/users/SRMS-c0e20910-5291-47e3-9d46-1c9096377084.webp"
+      class="avatar-img" alt="avatar">
+    <div class="action">
+      <button mat-mini-fab color="accent">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="user-info">
+    <h4 class="name">Julian Andres Lasso Figueroa</h4>
+    <h4 class="email">julian[at]gmail.com</h4>
+    <h4 class="location">Cali, Valle del Cauca, Colombia</h4>
+  </div>
+</div>
+
+<h3><mat-icon>person_edit</mat-icon> Actualización de información personal</h3>
+<mat-divider class="margin-divider"></mat-divider>
+<div class="update-personal-info">
+  <form>
+
+    <!-- Name -->
+    <mat-form-field class="width-100">
+      <mat-label>Nombre del usuario</mat-label>
+      <input matInput type="text" placeholder="Nombre de usuario">
+    </mat-form-field>
+
+    <!-- Location -->
+    <div class="form-location">
+      <!-- Country -->
+      <mat-form-field>
+        <mat-label>Ubicación</mat-label>
+        <mat-select>
+          <mat-option value="1">Colombia</mat-option>
+          <mat-option value="2">Ecuador</mat-option>
+          <mat-option value="3">Perú</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Province -->
+      <mat-form-field>
+        <mat-label>Provincia</mat-label>
+        <mat-select>
+          <mat-option value="1">Valle del Cauca</mat-option>
+          <mat-option value="2">Cauca</mat-option>
+          <mat-option value="3">Nariño</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- City -->
+      <mat-form-field>
+        <mat-label>Ciudad</mat-label>
+        <mat-select>
+          <mat-option value="1">Cali</mat-option>
+          <mat-option value="2">Buga</mat-option>
+          <mat-option value="3">Palmira</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions">
+      <button mat-raised-button color="primary" [disabled]="true">ACTUALIZAR DATOS</button>
+    </div>
+
+  </form>
+</div>
+
+<h3><mat-icon>key</mat-icon> Actualizar contraseña</h3>
+<mat-divider class="margin-divider"></mat-divider>
+<div class="update-personal-info">
+  <form>
+
+    <!-- Name -->
+    <!-- <mat-form-field class="width-100">
+      <mat-label>Nombre del usuario</mat-label>
+      <input matInput type="text" placeholder="Nombre de usuario">
+    </mat-form-field> -->
+
+    <!-- Update password -->
+    <div class="form-location">
+      <!-- Actual password -->
+      <mat-form-field>
+        <mat-label>Contraseña actual</mat-label>
+        <input matInput type="password" placeholder="Contraseña actual">
+      </mat-form-field>
+
+      <!-- New password -->
+      <mat-form-field>
+        <mat-label>Nueva contraseña</mat-label>
+        <input matInput type="password" placeholder="Nueva contraseña">
+      </mat-form-field>
+
+      <!-- City -->
+      <mat-form-field>
+        <mat-label>Confirmación de contraseña</mat-label>
+        <input matInput type="password" placeholder="Confirme su nueva contraseña">
+      </mat-form-field>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions">
+      <button mat-raised-button color="primary" [disabled]="true">ACTUALIZAR CONTRASEÑA</button>
+    </div>
+
+  </form>
+</div>

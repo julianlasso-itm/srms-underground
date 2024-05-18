@@ -1,10 +1,30 @@
 @if (isAuth) {
 <div class="container">
-  <div class="header">
+  <header class="header">
     <mat-toolbar class="header-bar">
       <span>Skills Ranking and Monitoring System - SRMS</span>
+      <span class="spacer"></span>
+      <div class="avatar-container" [matMenuTriggerFor]="profileMenu">
+        <img src="https://orderszulu2024.blob.core.windows.net/users/SRMS-c0e20910-5291-47e3-9d46-1c9096377084.webp"
+          class="avatar" alt="Avatar" />
+      </div>
+      <mat-menu #profileMenu="matMenu">
+        <a mat-menu-item routerLink="./user/profile">
+          <mat-icon>account_circle</mat-icon>
+          <span>Mi perfil</span>
+        </a>
+        <a mat-menu-item [disabled]="true">
+          <mat-icon>settings</mat-icon>
+          <span>Configuración</span>
+        </a>
+        <mat-divider></mat-divider>
+        <button mat-menu-item routerLink="./security/sign-out">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Cerrar sesión</span>
+        </button>
+      </mat-menu>
     </mat-toolbar>
-  </div>
+  </header>
   <div class="sub-container">
     <div class="menu">
       <mat-card>
@@ -54,4 +74,7 @@
   </div>
   <footer class="footer"></footer>
 </div>
+}
+@else {
+<router-outlet />
 }

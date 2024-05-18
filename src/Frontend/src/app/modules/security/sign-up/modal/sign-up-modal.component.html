@@ -64,6 +64,6 @@
   <div class="buttons">
     <button type="submit" form="frmSignUp" mat-flat-button color="primary" class="width-100"
       [disabled]="!frmSignUp.valid">REGISTRARSE</button>
-    <button mat-flat-button class="width-100">IDENTIFICARSE</button>
+    <a [routerLink]="['./security/sign-in']" mat-flat-button class="width-100">IDENTIFICARSE</a>
   </div>
 </mat-dialog-actions>
