@@ -1,28 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../modules/shared/services/auth.service';
 
 @Component({
   selector: 'srms-root',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    MatToolbarModule,
-    MatCardModule,
-    MatListModule,
-    MatIconModule,
-    RouterModule,
-    MatDividerModule,
-    MatMenuModule,
-  ],
-  providers: [],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

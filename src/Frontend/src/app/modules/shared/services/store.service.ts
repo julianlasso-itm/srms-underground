@@ -1,15 +1,21 @@
 import { Injectable } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class StoreService {
   set<Type>(key: string, value: Type): void {
-    localStorage.setItem(key, JSON.stringify(value));
+    if (typeof value === 'object') {
+      localStorage.setItem(key, JSON.stringify(value));
+      return;
+    }
+    localStorage.setItem(key, String(value));
   }
 
   get<Type>(key: string): Type {
-    return JSON.parse(localStorage.getItem(key) ?? '');
+    try {
+      return JSON.parse(localStorage.getItem(key) ?? '');
+    } catch {
+      return localStorage.getItem(key) as Type ?? '' as Type;
+    }
   }
 
   remove(key: string): void {

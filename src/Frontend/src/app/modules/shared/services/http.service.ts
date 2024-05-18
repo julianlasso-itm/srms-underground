@@ -1,12 +1,11 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class HttpService {
-  private readonly httpClient = inject(HttpClient);
+
+  constructor(private httpClient: HttpClient) {}
 
   public get<TResponse>(
     url: string,

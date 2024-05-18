@@ -6,9 +6,7 @@ import { Constant } from '../constants/constants';
 
 const URL_VERIFY_TOKEN = `${Constant.URL_BASE}${Constant.URL_VERIFY_TOKEN}`;
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AuthService {
   private changeAuthSubject = new Subject<boolean>();
   public isAuthSubject = this.changeAuthSubject.asObservable();
@@ -18,8 +16,9 @@ export class AuthService {
   private readonly httpService = inject(HttpService);
 
   constructor() {
+
     const token = this.storeService.getToken();
-    if (token.length > 0) {
+    if (token !== null && token.length > 0) {
       this.httpService.post(URL_VERIFY_TOKEN, { token }).subscribe({
         next: (response) => {
           this.ChangeIsAuth();

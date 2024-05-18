@@ -1,7 +1,8 @@
-import { Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import { authGuard } from './modules/shared/guards/auth.guard';
 
-export const routes: Routes = [
+const routes: Routes = [
   { path: '', redirectTo: 'security/sign-in', pathMatch: 'full' },
   {
     path: 'admin',
@@ -35,5 +36,11 @@ export const routes: Routes = [
     canActivate: [authGuard],
     loadComponent: () =>
       import('./modules/home/home.component').then((m) => m.HomeComponent),
-  }
+  },
 ];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
+})
+export class AppRoutingModule {}
