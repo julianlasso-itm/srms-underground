@@ -32,19 +32,19 @@
       <mat-card>
         <mat-card-content>
           <mat-list>
-            <a mat-list-item routerLink="./admin/roles" routerLinkActive="is-activated" *ngIf="isAdmin">
+            <a mat-list-item routerLink="./admin/roles" routerLinkActive="is-activated" *ngIf="isAdmin()">
               <mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-user-shield"></mat-icon>
               Gestión de roles (Seguridad)
             </a>
-            <a mat-list-item routerLink="./profiles/countries" routerLinkActive="is-activated" *ngIf="isAdmin">
+            <a mat-list-item routerLink="./profiles/countries" routerLinkActive="is-activated" *ngIf="isAdmin()">
               <mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-flag-usa"></mat-icon>
               Gestión de países
             </a>
-            <a mat-list-item routerLink="./profiles/provinces" routerLinkActive="is-activated" *ngIf="isAdmin">
+            <a mat-list-item routerLink="./profiles/provinces" routerLinkActive="is-activated" *ngIf="isAdmin()">
               <mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-signs-post"></mat-icon>
               Gestión de departamentos
             </a>
-            <a mat-list-item routerLink="./profiles/cities" routerLinkActive="is-activated" *ngIf="isAdmin">
+            <a mat-list-item routerLink="./profiles/cities" routerLinkActive="is-activated" *ngIf="isAdmin()">
               <mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-location-crosshairs"></mat-icon>
               Gestión de ciudades
             </a>
