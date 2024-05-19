@@ -171,5 +171,15 @@ namespace ApiGateway.Infrastructure.Controllers
       );
       return Ok(new { message = "Token is valid" });
     }
+
+    [HttpPost("reset-password")]
+    public async Task<IActionResult> ResetPasswordAsync(
+      [FromBody] ResetPasswordAccessControlRequest request
+    )
+    {
+      return await HandleAsync(
+        async () => Ok(await _accessControlService.ResetPasswordAsync(request))
+      );
+    }
   }
 }

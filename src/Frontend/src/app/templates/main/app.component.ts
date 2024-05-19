@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../modules/shared/services/auth.service';
-import { ProfileComponent } from '../../modules/user/profile/profile.component';
-import { StoreService } from '../../modules/shared/services/store.service';
 import { ProfileModel } from '../../modules/user/profile/profile.dto';
 import { Constant } from '../../modules/shared/constants/constants';
 
@@ -21,7 +19,7 @@ export class AppComponent implements OnInit {
     this.isAuth = this.authService.isAuthenticated();
     this.profile = this.authService.getTokenData();
   }
-  
+
   ngOnInit() {
     this.authObservable = this.authService.isAuthSubject.subscribe((isAuth) => {
       this.isAuth = isAuth;
@@ -32,6 +30,3 @@ export class AppComponent implements OnInit {
     return this.profile.Roles.includes(Constant.ADMIN_ROLE);
   }
 }
-
-
-

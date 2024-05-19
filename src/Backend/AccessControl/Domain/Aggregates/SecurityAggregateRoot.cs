@@ -79,5 +79,10 @@ namespace AccessControl.Domain.Aggregates
     {
       return UpdateCredentialHelper.Execute(updateData);
     }
+
+    public ResetPasswordDomainResponse ResetPassword(ResetPasswordDomainRequest resetData)
+    {
+      return ResetPasswordHelper.Execute(resetData);
+    }
   }
 }

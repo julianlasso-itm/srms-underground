@@ -1,5 +1,6 @@
 using AccessControl.Application.Responses;
 using AccessControl.Infrastructure.Persistence.Models;
+using Infrastructure.ProtocolBuffers.AccessControl.Responses;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses;
 
 namespace AccessControl.Infrastructure.AntiCorruption.Interfaces
@@ -29,5 +30,8 @@ namespace AccessControl.Infrastructure.AntiCorruption.Interfaces
       PasswordRecoveryApplicationResponse data
     );
     public UpdateUserAccessControlResponse ToUpdateUserResponse(UpdateUserApplicationResponse data);
+    public ResetPasswordAccessControlResponse ToResetPasswordResponse(
+      ResetPasswordApplicationResponse data
+    );
   }
 }

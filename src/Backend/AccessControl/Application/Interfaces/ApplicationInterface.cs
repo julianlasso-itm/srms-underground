@@ -18,5 +18,6 @@ namespace AccessControl.Application.Interfaces
     Task<ChangePasswordApplicationResponse> ChangePassword(ChangePasswordCommand request);
     Task<PasswordRecoveryApplicationResponse> PasswordRecovery(PasswordRecoveryCommand request);
     Task<UpdateUserApplicationResponse> UpdateUser(UpdateUserCommand request);
+    Task<ResetPasswordApplicationResponse> ResetPassword(ResetPasswordCommand request);
   }
 }

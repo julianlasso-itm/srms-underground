@@ -1,4 +1,5 @@
 using System.ServiceModel;
+using Infrastructure.ProtocolBuffers.AccessControl.Responses;
 using ProtoBuf.Grpc;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses;
@@ -71,6 +72,12 @@ namespace Shared.Infrastructure.ProtocolBuffers.AccessControl
     [OperationContract]
     Task<UpdateUserAccessControlResponse> UpdateUserAsync(
       UpdateUserAccessControlRequest request,
+      CallContext context = default
+    );
+
+    [OperationContract]
+    Task<ResetPasswordAccessControlResponse> ResetPasswordAsync(
+      ResetPasswordAccessControlRequest request,
       CallContext context = default
     );
   }

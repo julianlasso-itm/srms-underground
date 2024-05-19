@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -11,16 +11,19 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { RouterModule } from '@angular/router';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Router, RouterModule } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Constant } from '../../../shared/constants/constants';
 import { HttpService } from '../../../shared/services/http.service';
 import { SharedModule } from '../../../shared/shared.module';
-import { Subscription } from 'rxjs';
+
+const URL_RESET_PASSWORD = `${Constant.URL_BASE}${Constant.URL_RESET_PASSWORD}`;
 
 @Component({
   selector: 'srms-reset-password-modal',
@@ -47,7 +50,12 @@ export class ResetPasswordModalComponent implements OnInit, OnDestroy {
   frmResetPassword: FormGroup;
   private frmResetPasswordSubscription!: Subscription;
 
-  constructor(private readonly httpService: HttpService) {
+  constructor(
+    private readonly httpService: HttpService,
+    private readonly openSnackBar: MatSnackBar,
+    private readonly router: Router,
+    @Inject(MAT_DIALOG_DATA) public data: { token: string }
+  ) {
     this.frmResetPassword = this.defineForm();
   }
 
@@ -67,7 +75,27 @@ export class ResetPasswordModalComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    console.log(this.frmResetPassword.value);
+    const body = this.frmResetPassword.value;
+    delete body.passwordConfirmation;
+    this.httpService
+      .post(URL_RESET_PASSWORD, this.frmResetPassword.value)
+      .subscribe({
+        next: () => {
+          this.openSnackBar.open('Contraseña cambiada con éxito.', 'Cerrar', {
+            duration: 5000,
+          });
+          this.router.navigate(['./security/sign-in']);
+        },
+        error: (error) => {
+          this.openSnackBar.open(
+            'Ocurrió un error al intentar cambiar la contraseña. Por favor, intente nuevamente.',
+            'Cerrar',
+            {
+              duration: 5000,
+            }
+          );
+        },
+      });
   }
 
   static readonly passwordsMatch: ValidatorFn = (
@@ -84,6 +112,7 @@ export class ResetPasswordModalComponent implements OnInit, OnDestroy {
   private defineForm(): FormGroup {
     return new FormGroup(
       {
+        token: new FormControl(this.data.token, [Validators.required]),
         password: new FormControl('', [Validators.required]),
         passwordConfirmation: new FormControl('', [Validators.required]),
       },

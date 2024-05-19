@@ -123,5 +123,10 @@ namespace AccessControl.Infrastructure.AntiCorruption
         Disabled = request.Disabled
       };
     }
+
+    public ResetPasswordCommand ToResetPasswordCommand(ResetPasswordAccessControlRequest request)
+    {
+      return new ResetPasswordCommand { Token = request.Token, Password = request.Password };
+    }
   }
 }

@@ -172,5 +172,17 @@ namespace AccessControl.Application
       );
       return useCase.Handle(request);
     }
+
+    public Task<ResetPasswordApplicationResponse> ResetPassword(ResetPasswordCommand request)
+    {
+      var useCase = new ResetPasswordUseCase<TUserEntity>(
+        _cacheService,
+        _userRepository,
+        AggregateRoot,
+        ApplicationToDomain,
+        DomainToApplication
+      );
+      return useCase.Handle(request);
+    }
   }
 }
