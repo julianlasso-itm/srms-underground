@@ -1,13 +1,13 @@
-@if (isAuth) {
+@if (!isAuth) {
 <div class="container">
   <header class="header">
     <mat-toolbar class="header-bar">
       <span>Skills Ranking and Monitoring System - SRMS</span>
       <span class="spacer"></span>
       <span class="dot" [ngClass]="{'dot-authenticated': isAuth, 'dot-unauthenticated': !isAuth}" ></span>
-      <div class="username-nav"><p class="profile-name">{{profile.Name}}</p></div>
+      <div class="username-nav"><p class="profile-name">{{getProfile().Name}}</p></div>
       <div class="avatar-container" [matMenuTriggerFor]="profileMenu">
-        <img src="{{profile.Photo}}	"
+        <img src="{{getProfile().Photo}}	"
           class="avatar" alt="Avatar" />
       </div>
       <mat-menu #profileMenu="matMenu">
