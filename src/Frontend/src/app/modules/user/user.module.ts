@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { userRoutes } from './user.routes';
+import { NgModule } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { userRoutes } from './user.routes';
 
 @NgModule({
-  declarations: [],
-  imports: [CommonModule],
-  providers: [provideRouter(userRoutes)],
+    declarations: [],
+    imports: [CommonModule],
+    providers: [provideRouter(userRoutes)],
 })
 export class UserModule {}

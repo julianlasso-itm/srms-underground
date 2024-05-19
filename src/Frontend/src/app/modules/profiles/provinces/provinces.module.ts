@@ -4,8 +4,8 @@ import { provideRouter } from '@angular/router';
 import { provincesRoutes } from './provinces.routes';
 
 @NgModule({
-  declarations: [],
-  imports: [CommonModule],
-  providers: [provideRouter(provincesRoutes)],
+    declarations: [],
+    imports: [CommonModule],
+    providers: [provideRouter(provincesRoutes)],
 })
 export class ProvincesModule {}

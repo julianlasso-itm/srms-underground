@@ -20,34 +20,34 @@ import { ProfileComponent } from './modules/user/profile/profile.component';
 import { AppComponent } from './templates/main/app.component';
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    BrowserModule,
-    CommonModule,
-    HttpClientModule,
-    MatCardModule,
-    MatDividerModule,
-    MatIconModule,
-    MatListModule,
-    MatMenuModule,
-    MatToolbarModule,
-    RouterModule,
-    RouterOutlet,
-  ],
-  providers: [
-    StoreService,
-    AuthService,
-    HttpService,
-    AvatarService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptorService,
-      multi: true,
-    },
-    ProfileComponent,
-  ],
-  bootstrap: [AppComponent],
+    declarations: [AppComponent],
+    imports: [
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        BrowserModule,
+        CommonModule,
+        HttpClientModule,
+        MatCardModule,
+        MatDividerModule,
+        MatIconModule,
+        MatListModule,
+        MatMenuModule,
+        MatToolbarModule,
+        RouterModule,
+        RouterOutlet,
+    ],
+    providers: [
+        StoreService,
+        AuthService,
+        HttpService,
+        AvatarService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptorService,
+            multi: true,
+        },
+        ProfileComponent,
+    ],
+    bootstrap: [AppComponent],
 })
 export class AppModule {}

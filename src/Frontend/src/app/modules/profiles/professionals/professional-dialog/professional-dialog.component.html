@@ -1,21 +1,26 @@
 <h2 mat-dialog-title>
-  @if (data().formType == formType().CREATE) {
-    Nuevo Profesional
-  } @else if (data().formType == formType().EDIT) {
-    Editar Profesional
-  }
+    @if (data().formType == formType().CREATE) { Nuevo Profesional } @else if
+    (data().formType == formType().EDIT) { Editar Profesional }
 </h2>
 <mat-dialog-content>
-  <srms-professional-form [professional]="signal(data().professional ?? null)" (frmProfessional)="professionalForm($event)"></srms-professional-form>
+    <srms-professional-form
+        [professional]="signal(data().professional ?? null)"
+        (frmProfessional)="professionalForm($event)"
+    ></srms-professional-form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-flat-button class="min-width-110" (click)="onCancelClick()">Cancelar</button>
-  <button mat-flat-button color="primary" class="min-width-110" type="submit" form="frmProfessional"
-    [disabled]="!formProfessional().valid">
-    @if (data().formType == formType().CREATE) {
-      Crear
-    } @else if (data().formType == formType().EDIT) {
-      Actualizar
-    }
-  </button>
+    <button mat-flat-button class="min-width-110" (click)="onCancelClick()">
+        Cancelar
+    </button>
+    <button
+        mat-flat-button
+        color="primary"
+        class="min-width-110"
+        type="submit"
+        form="frmProfessional"
+        [disabled]="!formProfessional().valid"
+    >
+        @if (data().formType == formType().CREATE) { Crear } @else if
+        (data().formType == formType().EDIT) { Actualizar }
+    </button>
 </mat-dialog-actions>

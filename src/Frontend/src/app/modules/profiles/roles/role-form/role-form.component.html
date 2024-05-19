@@ -1,44 +1,58 @@
 <form id="frmRole" [formGroup]="frmRole()" (submit)="onSubmit()">
-  @if (role()?.roleId != null) {
-    <input type="text" class="hidden" formControlName="roleId">
-  }
-  <p>
-    <mat-form-field class="width-100">
-      <mat-label>Nombre</mat-label>
-      <input matInput type="text" formControlName="name" placeholder="Nombre del rol">
-      @if (frmRole().get('name')?.errors?.['required']) {
-        <mat-error>El nombre es requerido</mat-error>
-      }
-      @if (frmRole().get('name')?.errors?.['maxlength']) {
-        <mat-error>El nombre debe tener un máximo de 50 caracteres</mat-error>
-      }
-    </mat-form-field>
-  </p>
-  <p>
-    <mat-form-field class="width-100">
-      <mat-label>Descripción</mat-label>
-      <textarea matInput type="text" formControlName="description"
-        placeholder="Descripción del rol"></textarea>
-      @if (frmRole().get('description')?.errors?.['maxlength']) {
-        <mat-error>La descripción debe tener un máximo de 1024 caracteres</mat-error>
-      }
-    </mat-form-field>
-  </p>
-  @if (role()?.roleId != null) {
+    @if (role()?.roleId != null) {
+    <input type="text" class="hidden" formControlName="roleId" />
+    }
     <p>
-      <mat-slide-toggle formControlName="disabled" [checked]="frmRole().get('disabled')?.value">
-        @if (frmRole().get('disabled')?.value) {
-        <span class="color-red">Habilitado</span>
-        } @else {
-        <span class="color-green">Deshabilitado</span>
-        }
-      </mat-slide-toggle>
+        <mat-form-field class="width-100">
+            <mat-label>Nombre</mat-label>
+            <input
+                matInput
+                type="text"
+                formControlName="name"
+                placeholder="Nombre del rol"
+            />
+            @if (frmRole().get('name')?.errors?.['required']) {
+            <mat-error>El nombre es requerido</mat-error>
+            } @if (frmRole().get('name')?.errors?.['maxlength']) {
+            <mat-error
+                >El nombre debe tener un máximo de 50 caracteres</mat-error
+            >
+            }
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field class="width-100">
+            <mat-label>Descripción</mat-label>
+            <textarea
+                matInput
+                type="text"
+                formControlName="description"
+                placeholder="Descripción del rol"
+            ></textarea>
+            @if (frmRole().get('description')?.errors?.['maxlength']) {
+            <mat-error
+                >La descripción debe tener un máximo de 1024
+                caracteres</mat-error
+            >
+            }
+        </mat-form-field>
+    </p>
+    @if (role()?.roleId != null) {
+    <p>
+        <mat-slide-toggle
+            formControlName="disabled"
+            [checked]="frmRole().get('disabled')?.value"
+        >
+            @if (frmRole().get('disabled')?.value) {
+            <span class="color-red">Habilitado</span>
+            } @else {
+            <span class="color-green">Deshabilitado</span>
+            }
+        </mat-slide-toggle>
     </p>
     @if (frmRole().get('id')?.errors?.['required']) {
-      <mat-error>El id es requerido</mat-error>
-    }
-    @if (frmRole().get('id')?.errors?.['pattern']) {
-      <mat-error>El id debe tener un valor válido</mat-error>
-    }
-  }
+    <mat-error>El id es requerido</mat-error>
+    } @if (frmRole().get('id')?.errors?.['pattern']) {
+    <mat-error>El id debe tener un valor válido</mat-error>
+    } }
 </form>

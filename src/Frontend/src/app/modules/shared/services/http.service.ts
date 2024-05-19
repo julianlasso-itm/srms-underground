@@ -4,40 +4,39 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class HttpService {
+    constructor(private httpClient: HttpClient) {}
 
-  constructor(private httpClient: HttpClient) {}
+    public get<TResponse>(
+        url: string,
+        params?: HttpParams,
+        headers?: HttpHeaders
+    ): Observable<TResponse> {
+        return this.httpClient.get<TResponse>(url, { headers, params });
+    }
 
-  public get<TResponse>(
-    url: string,
-    params?: HttpParams,
-    headers?: HttpHeaders
-  ): Observable<TResponse> {
-    return this.httpClient.get<TResponse>(url, { headers, params });
-  }
+    public post<TRequest, TResponse>(
+        url: string,
+        body: TRequest,
+        params?: HttpParams,
+        headers?: HttpHeaders
+    ): Observable<TResponse> {
+        return this.httpClient.post<TResponse>(url, body, { headers, params });
+    }
 
-  public post<TRequest, TResponse>(
-    url: string,
-    body: TRequest,
-    params?: HttpParams,
-    headers?: HttpHeaders
-  ): Observable<TResponse> {
-    return this.httpClient.post<TResponse>(url, body, { headers, params });
-  }
+    public put<TRequest, TResponse>(
+        url: string,
+        body: TRequest,
+        params?: HttpParams,
+        headers?: HttpHeaders
+    ): Observable<TResponse> {
+        return this.httpClient.put<TResponse>(url, body, { headers, params });
+    }
 
-  public put<TRequest, TResponse>(
-    url: string,
-    body: TRequest,
-    params?: HttpParams,
-    headers?: HttpHeaders
-  ): Observable<TResponse> {
-    return this.httpClient.put<TResponse>(url, body, { headers, params });
-  }
-
-  public delete<TResponse>(
-    url: string,
-    params?: HttpParams,
-    headers?: HttpHeaders
-  ): Observable<TResponse> {
-    return this.httpClient.delete<TResponse>(url, { headers, params });
-  }
+    public delete<TResponse>(
+        url: string,
+        params?: HttpParams,
+        headers?: HttpHeaders
+    ): Observable<TResponse> {
+        return this.httpClient.delete<TResponse>(url, { headers, params });
+    }
 }

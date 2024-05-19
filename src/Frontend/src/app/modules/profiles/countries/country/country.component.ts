@@ -13,6 +13,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DeleteDialogComponent } from '../../../shared/components/delete-dialog/delete-dialog.component';
+import { InputFilterComponent } from '../../../shared/components/input-filter/input-filter.component';
 import { Constant } from '../../../shared/constants/constants';
 import { IPagination } from '../../../shared/interfaces/pagination.interface';
 import { HttpService } from '../../../shared/services/http.service';
@@ -21,156 +22,157 @@ import { SharedModule } from '../../../shared/shared.module';
 import { CountryDialogComponent } from '../country-dialog/country-dialog.component';
 import { FormType } from '../country-dialog/dialog.type';
 import { ICountries, ICountry } from './country.interface';
-import { InputFilterComponent } from '../../../shared/components/input-filter/input-filter.component';
 
 const URL_GET_COUNTRIES = `${Constant.URL_BASE}${Constant.URL_GET_COUNTRIES}`;
 const URL_COUNTRY = `${Constant.URL_BASE}${Constant.URL_COUNTRY}`;
 const MIN_LENGTH = 10;
 
 @Component({
-  selector: 'srms-country-component',
-  standalone: true,
-  imports: [
-    FormsModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatPaginatorModule,
-    MatProgressBarModule,
-    MatTableModule,
-    MatTooltipModule,
-    SharedModule,
-    RouterModule,
-    InputFilterComponent,
-  ],
-  templateUrl: './country.component.html',
-  styleUrl: './country.component.scss',
+    selector: 'srms-country-component',
+    standalone: true,
+    imports: [
+        FormsModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatPaginatorModule,
+        MatProgressBarModule,
+        MatTableModule,
+        MatTooltipModule,
+        SharedModule,
+        RouterModule,
+        InputFilterComponent,
+    ],
+    templateUrl: './country.component.html',
+    styleUrl: './country.component.scss',
 })
 export class CountryComponent implements OnInit, OnDestroy {
-  readonly displayedColumns: string[];
-  dataSource = signal<ICountry[]>([]);
-  totalRecords = signal(0);
-  pageSize = signal(MIN_LENGTH);
-  loading: boolean;
-  loadingTable: boolean;
-  filter = signal('');
-  loadingFromFilter = signal(false);
+    readonly displayedColumns: string[];
+    dataSource = signal<ICountry[]>([]);
+    totalRecords = signal(0);
+    pageSize = signal(MIN_LENGTH);
+    loading: boolean;
+    loadingTable: boolean;
+    filter = signal('');
+    loadingFromFilter = signal(false);
 
-  private pageIndex: number;
-  private reloadData!: Subscription;
+    private pageIndex: number;
+    private reloadData!: Subscription;
 
-  constructor(
-    public dialog: MatDialog,
-    public httpService: HttpService,
-    public reloadDataService: ReloadDataService
-  ) {
-    this.displayedColumns = ['position', 'name', 'disabled', 'actions'];
-    this.loading = false;
-    this.loadingTable = false;
-    this.pageIndex = 0;
-  }
-
-  ngOnInit(): void {
-    this.getCountries();
-    this.reloadData = this.reloadDataService.changeData.subscribe((data) => {
-      this.getCountries();
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.reloadData.unsubscribe();
-  }
-
-  openDialogNew(): void {
-    this.dialog.open(CountryDialogComponent, {
-      data: signal({ formType: FormType.CREATE }),
-      width: '450px',
-    });
-  }
-
-  openDialogEdit(country: ICountry): void {
-    this.dialog.open(CountryDialogComponent, {
-      data: signal({ formType: FormType.EDIT, country }),
-      width: '450px',
-    });
-  }
-
-  openDialogDelete(id: string): void {
-    this.dialog.open(DeleteDialogComponent, {
-      data: { url: URL_COUNTRY, id },
-      width: '400px',
-      autoFocus: false,
-    });
-  }
-
-  private getCountries(loadingTable: boolean = false): void {
-    this.tableLoadingTrue(loadingTable);
-    const pagination: IPagination = {
-      Page: this.pageIndex + 1,
-      Limit: this.pageSize(),
-    };
-    let params = new HttpParams()
-      .append('Page', pagination.Page.toString())
-      .append('Limit', pagination.Limit.toString())
-      .append('Sort', 'Name');
-    if (this.filter().length > 0) {
-      params = new HttpParams().appendAll({
-        Page: pagination.Page.toString(),
-        Limit: pagination.Limit.toString(),
-        Filter: this.filter(),
-        Sort: 'Name',
-      });
+    constructor(
+        public dialog: MatDialog,
+        public httpService: HttpService,
+        public reloadDataService: ReloadDataService
+    ) {
+        this.displayedColumns = ['position', 'name', 'disabled', 'actions'];
+        this.loading = false;
+        this.loadingTable = false;
+        this.pageIndex = 0;
     }
-    this.httpService.get<ICountries>(URL_GET_COUNTRIES, params).subscribe({
-      next: (data) => {
-        console.log(data);
-        if (data.countries !== null) {
-          this.dataSource.update(() => data.countries);
-          this.totalRecords.update(() => data.total);
-        } else {
-          this.dataSource.update(() => []);
-          this.totalRecords.update(() => 0);
+
+    ngOnInit(): void {
+        this.getCountries();
+        this.reloadData = this.reloadDataService.changeData.subscribe(
+            (data) => {
+                this.getCountries();
+            }
+        );
+    }
+
+    ngOnDestroy(): void {
+        this.reloadData.unsubscribe();
+    }
+
+    openDialogNew(): void {
+        this.dialog.open(CountryDialogComponent, {
+            data: signal({ formType: FormType.CREATE }),
+            width: '450px',
+        });
+    }
+
+    openDialogEdit(country: ICountry): void {
+        this.dialog.open(CountryDialogComponent, {
+            data: signal({ formType: FormType.EDIT, country }),
+            width: '450px',
+        });
+    }
+
+    openDialogDelete(id: string): void {
+        this.dialog.open(DeleteDialogComponent, {
+            data: { url: URL_COUNTRY, id },
+            width: '400px',
+            autoFocus: false,
+        });
+    }
+
+    private getCountries(loadingTable: boolean = false): void {
+        this.tableLoadingTrue(loadingTable);
+        const pagination: IPagination = {
+            Page: this.pageIndex + 1,
+            Limit: this.pageSize(),
+        };
+        let params = new HttpParams()
+            .append('Page', pagination.Page.toString())
+            .append('Limit', pagination.Limit.toString())
+            .append('Sort', 'Name');
+        if (this.filter().length > 0) {
+            params = new HttpParams().appendAll({
+                Page: pagination.Page.toString(),
+                Limit: pagination.Limit.toString(),
+                Filter: this.filter(),
+                Sort: 'Name',
+            });
         }
-      },
-      complete: () => {
-        this.tableLoadingFalse(loadingTable);
-        this.loadingFromFilter.update(() => false);
-        console.log('Countries loaded');
-      },
-      error: (error) => {
-        this.tableLoadingFalse(loadingTable);
-        this.loadingFromFilter.update(() => false);
-        console.error(error);
-      },
-    });
-  }
-
-  handlePageEvent(paginator: PageEvent) {
-    this.pageIndex = paginator.pageIndex;
-    this.pageSize.update(() => paginator.pageSize);
-    this.getCountries(true);
-  }
-
-  filterData(filter: string): void {
-    this.filter.update(() => filter);
-    this.loadingFromFilter.update(() => true);
-    this.getCountries(true);
-  }
-
-  private tableLoadingTrue(loadingTable: boolean): void {
-    if (loadingTable) {
-      this.loadingTable = true;
-    } else {
-      this.loading = true;
+        this.httpService.get<ICountries>(URL_GET_COUNTRIES, params).subscribe({
+            next: (data) => {
+                console.log(data);
+                if (data.countries !== null) {
+                    this.dataSource.update(() => data.countries);
+                    this.totalRecords.update(() => data.total);
+                } else {
+                    this.dataSource.update(() => []);
+                    this.totalRecords.update(() => 0);
+                }
+            },
+            complete: () => {
+                this.tableLoadingFalse(loadingTable);
+                this.loadingFromFilter.update(() => false);
+                console.log('Countries loaded');
+            },
+            error: (error) => {
+                this.tableLoadingFalse(loadingTable);
+                this.loadingFromFilter.update(() => false);
+                console.error(error);
+            },
+        });
     }
-  }
 
-  private tableLoadingFalse(loadingTable: boolean): void {
-    if (loadingTable) {
-      this.loadingTable = false;
-    } else {
-      this.loading = false;
+    handlePageEvent(paginator: PageEvent) {
+        this.pageIndex = paginator.pageIndex;
+        this.pageSize.update(() => paginator.pageSize);
+        this.getCountries(true);
     }
-  }
+
+    filterData(filter: string): void {
+        this.filter.update(() => filter);
+        this.loadingFromFilter.update(() => true);
+        this.getCountries(true);
+    }
+
+    private tableLoadingTrue(loadingTable: boolean): void {
+        if (loadingTable) {
+            this.loadingTable = true;
+        } else {
+            this.loading = true;
+        }
+    }
+
+    private tableLoadingFalse(loadingTable: boolean): void {
+        if (loadingTable) {
+            this.loadingTable = false;
+        } else {
+            this.loading = false;
+        }
+    }
 }

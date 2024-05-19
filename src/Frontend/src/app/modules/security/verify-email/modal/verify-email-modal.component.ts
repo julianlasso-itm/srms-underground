@@ -7,19 +7,19 @@ import { RouterModule } from '@angular/router';
 import { HttpService } from '../../../shared/services/http.service';
 
 @Component({
-  selector: 'srms-verify-email-modal',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatIconModule,
-    RouterModule,
-  ],
-  providers: [HttpService],
-  templateUrl: './verify-email-modal.component.html',
-  styleUrl: './verify-email-modal.component.scss',
+    selector: 'srms-verify-email-modal',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatIconModule,
+        RouterModule,
+    ],
+    providers: [HttpService],
+    templateUrl: './verify-email-modal.component.html',
+    styleUrl: './verify-email-modal.component.scss',
 })
 export class VerifyEmailModalComponent {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { susses: boolean }) {}
+    constructor(@Inject(MAT_DIALOG_DATA) public data: { susses: boolean }) {}
 }

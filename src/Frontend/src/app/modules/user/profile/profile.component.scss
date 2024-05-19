@@ -1,77 +1,77 @@
 .profile-container {
-  display: flex;
-  flex-direction: row;
+    display: flex;
+    flex-direction: row;
 }
 
 .avatar {
-  position: relative;
-  margin-right: 20px;
-  .avatar-img {
-    width: 150px;
-    border-radius: 50%;
-  }
-  .action {
-    width: fit-content;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-  }
+    position: relative;
+    margin-right: 20px;
+    .avatar-img {
+        width: 150px;
+        border-radius: 50%;
+    }
+    .action {
+        width: fit-content;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
 }
 
 .name {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
 }
 
 .email {
-  font-size: 16px;
-  color: #666;
-  margin-top: 0px;
-  margin-bottom: 8px;
-  font-weight: normal;
+    font-size: 16px;
+    color: #666;
+    margin-top: 0px;
+    margin-bottom: 8px;
+    font-weight: normal;
 }
 
 .location {
-  font-size: 16px;
-  color: #666;
-  margin-top: 0px;
-  font-weight: normal;
+    font-size: 16px;
+    color: #666;
+    margin-top: 0px;
+    font-weight: normal;
 }
 
 .margin-divider {
-  margin-top: 20px;
-  margin-bottom: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .form-location {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 10px;
-  mat-form-field {
-    flex-grow: 1;
-  }
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    mat-form-field {
+        flex-grow: 1;
+    }
 }
 
 .actions {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 
 .title {
-  font-size: 30px;
-  font-weight: bold;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  .icon {
-    width: 30px;
-    height: 30px;
     font-size: 30px;
-  }
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    .icon {
+        width: 30px;
+        height: 30px;
+        font-size: 30px;
+    }
 }
 
 .hide {
-  display: none;
+    display: none;
 }

@@ -1,4 +1,4 @@
 export interface IDeleteDialogData {
-  url: string;
-  id: string;
+    url: string;
+    id: string;
 }

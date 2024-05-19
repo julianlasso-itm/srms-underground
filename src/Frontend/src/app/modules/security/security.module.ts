@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { securityRoutes } from './security.routes';
-import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [],
-  imports: [CommonModule, HttpClientModule],
-  providers: [provideRouter(securityRoutes)],
+    declarations: [],
+    imports: [CommonModule, HttpClientModule],
+    providers: [provideRouter(securityRoutes)],
 })
 export class SecurityModule {}

@@ -1,50 +1,65 @@
-<form id="frmProfessional" [formGroup]="frmProfessional()" (submit)="onSubmit()">
-  @if (professional()?.professionalId != null) {
-    <input type="text" class="hidden" formControlName="professionalId">
-  }
-  <p>
-    <mat-form-field class="width-100">
-      <mat-label>Nombre</mat-label>
-      <input matInput type="text" formControlName="name" placeholder="Nombre del Profesional">
-      @if (frmProfessional().get('name')?.errors?.['required']) {
-        <mat-error>El nombre es requerido</mat-error>
-      }
-      @if (frmProfessional().get('name')?.errors?.['maxlength']) {
-        <mat-error>El nombre debe tener un máximo de 50 caracteres</mat-error>
-      }
-    </mat-form-field>
-  </p>
-  <p>
-    <mat-form-field class="width-100">
-      <mat-label>Email</mat-label>
-      <input matInput type="email" formControlName="email"
-        placeholder="Email del Profesional">
-        @if (frmProfessional().get('email')?.errors?.['pattern']) {
-          <mat-error>El formato de correo electronico no es valido</mat-error>
-        }
-        @if (frmProfessional().get('email')?.errors?.['required']) {
-          <mat-error>El correo electronico es requerido</mat-error>
-        }
-        @if (frmProfessional().get('email')?.errors?.['maxlength']) {
-          <mat-error>La descripción debe tener un máximo de 50 caracteres</mat-error>
-        }
-    </mat-form-field>
-  </p>
-  @if (professional()?.professionalId != null) {
+<form
+    id="frmProfessional"
+    [formGroup]="frmProfessional()"
+    (submit)="onSubmit()"
+>
+    @if (professional()?.professionalId != null) {
+    <input type="text" class="hidden" formControlName="professionalId" />
+    }
     <p>
-      <mat-slide-toggle formControlName="disabled" [checked]="frmProfessional().get('disabled')?.value">
-        @if (frmProfessional().get('disabled')?.value) {
-        <span class="color-red">Habilitado</span>
-        } @else {
-        <span class="color-green">Deshabilitado</span>
-        }
-      </mat-slide-toggle>
+        <mat-form-field class="width-100">
+            <mat-label>Nombre</mat-label>
+            <input
+                matInput
+                type="text"
+                formControlName="name"
+                placeholder="Nombre del Profesional"
+            />
+            @if (frmProfessional().get('name')?.errors?.['required']) {
+            <mat-error>El nombre es requerido</mat-error>
+            } @if (frmProfessional().get('name')?.errors?.['maxlength']) {
+            <mat-error
+                >El nombre debe tener un máximo de 50 caracteres</mat-error
+            >
+            }
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field class="width-100">
+            <mat-label>Email</mat-label>
+            <input
+                matInput
+                type="email"
+                formControlName="email"
+                placeholder="Email del Profesional"
+            />
+            @if (frmProfessional().get('email')?.errors?.['pattern']) {
+            <mat-error>El formato de correo electronico no es valido</mat-error>
+            } @if (frmProfessional().get('email')?.errors?.['required']) {
+            <mat-error>El correo electronico es requerido</mat-error>
+            } @if (frmProfessional().get('email')?.errors?.['maxlength']) {
+            <mat-error
+                >La descripción debe tener un máximo de 50 caracteres</mat-error
+            >
+            }
+        </mat-form-field>
+    </p>
+    @if (professional()?.professionalId != null) {
+    <p>
+        <mat-slide-toggle
+            formControlName="disabled"
+            [checked]="frmProfessional().get('disabled')?.value"
+        >
+            @if (frmProfessional().get('disabled')?.value) {
+            <span class="color-red">Habilitado</span>
+            } @else {
+            <span class="color-green">Deshabilitado</span>
+            }
+        </mat-slide-toggle>
     </p>
     @if (frmProfessional().get('id')?.errors?.['required']) {
-      <mat-error>El id es requerido</mat-error>
-    }
-    @if (frmProfessional().get('id')?.errors?.['pattern']) {
-      <mat-error>El id debe tener un valor válido</mat-error>
-    }
-  }
+    <mat-error>El id es requerido</mat-error>
+    } @if (frmProfessional().get('id')?.errors?.['pattern']) {
+    <mat-error>El id debe tener un valor válido</mat-error>
+    } }
 </form>

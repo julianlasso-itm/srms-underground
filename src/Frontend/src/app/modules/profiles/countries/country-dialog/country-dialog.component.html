@@ -1,21 +1,26 @@
 <h2 mat-dialog-title>
-  @if (data().formType == formType().CREATE) {
-  Nuevo país
-  } @else if (data().formType == formType().EDIT) {
-  Editar país
-  }
+    @if (data().formType == formType().CREATE) { Nuevo país } @else if
+    (data().formType == formType().EDIT) { Editar país }
 </h2>
 <mat-dialog-content>
-  <srms-country-form [country]="signal(data().country ?? null)" (frmCountry)="countryForm($event)"></srms-country-form>
+    <srms-country-form
+        [country]="signal(data().country ?? null)"
+        (frmCountry)="countryForm($event)"
+    ></srms-country-form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-flat-button class="min-width-110" (click)="onCancelClick()">Cancelar</button>
-  <button mat-flat-button color="primary" class="min-width-110" type="submit" form="frmCountry"
-    [disabled]="!formCountry().valid">
-    @if (data().formType == formType().CREATE) {
-    Crear
-    } @else if (data().formType == formType().EDIT) {
-    Actualizar
-    }
-  </button>
+    <button mat-flat-button class="min-width-110" (click)="onCancelClick()">
+        Cancelar
+    </button>
+    <button
+        mat-flat-button
+        color="primary"
+        class="min-width-110"
+        type="submit"
+        form="frmCountry"
+        [disabled]="!formCountry().valid"
+    >
+        @if (data().formType == formType().CREATE) { Crear } @else if
+        (data().formType == formType().EDIT) { Actualizar }
+    </button>
 </mat-dialog-actions>
