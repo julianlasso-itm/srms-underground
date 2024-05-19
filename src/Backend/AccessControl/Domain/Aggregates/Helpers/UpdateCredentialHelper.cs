@@ -51,6 +51,13 @@ namespace AccessControl.Domain.Aggregates.Helpers
         response.Disabled = credential.Disabled.Value;
       }
 
+      if (data.CityId != null)
+      {
+        // var cityId = new CityIdValueObject(data.CityId);
+        // credential.UpdateCity(cityId);
+        response.CityId = data.CityId; // credential.CityId.Value;
+      }
+
       ValidateRecordFields(credential);
       ValidateAmountDataToBeUpdated(response);
 

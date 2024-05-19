@@ -135,6 +135,7 @@ namespace AccessControl.Infrastructure.AntiCorruption
         Avatar = request.AvatarBytes,
         AvatarExtension = request.AvatarExtension,
         Disabled = request.Disabled,
+        CityId = request.CityId,
       };
     }
 

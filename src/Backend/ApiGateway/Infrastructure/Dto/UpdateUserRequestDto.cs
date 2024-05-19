@@ -7,6 +7,9 @@ namespace ApiGateway.Infrastructure.Dto
     [FromForm(Name = "name")]
     public string? Name { get; set; }
 
+    [FromForm(Name = "cityId")]
+    public string? CityId { get; set; }
+
     [FromForm(Name = "avatar")]
     public IFormFile? Avatar { get; set; }
 

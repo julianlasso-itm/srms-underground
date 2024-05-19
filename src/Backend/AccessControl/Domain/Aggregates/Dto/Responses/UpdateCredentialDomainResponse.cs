@@ -8,5 +8,6 @@ namespace AccessControl.Domain.Aggregates.Dto.Responses
     public string? AvatarExtension { get; set; }
     public string? Photo { get; set; }
     public bool? Disabled { get; set; }
+    public string? CityId { get; set; }
   }
 }

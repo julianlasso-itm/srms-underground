@@ -10,4 +10,5 @@ internal record CredentialRecord
   public PasswordValueObject Password { get; set; }
   public AvatarValueObject Avatar { get; set; }
   public DisabledValueObject Disabled { get; set; }
+  public CityIdValueObject CityId { get; set; }
 }

@@ -11,5 +11,6 @@ namespace AccessControl.Application.Commands
     public string? AvatarExtension { get; set; }
     public string? OldPhoto { get; set; }
     public bool? Disabled { get; set; }
+    public string? CityId { get; set; }
   }
 }

@@ -22,5 +22,8 @@ namespace Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests
 
     [DataMember(Order = 6, IsRequired = false)]
     public bool? Disabled { get; set; }
+
+    [DataMember(Order = 7, IsRequired = false)]
+    public string? CityId { get; set; }
   }
 }

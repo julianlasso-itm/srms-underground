@@ -123,7 +123,7 @@ namespace ApiGateway.Infrastructure.Controllers
     }
 
     [Permissions]
-    [HttpPost("update-user")]
+    [HttpPut("update-user")]
     public async Task<IActionResult> UpdateUserAsync([FromForm] UpdateUserRequestDto request)
     {
       var idAvatar = Guid.NewGuid().ToString();
@@ -156,6 +156,11 @@ namespace ApiGateway.Infrastructure.Controllers
       if (request.Disabled is not null)
       {
         newRequest.Disabled = request.Disabled;
+      }
+
+      if (request.CityId is not null)
+      {
+        newRequest.CityId = request.CityId;
       }
 
       return await HandleAsync(

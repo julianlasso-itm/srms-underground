@@ -6,5 +6,6 @@ namespace AccessControl.Application.Responses
     public string? Name { get; init; }
     public string? Photo { get; init; }
     public bool? Disabled { get; init; }
+    public string? CityId { get; init; }
   }
 }

@@ -101,6 +101,10 @@ namespace AccessControl.Infrastructure.Persistence.Repositories
       {
         user.Disabled = (bool)entity.Disabled;
       }
+      if (entity.CityId != null)
+      {
+        user.CityId = Guid.Parse(entity.CityId);
+      }
       return UpdateAsync(id, user);
     }
 

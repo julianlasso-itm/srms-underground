@@ -124,6 +124,7 @@ namespace AccessControl.Infrastructure.AntiCorruption
         Name = response.Name,
         Photo = response.Photo,
         Disabled = response.Disabled,
+        CityId = response.CityId,
       };
     }
 

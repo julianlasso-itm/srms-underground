@@ -7,5 +7,6 @@ namespace AccessControl.Domain.Aggregates.Dto.Requests
     public byte[]? Avatar { get; init; }
     public string? AvatarExtension { get; init; }
     public bool? Disabled { get; init; }
+    public string? CityId { get; init; }
   }
 }
