@@ -16,6 +16,7 @@ import { AuthService } from './modules/shared/services/auth.service';
 import { HttpService } from './modules/shared/services/http.service';
 import { StoreService } from './modules/shared/services/store.service';
 import { AppComponent } from './templates/main/app.component';
+import { ProfileComponent } from './modules/user/profile/profile.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -43,6 +44,7 @@ import { AppComponent } from './templates/main/app.component';
       useClass: AuthInterceptorService,
       multi: true,
     },
+    ProfileComponent
   ],
   bootstrap: [AppComponent],
 })

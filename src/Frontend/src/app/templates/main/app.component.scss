@@ -97,3 +97,39 @@ a[mat-list-item]:hover {
   justify-content: center;
   cursor: pointer;
 }
+
+.background-image {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  z-index: -1;
+}
+
+.dot-authenticated {
+  background-color: #4caf50;
+  border-radius: 50%;
+  display: inline-block;
+  height: 10px;
+  width: 10px;
+}
+
+.dot-unauthenticated {
+  background-color: #f44336;
+  border-radius: 50%;
+  display: inline-block;
+  height: 10px;
+  width: 10px;
+}
+
+.username-nav{
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.profile-name{
+  font-size: 16px;
+  font-weight: normal;
+}

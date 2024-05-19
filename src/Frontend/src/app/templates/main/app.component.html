@@ -4,6 +4,8 @@
     <mat-toolbar class="header-bar">
       <span>Skills Ranking and Monitoring System - SRMS</span>
       <span class="spacer"></span>
+      <span class="dot" [ngClass]="{'dot-authenticated': isAuth, 'dot-unauthenticated': !isAuth}" ></span>
+      <div class="username-nav"><p class="profile-name">{{profile.Name}}</p></div>
       <div class="avatar-container" [matMenuTriggerFor]="profileMenu">
         <img src="https://orderszulu2024.blob.core.windows.net/users/SRMS-c0e20910-5291-47e3-9d46-1c9096377084.webp"
           class="avatar" alt="Avatar" />
@@ -76,5 +78,6 @@
 </div>
 }
 @else {
+  <img src="assets/images/fondo.avif" class="background-image"/>
 <router-outlet />
 }
