@@ -24,14 +24,22 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Router, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Constant } from '../../../shared/constants/constants';
 import { HttpService } from '../../../shared/services/http.service';
 import { SharedModule } from '../../../shared/shared.module';
-import { RouterModule } from '@angular/router';
+import { IProvince } from '../../../profiles/provinces/province/province.interface';
+import { ICountry } from '../../../profiles/countries/country/country.interface';
+import { ICity } from '../../../profiles/cities/city/city.interface';
+import { HttpParams } from '@angular/common/http';
 
 const URL_SIGN_UP = `${Constant.URL_BASE}${Constant.URL_SIGN_UP}`;
+const URL_GET_PROVINCES = `${Constant.URL_BASE}${Constant.URL_GET_PROVINCES}`;
+const URL_GET_COUNTRIES = `${Constant.URL_BASE}${Constant.URL_GET_COUNTRIES}`;
+const URL_GET_CITIES = `${Constant.URL_BASE}${Constant.URL_GET_CITIES}`;
 
 @Component({
   selector: 'srms-sign-up-modal',
@@ -46,6 +54,7 @@ const URL_SIGN_UP = `${Constant.URL_BASE}${Constant.URL_SIGN_UP}`;
     MatInputModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
+    MatSelectModule,
     ReactiveFormsModule,
     SharedModule,
     RouterModule,
@@ -63,15 +72,22 @@ export class SignUpModalComponent implements OnInit, OnDestroy {
 
   frmSignUp: FormGroup;
   creatingUser = signal(false);
+  countries: ICountry[];
+  provinces: IProvince[];
+  cities: ICity[];
 
   private frmSignUpSubscription!: Subscription;
 
   constructor(
     private renderer: Renderer2,
     private _snackBar: MatSnackBar,
-    private readonly httpService: HttpService
+    private readonly httpService: HttpService,
+    private readonly router: Router
   ) {
     this.frmSignUp = this.defineForm();
+    this.provinces = [];
+    this.countries = [];
+    this.cities = [];
   }
 
   ngOnInit(): void {
@@ -88,7 +104,10 @@ export class SignUpModalComponent implements OnInit, OnDestroy {
           this.frmSignUp.get('name')?.valid &&
           this.frmSignUp.get('email')?.valid &&
           this.frmSignUp.get('password')?.valid &&
-          this.frmSignUp.get('passwordConfirmation')?.valid
+          this.frmSignUp.get('passwordConfirmation')?.valid &&
+          this.frmSignUp.get('country')?.valid &&
+          this.frmSignUp.get('province')?.valid &&
+          this.frmSignUp.get('city')?.valid
         ) {
           this.frmSignUp.get('avatar')?.setErrors({ required: true });
           this._snackBar.open(
@@ -98,6 +117,7 @@ export class SignUpModalComponent implements OnInit, OnDestroy {
         }
       }
     );
+    this.loadCountries();
   }
 
   ngOnDestroy(): void {
@@ -225,6 +245,7 @@ export class SignUpModalComponent implements OnInit, OnDestroy {
     formData.append('name', data.name);
     formData.append('email', data.email);
     formData.append('password', data.password);
+    formData.append('city', data.city);
     formData.append('avatar', data.avatar, data.avatar.name);
 
     this.httpService.post<FormData, any>(URL_SIGN_UP, formData).subscribe({
@@ -237,14 +258,7 @@ export class SignUpModalComponent implements OnInit, OnDestroy {
             duration: 15000,
           }
         );
-        this.frmSignUp.reset({
-          name: '',
-          email: '',
-          password: '',
-          passwordConfirmation: '',
-          avatar: null,
-        });
-        this.frmSignUp = this.defineForm();
+        this.router.navigate(['/security/sign-in']);
       },
       complete: () => {
         console.log('Sign up complete');
@@ -268,9 +282,28 @@ export class SignUpModalComponent implements OnInit, OnDestroy {
         email: new FormControl('', [Validators.required, Validators.email]),
         password: new FormControl('', [Validators.required]),
         passwordConfirmation: new FormControl('', [Validators.required]),
+        country: new FormControl(null, [Validators.required]),
+        province: new FormControl(null, [Validators.required]),
+        city: new FormControl(null, [Validators.required]),
         avatar: new FormControl(null, [Validators.required]),
       },
       { validators: SignUpModalComponent.passwordsMatch }
     );
+  }
+
+  private loadCountries(): void {
+    let params = new HttpParams().append('Page', 1).append('Limit', 9999999);
+    this.httpService.get(URL_GET_COUNTRIES, params).subscribe({
+      next: (response: any) => {
+        console.log(response);
+        this.countries = response.countries;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {
+        console.log('complete');
+      },
+    });
   }
 }

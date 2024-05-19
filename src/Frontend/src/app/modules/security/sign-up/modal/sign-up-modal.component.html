@@ -2,46 +2,85 @@
 <mat-dialog-content>
   <form autocomplete="off" [formGroup]="frmSignUp" id="frmSignUp" (submit)="onSubmit()">
 
-    <!-- Full name -->
-    <mat-form-field class="width-100">
-      <mat-label>Nombre completo</mat-label>
-      <input matInput formControlName="name" placeholder="Nombre completo" required>
-      @if (frmSignUp.get('name')?.hasError('required')) {
-      <mat-error>El nombre es obligatorio</mat-error>
-      }
-    </mat-form-field>
+    <div class="block">
+      <!-- Full name -->
+      <mat-form-field>
+        <mat-label>Nombre completo</mat-label>
+        <input matInput formControlName="name" placeholder="Nombre completo" required>
+        @if (frmSignUp.get('name')?.hasError('required')) {
+        <mat-error>El nombre es obligatorio</mat-error>
+        }
+      </mat-form-field>
 
-    <!-- Email -->
-    <mat-form-field class="width-100">
-      <mat-label>Correo electrónico</mat-label>
-      <input matInput formControlName="email" placeholder="Correo electrónico" required>
-      @if (frmSignUp.get('email')?.hasError('required')) {
-      <mat-error>El correo electrónico es obligatorio</mat-error>
-      } @else if (frmSignUp.get('email')?.hasError('email')) {
-      <mat-error>El correo electrónico no es válido</mat-error>
-      }
-    </mat-form-field>
+      <!-- Email -->
+      <mat-form-field>
+        <mat-label>Correo electrónico</mat-label>
+        <input matInput formControlName="email" placeholder="Correo electrónico" required>
+        @if (frmSignUp.get('email')?.hasError('required')) {
+        <mat-error>El correo electrónico es obligatorio</mat-error>
+        } @else if (frmSignUp.get('email')?.hasError('email')) {
+        <mat-error>El correo electrónico no es válido</mat-error>
+        }
+      </mat-form-field>
+    </div>
 
-    <!-- Password -->
-    <mat-form-field class="width-100">
-      <mat-label>Contraseña</mat-label>
-      <input matInput type="password" formControlName="password" placeholder="Contraseña" required>
-      @if (frmSignUp.get('password')?.hasError('required')) {
-      <mat-error>La contraseña es obligatoria</mat-error>
-      }
-    </mat-form-field>
+    <div class="block">
+      <!-- Password -->
+      <mat-form-field>
+        <mat-label>Contraseña</mat-label>
+        <input matInput type="password" formControlName="password" placeholder="Contraseña" required>
+        @if (frmSignUp.get('password')?.hasError('required')) {
+        <mat-error>La contraseña es obligatoria</mat-error>
+        }
+      </mat-form-field>
 
-    <!-- Confirm password -->
-    <mat-form-field class="width-100">
-      <mat-label>Confirme su contraseña</mat-label>
-      <input matInput type="password" formControlName="passwordConfirmation" placeholder="Confirme su contraseña"
-        required>
-      @if (frmSignUp.get('passwordConfirmation')?.hasError('required')) {
-      <mat-error>La confirmación de la contraseña es obligatoria</mat-error>
-      } @else if (frmSignUp.hasError('passwordsDontMatch')) {
-      <mat-error>Las contraseñas no coinciden</mat-error>
-      }
-    </mat-form-field>
+      <!-- Confirm password -->
+      <mat-form-field>
+        <mat-label>Confirme su contraseña</mat-label>
+        <input matInput type="password" formControlName="passwordConfirmation" placeholder="Confirme su contraseña"
+          required>
+        @if (frmSignUp.get('passwordConfirmation')?.hasError('required')) {
+        <mat-error>La confirmación de la contraseña es obligatoria</mat-error>
+        } @else if (frmSignUp.hasError('passwordsDontMatch')) {
+        <mat-error>Las contraseñas no coinciden</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="block">
+      <!-- Country -->
+      <mat-form-field>
+        <mat-label>País</mat-label>
+        <mat-select formControlName="country" placeholder="Seleccione un país" required>
+          <mat-option *ngFor="let country of countries" [value]="country.countryId">{{ country.name }}</mat-option>
+        </mat-select>
+        @if (frmSignUp.get('country')?.hasError('required')) {
+        <mat-error>El país es obligatorio</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Province -->
+      <mat-form-field>
+        <mat-label>Departamento</mat-label>
+        <mat-select formControlName="province" placeholder="Seleccione un departamento" required>
+          <mat-option *ngFor="let province of provinces" [value]="province.countryId">{{ province.name }}</mat-option>
+        </mat-select>
+        @if (frmSignUp.get('province')?.hasError('required')) {
+        <mat-error>El departamento es obligatorio</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- City -->
+      <mat-form-field>
+        <mat-label>Ciudad</mat-label>
+        <mat-select formControlName="city" placeholder="Seleccione una ciudad" required>
+          <mat-option *ngFor="let city of cities" [value]="city.cityId">{{ city.name }}</mat-option>
+        </mat-select>
+        @if (frmSignUp.get('city')?.hasError('required')) {
+        <mat-error>La ciudad es obligatoria</mat-error>
+        }
+      </mat-form-field>
+    </div>
 
     <!-- Avatar -->
     <div>

@@ -1,11 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { SignInModalComponent } from '../modal/sign-in-modal.component';
+import { Component, OnDestroy } from '@angular/core';
 import {
   MatDialog,
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
 import { AuthService } from '../../../shared/services/auth.service';
+import { SignInModalComponent } from '../modal/sign-in-modal.component';
 
 @Component({
   selector: 'srms-sign-in',
@@ -14,24 +14,19 @@ import { AuthService } from '../../../shared/services/auth.service';
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',
 })
-export class SignInComponent implements OnInit, OnDestroy {
-  private dialogRef!: MatDialogRef<SignInModalComponent>;
+export class SignInComponent implements OnDestroy {
+  private dialogRef: MatDialogRef<SignInModalComponent>;
 
   constructor(
     private dialog: MatDialog,
     private readonly authService: AuthService
-  ) {}
-
-  ngOnInit(): void {
+  ) {
     this.dialogRef = this.dialog.open(SignInModalComponent, {
       width: '450px',
       disableClose: true,
     });
   }
-
   ngOnDestroy(): void {
-    if (this.authService.isAuthenticated()) {
-      this.dialogRef.close();
-    }
+    this.dialogRef.close();
   }
 }

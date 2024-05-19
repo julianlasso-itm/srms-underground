@@ -20,7 +20,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.dialogRef = this.dialog.open(SignUpModalComponent, {
-      width: '450px',
+      width: '900px',
       disableClose: true,
     });
   }

@@ -1,48 +1,48 @@
-﻿using System.Net.Mail;
-using System.Net;
-using AccessControl.Application.Interfaces;
+﻿using System.Net;
+using System.Net.Mail;
 using System.Web;
+using AccessControl.Application.Interfaces;
 
 namespace AccessControl.Infrastructure.Services
 {
   public class MessageService : IMessageService
   {
     private readonly IConfiguration _configuration;
-    private string? SmtpServer;
-    private int SmtpPort;
-    private string? SmtpUsername;
-    private string? SmtpPassword;
-    private string? FrontendUrl;
-    private SmtpClient _smtpClient;
+    private readonly string? _smtpServer;
+    private readonly int _smtpPort;
+    private readonly string? _smtpUsername;
+    private readonly string? _smtpPassword;
+    private readonly string? _frontendUrl;
+    private readonly SmtpClient _smtpClient;
 
     public MessageService(IConfiguration configuration)
     {
       _configuration = configuration;
       var emailSettings = _configuration.GetSection("EmailSettings");
-      SmtpServer = emailSettings.GetValue<string>("SmtpServer");
-      SmtpPort = emailSettings.GetValue<int>("SmtpPort");
-      SmtpUsername = emailSettings.GetValue<string>("SmtpUsername");
-      SmtpPassword = emailSettings.GetValue<string>("SmtpPassword");
-      FrontendUrl = emailSettings.GetValue<string>("FrontendUrl");
+      _smtpServer = emailSettings.GetValue<string>("SmtpServer");
+      _smtpPort = emailSettings.GetValue<int>("SmtpPort");
+      _smtpUsername = emailSettings.GetValue<string>("SmtpUsername");
+      _smtpPassword = emailSettings.GetValue<string>("SmtpPassword");
+      _frontendUrl = emailSettings.GetValue<string>("FrontendUrl");
 
-      _smtpClient = new SmtpClient(SmtpServer)
+      _smtpClient = new SmtpClient(_smtpServer)
       {
-        Port = SmtpPort,
-        Credentials = new NetworkCredential(SmtpUsername, SmtpPassword),
+        Port = _smtpPort,
+        Credentials = new NetworkCredential(_smtpUsername, _smtpPassword),
         EnableSsl = true
       };
     }
 
     public void SendConfirmationEmail(string name, string email, string token)
     {
-
       try
       {
         var message = new MailMessage
         {
-          From = new MailAddress(SmtpUsername!),
+          From = new MailAddress(_smtpUsername!),
           Subject = "Confirmación de inicio de sesión",
-          Body = $@"
+          Body =
+            $@"
                 <!DOCTYPE html>
                 <html lang=""es"">
                 <head>
@@ -70,7 +70,7 @@ namespace AccessControl.Infrastructure.Services
                 <body>
                     <h1>Hola {name},</h1>
                     <p>Para verificar tu sesión, haz clic en el siguiente enlace:</p>
-                    <p><a href=""{FrontendUrl}/security/verify-email/{HttpUtility.UrlEncode(token)}"">Verificar sesión</a></p>
+                    <p><a href=""{_frontendUrl}/security/verify-email/{HttpUtility.UrlEncode(token)}"">Verificar sesión</a></p>
                     <p>¡Gracias por usar nuestro servicio!</p>
                 </body>
                 </html>",
@@ -94,9 +94,10 @@ namespace AccessControl.Infrastructure.Services
       {
         var message = new MailMessage
         {
-          From = new MailAddress(SmtpUsername!),
+          From = new MailAddress(_smtpUsername!),
           Subject = "Recuperación de contraseña",
-          Body = $@"
+          Body =
+            $@"
             <!DOCTYPE html>
             <html lang=""es"">
             <head>
@@ -124,7 +125,7 @@ namespace AccessControl.Infrastructure.Services
             <body>
                 <h1>Hola {name},</h1>
                 <p>Para recuperar tu contraseña, haz clic en el siguiente enlace:</p>
-                <p><a href=""{FrontendUrl}/security/reset-password/{HttpUtility.UrlEncode(token)}"">Recuperar contraseña</a></p>
+                <p><a href=""{_frontendUrl}/security/reset-password/{HttpUtility.UrlEncode(token)}"">Recuperar contraseña</a></p>
                 <p>¡Gracias por usar nuestro servicio!</p>
             </body>
             </html>",
