@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../modules/shared/services/auth.service';
-import { ProfileComponent } from '../../modules/user/profile/profile.component';
-import { StoreService } from '../../modules/shared/services/store.service';
 import { ProfileModel } from '../../modules/user/profile/profile.dto';
 import { Constant } from '../../modules/shared/constants/constants';
 
