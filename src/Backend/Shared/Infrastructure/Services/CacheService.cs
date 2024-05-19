@@ -1,4 +1,3 @@
-using System.Text;
 using Shared.Application.Interfaces;
 using StackExchange.Redis;
 
