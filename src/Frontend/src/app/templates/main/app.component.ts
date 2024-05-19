@@ -17,13 +17,13 @@ export class AppComponent implements OnInit {
 
   constructor(private authService: AuthService, private route: Router) {
     this.isAuth = this.authService.isAuthenticated();
-    this.profile = this.authService.getTokenData();
   }
 
   ngOnInit() {
     this.authObservable = this.authService.isAuthSubject.subscribe((isAuth) => {
       this.isAuth = isAuth;
     });
+    this.profile = this.authService.getTokenData();
   }
 
   isAdmin(): boolean {
