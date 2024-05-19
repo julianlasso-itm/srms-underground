@@ -13,7 +13,6 @@ import { ProfileModel } from '../../modules/user/profile/profile.dto';
 })
 export class AppComponent implements OnInit {
   isAuth: boolean;
-  public username!: string;
   private authObservable!: Subscription;
   public profile: ProfileModel = new ProfileModel();
 
@@ -23,14 +22,11 @@ export class AppComponent implements OnInit {
   }
   
   ngOnInit() {
-    this.showUsername();
+    this.authObservable = this.authService.isAuthSubject.subscribe((isAuth) => {
+      this.isAuth = isAuth;
+    });
   }
 
-  showUsername() {
-    if(!this.isAuth) {
-      console.log(this.profile)
-    }
-  }
 }
 
 
