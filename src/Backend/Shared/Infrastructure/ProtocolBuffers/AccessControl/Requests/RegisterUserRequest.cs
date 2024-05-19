@@ -19,5 +19,8 @@ namespace Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests
 
     [DataMember(Order = 5)]
     public required string AvatarExtension { get; set; }
+
+    [DataMember(Order = 6)]
+    public required string CityId { get; set; }
   }
 }

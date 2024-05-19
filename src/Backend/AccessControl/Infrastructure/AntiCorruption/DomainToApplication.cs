@@ -60,7 +60,8 @@ namespace AccessControl.Infrastructure.AntiCorruption
     }
 
     public RegisterUserApplicationResponse ToRegisterUserApplicationResponse(
-      RegisterCredentialDomainResponse user
+      RegisterCredentialDomainResponse user,
+      string cityId
     )
     {
       return new RegisterUserApplicationResponse
@@ -72,6 +73,7 @@ namespace AccessControl.Infrastructure.AntiCorruption
         Photo = user.Photo,
         Disabled = user.Disabled,
         Roles = user.Roles,
+        CityId = cityId,
       };
     }
 

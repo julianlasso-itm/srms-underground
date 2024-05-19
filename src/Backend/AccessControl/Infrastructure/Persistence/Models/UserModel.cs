@@ -36,6 +36,10 @@ namespace AccessControl.Infrastructure.Persistence.Models
     public string Photo { get; set; }
 
     [Required]
+    [Column("usr_city_id")]
+    public Guid CityId { get; set; }
+
+    [Required]
     [Column("usr_disabled")]
     public bool Disabled { get; set; } = false;
 

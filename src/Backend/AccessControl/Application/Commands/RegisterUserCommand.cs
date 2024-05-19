@@ -10,5 +10,6 @@ namespace AccessControl.Application.Commands
     public required string Avatar { get; set; }
     public required string AvatarExtension { get; set; }
     public byte[]? AvatarBytes { get; set; }
+    public required string CityId { get; init; }
   }
 }

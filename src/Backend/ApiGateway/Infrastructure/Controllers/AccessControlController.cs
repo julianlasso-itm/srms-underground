@@ -37,6 +37,7 @@ namespace ApiGateway.Infrastructure.Controllers
         Name = request.Name,
         Email = request.Email,
         Password = request.Password,
+        CityId = request.CityId,
         Avatar = idAvatar,
         AvatarExtension = Path.GetExtension(request.Avatar.FileName),
       };

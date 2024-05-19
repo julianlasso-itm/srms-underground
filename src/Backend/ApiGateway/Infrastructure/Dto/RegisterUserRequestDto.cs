@@ -15,5 +15,8 @@ namespace ApiGateway.Infrastructure.Dto
 
     [FromForm(Name = "avatar")]
     public required IFormFile Avatar { get; set; }
+
+    [FromForm(Name = "cityId")]
+    public required string CityId { get; set; }
   }
 }

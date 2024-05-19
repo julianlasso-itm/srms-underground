@@ -51,7 +51,7 @@ namespace AccessControl.Application.UseCases
       var command = AclInputMapper.ToRegisterCredentialDomainRequest(request);
       var user = AggregateRoot.RegisterCredential(command);
       user.Photo = await StoreAvatar(user.Avatar, user.AvatarExtension);
-      var response = AclOutputMapper.ToRegisterUserApplicationResponse(user);
+      var response = AclOutputMapper.ToRegisterUserApplicationResponse(user, request.CityId);
       _ = await Persist(response);
       SendConfirmationEmail(response);
       EmitEvent(Channel, JsonSerializer.Serialize(response));

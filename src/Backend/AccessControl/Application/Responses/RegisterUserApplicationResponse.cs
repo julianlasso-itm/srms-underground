@@ -9,5 +9,6 @@ namespace AccessControl.Application.Responses
     public required string Photo { get; init; }
     public required bool Disabled { get; init; }
     public required string[] Roles { get; init; }
+    public required string CityId { get; init; }
   }
 }

@@ -19,7 +19,7 @@ namespace AccessControl.Infrastructure.Persistence
         },
         new()
         {
-          RoleId = Guid.NewGuid(),
+          RoleId = Guid.Parse("137bcadf-79bb-47f4-8622-e7381c7664ae"),
           Name = "User",
           Description = "User role",
           Disabled = false,

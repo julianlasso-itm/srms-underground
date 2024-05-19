@@ -22,6 +22,7 @@ namespace AccessControl.Infrastructure.Persistence.Repositories
         Email = entity.Email,
         Password = entity.Password,
         Photo = entity.Photo,
+        CityId = Guid.Parse(entity.CityId),
         Disabled = entity.Disabled,
         CreatedAt = DateTime.UtcNow,
         UserPerRoles = new List<UserPerRoleModel>(
