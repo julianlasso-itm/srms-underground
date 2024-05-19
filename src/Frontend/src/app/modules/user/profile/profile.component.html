@@ -2,12 +2,13 @@
 <mat-divider class="margin-divider"></mat-divider>
 <div class="profile-container">
   <div class="avatar">
-    <img src="{{profile.Photo}}" class="avatar-img" alt="avatar">
+    <img #avatar src="{{profile.Photo}}" class="avatar-img" alt="avatar">
     <div class="action">
-      <button mat-mini-fab color="accent">
+      <button mat-mini-fab color="accent" (click)="triggerFileInput()">
         <mat-icon>edit</mat-icon>
       </button>
     </div>
+    <input type="file" #fileInput hidden (change)="onFileSelect($event)" accept="image/*">
   </div>
   <div class="user-info">
     <h4 class="name">{{profile.Name}}</h4>
@@ -19,50 +20,46 @@
 <h3><mat-icon>person_edit</mat-icon> Actualización de información personal</h3>
 <mat-divider class="margin-divider"></mat-divider>
 <div class="update-personal-info">
-  <form>
+  <form [formGroup]="frmPersonalData" id="frmPersonalData" (ngSubmit)="onSubmitPersonalData()">
 
     <!-- Name -->
     <mat-form-field class="width-100">
       <mat-label>Nombre del usuario</mat-label>
-      <input matInput type="text" placeholder="Nombre de usuario">
+      <input formControlName="name" matInput type="text" placeholder="Nombre de usuario">
     </mat-form-field>
 
     <!-- Location -->
     <div class="form-location">
+
       <!-- Country -->
       <mat-form-field>
         <mat-label>Ubicación</mat-label>
-        <mat-select>
-          <mat-option value="1">Colombia</mat-option>
-          <mat-option value="2">Ecuador</mat-option>
-          <mat-option value="3">Perú</mat-option>
+        <mat-select (selectionChange)="onCountryChange($event)">
+          <mat-option *ngFor="let country of countries" [value]="country.countryId">{{country.name}}</mat-option>
         </mat-select>
       </mat-form-field>
 
       <!-- Province -->
       <mat-form-field>
         <mat-label>Provincia</mat-label>
-        <mat-select>
-          <mat-option value="1">Valle del Cauca</mat-option>
-          <mat-option value="2">Cauca</mat-option>
-          <mat-option value="3">Nariño</mat-option>
+        <mat-select (selectionChange)="onProvinceChange($event)">
+          <mat-option *ngFor="let province of provinces" [value]="province.provinceId">{{province.name}}</mat-option>
         </mat-select>
       </mat-form-field>
 
       <!-- City -->
       <mat-form-field>
         <mat-label>Ciudad</mat-label>
-        <mat-select>
-          <mat-option value="1">Cali</mat-option>
-          <mat-option value="2">Buga</mat-option>
-          <mat-option value="3">Palmira</mat-option>
+        <mat-select formControlName="cityId">
+          <mat-option *ngFor="let city of cities" [value]="city.cityId">{{city.name}}</mat-option>
         </mat-select>
       </mat-form-field>
+
     </div>
 
     <!-- Actions -->
     <div class="actions">
-      <button mat-raised-button color="primary" [disabled]="true">ACTUALIZAR DATOS</button>
+      <button mat-raised-button color="primary" [disabled]="bntSubmitPersonalDataDisabled">ACTUALIZAR DATOS</button>
     </div>
 
   </form>
@@ -75,6 +72,7 @@
 
     <!-- Update password -->
     <div class="form-location">
+
       <!-- Actual password -->
       <mat-form-field>
         <mat-label>Contraseña actual</mat-label>
@@ -97,6 +95,7 @@
         <mat-error *ngIf="frmPassword.hasError('passwordsDontMatch')">La contraseña nueva no
           coinciden</mat-error>
       </mat-form-field>
+
     </div>
 
     <!-- Actions -->
