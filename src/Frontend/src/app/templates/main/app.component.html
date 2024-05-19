@@ -7,7 +7,7 @@
       <span class="dot" [ngClass]="{'dot-authenticated': isAuth, 'dot-unauthenticated': !isAuth}" ></span>
       <div class="username-nav"><p class="profile-name">{{profile.Name}}</p></div>
       <div class="avatar-container" [matMenuTriggerFor]="profileMenu">
-        <img src="https://orderszulu2024.blob.core.windows.net/users/SRMS-c0e20910-5291-47e3-9d46-1c9096377084.webp"
+        <img src="{{profile.Photo}}	"
           class="avatar" alt="Avatar" />
       </div>
       <mat-menu #profileMenu="matMenu">
@@ -32,19 +32,19 @@
       <mat-card>
         <mat-card-content>
           <mat-list>
-            <a mat-list-item routerLink="./admin/roles" routerLinkActive="is-activated">
+            <a mat-list-item routerLink="./admin/roles" routerLinkActive="is-activated" *ngIf="isAdmin">
               <mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-user-shield"></mat-icon>
               Gestión de roles (Seguridad)
             </a>
-            <a mat-list-item routerLink="./profiles/countries" routerLinkActive="is-activated">
+            <a mat-list-item routerLink="./profiles/countries" routerLinkActive="is-activated" *ngIf="isAdmin">
               <mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-flag-usa"></mat-icon>
               Gestión de países
             </a>
-            <a mat-list-item routerLink="./profiles/provinces" routerLinkActive="is-activated">
+            <a mat-list-item routerLink="./profiles/provinces" routerLinkActive="is-activated" *ngIf="isAdmin">
               <mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-signs-post"></mat-icon>
               Gestión de departamentos
             </a>
-            <a mat-list-item routerLink="./profiles/cities" routerLinkActive="is-activated">
+            <a mat-list-item routerLink="./profiles/cities" routerLinkActive="is-activated" *ngIf="isAdmin">
               <mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-location-crosshairs"></mat-icon>
               Gestión de ciudades
             </a>
