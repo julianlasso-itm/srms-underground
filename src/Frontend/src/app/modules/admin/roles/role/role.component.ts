@@ -21,6 +21,9 @@ import { SharedModule } from '../../../shared/shared.module';
 import { FormType } from '../role-dialog/dialog.type';
 import { RoleDialogComponent } from '../role-dialog/role-dialog.component';
 import { IRole, IRoles } from './role.interface';
+import { StoreService } from '../../../shared/services/store.service';
+import { AuthService } from '../../../shared/services/auth.service';
+import { Router } from '@angular/router';
 
 const URL_GET_ROLES = `${Constant.URL_BASE}${Constant.URL_GET_ROLES_SECURITY}`;
 const URL_ROLE = `${Constant.URL_BASE}${Constant.URL_ROLE_SECURITY}`;

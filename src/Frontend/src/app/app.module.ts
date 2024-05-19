@@ -11,10 +11,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { AppRoutingModule } from './app.routes';
+import { AppComponent } from './templates/main/app.component';
+import { StoreService } from './modules/shared/services/store.service';
 import { AuthService } from './modules/shared/services/auth.service';
 import { HttpService } from './modules/shared/services/http.service';
-import { StoreService } from './modules/shared/services/store.service';
-import { AppComponent } from './templates/main/app.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,7 +33,7 @@ import { AppComponent } from './templates/main/app.component';
     RouterModule,
     RouterOutlet,
   ],
-  providers: [AuthService, StoreService, HttpService],
+  providers: [StoreService, AuthService, HttpService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -8,7 +8,7 @@ import { AuthService } from '../services/auth.service';
 import { inject } from '@angular/core';
 import { StoreService } from '../services/store.service';
 
-export const authGuard: CanActivateFn = (
+export const authInverterGuard: CanActivateFn = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ) => {
@@ -22,10 +22,13 @@ export const authGuard: CanActivateFn = (
   }
 
   const isAuth = authService.isAuthenticated();
+
   if (isAuth) {
-    return true;
-  } else {
-    router.navigate(['./security/sign-in']);
+    console.log('authService.isAuthenticated()');
+    router.navigate(['./home']);
     return false;
   }
+
+  console.log('!authService.isAuthenticated()');
+  return true;
 };

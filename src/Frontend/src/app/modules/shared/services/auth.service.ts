@@ -1,8 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { Subject } from 'rxjs';
-import { HttpService } from './http.service';
-import { StoreService } from './store.service';
+import { Subject, lastValueFrom } from 'rxjs';
 import { Constant } from '../constants/constants';
+import { HttpService } from './http.service';
 
 const URL_VERIFY_TOKEN = `${Constant.URL_BASE}${Constant.URL_VERIFY_TOKEN}`;
 
@@ -10,23 +9,17 @@ const URL_VERIFY_TOKEN = `${Constant.URL_BASE}${Constant.URL_VERIFY_TOKEN}`;
 export class AuthService {
   private changeAuthSubject = new Subject<boolean>();
   public isAuthSubject = this.changeAuthSubject.asObservable();
-  private isAuth = false;
-
-  private readonly storeService = inject(StoreService);
+  private isAuth!: boolean;
   private readonly httpService = inject(HttpService);
 
-  constructor() {
+  constructor() {}
 
-    const token = this.storeService.getToken();
-    if (token !== null && token.length > 0) {
-      this.httpService.post(URL_VERIFY_TOKEN, { token }).subscribe({
-        next: (response) => {
-          this.ChangeIsAuth();
-        },
-        error: (error) => {
-          this.ChangeIsNotAuth();
-        },
-      });
+  async verifyToken(token: string) {
+    try {
+      await lastValueFrom(this.httpService.post(URL_VERIFY_TOKEN, { token }));
+      this.ChangeIsAuth();
+    } catch (error) {
+      this.ChangeIsNotAuth();
     }
   }
 

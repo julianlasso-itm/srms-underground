@@ -3,10 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { authGuard } from './modules/shared/guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'security/sign-in', pathMatch: 'full' },
   {
     path: 'admin',
-    canActivateChild: [authGuard],
+    // canActivateChild: [authGuard],
     loadChildren: () =>
       import('./modules/admin/admin.module').then((m) => m.AdminModule),
   },
@@ -37,6 +36,12 @@ const routes: Routes = [
     loadComponent: () =>
       import('./modules/home/home.component').then((m) => m.HomeComponent),
   },
+  // {
+  //   path: '',
+  //   canActivate: [authGuard],
+  //   loadComponent: () =>
+  //     import('./modules/home/home.component').then((m) => m.HomeComponent),
+  // },
 ];
 
 @NgModule({
