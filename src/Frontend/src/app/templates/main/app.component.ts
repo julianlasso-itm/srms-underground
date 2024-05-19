@@ -5,6 +5,7 @@ import { AuthService } from '../../modules/shared/services/auth.service';
 import { ProfileModel } from '../../modules/user/profile/profile.dto';
 import { Constant } from '../../modules/shared/constants/constants';
 import { StoreService } from '../../modules/shared/services/store.service';
+import { AvatarService } from '../../modules/shared/services/avatar.service';
 
 @Component({
   selector: 'srms-root',
@@ -13,15 +14,20 @@ import { StoreService } from '../../modules/shared/services/store.service';
 })
 export class AppComponent implements OnInit {
   isAuth: boolean;
+  avatar: string;
   private authObservable!: Subscription;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private avatarService: AvatarService) {
     this.isAuth = this.authService.isAuthenticated();
+    this.avatar = this.avatarService.get();
   }
 
   ngOnInit() {
     this.authObservable = this.authService.isAuthSubject.subscribe((isAuth) => {
       this.isAuth = isAuth;
+    });
+    this.avatarService.avatarSubject.subscribe((avatar) => {
+      this.avatar = avatar;
     });
   }
 
