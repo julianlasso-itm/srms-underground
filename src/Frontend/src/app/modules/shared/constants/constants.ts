@@ -20,4 +20,5 @@ export enum Constant {
   URL_ACTIVATE_ACCOUNT = '/api/access-control/activate-account',
   URL_PASSWORD_RECOVERY = '/api/access-control/password-recovery',
   ADMIN_ROLE = "Admin",
+  URL_RESET_PASSWORD = '/api/access-control/reset-password',
 }

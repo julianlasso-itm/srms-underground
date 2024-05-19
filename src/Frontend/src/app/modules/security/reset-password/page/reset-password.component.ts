@@ -5,6 +5,7 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { ResetPasswordModalComponent } from '../modal/reset-password-modal.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'srms-reset-password',
@@ -15,13 +16,20 @@ import { ResetPasswordModalComponent } from '../modal/reset-password-modal.compo
 })
 export class ResetPasswordComponent implements OnInit, OnDestroy {
   private dialogRef!: MatDialogRef<ResetPasswordModalComponent>;
+  private token: string;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(
+    private dialog: MatDialog,
+    private readonly activatedRoute: ActivatedRoute
+  ) {
+    this.token = this.activatedRoute.snapshot.params['token'];
+  }
 
   ngOnInit(): void {
     this.dialogRef = this.dialog.open(ResetPasswordModalComponent, {
       width: '450px',
       disableClose: true,
+      data: { token: this.token },
     });
   }
 

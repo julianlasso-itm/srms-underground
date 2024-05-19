@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
     this.profile = this.authService.getTokenData();
     this.isAdmin = this.validateAdmin();
   }
-  
+
   ngOnInit() {
     this.authObservable = this.authService.isAuthSubject.subscribe((isAuth) => {
       this.isAuth = isAuth;
@@ -34,6 +34,3 @@ export class AppComponent implements OnInit {
     return this.profile.Roles.includes(Constant.ADMIN_ROLE);
   }
 }
-
-
-
