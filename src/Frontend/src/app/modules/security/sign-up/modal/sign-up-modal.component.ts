@@ -24,7 +24,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSelectModule } from '@angular/material/select';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -107,7 +107,7 @@ export class SignUpModalComponent implements OnInit, OnDestroy {
           this.frmSignUp.get('passwordConfirmation')?.valid &&
           this.frmSignUp.get('country')?.valid &&
           this.frmSignUp.get('province')?.valid &&
-          this.frmSignUp.get('city')?.valid
+          this.frmSignUp.get('cityId')?.valid
         ) {
           this.frmSignUp.get('avatar')?.setErrors({ required: true });
           this._snackBar.open(
@@ -245,7 +245,7 @@ export class SignUpModalComponent implements OnInit, OnDestroy {
     formData.append('name', data.name);
     formData.append('email', data.email);
     formData.append('password', data.password);
-    formData.append('city', data.city);
+    formData.append('cityId', data.cityId);
     formData.append('avatar', data.avatar, data.avatar.name);
 
     this.httpService.post<FormData, any>(URL_SIGN_UP, formData).subscribe({
@@ -275,6 +275,24 @@ export class SignUpModalComponent implements OnInit, OnDestroy {
     });
   }
 
+  onCountryChange(event: MatSelectChange): void {
+    if (event.value === undefined || event.value === '') {
+      this.provinces = [];
+    } else {
+      this.loadProvinces(event.value);
+    }
+    this.frmSignUp.get('province')?.setValue('');
+  }
+
+  onProvinceChange(event: MatSelectChange): void {
+    if (event.value === undefined || event.value === '') {
+      this.cities = [];
+    } else {
+      this.loadCities(event.value);
+    }
+    this.frmSignUp.get('cityId')?.setValue('');
+  }
+
   private defineForm(): FormGroup {
     return new FormGroup(
       {
@@ -284,7 +302,7 @@ export class SignUpModalComponent implements OnInit, OnDestroy {
         passwordConfirmation: new FormControl('', [Validators.required]),
         country: new FormControl(null, [Validators.required]),
         province: new FormControl(null, [Validators.required]),
-        city: new FormControl(null, [Validators.required]),
+        cityId: new FormControl(null, [Validators.required]),
         avatar: new FormControl(null, [Validators.required]),
       },
       { validators: SignUpModalComponent.passwordsMatch }
@@ -292,11 +310,56 @@ export class SignUpModalComponent implements OnInit, OnDestroy {
   }
 
   private loadCountries(): void {
-    let params = new HttpParams().append('Page', 1).append('Limit', 9999999);
+    const params = new HttpParams()
+      .append('Page', 1)
+      .append('Limit', 9999999)
+      .append('Sort', 'Name');
     this.httpService.get(URL_GET_COUNTRIES, params).subscribe({
       next: (response: any) => {
         console.log(response);
         this.countries = response.countries;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {
+        console.log('complete');
+      },
+    });
+  }
+
+  private loadProvinces(countryId: string): void {
+    const params = new HttpParams()
+      .append('Page', 1)
+      .append('Limit', 9999999)
+      .append('Filter', countryId)
+      .append('FilterBy', 'CountryId')
+      .append('Sort', 'Name');
+    this.httpService.get(URL_GET_PROVINCES, params).subscribe({
+      next: (response: any) => {
+        console.log(response);
+        this.provinces = response.provinces;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {
+        console.log('complete');
+      },
+    });
+  }
+
+  private loadCities(provinceId: string): void {
+    const params = new HttpParams()
+      .append('Page', 1)
+      .append('Limit', 9999999)
+      .append('Filter', provinceId)
+      .append('FilterBy', 'ProvinceId')
+      .append('Sort', 'Name');
+    this.httpService.get(URL_GET_CITIES, params).subscribe({
+      next: (response: any) => {
+        console.log(response);
+        this.cities = response.cities;
       },
       error: (error) => {
         console.error(error);

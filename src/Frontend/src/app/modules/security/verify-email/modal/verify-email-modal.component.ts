@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { HttpService } from '../../../shared/services/http.service';
@@ -20,4 +20,6 @@ import { HttpService } from '../../../shared/services/http.service';
   templateUrl: './verify-email-modal.component.html',
   styleUrl: './verify-email-modal.component.scss',
 })
-export class VerifyEmailModalComponent {}
+export class VerifyEmailModalComponent {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { susses: boolean }) {}
+}

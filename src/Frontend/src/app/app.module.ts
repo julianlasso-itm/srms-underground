@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
@@ -11,10 +11,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { AppRoutingModule } from './app.routes';
-import { AppComponent } from './templates/main/app.component';
-import { StoreService } from './modules/shared/services/store.service';
+import { AuthInterceptorService } from './modules/shared/services/auth-interceptor.service';
 import { AuthService } from './modules/shared/services/auth.service';
 import { HttpService } from './modules/shared/services/http.service';
+import { StoreService } from './modules/shared/services/store.service';
+import { AppComponent } from './templates/main/app.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,7 +34,16 @@ import { HttpService } from './modules/shared/services/http.service';
     RouterModule,
     RouterOutlet,
   ],
-  providers: [StoreService, AuthService, HttpService],
+  providers: [
+    StoreService,
+    AuthService,
+    HttpService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -32,7 +32,7 @@ namespace AccessControl.Application.UseCases
 
     public override async Task<VerifyTokenApplicationResponse> Handle(VerifyTokenCommand request)
     {
-      var token = AclInputMapper.ToVerifyTokenDomainRequest(request);
+    var token = AclInputMapper.ToVerifyTokenDomainRequest(request);
       var response = AggregateRoot.VerifyToken(token);
       var userId = await _userRepository.GetIdByEmail(response.Email);
       return AclOutputMapper.ToVerifyTokenApplicationResponse(response, userId, response.Photo);

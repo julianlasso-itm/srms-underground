@@ -1,9 +1,18 @@
 <h2 mat-dialog-title class="title">
+  @if (data.susses) {
   <mat-icon class="green">check_circle</mat-icon>
   Cuenta verificada
+  } @else {
+  <mat-icon class="red">error</mat-icon>
+  Error al verificar la cuenta
+  }
 </h2>
 <mat-dialog-content>
+  @if (data.susses) {
   <p>La cuenta ha sido verificada correctamente. Para continuar, identifícate con tu cuenta.</p>
+  } @else {
+  <p>Ha ocurrido un error al verificar la cuenta. Por favor, inténtalo de nuevo.</p>
+  }
 </mat-dialog-content>
 <mat-dialog-actions>
   <div class="buttons">

@@ -51,7 +51,8 @@
       <!-- Country -->
       <mat-form-field>
         <mat-label>País</mat-label>
-        <mat-select formControlName="country" placeholder="Seleccione un país" required>
+        <mat-select formControlName="country" placeholder="Seleccione un país" required
+          (selectionChange)="onCountryChange($event)">
           <mat-option *ngFor="let country of countries" [value]="country.countryId">{{ country.name }}</mat-option>
         </mat-select>
         @if (frmSignUp.get('country')?.hasError('required')) {
@@ -62,8 +63,9 @@
       <!-- Province -->
       <mat-form-field>
         <mat-label>Departamento</mat-label>
-        <mat-select formControlName="province" placeholder="Seleccione un departamento" required>
-          <mat-option *ngFor="let province of provinces" [value]="province.countryId">{{ province.name }}</mat-option>
+        <mat-select formControlName="province" placeholder="Seleccione un departamento" required
+          (selectionChange)="onProvinceChange($event)">
+          <mat-option *ngFor="let province of provinces" [value]="province.provinceId">{{ province.name }}</mat-option>
         </mat-select>
         @if (frmSignUp.get('province')?.hasError('required')) {
         <mat-error>El departamento es obligatorio</mat-error>
@@ -73,7 +75,7 @@
       <!-- City -->
       <mat-form-field>
         <mat-label>Ciudad</mat-label>
-        <mat-select formControlName="city" placeholder="Seleccione una ciudad" required>
+        <mat-select formControlName="cityId" placeholder="Seleccione una ciudad" required>
           <mat-option *ngFor="let city of cities" [value]="city.cityId">{{ city.name }}</mat-option>
         </mat-select>
         @if (frmSignUp.get('city')?.hasError('required')) {
