@@ -13,10 +13,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { SharedModule } from '../../../shared/shared.module';
-import { RouterModule } from '@angular/router';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Router, RouterModule } from '@angular/router';
+import { Constant } from '../../../shared/constants/constants';
 import { HttpService } from '../../../shared/services/http.service';
+import { SharedModule } from '../../../shared/shared.module';
+
+const URL_PASSWORD_RECOVERY = `${Constant.URL_BASE}${Constant.URL_PASSWORD_RECOVERY}`;
 
 @Component({
   selector: 'srms-forgot-password-modal',
@@ -42,12 +45,32 @@ import { HttpService } from '../../../shared/services/http.service';
 export class ForgotPasswordModalComponent {
   frmForgotPassword: FormGroup;
 
-  constructor(private readonly httpService: HttpService) {
+  constructor(
+    private readonly httpService: HttpService,
+    private readonly snackBar: MatSnackBar,
+    private readonly router: Router
+  ) {
     this.frmForgotPassword = this.defineForm();
   }
 
   onSubmit(): void {
-    console.log(this.frmForgotPassword.value);
+    this.httpService
+      .post(URL_PASSWORD_RECOVERY, this.frmForgotPassword.value)
+      .subscribe({
+        next: () => {
+          this.snackBar.open(
+            'Un email de recuperación de contraseña ha sido enviado a su correo electrónico.',
+            'Cerrar',
+            {
+              duration: 5000,
+            }
+          );
+          this.router.navigate(['./security/sign-in']);
+        },
+        error: (error) => {
+          console.error('Error sending password recovery email', error);
+        },
+      });
   }
 
   private defineForm(): FormGroup {
