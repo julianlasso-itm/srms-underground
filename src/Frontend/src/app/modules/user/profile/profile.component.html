@@ -2,8 +2,7 @@
 <mat-divider class="margin-divider"></mat-divider>
 <div class="profile-container">
   <div class="avatar">
-    <img src="{{profile.Photo}}"
-      class="avatar-img" alt="avatar">
+    <img src="{{profile.Photo}}" class="avatar-img" alt="avatar">
     <div class="action">
       <button mat-mini-fab color="accent">
         <mat-icon>edit</mat-icon>
@@ -72,38 +71,40 @@
 <h3><mat-icon>key</mat-icon> Actualizar contraseña</h3>
 <mat-divider class="margin-divider"></mat-divider>
 <div class="update-personal-info">
-  <form>
-
-    <!-- Name -->
-    <!-- <mat-form-field class="width-100">
-      <mat-label>Nombre del usuario</mat-label>
-      <input matInput type="text" placeholder="Nombre de usuario">
-    </mat-form-field> -->
+  <form [formGroup]="frmPassword" id="frmPassword" (ngSubmit)="onSubmitChangePassword()">
 
     <!-- Update password -->
     <div class="form-location">
       <!-- Actual password -->
       <mat-form-field>
         <mat-label>Contraseña actual</mat-label>
-        <input matInput type="password" placeholder="Contraseña actual">
+        <input formControlName="password" matInput type="password" placeholder="Contraseña actual">
+        <mat-error *ngIf="frmPassword.get('password')?.hasError('required')">Este campo es requerido</mat-error>
       </mat-form-field>
 
       <!-- New password -->
       <mat-form-field>
         <mat-label>Nueva contraseña</mat-label>
-        <input matInput type="password" placeholder="Nueva contraseña">
+        <input formControlName="newPassword" matInput type="password" placeholder="Nueva contraseña">
+        <mat-error *ngIf="frmPassword.get('newPassword')?.hasError('required')">Este campo es requerido</mat-error>
       </mat-form-field>
 
-      <!-- City -->
+      <!-- Confirm password -->
       <mat-form-field>
         <mat-label>Confirmación de contraseña</mat-label>
-        <input matInput type="password" placeholder="Confirme su nueva contraseña">
+        <input formControlName="confirmPassword" matInput type="password" placeholder="Confirme su nueva contraseña">
+        <mat-error *ngIf="frmPassword.get('confirmPassword')?.hasError('required')">Este campo es requerido</mat-error>
+        <mat-error *ngIf="frmPassword.hasError('passwordsDontMatch')">La contraseña nueva no
+          coinciden</mat-error>
       </mat-form-field>
     </div>
 
     <!-- Actions -->
     <div class="actions">
-      <button mat-raised-button color="primary" [disabled]="true">ACTUALIZAR CONTRASEÑA</button>
+      <button #btnResetPassword id="btnResetPassword" type="reset" form="frmPassword" mat-raised-button
+        class="hide">REINICIAR</button>
+      <button type="submit" form="frmPassword" mat-raised-button color="primary"
+        [disabled]="frmPassword.invalid">ACTUALIZAR CONTRASEÑA</button>
     </div>
 
   </form>
