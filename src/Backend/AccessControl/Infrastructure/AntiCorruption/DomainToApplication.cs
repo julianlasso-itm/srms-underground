@@ -126,5 +126,10 @@ namespace AccessControl.Infrastructure.AntiCorruption
         Disabled = response.Disabled,
       };
     }
+
+    public ResetPasswordApplicationResponse ToResetPasswordApplicationResponse()
+    {
+      return new ResetPasswordApplicationResponse { Success = true };
+    }
   }
 }

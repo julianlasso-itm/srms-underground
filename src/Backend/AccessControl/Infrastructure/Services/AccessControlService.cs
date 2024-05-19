@@ -1,5 +1,6 @@
 using AccessControl.Infrastructure.AntiCorruption.Interfaces;
 using AccessControl.Infrastructure.Services.Helpers;
+using Infrastructure.ProtocolBuffers.AccessControl.Responses;
 using ProtoBuf.Grpc;
 using Shared.Application.Interfaces;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl;
@@ -135,6 +136,16 @@ namespace AccessControl.Infrastructure.Services
       UpdateUserHelper.SetApplication(_applicationService.GetApplication());
       UpdateUserHelper.SetAntiCorruptionLayer(_antiCorruptionLayerService);
       return UpdateUserHelper.UpdateUserAsync(request);
+    }
+
+    public Task<ResetPasswordAccessControlResponse> ResetPasswordAsync(
+      ResetPasswordAccessControlRequest request,
+      CallContext context = default
+    )
+    {
+      ResetPasswordHelper.SetApplication(_applicationService.GetApplication());
+      ResetPasswordHelper.SetAntiCorruptionLayer(_antiCorruptionLayerService);
+      return ResetPasswordHelper.ResetPasswordAsync(request);
     }
   }
 }

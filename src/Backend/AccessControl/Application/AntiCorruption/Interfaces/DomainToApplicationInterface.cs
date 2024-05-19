@@ -37,5 +37,6 @@ namespace AccessControl.Application.AntiCorruption.Interfaces
     public UpdateUserApplicationResponse ToUpdateUserApplicationResponse(
       UpdateCredentialDomainResponse response
     );
+    public ResetPasswordApplicationResponse ToResetPasswordApplicationResponse();
   }
 }

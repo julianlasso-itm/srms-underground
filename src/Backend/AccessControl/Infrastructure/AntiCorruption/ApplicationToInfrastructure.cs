@@ -1,6 +1,7 @@
 using AccessControl.Application.Responses;
 using AccessControl.Infrastructure.AntiCorruption.Interfaces;
 using AccessControl.Infrastructure.Persistence.Models;
+using Infrastructure.ProtocolBuffers.AccessControl.Responses;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses;
 
 namespace AccessControl.Infrastructure.AntiCorruption
@@ -122,6 +123,13 @@ namespace AccessControl.Infrastructure.AntiCorruption
         Photo = data.Photo,
         Disabled = data.Disabled,
       };
+    }
+
+    public ResetPasswordAccessControlResponse ToResetPasswordResponse(
+      ResetPasswordApplicationResponse data
+    )
+    {
+      return new ResetPasswordAccessControlResponse { Success = data.Success };
     }
   }
 }

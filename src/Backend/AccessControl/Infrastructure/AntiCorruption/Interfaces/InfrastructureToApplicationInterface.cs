@@ -20,5 +20,6 @@ namespace AccessControl.Infrastructure.AntiCorruption.Interfaces
       PasswordRecoveryAccessControlRequest request
     );
     public UpdateUserCommand ToUpdateUserCommand(UpdateUserAccessControlRequest request);
+    public ResetPasswordCommand ToResetPasswordCommand(ResetPasswordAccessControlRequest request);
   }
 }

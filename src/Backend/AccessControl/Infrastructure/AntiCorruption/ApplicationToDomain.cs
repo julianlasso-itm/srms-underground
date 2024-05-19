@@ -137,5 +137,10 @@ namespace AccessControl.Infrastructure.AntiCorruption
         Disabled = request.Disabled,
       };
     }
+
+    public ResetPasswordDomainRequest ToResetPasswordDomainRequest(ResetPasswordCommand request)
+    {
+      return new ResetPasswordDomainRequest { Password = request.Password };
+    }
   }
 }

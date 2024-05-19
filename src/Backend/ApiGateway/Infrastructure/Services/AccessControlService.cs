@@ -1,4 +1,5 @@
 using ApiGateway.Infrastructure.Services.Base;
+using Infrastructure.ProtocolBuffers.AccessControl.Responses;
 using ProtoBuf.Grpc;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
@@ -102,6 +103,14 @@ namespace ApiGateway.Infrastructure.Services
     )
     {
       return Client.UpdateUserAsync(request, context);
+    }
+
+    public Task<ResetPasswordAccessControlResponse> ResetPasswordAsync(
+      ResetPasswordAccessControlRequest request,
+      CallContext context = default
+    )
+    {
+      return Client.ResetPasswordAsync(request, context);
     }
   }
 }

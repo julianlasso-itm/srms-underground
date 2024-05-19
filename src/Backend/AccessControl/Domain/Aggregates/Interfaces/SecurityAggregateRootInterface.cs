@@ -30,5 +30,6 @@ namespace AccessControl.Domain.Aggregates.Interfaces
     public UpdateCredentialDomainResponse UpdateCredential(
       UpdateCredentialDomainRequest updateData
     );
+    public ResetPasswordDomainResponse ResetPassword(ResetPasswordDomainRequest resetData);
   }
 }
