@@ -8,7 +8,7 @@ import { AuthService } from '../services/auth.service';
 import { inject } from '@angular/core';
 import { StoreService } from '../services/store.service';
 
-export const authGuard: CanActivateFn = (
+export const authGuard: CanActivateFn = async (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ) => {
@@ -18,7 +18,7 @@ export const authGuard: CanActivateFn = (
 
   const token = storeService.getToken();
   if (token !== '' && token.length > 0) {
-    authService.verifyToken(token);
+    await authService.verifyToken(token);
   }
 
   const isAuth = authService.isAuthenticated();

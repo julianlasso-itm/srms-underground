@@ -19,12 +19,6 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.authObservable = this.authService.isAuthSubject.subscribe((isAuth) => {
       this.isAuth = isAuth;
-      console.log('isAuth', isAuth);
-      if (isAuth === false) {
-        this.route.navigate(['./security/sign-in']);
-      } else {
-        this.route.navigate(['./home']);
-      }
     });
   }
 }

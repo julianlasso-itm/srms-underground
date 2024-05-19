@@ -14,7 +14,7 @@ export class StoreService {
     try {
       return JSON.parse(localStorage.getItem(key) ?? '');
     } catch {
-      return localStorage.getItem(key) as Type ?? '' as Type;
+      return (localStorage.getItem(key) as Type) ?? ('' as Type);
     }
   }
 
@@ -32,5 +32,9 @@ export class StoreService {
 
   setToken(token: string): void {
     this.set('token', token);
+  }
+
+  clearToken(): void {
+    this.remove('token');
   }
 }

@@ -36,4 +36,8 @@ export class AuthService {
     this.isAuth = false;
     this.changeAuthSubject.next(this.isAuth);
   }
+
+  signOut() {
+    this.ChangeIsNotAuth();
+  }
 }

@@ -8,7 +8,7 @@ import { AuthService } from '../services/auth.service';
 import { inject } from '@angular/core';
 import { StoreService } from '../services/store.service';
 
-export const authInverterGuard: CanActivateFn = (
+export const authInverterGuard: CanActivateFn = async (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ) => {
@@ -18,17 +18,16 @@ export const authInverterGuard: CanActivateFn = (
 
   const token = storeService.getToken();
   if (token !== '' && token.length > 0) {
-    authService.verifyToken(token);
+    await authService.verifyToken(token);
   }
 
   const isAuth = authService.isAuthenticated();
-
   if (isAuth) {
     console.log('authService.isAuthenticated()');
     router.navigate(['./home']);
     return false;
+  } else {
+    console.log('!authService.isAuthenticated()');
+    return true;
   }
-
-  console.log('!authService.isAuthenticated()');
-  return true;
 };

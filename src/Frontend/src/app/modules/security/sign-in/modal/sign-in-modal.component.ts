@@ -14,7 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Constant } from '../../../shared/constants/constants';
 import { HttpService } from '../../../shared/services/http.service';
 import { StoreService } from '../../../shared/services/store.service';
@@ -53,6 +53,7 @@ export class SignInModalComponent {
     private readonly _snackBar: MatSnackBar,
     private readonly _storeService: StoreService,
     private readonly _authService: AuthService,
+    private readonly _router: Router
   ) {
     this.frmSignIn = this.defineForm();
   }
@@ -64,6 +65,7 @@ export class SignInModalComponent {
         next: (response) => {
           this._storeService.setToken(response.token);
           this._authService.ChangeIsAuth();
+          this._router.navigate(['./']);
         },
         error: (error) => {
           if (error.status === 401) {
