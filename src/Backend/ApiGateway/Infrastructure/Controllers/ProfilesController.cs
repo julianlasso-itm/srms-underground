@@ -1,5 +1,6 @@
 using ApiGateway.Infrastructure.Controllers.Base;
 using ApiGateway.Infrastructure.Services;
+using Infrastructure.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Application.Interfaces;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
@@ -119,6 +120,7 @@ namespace ApiGateway.Infrastructure.Controllers
       return await HandleAsync(async () => Ok(await _profilesService.GetCitiesAsync(request)));
     }
 
+    [Permissions]
     [HttpPost("role")]
     public async Task<IActionResult> RegisterRoleAsync(
       [FromBody] RegisterRoleProfilesRequest request
@@ -127,6 +129,7 @@ namespace ApiGateway.Infrastructure.Controllers
       return await HandleAsync(async () => Ok(await _profilesService.RegisterRoleAsync(request)));
     }
 
+    [Permissions]
     [HttpPut("role/{id}")]
     public async Task<IActionResult> UpdateRoleAsync(
       string id,
@@ -137,6 +140,7 @@ namespace ApiGateway.Infrastructure.Controllers
       return await HandleAsync(async () => Ok(await _profilesService.UpdateRoleAsync(request)));
     }
 
+    [Permissions]
     [HttpDelete("role/{id}")]
     public async Task<IActionResult> DeleteRoleAsync(string id)
     {
@@ -144,12 +148,14 @@ namespace ApiGateway.Infrastructure.Controllers
       return await HandleAsync(async () => Ok(await _profilesService.DeleteRoleAsync(request)));
     }
 
+    [Permissions]
     [HttpGet("roles")]
     public async Task<IActionResult> GetRolesAsync([FromQuery] GetRolesProfilesRequest request)
     {
       return await HandleAsync(async () => Ok(await _profilesService.GetRolesAsync(request)));
     }
 
+    [Permissions]
     [HttpPost("skill")]
     public async Task<IActionResult> RegisterSkillAsync(
       [FromBody] RegisterSkillProfilesRequest request
@@ -158,6 +164,7 @@ namespace ApiGateway.Infrastructure.Controllers
       return await HandleAsync(async () => Ok(await _profilesService.RegisterSkillAsync(request)));
     }
 
+    [Permissions]
     [HttpPut("skill/{id}")]
     public async Task<IActionResult> UpdateSkillAsync(
       string id,
@@ -170,6 +177,7 @@ namespace ApiGateway.Infrastructure.Controllers
       );
     }
 
+    [Permissions]
     [HttpDelete("skill/{id}")]
     public async Task<IActionResult> DeleteSkillAsync(string id)
     {
@@ -177,12 +185,14 @@ namespace ApiGateway.Infrastructure.Controllers
       return await HandleAsync(async () => Ok(await _profilesService.DeleteSkillAsync(request)));
     }
 
+    [Permissions]
     [HttpGet("skills")]
     public async Task<IActionResult> GetSkillsAsync([FromQuery] GetSkillsProfilesRequest request)
     {
       return await HandleAsync(async () => Ok(await _profilesService.GetSkillAsync(request)));
     }
 
+    [Permissions]
     [HttpPost("professional")]
     public async Task<IActionResult> RegisterProfessionalAsync(
       [FromBody] RegisterProfessionalProfilesRequest request
@@ -193,6 +203,7 @@ namespace ApiGateway.Infrastructure.Controllers
       );
     }
 
+    [Permissions]
     [HttpPut("professional/{id}")]
     public async Task<IActionResult> UpdateProfessionalAsync(
       string id,
@@ -205,6 +216,7 @@ namespace ApiGateway.Infrastructure.Controllers
       );
     }
 
+    [Permissions]
     [HttpDelete("professional/{id}")]
     public async Task<IActionResult> DeleteProfessionalAsync(string id)
     {
@@ -214,6 +226,7 @@ namespace ApiGateway.Infrastructure.Controllers
       );
     }
 
+    [Permissions]
     [HttpGet("professionals")]
     public async Task<IActionResult> GetProfessionalsAsync(
       [FromQuery] GetProfessionalsProfilesRequest request

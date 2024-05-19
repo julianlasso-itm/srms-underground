@@ -12,11 +12,11 @@
                 }"
             ></span>
             <div class="username-nav">
-                <p class="profile-name">{{ getProfile().Name }}</p>
+                <p class="profile-name">{{ name }}</p>
             </div>
             <div class="avatar-container" [matMenuTriggerFor]="profileMenu">
                 <img
-                    src="{{ getProfile().Photo }}	"
+                    src="{{ avatar }}"
                     class="avatar"
                     alt="Avatar"
                 />
@@ -148,6 +148,6 @@
     <footer class="footer"></footer>
 </div>
 } @else {
-<img src="assets/images/fondo.avif" class="background-image" />
+<img src="assets/images/fondo.avif" class="background-image" alt="" />
 <router-outlet />
 }

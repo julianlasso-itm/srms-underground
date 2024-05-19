@@ -5,6 +5,7 @@ import { Constant } from '../constants/constants';
 import { AvatarService } from './avatar.service';
 import { HttpService } from './http.service';
 import { StoreService } from './store.service';
+import { NameService } from './name.service';
 
 const URL_VERIFY_TOKEN = `${Constant.URL_BASE}${Constant.URL_VERIFY_TOKEN}`;
 
@@ -16,6 +17,7 @@ export class AuthService {
     private profile!: ProfileModel;
     private readonly httpService = inject(HttpService);
     private readonly avatarService = inject(AvatarService);
+    private readonly nameService = inject(NameService);
 
     constructor(private storeService: StoreService) {}
 
@@ -34,7 +36,7 @@ export class AuthService {
         return this.isAuth;
     }
 
-    getUserAutenticated() {
+    getUserAuthenticated() {
         return this.profile;
     }
 
@@ -42,7 +44,20 @@ export class AuthService {
         this.isAuth = true;
         this.profile = this.getTokenData();
         this.changeAuthSubject.next(this.isAuth);
-        this.avatarService.set(this.profile.Photo);
+
+        const avatar = localStorage.getItem('avatar');
+        if (avatar == null) {
+          this.avatarService.set(this.profile.Photo);
+        } else {
+          this.avatarService.set(avatar);
+        }
+
+        const name = localStorage.getItem('name');
+        if (name == null) {
+          this.nameService.set(this.profile.Name);
+        } else {
+          this.nameService.set(name);
+        }
     }
 
     ChangeIsNotAuth() {

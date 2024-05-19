@@ -33,6 +33,7 @@ import { AuthService } from '../../shared/services/auth.service';
 import { AvatarService } from '../../shared/services/avatar.service';
 import { HttpService } from '../../shared/services/http.service';
 import { ProfileModel } from './profile.dto';
+import { NameService } from '../../shared/services/name.service';
 
 const URL_CHANGE_PASSWORD = `${Constant.URL_BASE}${Constant.URL_CHANGE_PASSWORD}`;
 const URL_GET_PROVINCES = `${Constant.URL_BASE}${Constant.URL_GET_PROVINCES}`;
@@ -72,23 +73,32 @@ export class ProfileComponent implements OnInit, OnDestroy {
     cities: ICity[];
     bntSubmitPersonalDataDisabled: boolean = false;
     private fileAvatar!: File;
+    avatarPhoto: string;
+    name: string;
 
     constructor(
         private authService: AuthService,
         private httpService: HttpService,
         private openSnackBar: MatSnackBar,
         private renderer: Renderer2,
-        private avatarService: AvatarService
+        private avatarService: AvatarService,
+        private nameService: NameService
     ) {
         this.countries = [];
         this.provinces = [];
         this.cities = [];
         this.frmPersonalData = this.defineFormPersonalData();
         this.frmPassword = this.defineFormUpdatePassword();
+        this.avatarPhoto = this.avatarService.get();
+        this.name = this.nameService.get();
     }
 
     ngOnInit() {
         this.profile = this.authService.getTokenData();
+
+        this.nameService.nameSubject.subscribe((name) => {
+            this.name = name;
+        });
 
         this.frmResetPasswordSubscription =
             this.frmPassword.valueChanges.subscribe((value) => {
@@ -154,7 +164,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
                         duration: 5000,
                     }
                 );
-                this.avatarService.set(response.photo);
+                if (response.photo) {
+                    this.avatarService.set(response.photo);
+                }
+                if (response.name) {
+                    this.nameService.set(response.name);
+                }
             },
             error: (error) => {
                 this.openSnackBar.open(

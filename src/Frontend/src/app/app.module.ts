@@ -18,6 +18,7 @@ import { HttpService } from './modules/shared/services/http.service';
 import { StoreService } from './modules/shared/services/store.service';
 import { ProfileComponent } from './modules/user/profile/profile.component';
 import { AppComponent } from './templates/main/app.component';
+import { NameService } from './modules/shared/services/name.service';
 
 @NgModule({
     declarations: [AppComponent],
@@ -41,6 +42,7 @@ import { AppComponent } from './templates/main/app.component';
         AuthService,
         HttpService,
         AvatarService,
+        NameService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptorService,

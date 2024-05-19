@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { Constant } from '../../modules/shared/constants/constants';
 import { AuthService } from '../../modules/shared/services/auth.service';
 import { AvatarService } from '../../modules/shared/services/avatar.service';
+import { NameService } from '../../modules/shared/services/name.service';
 
 @Component({
     selector: 'srms-root',
@@ -12,14 +13,17 @@ import { AvatarService } from '../../modules/shared/services/avatar.service';
 export class AppComponent implements OnInit {
     isAuth: boolean;
     avatar: string;
+    name: string;
     private authObservable!: Subscription;
 
     constructor(
         private authService: AuthService,
-        private avatarService: AvatarService
+        private avatarService: AvatarService,
+        private nameService: NameService
     ) {
         this.isAuth = this.authService.isAuthenticated();
         this.avatar = this.avatarService.get();
+        this.name = this.nameService.get();
     }
 
     ngOnInit() {
@@ -31,15 +35,18 @@ export class AppComponent implements OnInit {
         this.avatarService.avatarSubject.subscribe((avatar) => {
             this.avatar = avatar;
         });
+        this.nameService.nameSubject.subscribe((name) => {
+            this.name = name;
+        });
     }
 
     getProfile() {
-        return this.authService.getUserAutenticated();
+        return this.authService.getUserAuthenticated();
     }
 
     isAdmin(): boolean {
         return this.authService
-            .getUserAutenticated()
+            .getUserAuthenticated()
             .Roles.includes(Constant.ADMIN_ROLE);
     }
 }

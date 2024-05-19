@@ -53,6 +53,7 @@ namespace ApiGateway.Infrastructure.Controllers
       return await HandleAsync(async () => Ok(await _accessControlService.SignInAsync(request)));
     }
 
+    [Permissions]
     [HttpPost("role")]
     public async Task<IActionResult> RegisterRoleAsync(
       [FromBody] RegisterRoleAccessControlRequest request
@@ -63,6 +64,7 @@ namespace ApiGateway.Infrastructure.Controllers
       );
     }
 
+    [Permissions]
     [HttpPut("role/{id}")]
     public async Task<IActionResult> UpdateRoleAsync(
       string id,
@@ -75,6 +77,7 @@ namespace ApiGateway.Infrastructure.Controllers
       );
     }
 
+    [Permissions]
     [HttpDelete("role/{id}")]
     public async Task<IActionResult> DeleteRoleAsync(string id)
     {
@@ -84,7 +87,7 @@ namespace ApiGateway.Infrastructure.Controllers
       );
     }
 
-    [Permissions("User")]
+    [Permissions]
     [HttpGet("roles")]
     public async Task<IActionResult> GetRolesAsync([FromQuery] GetRolesAccessControlRequest request)
     {
