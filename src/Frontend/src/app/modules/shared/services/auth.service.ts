@@ -4,6 +4,7 @@ import { Constant } from '../constants/constants';
 import { HttpService } from './http.service';
 import { StoreService } from './store.service';
 import { ProfileModel } from '../../user/profile/profile.dto';
+import { AvatarService } from './avatar.service';
 
 const URL_VERIFY_TOKEN = `${Constant.URL_BASE}${Constant.URL_VERIFY_TOKEN}`;
 
@@ -14,6 +15,7 @@ export class AuthService {
   private isAuth!: boolean;
   private profile!: ProfileModel;
   private readonly httpService = inject(HttpService);
+  private readonly avatarService = inject(AvatarService);
 
   constructor(private storeService: StoreService) {}
 
@@ -38,12 +40,14 @@ export class AuthService {
     this.isAuth = true;
     this.profile = this.getTokenData();
     this.changeAuthSubject.next(this.isAuth);
+    this.avatarService.set(this.profile.Photo);
   }
 
   ChangeIsNotAuth() {
     this.isAuth = false;
     this.profile = new ProfileModel();
     this.changeAuthSubject.next(this.isAuth);
+    this.avatarService.remove();
   }
 
   signOut() {
