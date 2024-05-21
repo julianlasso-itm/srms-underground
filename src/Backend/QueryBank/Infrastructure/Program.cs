@@ -10,6 +10,7 @@ using QueryBank.Infrastructure.Services;
 using Shared.Infrastructure.Events;
 using Shared.Infrastructure.Interceptors;
 using Shared.Infrastructure.Services;
+using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
   options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionDataBase"));
 });
 // ==========================================
+
+// == Configure connection to Redis ==
+var multiplexer = ConnectionMultiplexer.Connect(
+  builder.Configuration.GetConnectionString("RedisConnection")!
+);
+builder.Services.AddSingleton<IConnectionMultiplexer>(multiplexer);
+// ===================================
 
 // == Configure repositories ==
 builder.Services.AddScoped<ISkillRepository<SkillModel>, SkillRepository>();

@@ -5,25 +5,17 @@ namespace Shared.Infrastructure.Events.Base
 {
   public abstract class BaseEvent : IEvent
   {
-    private string Uri { get; }
     private ISubscriber Subscriber { get; }
 
-    protected BaseEvent(string uri)
+    protected BaseEvent(IConnectionMultiplexer connection)
     {
-      Uri = uri;
-      Subscriber = CreateSubscriber();
+      Subscriber = connection.GetSubscriber();
     }
 
     public void Emit(string channel, string data)
     {
       var myChannel = new RedisChannel(channel, RedisChannel.PatternMode.Literal);
       _ = Subscriber.Publish(myChannel, data);
-    }
-
-    private ISubscriber CreateSubscriber()
-    {
-      var connection = ConnectionMultiplexer.Connect(Uri);
-      return connection.GetSubscriber();
     }
   }
 }
