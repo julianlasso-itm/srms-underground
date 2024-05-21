@@ -4,8 +4,16 @@ using Shared.Infrastructure.ProtocolBuffers.AccessControl;
 using Shared.Infrastructure.ProtocolBuffers.Analytics;
 using Shared.Infrastructure.ProtocolBuffers.Profiles;
 using Shared.Infrastructure.Services;
+using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// == Configure connection to Redis ==
+var multiplexer = ConnectionMultiplexer.Connect(
+  builder.Configuration.GetConnectionString("RedisConnection")!
+);
+builder.Services.AddSingleton<IConnectionMultiplexer>(multiplexer);
+// ===================================
 
 // Add services to the container.
 builder.Services.AddAuthorization(options =>

@@ -5,13 +5,11 @@ namespace Shared.Infrastructure.Services
 {
   public class CacheService : ICacheService
   {
-    private readonly ConnectionMultiplexer _cache;
     private readonly IDatabase _database;
 
-    public CacheService(string connectionString = "localhost:6379")
+    public CacheService(IConnectionMultiplexer connection)
     {
-      _cache = ConnectionMultiplexer.Connect(connectionString);
-      _database = _cache.GetDatabase();
+      _database = connection.GetDatabase();
     }
 
     public string? Get(string key)

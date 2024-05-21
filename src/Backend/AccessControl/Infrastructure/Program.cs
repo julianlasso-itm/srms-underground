@@ -5,6 +5,7 @@ using AccessControl.Infrastructure.Persistence;
 using AccessControl.Infrastructure.Persistence.Models;
 using AccessControl.Infrastructure.Persistence.Repositories;
 using AccessControl.Infrastructure.Services;
+using Azure.Storage.Blobs;
 using Microsoft.EntityFrameworkCore;
 using ProtoBuf.Grpc.Server;
 using Shared.Application.Interfaces;
@@ -21,6 +22,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
   options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionDataBase"));
 });
 // ==========================================
+
+// == Configure connection to Azure Blob Storage ==
+var blobServiceClient = new BlobServiceClient(
+  builder.Configuration.GetConnectionString("AzureStorageConnection")!
+);
+builder.Services.AddSingleton(blobServiceClient);
+// ================================================
 
 // == Configure connection to Redis ==
 var multiplexer = ConnectionMultiplexer.Connect(
