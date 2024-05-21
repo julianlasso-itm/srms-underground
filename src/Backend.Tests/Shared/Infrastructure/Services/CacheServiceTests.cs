@@ -1,7 +1,7 @@
 using Moq;
 using StackExchange.Redis;
 
-namespace Shared.Infrastructure.Services
+namespace Shared.Infrastructure.Services.Tests
 {
   [TestClass]
   public class CacheServiceTests
@@ -138,6 +138,49 @@ namespace Shared.Infrastructure.Services
       // Arrange
       var key = "testKey";
       var value = "testValue";
+
+      // Act
+      _cacheService.Set(key, value);
+
+      // Assert
+      _mockDatabase.Verify(
+        db => db.StringSet(key, value, null, It.IsAny<bool>(), It.IsAny<When>(), CommandFlags.None),
+        Times.Once()
+      );
+    }
+
+    [TestMethod]
+    public void Set_SetsByteArrayValueWithExpiration()
+    {
+      // Arrange
+      var key = "testKey";
+      var value = new byte[] { 1, 2, 3 };
+      var expiration = TimeSpan.FromMinutes(5);
+
+      // Act
+      _cacheService.Set(key, value, expiration);
+
+      // Assert
+      _mockDatabase.Verify(
+        db =>
+          db.StringSet(
+            key,
+            value,
+            expiration,
+            It.IsAny<bool>(),
+            It.IsAny<When>(),
+            CommandFlags.None
+          ),
+        Times.Once()
+      );
+    }
+
+    [TestMethod]
+    public void Set_SetsByteArrayValueWithoutExpiration()
+    {
+      // Arrange
+      var key = "testKey";
+      var value = new byte[] { 1, 2, 3 };
 
       // Act
       _cacheService.Set(key, value);
