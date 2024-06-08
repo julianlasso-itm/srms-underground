@@ -1,103 +1,211 @@
 @if (isAuth) {
 <div class="container">
-    <header class="header">
-        <mat-toolbar class="header-bar">
-            <span>Skills Ranking and Monitoring System - SRMS</span>
-            <span class="spacer"></span>
-            <span class="dot" [ngClass]="{
-                    'dot-authenticated': isAuth,
-                    'dot-unauthenticated': !isAuth
-                }"></span>
-            <div class="username-nav">
-                <p class="profile-name">{{ name }}</p>
-            </div>
-            <div class="avatar-container" [matMenuTriggerFor]="profileMenu">
-                <img src="{{ avatar }}" class="avatar" alt="Avatar" />
-            </div>
-            <mat-menu #profileMenu="matMenu">
-                <a mat-menu-item routerLink="./user/profile">
-                    <mat-icon>account_circle</mat-icon>
-                    <span>Mi perfil</span>
-                </a>
-                <a mat-menu-item [disabled]="true">
-                    <mat-icon>settings</mat-icon>
-                    <span>Configuración</span>
-                </a>
-                <mat-divider></mat-divider>
-                <a mat-menu-item routerLink="./security/sign-out">
-                    <mat-icon>exit_to_app</mat-icon>
-                    <span>Cerrar sesión</span>
-                </a>
-            </mat-menu>
-        </mat-toolbar>
-    </header>
-    <div class="sub-container">
-        <div class="menu">
-            <mat-card>
-                <mat-card-content>
-                    <mat-list>
-                        <a mat-list-item routerLink="./profiles/roles" routerLinkActive="is-activated">
-                            <mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-address-card"></mat-icon>
-                            Gestión de roles (Perfiles)
-                        </a>
-                        <a mat-list-item routerLink="./profiles/skills" routerLinkActive="is-activated">
-                            <mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-lightbulb"></mat-icon>
-                            Gestión de habilidades
-                        </a>
-                        <a mat-list-item routerLink="./profiles/professionals" routerLinkActive="is-activated">
-                            <mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-user-tie"></mat-icon>
-                            Gestión de profesionales
-                        </a>
-                        <a mat-list-item routerLink="./profiles/countries" routerLinkActive="is-activated"
-                            *ngIf="isAdmin()">
-                            <mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-flag-usa"></mat-icon>
-                            Gestión de países
-                        </a>
-                        <a mat-list-item routerLink="./profiles/provinces" routerLinkActive="is-activated"
-                            *ngIf="isAdmin()">
-                            <mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-signs-post"></mat-icon>
-                            Gestión de departamentos
-                        </a>
-                        <a mat-list-item routerLink="./profiles/cities" routerLinkActive="is-activated"
-                            *ngIf="isAdmin()">
-                            <mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-location-crosshairs"></mat-icon>
-                            Gestión de ciudades
-                        </a>
-                        <a mat-list-item routerLink="./admin/roles" routerLinkActive="is-activated" *ngIf="isAdmin()">
-                            <mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-user-shield"></mat-icon>
-                            Gestión de roles (Seguridad)
-                        </a>    
-                        <a mat-list-item routerLink="./profiles/squads" routerLinkActive="is-activated" *ngIf="isAdmin()">
-                            <mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-people-group"></mat-icon>
-                            Gestión de equipos
-                        </a>        
-                        <a mat-list-item routerLink="./profiles/professionals" routerLinkActive="is-activated" *ngIf="isAdmin()">
-                            <mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-list-check"></mat-icon>
-                            Gestión de evaluaciones
-                        </a>
-                        <a mat-list-item routerLink="./profiles/professionals" routerLinkActive="is-activated" *ngIf="isAdmin()">
-                            <mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-circle-check"></mat-icon>
-                            Evaluar profesionales
-                        </a>
-                        <a mat-list-item routerLink="./profiles/professionals" routerLinkActive="is-activated" *ngIf="isAdmin()">
-                            <mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-square-poll-vertical"></mat-icon>
-                            Resultados de evaluación
-                        </a>
-                    </mat-list>
-                </mat-card-content>
-            </mat-card>
-        </div>
-        <div class="main">
-            <mat-card>
-                <mat-card-content>
-                    <div class="niam">
-                        <router-outlet />
-                    </div>
-                </mat-card-content>
-            </mat-card>
-        </div>
+  <header class="header">
+    <mat-toolbar class="header-bar">
+      <span>Skills Ranking and Monitoring System - SRMS</span>
+      <span class="spacer"></span>
+      <span
+        class="dot"
+        [ngClass]="{
+          'dot-authenticated': isAuth,
+          'dot-unauthenticated': !isAuth
+        }"
+      ></span>
+      <div class="username-nav">
+        <p class="profile-name">{{ name }}</p>
+      </div>
+      <div class="avatar-container" [matMenuTriggerFor]="profileMenu">
+        <img src="{{ avatar }}" class="avatar" alt="Avatar" />
+      </div>
+      <mat-menu #profileMenu="matMenu">
+        <a mat-menu-item routerLink="./user/profile">
+          <mat-icon>account_circle</mat-icon>
+          <span>Mi perfil</span>
+        </a>
+        <a mat-menu-item [disabled]="true">
+          <mat-icon>settings</mat-icon>
+          <span>Configuración</span>
+        </a>
+        <mat-divider></mat-divider>
+        <a mat-menu-item routerLink="./security/sign-out">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Cerrar sesión</span>
+        </a>
+      </mat-menu>
+    </mat-toolbar>
+  </header>
+  <div class="sub-container">
+    <div class="menu">
+      <mat-card>
+        <mat-card-content>
+          <mat-list>
+            <a
+              mat-list-item
+              routerLink="./profiles/roles"
+              routerLinkActive="is-activated"
+            >
+              <mat-icon
+                matListItemIcon
+                fontSet="fa-solid"
+                fontIcon="fa-address-card"
+              ></mat-icon>
+              Gestión de roles (Perfiles)
+            </a>
+            <a
+              mat-list-item
+              routerLink="./profiles/skills"
+              routerLinkActive="is-activated"
+            >
+              <mat-icon
+                matListItemIcon
+                fontSet="fa-solid"
+                fontIcon="fa-lightbulb"
+              ></mat-icon>
+              Gestión de habilidades
+            </a>
+            <a
+              mat-list-item
+              routerLink="./profiles/professionals"
+              routerLinkActive="is-activated"
+            >
+              <mat-icon
+                matListItemIcon
+                fontSet="fa-solid"
+                fontIcon="fa-user-tie"
+              ></mat-icon>
+              Gestión de profesionales
+            </a>
+            <a
+              mat-list-item
+              routerLink="./assessment/assessments"
+              routerLinkActive="is-activated"
+            >
+              <mat-icon
+                matListItemIcon
+                fontSet="fa-solid"
+                fontIcon="fa-user-tie"
+              ></mat-icon>
+              Gestión de evaluaciones
+            </a>
+            <a
+              mat-list-item
+              routerLink="./profiles/countries"
+              routerLinkActive="is-activated"
+              *ngIf="isAdmin()"
+            >
+              <mat-icon
+                matListItemIcon
+                fontSet="fa-solid"
+                fontIcon="fa-flag-usa"
+              ></mat-icon>
+              Gestión de países
+            </a>
+            <a
+              mat-list-item
+              routerLink="./profiles/provinces"
+              routerLinkActive="is-activated"
+              *ngIf="isAdmin()"
+            >
+              <mat-icon
+                matListItemIcon
+                fontSet="fa-solid"
+                fontIcon="fa-signs-post"
+              ></mat-icon>
+              Gestión de departamentos
+            </a>
+            <a
+              mat-list-item
+              routerLink="./profiles/cities"
+              routerLinkActive="is-activated"
+              *ngIf="isAdmin()"
+            >
+              <mat-icon
+                matListItemIcon
+                fontSet="fa-solid"
+                fontIcon="fa-location-crosshairs"
+              ></mat-icon>
+              Gestión de ciudades
+            </a>
+            <a
+              mat-list-item
+              routerLink="./admin/roles"
+              routerLinkActive="is-activated"
+              *ngIf="isAdmin()"
+            >
+              <mat-icon
+                matListItemIcon
+                fontSet="fa-solid"
+                fontIcon="fa-user-shield"
+              ></mat-icon>
+              Gestión de roles (Seguridad)
+            </a>
+            <a
+              mat-list-item
+              routerLink="./profiles/squads"
+              routerLinkActive="is-activated"
+              *ngIf="isAdmin()"
+            >
+              <mat-icon
+                matListItemIcon
+                fontSet="fa-solid"
+                fontIcon="fa-people-group"
+              ></mat-icon>
+              Gestión de equipos
+            </a>
+            <a
+              mat-list-item
+              routerLink="./profiles/professionals"
+              routerLinkActive="is-activated"
+              *ngIf="isAdmin()"
+            >
+              <mat-icon
+                matListItemIcon
+                fontSet="fa-solid"
+                fontIcon="fa-list-check"
+              ></mat-icon>
+              Gestión de evaluaciones
+            </a>
+            <a
+              mat-list-item
+              routerLink="./profiles/professionals"
+              routerLinkActive="is-activated"
+              *ngIf="isAdmin()"
+            >
+              <mat-icon
+                matListItemIcon
+                fontSet="fa-solid"
+                fontIcon="fa-circle-check"
+              ></mat-icon>
+              Evaluar profesionales
+            </a>
+            <a
+              mat-list-item
+              routerLink="./profiles/professionals"
+              routerLinkActive="is-activated"
+              *ngIf="isAdmin()"
+            >
+              <mat-icon
+                matListItemIcon
+                fontSet="fa-solid"
+                fontIcon="fa-square-poll-vertical"
+              ></mat-icon>
+              Resultados de evaluación
+            </a>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
     </div>
-    <footer class="footer"></footer>
+    <div class="main">
+      <mat-card>
+        <mat-card-content>
+          <div class="niam">
+            <router-outlet />
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <footer class="footer"></footer>
 </div>
 } @else {
 <img src="assets/images/fondo.avif" class="background-image" alt="" />
