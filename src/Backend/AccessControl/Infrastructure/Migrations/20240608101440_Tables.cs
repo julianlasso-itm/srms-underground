@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AccessControl.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Tables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -80,21 +80,21 @@ namespace AccessControl.Infrastructure.Migrations
                 columns: new[] { "rol_role_id", "created_at", "deleted_at", "rol_description", "rol_disabled", "rol_name", "updated_at" },
                 values: new object[,]
                 {
-                    { new Guid("097d0797-b3ba-4672-ad26-5685244ca4a3"), new DateTime(2024, 6, 8, 7, 31, 19, 709, DateTimeKind.Utc).AddTicks(3860), null, "Author role", false, "Author", null },
-                    { new Guid("137bcadf-79bb-47f4-8622-e7381c7664ae"), new DateTime(2024, 6, 8, 7, 31, 19, 709, DateTimeKind.Utc).AddTicks(3846), null, "User role", false, "User", null },
-                    { new Guid("474fdb3d-f817-4299-a687-3dafa81f107e"), new DateTime(2024, 6, 8, 7, 31, 19, 709, DateTimeKind.Utc).AddTicks(3858), null, "Editor role", false, "Editor", null },
-                    { new Guid("5789a37a-0be9-4ccf-960a-83bf73ec2a12"), new DateTime(2024, 6, 8, 7, 31, 19, 709, DateTimeKind.Utc).AddTicks(3851), null, "SuperAdmin role", false, "SuperAdmin", null },
-                    { new Guid("940c829a-a560-4013-ad8c-ecee553cd5f0"), new DateTime(2024, 6, 8, 7, 31, 19, 709, DateTimeKind.Utc).AddTicks(3891), null, "Developer role", false, "Developer", null },
-                    { new Guid("96aa59d2-5055-4832-ab6c-77f53f8705a5"), new DateTime(2024, 6, 8, 7, 31, 19, 709, DateTimeKind.Utc).AddTicks(3876), null, "Subscriber role", false, "Subscriber", null },
-                    { new Guid("98ce4a72-867d-4f30-b2d8-6ae7e86487eb"), new DateTime(2024, 6, 8, 7, 31, 19, 709, DateTimeKind.Utc).AddTicks(3849), null, "Guest role", false, "Guest", null },
-                    { new Guid("9b6b4ebd-03a0-4d5a-99df-02118a0c8ac4"), new DateTime(2024, 6, 8, 7, 31, 19, 709, DateTimeKind.Utc).AddTicks(3853), null, "Moderator role", false, "Moderator", null },
-                    { new Guid("a667d7fd-a528-4d8e-a119-50791deb5ce5"), new DateTime(2024, 6, 8, 7, 31, 19, 709, DateTimeKind.Utc).AddTicks(3884), null, "Client role", false, "Client", null },
-                    { new Guid("ab6c9842-5517-488c-9e27-b19563c814a9"), new DateTime(2024, 6, 8, 7, 31, 19, 709, DateTimeKind.Utc).AddTicks(3886), null, "Viewer role", false, "Viewer", null },
-                    { new Guid("b22f31c5-54fa-433a-8c87-530eaad0374d"), new DateTime(2024, 6, 8, 7, 31, 19, 709, DateTimeKind.Utc).AddTicks(3882), null, "Customer role", false, "Customer", null },
-                    { new Guid("b71a5d7f-b1bc-46d6-9ab0-3ae224e154f1"), new DateTime(2024, 6, 8, 7, 31, 19, 709, DateTimeKind.Utc).AddTicks(3821), null, "Admin role", false, "Admin", null },
-                    { new Guid("b87e9821-5f92-421d-a032-32db1eb92294"), new DateTime(2024, 6, 8, 7, 31, 19, 709, DateTimeKind.Utc).AddTicks(3874), null, "Contributor role", false, "Contributor", null },
-                    { new Guid("bff78836-e9dc-474e-aec5-ba7b60e26165"), new DateTime(2024, 6, 8, 7, 31, 19, 709, DateTimeKind.Utc).AddTicks(3880), null, "Member role", false, "Member", null },
-                    { new Guid("d3be8aea-9f7a-4d52-9e0b-9311e3af0e5f"), new DateTime(2024, 6, 8, 7, 31, 19, 709, DateTimeKind.Utc).AddTicks(3889), null, "Tester role", false, "Tester", null }
+                    { new Guid("0974ff08-e056-4039-8423-3fd6577433d3"), new DateTime(2024, 6, 8, 10, 14, 40, 781, DateTimeKind.Utc).AddTicks(9726), null, "Author role", false, "Author", null },
+                    { new Guid("137bcadf-79bb-47f4-8622-e7381c7664ae"), new DateTime(2024, 6, 8, 10, 14, 40, 781, DateTimeKind.Utc).AddTicks(9701), null, "User role", false, "User", null },
+                    { new Guid("1466d240-a5e1-490c-a363-472ec60bd051"), new DateTime(2024, 6, 8, 10, 14, 40, 781, DateTimeKind.Utc).AddTicks(9743), null, "Customer role", false, "Customer", null },
+                    { new Guid("2af57491-3169-4beb-84bd-4ff4a31d26d5"), new DateTime(2024, 6, 8, 10, 14, 40, 781, DateTimeKind.Utc).AddTicks(9730), null, "Contributor role", false, "Contributor", null },
+                    { new Guid("374a5b53-8951-4492-bf72-a1ddeba33ae6"), new DateTime(2024, 6, 8, 10, 14, 40, 781, DateTimeKind.Utc).AddTicks(9739), null, "Member role", false, "Member", null },
+                    { new Guid("5246fd6d-82bb-4612-9cca-92b71170886f"), new DateTime(2024, 6, 8, 10, 14, 40, 781, DateTimeKind.Utc).AddTicks(9706), null, "Guest role", false, "Guest", null },
+                    { new Guid("561007f0-1d7b-4fcf-afa8-373c8e70fe5b"), new DateTime(2024, 6, 8, 10, 14, 40, 781, DateTimeKind.Utc).AddTicks(9711), null, "SuperAdmin role", false, "SuperAdmin", null },
+                    { new Guid("5722b0bf-93d4-481f-a6a5-2b2aecbc4046"), new DateTime(2024, 6, 8, 10, 14, 40, 781, DateTimeKind.Utc).AddTicks(9734), null, "Subscriber role", false, "Subscriber", null },
+                    { new Guid("667cb970-f4a1-4c3a-b199-1a3dfe6b6f2c"), new DateTime(2024, 6, 8, 10, 14, 40, 781, DateTimeKind.Utc).AddTicks(9760), null, "Developer role", false, "Developer", null },
+                    { new Guid("6a49683c-d303-489e-ae1d-cabb3be79090"), new DateTime(2024, 6, 8, 10, 14, 40, 781, DateTimeKind.Utc).AddTicks(9715), null, "Moderator role", false, "Moderator", null },
+                    { new Guid("7bf5213a-7473-4cdf-a38d-c315447814bf"), new DateTime(2024, 6, 8, 10, 14, 40, 781, DateTimeKind.Utc).AddTicks(9756), null, "Tester role", false, "Tester", null },
+                    { new Guid("b99f06e2-a616-45b1-ac78-bb635a3133a5"), new DateTime(2024, 6, 8, 10, 14, 40, 781, DateTimeKind.Utc).AddTicks(9752), null, "Viewer role", false, "Viewer", null },
+                    { new Guid("c63d9a0b-b023-4d9d-ad04-e4359f425b78"), new DateTime(2024, 6, 8, 10, 14, 40, 781, DateTimeKind.Utc).AddTicks(9721), null, "Editor role", false, "Editor", null },
+                    { new Guid("dce27d6c-a019-4ba6-b7fa-9b3296dfec1b"), new DateTime(2024, 6, 8, 10, 14, 40, 781, DateTimeKind.Utc).AddTicks(9675), null, "Admin role", false, "Admin", null },
+                    { new Guid("ea0f5af6-2d6b-4c92-a105-c9118fe2d25a"), new DateTime(2024, 6, 8, 10, 14, 40, 781, DateTimeKind.Utc).AddTicks(9748), null, "Client role", false, "Client", null }
                 });
 
             migrationBuilder.CreateIndex(

@@ -12,8 +12,8 @@ using QueryBank.Infrastructure.Persistence;
 namespace QueryBank.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240608073300_init")]
-    partial class init
+    [Migration("20240608101600_Tables")]
+    partial class Tables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

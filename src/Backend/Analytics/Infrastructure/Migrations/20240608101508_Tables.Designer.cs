@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Analytics.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240608073202_init")]
-    partial class init
+    [Migration("20240608101508_Tables")]
+    partial class Tables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,85 +68,85 @@ namespace Analytics.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            LevelId = new Guid("d0839f4f-6351-4dac-adb1-fbbcd25f414b"),
-                            CreatedAt = new DateTime(2024, 6, 8, 7, 32, 1, 892, DateTimeKind.Utc).AddTicks(1956),
+                            LevelId = new Guid("8075a7cb-c688-4c57-b205-0fda99f33c3f"),
+                            CreatedAt = new DateTime(2024, 6, 8, 10, 15, 8, 359, DateTimeKind.Utc).AddTicks(6478),
                             Disabled = false,
                             Name = "Backend"
                         },
                         new
                         {
-                            LevelId = new Guid("bde87b01-bba2-4c67-aea8-b811729f423d"),
-                            CreatedAt = new DateTime(2024, 6, 8, 7, 32, 1, 892, DateTimeKind.Utc).AddTicks(1962),
+                            LevelId = new Guid("322c1b97-4284-4f69-8602-e394f0696ae3"),
+                            CreatedAt = new DateTime(2024, 6, 8, 10, 15, 8, 359, DateTimeKind.Utc).AddTicks(6490),
                             Disabled = false,
                             Name = "Frontend"
                         },
                         new
                         {
-                            LevelId = new Guid("c6b7431b-4d1c-4a16-b345-48bcdffd4c73"),
-                            CreatedAt = new DateTime(2024, 6, 8, 7, 32, 1, 892, DateTimeKind.Utc).AddTicks(1964),
+                            LevelId = new Guid("10518b06-1c9a-4318-bec3-20b689f6bc07"),
+                            CreatedAt = new DateTime(2024, 6, 8, 10, 15, 8, 359, DateTimeKind.Utc).AddTicks(6494),
                             Disabled = false,
                             Name = "Fullstack"
                         },
                         new
                         {
-                            LevelId = new Guid("018de1d9-0878-44bf-b501-7205e4f0dd99"),
-                            CreatedAt = new DateTime(2024, 6, 8, 7, 32, 1, 892, DateTimeKind.Utc).AddTicks(1975),
+                            LevelId = new Guid("4b378c3b-3823-45e1-a934-50475db28cd3"),
+                            CreatedAt = new DateTime(2024, 6, 8, 10, 15, 8, 359, DateTimeKind.Utc).AddTicks(6498),
                             Disabled = false,
                             Name = "DevOps"
                         },
                         new
                         {
-                            LevelId = new Guid("01dfef2e-e845-4df0-9d0f-e54345f105b7"),
-                            CreatedAt = new DateTime(2024, 6, 8, 7, 32, 1, 892, DateTimeKind.Utc).AddTicks(1977),
+                            LevelId = new Guid("a0a0ce05-e9ec-47d5-ad94-a6bb2de97f7f"),
+                            CreatedAt = new DateTime(2024, 6, 8, 10, 15, 8, 359, DateTimeKind.Utc).AddTicks(6501),
                             Disabled = false,
                             Name = "QA"
                         },
                         new
                         {
-                            LevelId = new Guid("66a57db7-6ba5-45cb-886f-8012b0efa63d"),
-                            CreatedAt = new DateTime(2024, 6, 8, 7, 32, 1, 892, DateTimeKind.Utc).AddTicks(1981),
+                            LevelId = new Guid("d139f1cf-259e-4658-9dce-a7dcf2e34197"),
+                            CreatedAt = new DateTime(2024, 6, 8, 10, 15, 8, 359, DateTimeKind.Utc).AddTicks(6507),
                             Disabled = false,
                             Name = "UX/UI"
                         },
                         new
                         {
-                            LevelId = new Guid("34c611ee-9b16-495e-8d80-ee86f3db2419"),
-                            CreatedAt = new DateTime(2024, 6, 8, 7, 32, 1, 892, DateTimeKind.Utc).AddTicks(1983),
+                            LevelId = new Guid("20d03185-6852-4e04-b474-33cbb57c5d30"),
+                            CreatedAt = new DateTime(2024, 6, 8, 10, 15, 8, 359, DateTimeKind.Utc).AddTicks(6511),
                             Disabled = false,
                             Name = "DataScience"
                         },
                         new
                         {
-                            LevelId = new Guid("d573949b-d77e-4872-91e1-2041e7c796f7"),
-                            CreatedAt = new DateTime(2024, 6, 8, 7, 32, 1, 892, DateTimeKind.Utc).AddTicks(1985),
+                            LevelId = new Guid("50aaafd2-4bee-4453-8913-0336d29306f8"),
+                            CreatedAt = new DateTime(2024, 6, 8, 10, 15, 8, 359, DateTimeKind.Utc).AddTicks(6515),
                             Disabled = false,
                             Name = "Cybersecurity"
                         },
                         new
                         {
-                            LevelId = new Guid("d61b04d4-4ad4-40b3-9bf7-604e3926c323"),
-                            CreatedAt = new DateTime(2024, 6, 8, 7, 32, 1, 892, DateTimeKind.Utc).AddTicks(1987),
+                            LevelId = new Guid("158dab97-0b37-4b2e-909f-e801cbfe38ab"),
+                            CreatedAt = new DateTime(2024, 6, 8, 10, 15, 8, 359, DateTimeKind.Utc).AddTicks(6519),
                             Disabled = false,
                             Name = "Product"
                         },
                         new
                         {
-                            LevelId = new Guid("a8586256-6348-4a2b-8903-05bac522f34b"),
-                            CreatedAt = new DateTime(2024, 6, 8, 7, 32, 1, 892, DateTimeKind.Utc).AddTicks(1990),
+                            LevelId = new Guid("a663fff2-a93a-4f08-95c4-1fd113b29043"),
+                            CreatedAt = new DateTime(2024, 6, 8, 10, 15, 8, 359, DateTimeKind.Utc).AddTicks(6523),
                             Disabled = false,
                             Name = "Project"
                         },
                         new
                         {
-                            LevelId = new Guid("e305b62b-fbb4-42d4-b6ca-0dbae64aa674"),
-                            CreatedAt = new DateTime(2024, 6, 8, 7, 32, 1, 892, DateTimeKind.Utc).AddTicks(1992),
+                            LevelId = new Guid("232ca6c8-e24d-4872-bad3-7e88d5cdd7f0"),
+                            CreatedAt = new DateTime(2024, 6, 8, 10, 15, 8, 359, DateTimeKind.Utc).AddTicks(6527),
                             Disabled = false,
                             Name = "Management"
                         },
                         new
                         {
-                            LevelId = new Guid("c6b8d32e-e333-4107-93e4-1b44299cb60b"),
-                            CreatedAt = new DateTime(2024, 6, 8, 7, 32, 1, 892, DateTimeKind.Utc).AddTicks(1995),
+                            LevelId = new Guid("d7ffddf0-1fa6-49ca-b110-131f274471cb"),
+                            CreatedAt = new DateTime(2024, 6, 8, 10, 15, 8, 359, DateTimeKind.Utc).AddTicks(6530),
                             Disabled = false,
                             Name = "Other"
                         });
