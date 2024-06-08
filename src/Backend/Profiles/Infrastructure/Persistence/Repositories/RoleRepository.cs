@@ -35,7 +35,7 @@ namespace Profiles.Infrastructure.Persistence.Repositories
       return AddAsync(role);
     }
 
-    public Task<RoleModel> UpdateAsync(Guid id, UpdateRoleApplicationResponse entity)
+    public async Task<RoleModel> UpdateAsync(Guid id, UpdateRoleApplicationResponse entity)
     {
       var role = new RoleModel { RoleId = id };
       if (entity.Name != null)
@@ -51,18 +51,35 @@ namespace Profiles.Infrastructure.Persistence.Repositories
         role.RolePerSkills = entity
           .Skills.Select(skill => new RolePerSkillModel
           {
+            RolePerSkillId = Guid.NewGuid(),
             RoleId = role.RoleId,
             SkillId = Guid.Parse(skill),
           })
           .ToList();
       }
-      return UpdateAsync(id, role);
+      var data = await GetByIdAsync(role.RoleId);
+      if (Context.Entry(data).Collection(role => role.RolePerSkills).IsLoaded == false)
+      {
+        Context.Entry(data).Collection(role => role.RolePerSkills).Load();
+        _ = data.RolePerSkills.Select(rolePerSkill => Context.Remove(rolePerSkill));
+      }
+      return await UpdateAsync(id, role);
     }
 
     public new async Task<RoleModel> DeleteAsync(Guid id)
     {
       var data = await GetByIdAsync(id);
-      Console.WriteLine(data.RolePerSkills.Count);
+      if (Context.Entry(data).Collection(role => role.RolePerSkills).IsLoaded == false)
+      {
+        Context.Entry(data).Collection(role => role.RolePerSkills).Load();
+        var info = data.RolePerSkills.Select(rolePerSkill =>
+        {
+          rolePerSkill.DeletedAt = DateTime.UtcNow;
+          var info = Context.Update(rolePerSkill);
+          return Task.CompletedTask;
+        });
+        await Task.WhenAll(info);
+      }
       return await base.DeleteAsync(id);
     }
   }

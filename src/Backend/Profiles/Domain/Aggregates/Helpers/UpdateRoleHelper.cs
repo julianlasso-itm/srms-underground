@@ -50,6 +50,11 @@ namespace Profiles.Domain.Aggregates.Helpers
       ValidateRecordFields(role);
       ValidateAmountDataToBeUpdated(response);
 
+      if (data.Skills != null)
+      {
+        response.Skills = data.Skills;
+      }
+
       return response;
     }
 

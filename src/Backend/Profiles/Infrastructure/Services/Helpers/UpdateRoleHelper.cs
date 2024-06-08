@@ -24,7 +24,8 @@ namespace Profiles.Infrastructure.Services.Helpers
         RoleId = request.RoleId!,
         Name = request.Name,
         Description = request.Description,
-        Disable = request.Disable
+        Disable = request.Disable,
+        Skills = request.Skills,
       };
     }
 
@@ -38,6 +39,7 @@ namespace Profiles.Infrastructure.Services.Helpers
         Name = data.Name,
         Description = data.Description,
         Disabled = data.Disabled,
+        Skills = data.Skills,
       };
     }
   }

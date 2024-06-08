@@ -33,5 +33,8 @@ namespace Profiles.Infrastructure.Persistence.Models
 
     [DeleteBehavior(DeleteBehavior.Restrict)]
     public SquadModel Squad { get; set; }
+
+    [InverseProperty("Assessment")]
+    public ICollection<ResultModel> Results { get; set; } = new List<ResultModel>();
   }
 }

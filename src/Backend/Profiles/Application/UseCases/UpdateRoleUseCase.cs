@@ -53,6 +53,7 @@ namespace Profiles.Application.UseCases
         Name = request.Name,
         Description = request.Description,
         Disable = request.Disable,
+        Skills = request.Skills,
       };
     }
 
@@ -64,6 +65,7 @@ namespace Profiles.Application.UseCases
         Name = role.Name,
         Description = role.Description,
         Disabled = role.Disabled,
+        Skills = role.Skills,
       };
     }
 
