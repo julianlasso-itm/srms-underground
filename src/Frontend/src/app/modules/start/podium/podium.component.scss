@@ -17,15 +17,15 @@
   }
   
   .podium-first {
-    height: 150px; /* Ajusta la altura del primer lugar */
+    height: 200px; /* Ajusta la altura del primer lugar */
   }
   
   .podium-second {
-    height: 120px; /* Ajusta la altura del segundo lugar */
+    height: 150px; /* Ajusta la altura del segundo lugar */
   }
   
   .podium-third {
-    height: 90px; /* Ajusta la altura del tercer lugar */
+    height: 130px; /* Ajusta la altura del tercer lugar */
   }
   
   .user-image {
@@ -41,6 +41,11 @@
     margin-bottom: 10px; /* Espacio entre el nombre del usuario y el borde del podio */
     font-weight: bold;
   }
+
+  .mail {
+    font-size: xx-small;
+    font-weight: lighter;
+  }
   
   .position-number {
     font-size: 24px;
@@ -54,7 +59,7 @@
     align-items: center;
     justify-content: center;
     position: absolute;
-    top: 10px;
+    top: 50px;
   }
   
   .podium-base {
