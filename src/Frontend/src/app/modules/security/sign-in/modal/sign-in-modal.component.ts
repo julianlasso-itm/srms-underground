@@ -65,7 +65,7 @@ export class SignInModalComponent {
                 next: (response) => {
                     this._storeService.setToken(response.token);
                     this._authService.ChangeIsAuth();
-                    this._router.navigate(['./']);
+                    this._router.navigate(['./home']);
                 },
                 error: (error) => {
                     if (error.status === 401) {

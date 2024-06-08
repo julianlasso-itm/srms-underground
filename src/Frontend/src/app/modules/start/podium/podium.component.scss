@@ -1,0 +1,67 @@
+.podium-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 250px; /* Ajusta la altura del contenedor según tus necesidades */
+  }
+  
+  .podium {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    width: 180px; /* Ajusta el ancho del podio según tus necesidades */
+    background-color: white;
+    margin: 0 -1px; /* Espacio negativo entre los podios para que se toquen */
+    position: relative;
+  }
+  
+  .podium-first {
+    height: 150px; /* Ajusta la altura del primer lugar */
+  }
+  
+  .podium-second {
+    height: 120px; /* Ajusta la altura del segundo lugar */
+  }
+  
+  .podium-third {
+    height: 90px; /* Ajusta la altura del tercer lugar */
+  }
+  
+  .user-image {
+    width: 80px; /* Ajusta el tamaño de la imagen según tus necesidades */
+    height: 80px; /* Ajusta el tamaño de la imagen según tus necesidades */
+    object-fit: cover;
+    position: absolute;
+    top: -40px; /* Ajusta la posición de la imagen para que quede sobre el podio */
+    border-radius: 50%; /* Hacer las imágenes circulares */
+  }
+  
+  .user {
+    margin-bottom: 10px; /* Espacio entre el nombre del usuario y el borde del podio */
+    font-weight: bold;
+  }
+  
+  .position-number {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    background-color: #001c40; /* Color de fondo decorado */
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 10px;
+  }
+  
+  .podium-base {
+    width: 100%;
+    height: 30px; /* Altura del bloque base */
+    background-color: white;
+    position: relative;
+    top: -1px; /* Ajuste para que la base toque los podios */
+  }
+  

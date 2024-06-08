@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { authGuard } from './modules/shared/guards/auth.guard';
+import { authInverterGuard } from './modules/shared/guards/auth-inverter.guard';
 
 const routes: Routes = [
     {
@@ -40,10 +41,10 @@ const routes: Routes = [
     },
     {
         path: '',
-        canActivate: [authGuard],
+        canActivate: [authInverterGuard],
         loadComponent: () =>
-            import('./modules/home/home.component').then(
-                (m) => m.HomeComponent
+            import('./modules/start/index/start.component').then(
+                (m) => m.StartComponent
             ),
     },
 ];

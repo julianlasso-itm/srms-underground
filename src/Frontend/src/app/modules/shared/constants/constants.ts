@@ -13,6 +13,8 @@ export enum Constant {
     URL_ROLE = '/api/profiles/role',
     URL_GET_SKILLS = '/api/profiles/skills',
     URL_SKILL = '/api/profiles/skill',
+    URL_SQUAD = '/api/profiles/squad',
+    URL_GET_SQUADS = '/api/profiles/squads',
     URL_GET_PROFESSIONALS = '/api/profiles/professionals',
     URL_PROFESSIONAL = '/api/profiles/professional',
     URL_SIGN_IN = '/api/access-control/sign-in',
@@ -23,4 +25,5 @@ export enum Constant {
     URL_RESET_PASSWORD = '/api/access-control/reset-password',
     URL_CHANGE_PASSWORD = '/api/access-control/change-password',
     URL_UPDATE_USER = '/api/access-control/update-user',
+    URL_GET_PODIUM = "/api/access-control/podium",
 }

@@ -152,3 +152,4 @@ namespace Analytics.Infrastructure.Migrations
         }
     }
 }
+
