@@ -16,5 +16,8 @@ namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Requests
 
     [DataMember(Order = 4, IsRequired = false)]
     public bool? Disable { get; set; }
+
+    [DataMember(Order = 5, IsRequired = false)]
+    public IEnumerable<string>? Skills { get; set; }
   }
 }

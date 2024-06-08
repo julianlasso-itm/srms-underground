@@ -21,7 +21,7 @@ namespace Profiles.Infrastructure.Persistence.Models
     [Column("ski_skill_id")]
     public Guid SkillId { get; set; }
 
-    [DeleteBehavior(DeleteBehavior.Restrict)]
+    [DeleteBehavior(DeleteBehavior.Cascade)]
     public RoleModel Role { get; set; }
 
     [DeleteBehavior(DeleteBehavior.Restrict)]
