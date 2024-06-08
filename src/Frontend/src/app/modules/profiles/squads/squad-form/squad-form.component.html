@@ -1,0 +1,41 @@
+<form id="frmSquad" [formGroup]="frmSquad()" (submit)="onSubmit()">
+    @if (squad()?.squadId != null) {
+    <input type="text" class="hidden" formControlName="squadId" />
+    }
+    <p>
+        <mat-form-field class="width-100">
+            <mat-label>Nombre</mat-label>
+            <input
+                matInput
+                type="text"
+                formControlName="name"
+                placeholder="Nombre del Squad"
+            />
+            @if (frmSquad().get('name')?.errors?.['required']) {
+            <mat-error>El nombre es requerido</mat-error>
+            } @if (frmSquad().get('name')?.errors?.['maxlength']) {
+            <mat-error
+                >El nombre debe tener un máximo de 50 caracteres</mat-error
+            >
+            }
+        </mat-form-field>
+    </p>
+    @if (squad()?.squadId != null) {
+    <p>
+        <mat-slide-toggle
+            formControlName="disabled"
+            [checked]="frmSquad().get('disabled')?.value"
+        >
+            @if (frmSquad().get('disabled')?.value) {
+            <span class="color-red">Habilitado</span>
+            } @else {
+            <span class="color-green">Deshabilitado</span>
+            }
+        </mat-slide-toggle>
+    </p>
+    @if (frmSquad().get('id')?.errors?.['required']) {
+    <mat-error>El id es requerido</mat-error>
+    } @if (frmSquad().get('id')?.errors?.['pattern']) {
+    <mat-error>El id debe tener un valor válido</mat-error>
+    } }
+</form>

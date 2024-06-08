@@ -31,6 +31,11 @@ export const profilesRoutes: Routes = [
             import('./skills/skills.module').then((m) => m.SkillsModule),
     },
     {
+        path: 'squads',
+        loadChildren: () =>
+            import('./squads/squad.module').then((m) => m.SquadsModule),
+    },
+    {
         path: 'professionals',
         loadChildren: () =>
             import('./professionals/professional.module').then(
