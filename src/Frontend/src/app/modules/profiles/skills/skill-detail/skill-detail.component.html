@@ -10,7 +10,7 @@
             ></mat-icon>
             Detalle de la habilidad
         </h3>
-        <button mat-flat-button color="primary" (click)="openDialogNew()">
+        <button mat-flat-button color="primary" (click)="openDialogNew(skill)">
             Agregar detalle
         </button>
     </div>
@@ -64,7 +64,7 @@
                     mat-icon-button
                     color="warn"
                     aria-label="Delete"
-                    (click)="openDialogDelete(element.skillId)"
+                    (click)="openDialogDelete(element.subSkillId)"
                     matTooltip="Eliminar"
                     matTooltipPosition="right"
                 >

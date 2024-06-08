@@ -10,17 +10,17 @@ import {
 import { HttpService } from '../../../shared/services/http.service';
 import { ReloadDataService } from '../../../shared/services/reload-data.service';
 import { SharedModule } from '../../../shared/shared.module';
-import { SkillFormComponent } from '../skill-form/skill-form.component';
 import { DialogType, FormType } from './dialog.type';
+import { SkillDetailFormComponent } from '../skill-detail-form/skill-detail-form.component';
 
 @Component({
-    selector: 'srms-skill-dialog',
+    selector: 'srms-skill-detail-dialog',
     standalone: true,
     imports: [
         CommonModule,
         MatButtonModule,
         MatDialogModule,
-        SkillFormComponent,
+        SkillDetailFormComponent,
         SharedModule,
     ],
     providers: [HttpService],

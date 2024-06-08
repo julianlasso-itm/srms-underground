@@ -8,6 +8,7 @@ export interface ISubSkill {
     skillId: string;
     name: string;
     subSkillId: string;
+    disabled: boolean;
 }
 
 export interface ISkills {

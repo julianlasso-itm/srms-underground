@@ -1,8 +1,8 @@
-import type { ISkill } from '../skill/skill.interface';
+import type { ISkill, ISubSkill } from '../skill/skill.interface';
 
 export interface DialogType {
     formType: FormType;
-    skill?: ISkill;
+    skill?: ISubSkill;
 }
 
 export enum FormType {

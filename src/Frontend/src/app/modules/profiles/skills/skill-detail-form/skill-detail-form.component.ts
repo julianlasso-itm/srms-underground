@@ -23,12 +23,12 @@ import { Constant } from '../../../shared/constants/constants';
 import { HttpService } from '../../../shared/services/http.service';
 import { ReloadDataService } from '../../../shared/services/reload-data.service';
 import { SharedModule } from '../../../shared/shared.module';
-import { ISkill } from '../skill/skill.interface';
+import { ISkill, ISubSkill } from '../skill/skill.interface';
 
 const URL_SKILL = `${Constant.URL_BASE}${Constant.URL_SKILL_DETAIL}`;
 
 @Component({
-    selector: 'srms-skill-form',
+    selector: 'srms-skill-detail-form',
     standalone: true,
     imports: [
         CommonModule,
@@ -43,7 +43,7 @@ const URL_SKILL = `${Constant.URL_BASE}${Constant.URL_SKILL_DETAIL}`;
     styleUrl: './skill-detail-form.component.scss',
 })
 export class SkillDetailFormComponent implements OnInit {
-    @Input() skill: Signal<ISkill | null> = signal(null);
+    @Input() skill: Signal<ISubSkill | null> = signal(null);
     @Output('frmSkill') form: EventEmitter<Signal<FormGroup>>;
     public frmSkill: Signal<FormGroup>;
     private regexp =
@@ -66,10 +66,10 @@ export class SkillDetailFormComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        if (this.skill()?.skillId !== undefined) {
+        if (this.skill()?.subSkillId !== undefined) {
             this.frmSkill().setControl(
-                'skillId',
-                new FormControl(this.skill()?.skillId, [
+                'subSkillId',
+                new FormControl(this.skill()?.subSkillId, [
                     Validators.required,
                     Validators.pattern(this.regexp),
                 ])
@@ -80,12 +80,18 @@ export class SkillDetailFormComponent implements OnInit {
                 new FormControl<boolean>(!this.skill()?.disabled || false)
             );
         }
+        this.frmSkill().setControl(
+            'skillId',
+            new FormControl(this.skill()?.skillId, [
+                Validators.pattern(this.regexp),
+            ])
+        );
         this.form.emit(computed(() => this.frmSkill()));
     }
 
     onSubmit(): void {
         if (this.frmSkill().valid) {
-            if (this.skill()?.skillId === undefined) {
+            if (this.skill()?.subSkillId === undefined) {
                 this.createSkill();
             } else {
                 this.updateSkill();
@@ -95,6 +101,7 @@ export class SkillDetailFormComponent implements OnInit {
 
     private createSkill(): void {
         const body = this.frmSkill().value;
+        console.log(body);
         this.httpService.post(URL_SKILL, body).subscribe({
             next: (response) => {
                 console.log(response);
@@ -115,8 +122,8 @@ export class SkillDetailFormComponent implements OnInit {
         body.disable = !body.disabled;
         delete body.disabled;
 
-        const url = `${URL_SKILL}/${this.skill()?.skillId}`;
-        delete body.skillId;
+        const url = `${URL_SKILL}/${this.skill()?.subSkillId}`;
+        delete body.subSkillId;
 
         this.httpService.put(url, body).subscribe({
             next: (response) => {
