@@ -14,14 +14,17 @@ namespace Profiles.Infrastructure.Services
   {
     private readonly ApplicationService _applicationService;
     private readonly ISubSkillRepository<SubSkillModel> _subSkillRepository;
+    private readonly ISquadRepository<SquadModel> _squadRepository;
 
     public ProfilesService(
       ApplicationService applicationService,
-      ISubSkillRepository<SubSkillModel> subSkillRepository
+      ISubSkillRepository<SubSkillModel> subSkillRepository,
+      ISquadRepository<SquadModel> squadRepository
     )
     {
       _applicationService = applicationService;
       _subSkillRepository = subSkillRepository;
+      _squadRepository = squadRepository;
     }
 
     public Task<DeleteCityProfilesResponse> DeleteCityAsync(
@@ -267,7 +270,8 @@ namespace Profiles.Infrastructure.Services
       CallContext context = default
     )
     {
-      var subskill = new UpdateSubSkillApplicationResponse {
+      var subskill = new UpdateSubSkillApplicationResponse
+      {
         SubSkillId = request.SubSkillId!,
         SkillId = request.SkillId,
         Name = request.Name,
@@ -292,12 +296,12 @@ namespace Profiles.Infrastructure.Services
       return new DeleteSubSkillProfilesResponse { SubSkillId = result.SubSkillId.ToString() };
     }
 
-    public async Task<GetSubSkillsProfilesResponse> GetSubSkillAsync(
+    public async Task<GetSubSkillsProfilesResponse> GetSubSkillsAsync(
       GetSubSkillsProfilesRequest request,
       CallContext context = default
     )
     {
-      var result = await _subSkillRepository.GetWithPaginationAsync(
+      var results = await _subSkillRepository.GetWithPaginationAsync(
         request.Page,
         request.Limit,
         request.Sort,
@@ -308,13 +312,90 @@ namespace Profiles.Infrastructure.Services
       var total = await _subSkillRepository.GetCountAsync(request.Filter, request.FilterBy);
       return new GetSubSkillsProfilesResponse
       {
-        SubSkills = result
+        SubSkills = results
           .Select(subskill => new SubSkillProfiles
           {
             SubSkillId = subskill.SubSkillId.ToString(),
             SkillId = subskill.SkillId.ToString(),
             Name = subskill.Name,
             Disabled = subskill.Disabled,
+          })
+          .ToList(),
+        Total = total,
+      };
+    }
+
+    public async Task<RegisterSquadProfilesResponse> RegisterSquadAsync(
+      RegisterSquadProfilesRequest request,
+      CallContext context = default
+    )
+    {
+      var squad = new SquadModel
+      {
+        SquadId = Guid.NewGuid(),
+        Name = request.Name,
+        Disabled = false,
+      };
+      var result = await _squadRepository.AddAsync(squad);
+      return new RegisterSquadProfilesResponse
+      {
+        SquadId = result.SquadId.ToString(),
+        Name = result.Name,
+        Disabled = result.Disabled,
+      };
+    }
+
+    public async Task<UpdateSquadProfilesResponse> UpdateSquadAsync(
+      UpdateSquadProfilesRequest request,
+      CallContext context = default
+    )
+    {
+      var squad = new UpdateSquadApplicationResponse
+      {
+        SquadId = request.SquadId!,
+        Name = request.Name,
+        Disabled = !request.Disable,
+      };
+      var result = await _squadRepository.UpdateAsync(Guid.Parse(request.SquadId!), squad);
+      return new UpdateSquadProfilesResponse
+      {
+        SquadId = result.SquadId.ToString(),
+        Name = result.Name,
+        Disabled = result.Disabled,
+      };
+    }
+
+    public async Task<DeleteSquadProfilesResponse> DeleteSquadAsync(
+      DeleteSquadProfilesRequest request,
+      CallContext context = default
+    )
+    {
+      var result = await _squadRepository.DeleteAsync(Guid.Parse(request.SquadId));
+      return new DeleteSquadProfilesResponse { SquadId = result.SquadId.ToString() };
+    }
+
+    public async Task<GetSquadsProfilesResponse> GetSquadsAsync(
+      GetSquadsProfilesRequest request,
+      CallContext context = default
+    )
+    {
+      var results = await _squadRepository.GetWithPaginationAsync(
+        request.Page,
+        request.Limit,
+        request.Sort,
+        request.Order ?? "asc",
+        request.Filter,
+        request.FilterBy
+      );
+      var total = await _squadRepository.GetCountAsync(request.Filter, request.FilterBy);
+      return new GetSquadsProfilesResponse
+      {
+        Squads = results
+          .Select(squad => new SquadProfiles
+          {
+            SquadId = squad.SquadId.ToString(),
+            Name = squad.Name,
+            Disabled = squad.Disabled,
           })
           .ToList(),
         Total = total,

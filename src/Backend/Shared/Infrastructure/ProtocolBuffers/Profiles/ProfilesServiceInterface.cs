@@ -171,8 +171,32 @@ namespace Shared.Infrastructure.ProtocolBuffers.Profiles
     );
 
     [OperationContract]
-    Task<GetSubSkillsProfilesResponse> GetSubSkillAsync(
+    Task<GetSubSkillsProfilesResponse> GetSubSkillsAsync(
       GetSubSkillsProfilesRequest request,
+      CallContext context = default
+    );
+
+    [OperationContract]
+    Task<RegisterSquadProfilesResponse> RegisterSquadAsync(
+      RegisterSquadProfilesRequest request,
+      CallContext context = default
+    );
+
+    [OperationContract]
+    Task<UpdateSquadProfilesResponse> UpdateSquadAsync(
+      UpdateSquadProfilesRequest request,
+      CallContext context = default
+    );
+
+    [OperationContract]
+    Task<DeleteSquadProfilesResponse> DeleteSquadAsync(
+      DeleteSquadProfilesRequest request,
+      CallContext context = default
+    );
+
+    [OperationContract]
+    Task<GetSquadsProfilesResponse> GetSquadsAsync(
+      GetSquadsProfilesRequest request,
       CallContext context = default
     );
   }

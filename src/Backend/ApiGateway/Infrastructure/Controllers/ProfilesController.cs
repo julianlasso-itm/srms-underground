@@ -273,7 +273,42 @@ namespace ApiGateway.Infrastructure.Controllers
       [FromQuery] GetSubSkillsProfilesRequest request
     )
     {
-      return await HandleAsync(async () => Ok(await _profilesService.GetSubSkillAsync(request)));
+      return await HandleAsync(async () => Ok(await _profilesService.GetSubSkillsAsync(request)));
+    }
+
+    [Permissions]
+    [HttpPost("squad")]
+    public async Task<IActionResult> RegisterSquadAsync(
+      [FromBody] RegisterSquadProfilesRequest request
+    )
+    {
+      return await HandleAsync(async () => Ok(await _profilesService.RegisterSquadAsync(request)));
+    }
+
+    [Permissions]
+    [HttpPut("squad/{id}")]
+    public async Task<IActionResult> UpdateSquadAsync(
+      string id,
+      [FromBody] UpdateSquadProfilesRequest request
+    )
+    {
+      request.SquadId = id;
+      return await HandleAsync(async () => Ok(await _profilesService.UpdateSquadAsync(request)));
+    }
+
+    [Permissions]
+    [HttpDelete("squad/{id}")]
+    public async Task<IActionResult> DeleteSquadAsync(string id)
+    {
+      var request = new DeleteSquadProfilesRequest { SquadId = id };
+      return await HandleAsync(async () => Ok(await _profilesService.DeleteSquadAsync(request)));
+    }
+
+    [Permissions]
+    [HttpGet("squads")]
+    public async Task<IActionResult> GetSquadsAsync([FromQuery] GetSquadsProfilesRequest request)
+    {
+      return await HandleAsync(async () => Ok(await _profilesService.GetSquadsAsync(request)));
     }
   }
 }

@@ -232,12 +232,44 @@ namespace ApiGateway.Infrastructure.Services
       return Client.DeleteSubSkillAsync(request);
     }
 
-    public Task<GetSubSkillsProfilesResponse> GetSubSkillAsync(
+    public Task<GetSubSkillsProfilesResponse> GetSubSkillsAsync(
       GetSubSkillsProfilesRequest request,
       CallContext context = default
     )
     {
-      return Client.GetSubSkillAsync(request);
+      return Client.GetSubSkillsAsync(request);
+    }
+
+    public Task<RegisterSquadProfilesResponse> RegisterSquadAsync(
+      RegisterSquadProfilesRequest request,
+      CallContext context = default
+    )
+    {
+      return Client.RegisterSquadAsync(request);
+    }
+
+    public Task<UpdateSquadProfilesResponse> UpdateSquadAsync(
+      UpdateSquadProfilesRequest request,
+      CallContext context = default
+    )
+    {
+      return Client.UpdateSquadAsync(request);
+    }
+
+    public Task<DeleteSquadProfilesResponse> DeleteSquadAsync(
+      DeleteSquadProfilesRequest request,
+      CallContext context = default
+    )
+    {
+      return Client.DeleteSquadAsync(request);
+    }
+
+    public Task<GetSquadsProfilesResponse> GetSquadsAsync(
+      GetSquadsProfilesRequest request,
+      CallContext context = default
+    )
+    {
+      return Client.GetSquadsAsync(request);
     }
   }
 }
