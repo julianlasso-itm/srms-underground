@@ -199,5 +199,29 @@ namespace Shared.Infrastructure.ProtocolBuffers.Profiles
       GetSquadsProfilesRequest request,
       CallContext context = default
     );
+
+    [OperationContract]
+    Task<RegisterAssessmentProfilesResponse> RegisterAssessmentAsync(
+      RegisterAssessmentProfilesRequest request,
+      CallContext context = default
+    );
+
+    [OperationContract]
+    Task<UpdateAssessmentProfilesResponse> UpdateAssessmentAsync(
+      UpdateAssessmentProfilesRequest request,
+      CallContext context = default
+    );
+
+    [OperationContract]
+    Task<DeleteAssessmentProfilesResponse> DeleteAssessmentAsync(
+      DeleteAssessmentProfilesRequest request,
+      CallContext context = default
+    );
+
+    [OperationContract]
+    Task<GetAssessmentsProfilesResponse> GetAssessmentsAsync(
+      GetAssessmentsProfilesRequest request,
+      CallContext context = default
+    );
   }
 }

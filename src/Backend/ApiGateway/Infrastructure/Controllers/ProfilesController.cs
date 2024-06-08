@@ -310,5 +310,50 @@ namespace ApiGateway.Infrastructure.Controllers
     {
       return await HandleAsync(async () => Ok(await _profilesService.GetSquadsAsync(request)));
     }
+
+    [Permissions]
+    [HttpPost("assessment")]
+    public async Task<IActionResult> RegisterAssessmentAsync(
+      [FromBody] RegisterAssessmentProfilesRequest request
+    )
+    {
+      return await HandleAsync(
+        async () => Ok(await _profilesService.RegisterAssessmentAsync(request))
+      );
+    }
+
+    [Permissions]
+    [HttpPut("assessment/{id}")]
+    public async Task<IActionResult> UpdateAssessmentAsync(
+      string id,
+      [FromBody] UpdateAssessmentProfilesRequest request
+    )
+    {
+      request.AssessmentId = id;
+      return await HandleAsync(
+        async () => Ok(await _profilesService.UpdateAssessmentAsync(request))
+      );
+    }
+
+    [Permissions]
+    [HttpDelete("assessment/{id}")]
+    public async Task<IActionResult> DeleteAssessmentAsync(string id)
+    {
+      var request = new DeleteAssessmentProfilesRequest { AssessmentId = id };
+      return await HandleAsync(
+        async () => Ok(await _profilesService.DeleteAssessmentAsync(request))
+      );
+    }
+
+    [Permissions]
+    [HttpGet("assessments")]
+    public async Task<IActionResult> GetAssessmentsAsync(
+      [FromQuery] GetAssessmentsProfilesRequest request
+    )
+    {
+      return await HandleAsync(
+        async () => Ok(await _profilesService.GetAssessmentsAsync(request))
+      );
+    }
   }
 }

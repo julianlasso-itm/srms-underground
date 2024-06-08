@@ -271,5 +271,37 @@ namespace ApiGateway.Infrastructure.Services
     {
       return Client.GetSquadsAsync(request);
     }
+
+    public Task<RegisterAssessmentProfilesResponse> RegisterAssessmentAsync(
+      RegisterAssessmentProfilesRequest request,
+      CallContext context = default
+    )
+    {
+      return Client.RegisterAssessmentAsync(request);
+    }
+
+    public Task<UpdateAssessmentProfilesResponse> UpdateAssessmentAsync(
+      UpdateAssessmentProfilesRequest request,
+      CallContext context = default
+    )
+    {
+      return Client.UpdateAssessmentAsync(request);
+    }
+
+    public Task<DeleteAssessmentProfilesResponse> DeleteAssessmentAsync(
+      DeleteAssessmentProfilesRequest request,
+      CallContext context = default
+    )
+    {
+      return Client.DeleteAssessmentAsync(request);
+    }
+
+    public Task<GetAssessmentsProfilesResponse> GetAssessmentsAsync(
+      GetAssessmentsProfilesRequest request,
+      CallContext context = default
+    )
+    {
+      return Client.GetAssessmentsAsync(request);
+    }
   }
 }

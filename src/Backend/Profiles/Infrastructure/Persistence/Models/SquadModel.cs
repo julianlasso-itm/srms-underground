@@ -22,5 +22,8 @@ namespace Profiles.Infrastructure.Persistence.Models
     [Required]
     [Column("sqd_disabled")]
     public bool Disabled { get; set; } = false;
+
+    [InverseProperty("Squad")]
+    public ICollection<AssessmentModel> Assessments { get; set; } = new List<AssessmentModel>();
   }
 }

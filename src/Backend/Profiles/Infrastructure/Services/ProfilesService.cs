@@ -15,16 +15,19 @@ namespace Profiles.Infrastructure.Services
     private readonly ApplicationService _applicationService;
     private readonly ISubSkillRepository<SubSkillModel> _subSkillRepository;
     private readonly ISquadRepository<SquadModel> _squadRepository;
+    private readonly IAssessmentRepository<AssessmentModel> _assessmentRepository;
 
     public ProfilesService(
       ApplicationService applicationService,
       ISubSkillRepository<SubSkillModel> subSkillRepository,
-      ISquadRepository<SquadModel> squadRepository
+      ISquadRepository<SquadModel> squadRepository,
+      IAssessmentRepository<AssessmentModel> assessmentRepository
     )
     {
       _applicationService = applicationService;
       _subSkillRepository = subSkillRepository;
       _squadRepository = squadRepository;
+      _assessmentRepository = assessmentRepository;
     }
 
     public Task<DeleteCityProfilesResponse> DeleteCityAsync(
@@ -396,6 +399,90 @@ namespace Profiles.Infrastructure.Services
             SquadId = squad.SquadId.ToString(),
             Name = squad.Name,
             Disabled = squad.Disabled,
+          })
+          .ToList(),
+        Total = total,
+      };
+    }
+
+    public async Task<RegisterAssessmentProfilesResponse> RegisterAssessmentAsync(
+      RegisterAssessmentProfilesRequest request,
+      CallContext context = default
+    )
+    {
+      var assessment = new AssessmentModel
+      {
+        AssessmentId = Guid.NewGuid(),
+        ProfessionalId = Guid.Parse(request.ProfessionalId),
+        RoleId = Guid.Parse(request.RoleId),
+        SquadId = Guid.Parse(request.SquadId),
+      };
+      var result = await _assessmentRepository.AddAsync(assessment);
+      return new RegisterAssessmentProfilesResponse
+      {
+        AssessmentId = result.AssessmentId.ToString(),
+        ProfessionalId = result.ProfessionalId.ToString(),
+        RoleId = result.RoleId.ToString(),
+        SquadId = result.SquadId.ToString(),
+      };
+    }
+
+    public async Task<UpdateAssessmentProfilesResponse> UpdateAssessmentAsync(
+      UpdateAssessmentProfilesRequest request,
+      CallContext context = default
+    )
+    {
+      var assessment = new UpdateAssessmentApplicationResponse
+      {
+        ProfessionalId = request.ProfessionalId,
+        RoleId = request.RoleId,
+        SquadId = request.SquadId,
+      };
+      var result = await _assessmentRepository.UpdateAsync(
+        Guid.Parse(request.AssessmentId!),
+        assessment
+      );
+      return new UpdateAssessmentProfilesResponse
+      {
+        AssessmentId = result.AssessmentId.ToString(),
+        ProfessionalId = result.ProfessionalId.ToString(),
+        RoleId = result.RoleId.ToString(),
+        SquadId = result.SquadId.ToString(),
+      };
+    }
+
+    public async Task<DeleteAssessmentProfilesResponse> DeleteAssessmentAsync(
+      DeleteAssessmentProfilesRequest request,
+      CallContext context = default
+    )
+    {
+      var result = await _assessmentRepository.DeleteAsync(Guid.Parse(request.AssessmentId));
+      return new DeleteAssessmentProfilesResponse { AssessmentId = result.AssessmentId.ToString() };
+    }
+
+    public async Task<GetAssessmentsProfilesResponse> GetAssessmentsAsync(
+      GetAssessmentsProfilesRequest request,
+      CallContext context = default
+    )
+    {
+      var results = await _assessmentRepository.GetWithPaginationAsync(
+        request.Page,
+        request.Limit,
+        request.Sort,
+        request.Order ?? "asc",
+        request.Filter,
+        request.FilterBy
+      );
+      var total = await _assessmentRepository.GetCountAsync(request.Filter, request.FilterBy);
+      return new GetAssessmentsProfilesResponse
+      {
+        Assessments = results
+          .Select(assessment => new AssessmentProfiles
+          {
+            AssessmentId = assessment.AssessmentId.ToString(),
+            ProfessionalId = assessment.ProfessionalId.ToString(),
+            RoleId = assessment.RoleId.ToString(),
+            SquadId = assessment.SquadId.ToString(),
           })
           .ToList(),
         Total = total,

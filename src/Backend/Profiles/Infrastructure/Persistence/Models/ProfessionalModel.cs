@@ -27,5 +27,8 @@ namespace Profiles.Infrastructure.Persistence.Models
     [Required]
     [Column("prf_disabled")]
     public bool Disabled { get; set; }
+
+    [InverseProperty("Professional")]
+    public ICollection<AssessmentModel> Assessments { get; set; } = new List<AssessmentModel>();
   }
 }

@@ -37,6 +37,7 @@ builder.Services.AddScoped<ISkillRepository<SkillModel>, SkillRepository>();
 builder.Services.AddScoped<ISubSkillRepository<SubSkillModel>, SubSkillRepository>();
 builder.Services.AddScoped<ISquadRepository<SquadModel>, SquadRepository>();
 builder.Services.AddScoped<IProfessionalRepository<ProfessionalModel>, ProfessionalRepository>();
+builder.Services.AddScoped<IAssessmentRepository<AssessmentModel>, AssessmentRepository>();
 builder.Services.AddScoped<ILevelRepository<LevelModel>, LevelRepository>();
 // ============================
 

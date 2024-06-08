@@ -26,5 +26,8 @@ namespace Profiles.Infrastructure.Persistence.Models
     [Required]
     [Column("rol_disabled")]
     public bool Disabled { get; set; }
+
+    [InverseProperty("Role")]
+    public ICollection<AssessmentModel> Assessments { get; set; } = new List<AssessmentModel>();
   }
 }
