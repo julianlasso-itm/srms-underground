@@ -410,12 +410,12 @@ namespace Profiles.Infrastructure.Services
       CallContext context = default
     )
     {
-      var assessment = new AssessmentModel
+      var assessment = new RegisterAssessmentApplicationResponse
       {
-        AssessmentId = Guid.NewGuid(),
-        ProfessionalId = Guid.Parse(request.ProfessionalId),
-        RoleId = Guid.Parse(request.RoleId),
-        SquadId = Guid.Parse(request.SquadId),
+        AssessmentId = Guid.NewGuid().ToString(),
+        ProfessionalId = request.ProfessionalId,
+        RoleId = request.RoleId,
+        SquadId = request.SquadId,
       };
       var result = await _assessmentRepository.AddAsync(assessment);
       return new RegisterAssessmentProfilesResponse

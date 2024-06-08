@@ -29,5 +29,8 @@ namespace Profiles.Infrastructure.Persistence.Models
 
     [DeleteBehavior(DeleteBehavior.Restrict)]
     public SkillModel Skill { get; set; }
+
+    [InverseProperty("SubSkill")]
+    public ICollection<ResultModel> Results { get; set; } = new List<ResultModel>();
   }
 }
