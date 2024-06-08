@@ -82,5 +82,47 @@ namespace Profiles.Infrastructure.Persistence.Repositories
       }
       return await base.DeleteAsync(id);
     }
+
+    public new async Task<IEnumerable<RoleModel>> GetWithPaginationAsync(
+      int page,
+      int limit,
+      string? sort = null,
+      string order = "asc",
+      string? filter = null,
+      string? filterBy = null
+    )
+    {
+      var data = await base.GetWithPaginationAsync(page, limit, sort, order, filter, filterBy);
+      if (data.Count() > 0)
+      {
+        var info = data.Select(role =>
+        {
+          if (Context.Entry(role).Collection(role => role.RolePerSkills).IsLoaded == false)
+          {
+            Context.Entry(role).Collection(role => role.RolePerSkills).Load();
+          }
+
+          if (Context.Entry(role).Collection(role => role.RolePerSkills).IsLoaded == true)
+          {
+            var info = role.RolePerSkills.Select(rolePerSkill =>
+            {
+              if (
+                Context.Entry(rolePerSkill).Reference(rolePerSkill => rolePerSkill.Skill).IsLoaded
+                == false
+              )
+              {
+                Context.Entry(rolePerSkill).Reference(rolePerSkill => rolePerSkill.Skill).Load();
+              }
+              return Task.CompletedTask;
+            });
+            return Task.WhenAll(info);
+          }
+
+          return Task.CompletedTask;
+        });
+        await Task.WhenAll(info);
+      }
+      return data;
+    }
   }
 }

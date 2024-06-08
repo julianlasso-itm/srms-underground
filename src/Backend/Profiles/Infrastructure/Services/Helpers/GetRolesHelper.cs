@@ -43,7 +43,15 @@ namespace Profiles.Infrastructure.Services.Helpers
             RoleId = role.RoleId.ToString(),
             Name = role.Name,
             Description = role.Description,
-            Disabled = role.Disabled
+            Disabled = role.Disabled,
+            Skills = role
+              .RolePerSkills.Select(rolePerSkill => new SkillProfiles
+              {
+                SkillId = rolePerSkill.SkillId.ToString(),
+                Name = rolePerSkill.Skill.Name,
+                Disabled = rolePerSkill.Skill.Disabled
+              })
+              .ToList()
           })
           .ToList(),
         Total = data.Total
