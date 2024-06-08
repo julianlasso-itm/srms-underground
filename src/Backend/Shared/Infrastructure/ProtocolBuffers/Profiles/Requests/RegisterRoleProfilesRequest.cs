@@ -10,5 +10,8 @@ namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Requests
 
     [DataMember(Order = 2, IsRequired = false)]
     public string? Description { get; set; }
+
+    [DataMember(Order = 3, IsRequired = false)]
+    public IEnumerable<string>? Skills { get; set; }
   }
 }

@@ -29,5 +29,9 @@ namespace Profiles.Infrastructure.Persistence.Models
 
     [InverseProperty("Role")]
     public ICollection<AssessmentModel> Assessments { get; set; } = new List<AssessmentModel>();
+
+    [InverseProperty("Role")]
+    public ICollection<RolePerSkillModel> RolePerSkills { get; set; } =
+      new List<RolePerSkillModel>();
   }
 }

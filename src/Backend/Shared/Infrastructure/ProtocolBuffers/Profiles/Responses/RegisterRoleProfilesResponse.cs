@@ -16,5 +16,8 @@ namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Responses
 
     [DataMember(Order = 4)]
     public required bool Disabled { get; set; }
+
+    [DataMember(Order = 5)]
+    public required IEnumerable<string>? Skills { get; set; }
   }
 }

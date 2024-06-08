@@ -26,6 +26,7 @@ namespace Profiles.Domain.Aggregates.Helpers
         Name = role.Name.Value,
         Description = role.Description?.Value,
         Disabled = role.Disabled.Value,
+        Skills = request.Skills,
       };
     }
 

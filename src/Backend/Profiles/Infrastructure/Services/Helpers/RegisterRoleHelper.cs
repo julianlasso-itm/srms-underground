@@ -19,7 +19,12 @@ namespace Profiles.Infrastructure.Services.Helpers
 
     private static RegisterRoleCommand MapToRegisterRoleCommand(RegisterRoleProfilesRequest request)
     {
-      return new RegisterRoleCommand { Name = request.Name, Description = request.Description };
+      return new RegisterRoleCommand
+      {
+        Name = request.Name,
+        Description = request.Description,
+        Skills = request.Skills
+      };
     }
 
     private static RegisterRoleProfilesResponse MapToRegisterRoleResponse(
@@ -32,6 +37,7 @@ namespace Profiles.Infrastructure.Services.Helpers
         Name = data.Name,
         Description = data.Description,
         Disabled = data.Disabled,
+        Skills = data.Skills,
       };
     }
   }

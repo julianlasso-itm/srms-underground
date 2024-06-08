@@ -12,7 +12,7 @@ using Profiles.Infrastructure.Persistence;
 namespace Profiles.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240608025755_Tables")]
+    [Migration("20240608043703_Tables")]
     partial class Tables
     {
         /// <inheritdoc />
@@ -24,6 +24,47 @@ namespace Profiles.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("Profiles.Infrastructure.Persistence.Models.AssessmentModel", b =>
+                {
+                    b.Property<Guid>("AssessmentId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("asm_assessment_id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("deleted_at");
+
+                    b.Property<Guid>("ProfessionalId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("prf_professional_id");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("rol_role_id");
+
+                    b.Property<Guid>("SquadId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("sqd_squad_id");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("AssessmentId");
+
+                    b.HasIndex("ProfessionalId");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("SquadId");
+
+                    b.ToTable("assessment");
+                });
 
             modelBuilder.Entity("Profiles.Infrastructure.Persistence.Models.CityModel", b =>
                 {
@@ -57,878 +98,878 @@ namespace Profiles.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            CityId = new Guid("9039321f-b78a-4e48-b1fa-935c86e7bfe8"),
+                            CityId = new Guid("7f86f19b-2508-45f0-8142-71ec277b8cf2"),
                             Disabled = false,
                             Name = "Leticia",
-                            ProvinceId = new Guid("8f5d4d86-b4aa-4866-94ad-e5e97687a007")
+                            ProvinceId = new Guid("b3069941-627f-4e09-9523-dd0c72253fae")
                         },
                         new
                         {
-                            CityId = new Guid("ea5ee31a-8b85-4a10-80b1-e506e79a1868"),
+                            CityId = new Guid("b9214f06-c891-43d7-bcb0-57ad35991c8b"),
                             Disabled = false,
                             Name = "Medellín",
-                            ProvinceId = new Guid("40425c6e-abe2-439a-aa3a-b4fba23eb116")
+                            ProvinceId = new Guid("149f741d-357b-49d0-b08e-28d789eb2e66")
                         },
                         new
                         {
-                            CityId = new Guid("5102c375-a52f-447e-9e3c-6da75c033ebe"),
+                            CityId = new Guid("df355dd5-fca4-4b2e-bc15-b006ef7f066c"),
                             Disabled = false,
                             Name = "Apartadó",
-                            ProvinceId = new Guid("40425c6e-abe2-439a-aa3a-b4fba23eb116")
+                            ProvinceId = new Guid("149f741d-357b-49d0-b08e-28d789eb2e66")
                         },
                         new
                         {
-                            CityId = new Guid("4024b1a5-2059-460e-ab5b-d582bd885c8c"),
+                            CityId = new Guid("961ef995-5bbf-4fe6-9829-b1fb60b4d2b5"),
                             Disabled = false,
                             Name = "Turbo",
-                            ProvinceId = new Guid("40425c6e-abe2-439a-aa3a-b4fba23eb116")
+                            ProvinceId = new Guid("149f741d-357b-49d0-b08e-28d789eb2e66")
                         },
                         new
                         {
-                            CityId = new Guid("b02a3b3e-3f44-4c4e-a063-a7cebfce6ac1"),
+                            CityId = new Guid("19c98157-cf62-4564-8e5b-95e6c35336ba"),
                             Disabled = false,
                             Name = "Arauca",
-                            ProvinceId = new Guid("60ad0eca-a433-4952-aedd-a5af106257e5")
+                            ProvinceId = new Guid("9b41ec32-7e41-4929-94fe-600e1d1f5294")
                         },
                         new
                         {
-                            CityId = new Guid("e8676e7f-0294-4952-b3f6-c9f790e15447"),
+                            CityId = new Guid("4f22c4f8-c2d0-4fc6-af79-dcfaf69b5771"),
                             Disabled = false,
                             Name = "Saravena",
-                            ProvinceId = new Guid("60ad0eca-a433-4952-aedd-a5af106257e5")
+                            ProvinceId = new Guid("9b41ec32-7e41-4929-94fe-600e1d1f5294")
                         },
                         new
                         {
-                            CityId = new Guid("285c1155-7cf6-4479-aac1-7373832811a1"),
+                            CityId = new Guid("e01ca171-2d42-4790-a2f9-fc42330d6dfb"),
                             Disabled = false,
                             Name = "Fortul",
-                            ProvinceId = new Guid("60ad0eca-a433-4952-aedd-a5af106257e5")
+                            ProvinceId = new Guid("9b41ec32-7e41-4929-94fe-600e1d1f5294")
                         },
                         new
                         {
-                            CityId = new Guid("f960c663-5459-4339-a591-a19dd6013417"),
+                            CityId = new Guid("d08f9288-3e48-40f6-b7db-e5c3dbcc2da5"),
                             Disabled = false,
                             Name = "Barranquilla",
-                            ProvinceId = new Guid("0b0d286b-21c2-4d1d-9745-17d9c2e529f7")
+                            ProvinceId = new Guid("e2c590da-9bf6-4b7d-bd8b-13a454a92931")
                         },
                         new
                         {
-                            CityId = new Guid("d2bc1ce3-d9c7-4fe4-a743-765dfc94a62d"),
+                            CityId = new Guid("d68c387e-2919-4221-81c9-b4988b455a43"),
                             Disabled = false,
                             Name = "Soledad",
-                            ProvinceId = new Guid("0b0d286b-21c2-4d1d-9745-17d9c2e529f7")
+                            ProvinceId = new Guid("e2c590da-9bf6-4b7d-bd8b-13a454a92931")
                         },
                         new
                         {
-                            CityId = new Guid("8972349d-e55a-4bd9-8133-1bc756b961fe"),
+                            CityId = new Guid("5d5afda8-cd20-4b99-9e06-a0abd08b0a5c"),
                             Disabled = false,
                             Name = "Puerto Colombia",
-                            ProvinceId = new Guid("0b0d286b-21c2-4d1d-9745-17d9c2e529f7")
+                            ProvinceId = new Guid("e2c590da-9bf6-4b7d-bd8b-13a454a92931")
                         },
                         new
                         {
-                            CityId = new Guid("64d14d20-23f3-417b-80f6-3dc9f135514f"),
+                            CityId = new Guid("4364b0b5-f508-4a5b-baa7-b9c1f2e3b7b8"),
                             Disabled = false,
                             Name = "Cartagena de Indias",
-                            ProvinceId = new Guid("aa2d2d92-3024-427f-81b9-6aec0b305a8a")
+                            ProvinceId = new Guid("4c5cbb38-c803-4306-86cd-3c948c7303b9")
                         },
                         new
                         {
-                            CityId = new Guid("96402fe4-6820-41e8-8c1b-a9dbb978d7dc"),
+                            CityId = new Guid("c0e0c167-3d97-4957-9c56-661160f9ef14"),
                             Disabled = false,
                             Name = "Magangué",
-                            ProvinceId = new Guid("aa2d2d92-3024-427f-81b9-6aec0b305a8a")
+                            ProvinceId = new Guid("4c5cbb38-c803-4306-86cd-3c948c7303b9")
                         },
                         new
                         {
-                            CityId = new Guid("cf4708ac-78d8-4de1-9766-e4bc61044e6f"),
+                            CityId = new Guid("a724bf86-c246-4436-b4ee-b2ad3a620511"),
                             Disabled = false,
                             Name = "Cartagena del Chairá",
-                            ProvinceId = new Guid("aa2d2d92-3024-427f-81b9-6aec0b305a8a")
+                            ProvinceId = new Guid("4c5cbb38-c803-4306-86cd-3c948c7303b9")
                         },
                         new
                         {
-                            CityId = new Guid("cf0580a4-26b0-4cb4-8a18-66f58204191e"),
+                            CityId = new Guid("7e4ba276-2903-4155-9f3f-d64c9a7b9777"),
                             Disabled = false,
                             Name = "Tunja",
-                            ProvinceId = new Guid("4fbe7a63-ce0d-485e-b360-d94aa7a3c23e")
+                            ProvinceId = new Guid("055aef5a-47a8-4cee-9c8e-9609f3701cea")
                         },
                         new
                         {
-                            CityId = new Guid("72f5f57f-cd3f-4797-beb7-f9ee1df44cc9"),
+                            CityId = new Guid("b27653ff-adb0-4125-a882-10f0c046482a"),
                             Disabled = false,
                             Name = "Sogamoso",
-                            ProvinceId = new Guid("4fbe7a63-ce0d-485e-b360-d94aa7a3c23e")
+                            ProvinceId = new Guid("055aef5a-47a8-4cee-9c8e-9609f3701cea")
                         },
                         new
                         {
-                            CityId = new Guid("f60b00b4-8ad2-4cb2-a7eb-edf3cb2fb849"),
+                            CityId = new Guid("2bca1c74-d439-44fd-856f-c26e542a18bc"),
                             Disabled = false,
                             Name = "Duitama",
-                            ProvinceId = new Guid("4fbe7a63-ce0d-485e-b360-d94aa7a3c23e")
+                            ProvinceId = new Guid("055aef5a-47a8-4cee-9c8e-9609f3701cea")
                         },
                         new
                         {
-                            CityId = new Guid("835acef0-74b6-40c7-9da4-e37536f1e237"),
+                            CityId = new Guid("bdeb3270-c05b-47d5-ac2b-bff17d0a2f3f"),
                             Disabled = false,
                             Name = "Manizales",
-                            ProvinceId = new Guid("662befe1-f710-4694-9c85-b9c29dc05fa0")
+                            ProvinceId = new Guid("b605f028-f6e9-4e21-aeb5-79a3068a0b15")
                         },
                         new
                         {
-                            CityId = new Guid("f2ead246-6c29-4554-aff9-18155e906bd7"),
+                            CityId = new Guid("7e68c19e-963c-4d57-9bc3-4ddfd31e512a"),
                             Disabled = false,
                             Name = "Pereira",
-                            ProvinceId = new Guid("662befe1-f710-4694-9c85-b9c29dc05fa0")
+                            ProvinceId = new Guid("b605f028-f6e9-4e21-aeb5-79a3068a0b15")
                         },
                         new
                         {
-                            CityId = new Guid("a0a181bb-e070-4131-9df3-959ebe53410e"),
+                            CityId = new Guid("9d01b1b7-cd59-4159-baed-28ef551d2784"),
                             Disabled = false,
                             Name = "Chinchiná",
-                            ProvinceId = new Guid("662befe1-f710-4694-9c85-b9c29dc05fa0")
+                            ProvinceId = new Guid("b605f028-f6e9-4e21-aeb5-79a3068a0b15")
                         },
                         new
                         {
-                            CityId = new Guid("cc8193f4-f0f5-42c2-85f2-fe57b28f9ab1"),
+                            CityId = new Guid("5295f9a0-f827-476e-8b56-1873b0049718"),
                             Disabled = false,
                             Name = "Florencia",
-                            ProvinceId = new Guid("eda9dc13-c0fe-42eb-ad4c-c5a7573ca4cf")
+                            ProvinceId = new Guid("f2de2cb3-c911-43e0-99ba-6a287c74e9f9")
                         },
                         new
                         {
-                            CityId = new Guid("e5be225a-860b-4657-874f-3f7c155790c0"),
+                            CityId = new Guid("ff9391a6-5665-464c-8191-28535d2d0676"),
                             Disabled = false,
                             Name = "Cartagena del Chairá",
-                            ProvinceId = new Guid("eda9dc13-c0fe-42eb-ad4c-c5a7573ca4cf")
+                            ProvinceId = new Guid("f2de2cb3-c911-43e0-99ba-6a287c74e9f9")
                         },
                         new
                         {
-                            CityId = new Guid("699e5c05-634c-4774-80e7-e634d1dcacd1"),
+                            CityId = new Guid("00dce668-ccd1-4a28-ab77-40c4d7e9bbc6"),
                             Disabled = false,
                             Name = "Morelia",
-                            ProvinceId = new Guid("eda9dc13-c0fe-42eb-ad4c-c5a7573ca4cf")
+                            ProvinceId = new Guid("f2de2cb3-c911-43e0-99ba-6a287c74e9f9")
                         },
                         new
                         {
-                            CityId = new Guid("5e30eb43-d01a-446c-99d0-f653cc080b64"),
+                            CityId = new Guid("ab8d8c7f-c878-460c-b05f-98a966a12899"),
                             Disabled = false,
                             Name = "Yopal",
-                            ProvinceId = new Guid("f34f9f4c-44a2-40b0-a391-17182d6fcc67")
+                            ProvinceId = new Guid("bb2e0688-d812-444e-98d2-f15376ec8948")
                         },
                         new
                         {
-                            CityId = new Guid("cee7985f-fca2-4277-b849-8eafcf2521e4"),
+                            CityId = new Guid("0faf2024-2b87-48f3-877f-fd3d7b843feb"),
                             Disabled = false,
                             Name = "Aguazul",
-                            ProvinceId = new Guid("f34f9f4c-44a2-40b0-a391-17182d6fcc67")
+                            ProvinceId = new Guid("bb2e0688-d812-444e-98d2-f15376ec8948")
                         },
                         new
                         {
-                            CityId = new Guid("47a0a287-52cb-460b-9f33-4025b47ba771"),
+                            CityId = new Guid("477ce0bc-1a68-4dab-9f28-e9c745e1bf6e"),
                             Disabled = false,
                             Name = "Tauramena",
-                            ProvinceId = new Guid("f34f9f4c-44a2-40b0-a391-17182d6fcc67")
+                            ProvinceId = new Guid("bb2e0688-d812-444e-98d2-f15376ec8948")
                         },
                         new
                         {
-                            CityId = new Guid("d10cc2b7-7a42-459e-836b-e13071b44bc1"),
+                            CityId = new Guid("39be6cc1-ea2c-4bd7-8ead-4d34aa4f0006"),
                             Disabled = false,
                             Name = "Popayán",
-                            ProvinceId = new Guid("822cac7a-c804-4ba1-8d73-abfeaf566272")
+                            ProvinceId = new Guid("544675b9-3f99-4a42-a326-da2afe77deee")
                         },
                         new
                         {
-                            CityId = new Guid("35a86551-b845-47d9-95ac-dc23b14246c8"),
+                            CityId = new Guid("0b3b1b52-8776-414f-bc99-ec5d1f6c6d9c"),
                             Disabled = false,
                             Name = "Silvia",
-                            ProvinceId = new Guid("822cac7a-c804-4ba1-8d73-abfeaf566272")
+                            ProvinceId = new Guid("544675b9-3f99-4a42-a326-da2afe77deee")
                         },
                         new
                         {
-                            CityId = new Guid("79ab8d32-f2ef-42d5-b80a-dd92ac61add7"),
+                            CityId = new Guid("47f6c774-20da-4416-8b95-c186d6b7f231"),
                             Disabled = false,
                             Name = "Santander de Quilichao",
-                            ProvinceId = new Guid("822cac7a-c804-4ba1-8d73-abfeaf566272")
+                            ProvinceId = new Guid("544675b9-3f99-4a42-a326-da2afe77deee")
                         },
                         new
                         {
-                            CityId = new Guid("fcb2570e-a518-49f3-a93b-d982dd035c5a"),
+                            CityId = new Guid("99081c93-0c66-4484-9c21-a714272d8adc"),
                             Disabled = false,
                             Name = "Valledupar",
-                            ProvinceId = new Guid("99a295e3-9403-41c2-bc92-f52ef186e7e3")
+                            ProvinceId = new Guid("cce65031-ee71-4dc0-9130-b03b1a220e7d")
                         },
                         new
                         {
-                            CityId = new Guid("5ec86bb0-a3a8-4762-9dd3-f091a4b8b7ae"),
+                            CityId = new Guid("8659e090-08a0-4479-a3b3-dcf27a4085a8"),
                             Disabled = false,
                             Name = "Aguachica",
-                            ProvinceId = new Guid("99a295e3-9403-41c2-bc92-f52ef186e7e3")
+                            ProvinceId = new Guid("cce65031-ee71-4dc0-9130-b03b1a220e7d")
                         },
                         new
                         {
-                            CityId = new Guid("9051e15a-4df0-4832-b42f-bdf220118905"),
+                            CityId = new Guid("7269374f-b00f-44cd-b8ed-a74732dd7d07"),
                             Disabled = false,
                             Name = "La Paz",
-                            ProvinceId = new Guid("99a295e3-9403-41c2-bc92-f52ef186e7e3")
+                            ProvinceId = new Guid("cce65031-ee71-4dc0-9130-b03b1a220e7d")
                         },
                         new
                         {
-                            CityId = new Guid("a85036b4-2bad-4408-982d-e3345ded617a"),
+                            CityId = new Guid("100340ae-1cf2-4a18-bec9-ac37696bc156"),
                             Disabled = false,
                             Name = "Quibdó",
-                            ProvinceId = new Guid("7d20ff47-fb82-4bec-9c91-cb3c0e28a9ec")
+                            ProvinceId = new Guid("fdb0669b-5c04-496b-86ec-07eafd64e20e")
                         },
                         new
                         {
-                            CityId = new Guid("dd196bca-8114-40ba-b512-f779a55a0711"),
+                            CityId = new Guid("588731a7-2ee5-4292-8566-a0898e4b8e68"),
                             Disabled = false,
                             Name = "Istmina",
-                            ProvinceId = new Guid("7d20ff47-fb82-4bec-9c91-cb3c0e28a9ec")
+                            ProvinceId = new Guid("fdb0669b-5c04-496b-86ec-07eafd64e20e")
                         },
                         new
                         {
-                            CityId = new Guid("2ba73d98-cb1f-4521-9975-aa47f5c4edcc"),
+                            CityId = new Guid("65e0145f-d449-43b9-9626-5759495d02f2"),
                             Disabled = false,
                             Name = "Novita",
-                            ProvinceId = new Guid("7d20ff47-fb82-4bec-9c91-cb3c0e28a9ec")
+                            ProvinceId = new Guid("fdb0669b-5c04-496b-86ec-07eafd64e20e")
                         },
                         new
                         {
-                            CityId = new Guid("53da6ea1-f9a1-4b6c-a6f5-48133d0e99dd"),
+                            CityId = new Guid("a3eabdd8-f5c7-41f7-a5d4-5dbb35a54dbc"),
                             Disabled = false,
                             Name = "Montería",
-                            ProvinceId = new Guid("deaa059e-a368-4592-8ad9-2fc9a710fb4f")
+                            ProvinceId = new Guid("05e22edb-1694-4828-b079-440ea4d49cad")
                         },
                         new
                         {
-                            CityId = new Guid("5624d836-c8ac-4d93-91fc-2ee931989599"),
+                            CityId = new Guid("0126ba72-570c-4348-bd66-32bf4600f8fa"),
                             Disabled = false,
                             Name = "Cereté",
-                            ProvinceId = new Guid("deaa059e-a368-4592-8ad9-2fc9a710fb4f")
+                            ProvinceId = new Guid("05e22edb-1694-4828-b079-440ea4d49cad")
                         },
                         new
                         {
-                            CityId = new Guid("291d777f-b85e-4a0e-9083-661c953a1739"),
+                            CityId = new Guid("82497b6b-cca5-4344-b14f-57eec6da5321"),
                             Disabled = false,
                             Name = "Lorica",
-                            ProvinceId = new Guid("deaa059e-a368-4592-8ad9-2fc9a710fb4f")
+                            ProvinceId = new Guid("05e22edb-1694-4828-b079-440ea4d49cad")
                         },
                         new
                         {
-                            CityId = new Guid("ba153edd-5d6e-4513-a6b7-86de605feac9"),
+                            CityId = new Guid("1421abaf-0f28-4294-bb52-f6a88665bd0d"),
                             Disabled = false,
                             Name = "Bogotá",
-                            ProvinceId = new Guid("4503b414-9297-4d41-9d34-43002159eab7")
+                            ProvinceId = new Guid("0bfbdcbb-f0b9-4587-ab00-48a0ff75d28a")
                         },
                         new
                         {
-                            CityId = new Guid("279a1cb3-03d2-434f-ab33-4beabbdda034"),
+                            CityId = new Guid("52bbf7f5-4c51-4ead-8a05-3f6f72d76646"),
                             Disabled = false,
                             Name = "Soacha",
-                            ProvinceId = new Guid("4503b414-9297-4d41-9d34-43002159eab7")
+                            ProvinceId = new Guid("0bfbdcbb-f0b9-4587-ab00-48a0ff75d28a")
                         },
                         new
                         {
-                            CityId = new Guid("9d63c49d-2a42-4d12-bc2b-39f49e526ed0"),
+                            CityId = new Guid("97b44dae-0594-49c5-b06f-b3c2d3f3d8df"),
                             Disabled = false,
                             Name = "Zipaquirá",
-                            ProvinceId = new Guid("4503b414-9297-4d41-9d34-43002159eab7")
+                            ProvinceId = new Guid("0bfbdcbb-f0b9-4587-ab00-48a0ff75d28a")
                         },
                         new
                         {
-                            CityId = new Guid("6d57907c-9277-4b4c-b29e-d1d81ce52640"),
+                            CityId = new Guid("3cfd6f7c-dae8-40bf-921c-cf7eac34235d"),
                             Disabled = false,
                             Name = "Inírida",
-                            ProvinceId = new Guid("4ea7cf1e-51b9-485d-bf6e-8fc2f6775e7c")
+                            ProvinceId = new Guid("a86d4b73-6e6e-4581-9886-aa7a91778444")
                         },
                         new
                         {
-                            CityId = new Guid("b3dd69ef-c6c3-409e-8606-64cd8280251c"),
+                            CityId = new Guid("39d244d1-1bc4-4dd2-b777-a23c3f2d81c2"),
                             Disabled = false,
                             Name = "Puerto Inírida",
-                            ProvinceId = new Guid("4ea7cf1e-51b9-485d-bf6e-8fc2f6775e7c")
+                            ProvinceId = new Guid("a86d4b73-6e6e-4581-9886-aa7a91778444")
                         },
                         new
                         {
-                            CityId = new Guid("74faff0d-6e8b-4f52-a723-e95ca352bfee"),
+                            CityId = new Guid("3c3a9066-1513-4fa5-9ef7-fc7adc8e8172"),
                             Disabled = false,
                             Name = "Memarí",
-                            ProvinceId = new Guid("4ea7cf1e-51b9-485d-bf6e-8fc2f6775e7c")
+                            ProvinceId = new Guid("a86d4b73-6e6e-4581-9886-aa7a91778444")
                         },
                         new
                         {
-                            CityId = new Guid("c002b03e-ea2a-4d3c-ba8a-85c7d4da3eaa"),
+                            CityId = new Guid("661bc0fe-1224-4514-a3b0-301d91ff1031"),
                             Disabled = false,
                             Name = "San José del Guaviare",
-                            ProvinceId = new Guid("49782e32-f95a-4917-9861-0085faaa7b50")
+                            ProvinceId = new Guid("fcf437ff-6e6d-4dc0-9a5f-740817c9affd")
                         },
                         new
                         {
-                            CityId = new Guid("6bd8ed28-fbd1-47bd-8479-3321b1abb9d4"),
+                            CityId = new Guid("40775b13-06d7-40b4-91b6-e76bcf1f33a6"),
                             Disabled = false,
                             Name = "Calamar",
-                            ProvinceId = new Guid("49782e32-f95a-4917-9861-0085faaa7b50")
+                            ProvinceId = new Guid("fcf437ff-6e6d-4dc0-9a5f-740817c9affd")
                         },
                         new
                         {
-                            CityId = new Guid("ea7ed149-4f87-4c94-93c7-8c239338c27d"),
+                            CityId = new Guid("18a2a7f3-661a-4371-a64f-757562f6fa65"),
                             Disabled = false,
                             Name = "El Retén",
-                            ProvinceId = new Guid("49782e32-f95a-4917-9861-0085faaa7b50")
+                            ProvinceId = new Guid("fcf437ff-6e6d-4dc0-9a5f-740817c9affd")
                         },
                         new
                         {
-                            CityId = new Guid("00d72140-cdaa-4baf-8c80-6c82ac827f86"),
+                            CityId = new Guid("159be93b-2554-41eb-8f07-b62d7a013411"),
                             Disabled = false,
                             Name = "Neiva",
-                            ProvinceId = new Guid("9f363aca-fb3f-4708-aef7-659190d7c141")
+                            ProvinceId = new Guid("39e39f8e-0648-4601-93f7-45c05ae0aaf7")
                         },
                         new
                         {
-                            CityId = new Guid("c45abb3c-a7ab-4a27-9bb6-0456cb5d31d6"),
+                            CityId = new Guid("2d65354f-790e-4e60-b477-441ea5166af7"),
                             Disabled = false,
                             Name = "Garzón",
-                            ProvinceId = new Guid("9f363aca-fb3f-4708-aef7-659190d7c141")
+                            ProvinceId = new Guid("39e39f8e-0648-4601-93f7-45c05ae0aaf7")
                         },
                         new
                         {
-                            CityId = new Guid("4b59a662-738a-4f73-aad7-f5cebaab5d48"),
+                            CityId = new Guid("47caa32e-b854-4fc3-af04-6d910015b02d"),
                             Disabled = false,
                             Name = "Pitalito",
-                            ProvinceId = new Guid("9f363aca-fb3f-4708-aef7-659190d7c141")
+                            ProvinceId = new Guid("39e39f8e-0648-4601-93f7-45c05ae0aaf7")
                         },
                         new
                         {
-                            CityId = new Guid("d86d70aa-ab8b-4e3c-bd32-b9610f65aad8"),
+                            CityId = new Guid("a66a56e3-78e5-40dc-a815-a06cbf322bf0"),
                             Disabled = false,
                             Name = "Riohacha",
-                            ProvinceId = new Guid("b8f089af-8038-4b8b-ad22-b189ec19aefc")
+                            ProvinceId = new Guid("ba768149-8ec4-4824-b681-0531ef20e37c")
                         },
                         new
                         {
-                            CityId = new Guid("c79fc35e-40b8-48d1-96a4-c1845b6f3835"),
+                            CityId = new Guid("8d03ca45-8e67-40dd-8c0f-54ff16725b81"),
                             Disabled = false,
                             Name = "Maicao",
-                            ProvinceId = new Guid("b8f089af-8038-4b8b-ad22-b189ec19aefc")
+                            ProvinceId = new Guid("ba768149-8ec4-4824-b681-0531ef20e37c")
                         },
                         new
                         {
-                            CityId = new Guid("6c44ac90-43be-4775-9833-6e5b5adfd976"),
+                            CityId = new Guid("ebb119de-6885-40d2-b438-c8831ada3e6e"),
                             Disabled = false,
                             Name = "Uribia",
-                            ProvinceId = new Guid("b8f089af-8038-4b8b-ad22-b189ec19aefc")
+                            ProvinceId = new Guid("ba768149-8ec4-4824-b681-0531ef20e37c")
                         },
                         new
                         {
-                            CityId = new Guid("79683241-c743-47ff-b417-5079192af532"),
+                            CityId = new Guid("9b5f07b9-f73d-48d5-98d8-f97f1242aad1"),
                             Disabled = false,
                             Name = "Santa Marta",
-                            ProvinceId = new Guid("a367ce45-d4a6-4520-9906-1870d5849ab8")
+                            ProvinceId = new Guid("3096e523-ff62-4634-af4d-49200229c694")
                         },
                         new
                         {
-                            CityId = new Guid("de9c90ac-66e9-468f-ac28-afa7e686003b"),
+                            CityId = new Guid("76001be2-f1e6-459d-b16f-bf04e18f60b2"),
                             Disabled = false,
                             Name = "Aracataca",
-                            ProvinceId = new Guid("a367ce45-d4a6-4520-9906-1870d5849ab8")
+                            ProvinceId = new Guid("3096e523-ff62-4634-af4d-49200229c694")
                         },
                         new
                         {
-                            CityId = new Guid("debb3353-58f3-4f88-97d4-7c3d0cf01f2f"),
+                            CityId = new Guid("21f737c9-d82f-4805-95ef-65d7daf8cb26"),
                             Disabled = false,
                             Name = "Ciénaga",
-                            ProvinceId = new Guid("a367ce45-d4a6-4520-9906-1870d5849ab8")
+                            ProvinceId = new Guid("3096e523-ff62-4634-af4d-49200229c694")
                         },
                         new
                         {
-                            CityId = new Guid("8647b653-d58c-42b2-ba80-4df110cafe8a"),
+                            CityId = new Guid("e46f7303-4315-4d34-8af6-2db0ecfb3f44"),
                             Disabled = false,
                             Name = "Villavicencio",
-                            ProvinceId = new Guid("209e5d47-00ed-4249-959d-f89d6749160a")
+                            ProvinceId = new Guid("83b109d6-6b7f-4664-b874-56a796d1ee80")
                         },
                         new
                         {
-                            CityId = new Guid("300d49d5-2704-4966-9047-4698962e4a6a"),
+                            CityId = new Guid("f9b01027-fba6-4164-9ea7-65d77cb505f1"),
                             Disabled = false,
                             Name = "Acacias",
-                            ProvinceId = new Guid("209e5d47-00ed-4249-959d-f89d6749160a")
+                            ProvinceId = new Guid("83b109d6-6b7f-4664-b874-56a796d1ee80")
                         },
                         new
                         {
-                            CityId = new Guid("a557af9f-7ebe-4332-b2ff-13e2596e77b2"),
+                            CityId = new Guid("676d9023-967d-49c5-8286-dee94255d7db"),
                             Disabled = false,
                             Name = "Granada",
-                            ProvinceId = new Guid("209e5d47-00ed-4249-959d-f89d6749160a")
+                            ProvinceId = new Guid("83b109d6-6b7f-4664-b874-56a796d1ee80")
                         },
                         new
                         {
-                            CityId = new Guid("da7528d2-4b30-4c94-9069-8810b1b80786"),
+                            CityId = new Guid("0c595fab-e24b-4775-8086-99d20fecad9d"),
                             Disabled = false,
                             Name = "San Juan de Pasto",
-                            ProvinceId = new Guid("f9e082fa-0dee-41eb-aa67-02fddb3a0b3d")
+                            ProvinceId = new Guid("a55922e7-85fc-4fc5-b9d3-6486ee97a41d")
                         },
                         new
                         {
-                            CityId = new Guid("8fb5f0d2-aedf-42f3-944f-7d4a3ae29c21"),
+                            CityId = new Guid("4d15fb31-05c1-4ef8-a8ce-3d14b98bfd91"),
                             Disabled = false,
                             Name = "Tumaco",
-                            ProvinceId = new Guid("f9e082fa-0dee-41eb-aa67-02fddb3a0b3d")
+                            ProvinceId = new Guid("a55922e7-85fc-4fc5-b9d3-6486ee97a41d")
                         },
                         new
                         {
-                            CityId = new Guid("a6f0dfec-57a2-407f-8064-6c32456bb7fb"),
+                            CityId = new Guid("6e52efb2-8b17-45e3-a9a6-0c8fc3b6af60"),
                             Disabled = false,
                             Name = "Ipiales",
-                            ProvinceId = new Guid("f9e082fa-0dee-41eb-aa67-02fddb3a0b3d")
+                            ProvinceId = new Guid("a55922e7-85fc-4fc5-b9d3-6486ee97a41d")
                         },
                         new
                         {
-                            CityId = new Guid("15335391-d37f-4a3c-bc96-5e617bf51dae"),
+                            CityId = new Guid("4e4faef6-9165-4213-a677-f28933321fed"),
                             Disabled = false,
                             Name = "Cúcuta",
-                            ProvinceId = new Guid("40d8ebf1-ad2c-4ae1-987c-09280f659383")
+                            ProvinceId = new Guid("a88ee677-6b20-4a33-8488-31ec389893de")
                         },
                         new
                         {
-                            CityId = new Guid("915c6fcc-b4bf-4aae-91b1-8d1f30f5a1b5"),
+                            CityId = new Guid("e997007a-1e7f-4406-b05f-951256710229"),
                             Disabled = false,
                             Name = "Ocaña",
-                            ProvinceId = new Guid("40d8ebf1-ad2c-4ae1-987c-09280f659383")
+                            ProvinceId = new Guid("a88ee677-6b20-4a33-8488-31ec389893de")
                         },
                         new
                         {
-                            CityId = new Guid("1d0d7908-e074-4a50-b052-2317217d45d5"),
+                            CityId = new Guid("b9ffbe72-e408-4ac2-bd9c-1ae1a0e4a04d"),
                             Disabled = false,
                             Name = "Pamplona",
-                            ProvinceId = new Guid("40d8ebf1-ad2c-4ae1-987c-09280f659383")
+                            ProvinceId = new Guid("a88ee677-6b20-4a33-8488-31ec389893de")
                         },
                         new
                         {
-                            CityId = new Guid("5e89c1f8-dea0-4568-9fbc-bf3059ae1c7f"),
+                            CityId = new Guid("ce1cce32-1fd8-4f85-bd76-854da61518b8"),
                             Disabled = false,
                             Name = "Mocoa",
-                            ProvinceId = new Guid("3a76b9cf-39ec-48c9-9508-50f17df3b382")
+                            ProvinceId = new Guid("365cd5b0-a65e-4c4a-8833-1f75519ed2e7")
                         },
                         new
                         {
-                            CityId = new Guid("cce88514-1a7a-494a-b41d-27098c329f2c"),
+                            CityId = new Guid("a7236a49-8df1-493a-8ae9-2ba7ff91d551"),
                             Disabled = false,
                             Name = "Puerto Asís",
-                            ProvinceId = new Guid("3a76b9cf-39ec-48c9-9508-50f17df3b382")
+                            ProvinceId = new Guid("365cd5b0-a65e-4c4a-8833-1f75519ed2e7")
                         },
                         new
                         {
-                            CityId = new Guid("a58b3009-619e-4997-854a-cba87fdddb03"),
+                            CityId = new Guid("bad1cd27-b7a9-4a98-a0d8-dc51cae18ffe"),
                             Disabled = false,
                             Name = "Orito",
-                            ProvinceId = new Guid("3a76b9cf-39ec-48c9-9508-50f17df3b382")
+                            ProvinceId = new Guid("365cd5b0-a65e-4c4a-8833-1f75519ed2e7")
                         },
                         new
                         {
-                            CityId = new Guid("4e977c21-8c15-4b6a-906f-24f80ad88daf"),
+                            CityId = new Guid("ea344450-dc1d-46e5-8990-1eea1d75331b"),
                             Disabled = false,
                             Name = "Armenia",
-                            ProvinceId = new Guid("d68a25e8-59b0-4754-a240-5982fe7d773d")
+                            ProvinceId = new Guid("52599a84-2471-472f-a541-3a6ff2e10ac7")
                         },
                         new
                         {
-                            CityId = new Guid("42a61ce2-5e01-4caf-b261-ebc8491196ee"),
+                            CityId = new Guid("0d705584-9063-4298-95e5-7cf44c431880"),
                             Disabled = false,
                             Name = "Calarcá",
-                            ProvinceId = new Guid("d68a25e8-59b0-4754-a240-5982fe7d773d")
+                            ProvinceId = new Guid("52599a84-2471-472f-a541-3a6ff2e10ac7")
                         },
                         new
                         {
-                            CityId = new Guid("71623e0a-a26d-4f65-a270-b8a9355eea35"),
+                            CityId = new Guid("f6701621-6cbd-4dea-900a-40572cc916fc"),
                             Disabled = false,
                             Name = "La Tebaida",
-                            ProvinceId = new Guid("d68a25e8-59b0-4754-a240-5982fe7d773d")
+                            ProvinceId = new Guid("52599a84-2471-472f-a541-3a6ff2e10ac7")
                         },
                         new
                         {
-                            CityId = new Guid("be7270e3-411c-4afa-93de-ef519ee877d8"),
+                            CityId = new Guid("85e1c49f-7f51-4bf1-b9a3-5b011e59a99b"),
                             Disabled = false,
                             Name = "Pereira",
-                            ProvinceId = new Guid("27599624-570d-43ba-9cea-ff41a017fe07")
+                            ProvinceId = new Guid("f57fc06e-3987-4aea-8e7e-424bb46f005b")
                         },
                         new
                         {
-                            CityId = new Guid("98b0e775-a45e-4164-a55f-c1149982a636"),
+                            CityId = new Guid("ed19b397-ec5e-4f66-b517-44f709d0ca51"),
                             Disabled = false,
                             Name = "Dosquebradas",
-                            ProvinceId = new Guid("27599624-570d-43ba-9cea-ff41a017fe07")
+                            ProvinceId = new Guid("f57fc06e-3987-4aea-8e7e-424bb46f005b")
                         },
                         new
                         {
-                            CityId = new Guid("eb732d1a-f794-43ff-a121-abec2b49e659"),
+                            CityId = new Guid("59d3b2f3-5d08-41f9-b363-2ea1deb037e6"),
                             Disabled = false,
                             Name = "Santa Rosa de Cabal",
-                            ProvinceId = new Guid("27599624-570d-43ba-9cea-ff41a017fe07")
+                            ProvinceId = new Guid("f57fc06e-3987-4aea-8e7e-424bb46f005b")
                         },
                         new
                         {
-                            CityId = new Guid("925f2b24-5d8e-4d75-9013-cd18047d3d79"),
+                            CityId = new Guid("fd58fb99-fb02-4b09-a71f-609887a49b79"),
                             Disabled = false,
                             Name = "San Andrés",
-                            ProvinceId = new Guid("1e73edf9-f423-475e-a9eb-d400485e7c60")
+                            ProvinceId = new Guid("37204e28-16ed-49b9-b4a2-b75406ee5eb6")
                         },
                         new
                         {
-                            CityId = new Guid("bac2f6e8-d80c-491f-8b92-c0b8516e1166"),
+                            CityId = new Guid("8d7eb064-780e-458a-b923-a1915c590e51"),
                             Disabled = false,
                             Name = "Providencia",
-                            ProvinceId = new Guid("1e73edf9-f423-475e-a9eb-d400485e7c60")
+                            ProvinceId = new Guid("37204e28-16ed-49b9-b4a2-b75406ee5eb6")
                         },
                         new
                         {
-                            CityId = new Guid("5f94a23e-1b29-4953-8f16-15d9b76b5e1e"),
+                            CityId = new Guid("0293dcff-d53b-4c08-aa88-df3ae0d5a6e1"),
                             Disabled = false,
                             Name = "Santa Catalina",
-                            ProvinceId = new Guid("1e73edf9-f423-475e-a9eb-d400485e7c60")
+                            ProvinceId = new Guid("37204e28-16ed-49b9-b4a2-b75406ee5eb6")
                         },
                         new
                         {
-                            CityId = new Guid("e0789df1-f055-4d6c-a048-2c8d89cfc8e3"),
+                            CityId = new Guid("3c18be4f-5fac-435c-a7c1-4ea636fb6b80"),
                             Disabled = false,
                             Name = "Bucaramanga",
-                            ProvinceId = new Guid("5463bf9a-732a-4602-a13a-953e41d83619")
+                            ProvinceId = new Guid("17797eff-57f0-4717-8087-2adf40b0c0e6")
                         },
                         new
                         {
-                            CityId = new Guid("7ec9d0d6-c5a5-4f90-8c4c-5ecbe6d210eb"),
+                            CityId = new Guid("3c8298ea-ddae-4114-99c1-64d4d00bf613"),
                             Disabled = false,
                             Name = "Barrancabermeja",
-                            ProvinceId = new Guid("5463bf9a-732a-4602-a13a-953e41d83619")
+                            ProvinceId = new Guid("17797eff-57f0-4717-8087-2adf40b0c0e6")
                         },
                         new
                         {
-                            CityId = new Guid("c1125531-5bc8-47c8-9df0-a81838b26aa5"),
+                            CityId = new Guid("ee10b593-38f8-4a32-979a-9ebb64cbcbd2"),
                             Disabled = false,
                             Name = "Piedecuesta",
-                            ProvinceId = new Guid("5463bf9a-732a-4602-a13a-953e41d83619")
+                            ProvinceId = new Guid("17797eff-57f0-4717-8087-2adf40b0c0e6")
                         },
                         new
                         {
-                            CityId = new Guid("07f2076d-f0c7-4679-acb0-858e6640bdd9"),
+                            CityId = new Guid("1bf17fe4-537b-4c9f-ae16-30bc2abe8c7f"),
                             Disabled = false,
                             Name = "Sincelejo",
-                            ProvinceId = new Guid("3b9322e8-e71f-477c-a51b-7d57092d5576")
+                            ProvinceId = new Guid("3c0f7582-7f3b-4222-a856-33ea2019c29b")
                         },
                         new
                         {
-                            CityId = new Guid("826278e2-cbeb-454e-93b9-85ee824450a8"),
+                            CityId = new Guid("ce713b35-ddcb-41a9-a326-55012651cb79"),
                             Disabled = false,
                             Name = "Corozal",
-                            ProvinceId = new Guid("3b9322e8-e71f-477c-a51b-7d57092d5576")
+                            ProvinceId = new Guid("3c0f7582-7f3b-4222-a856-33ea2019c29b")
                         },
                         new
                         {
-                            CityId = new Guid("a0182ba2-97ea-4358-8707-36a2e516448a"),
+                            CityId = new Guid("02a19871-3f67-46d5-97c9-21e722b6b65f"),
                             Disabled = false,
                             Name = "Montería",
-                            ProvinceId = new Guid("3b9322e8-e71f-477c-a51b-7d57092d5576")
+                            ProvinceId = new Guid("3c0f7582-7f3b-4222-a856-33ea2019c29b")
                         },
                         new
                         {
-                            CityId = new Guid("81919357-bb36-4a90-b044-3330daa6d904"),
+                            CityId = new Guid("ada11005-b0fb-4f0b-9eeb-f17f6c0fbea2"),
                             Disabled = false,
                             Name = "Ibagué",
-                            ProvinceId = new Guid("3700be94-0cb0-493d-bd59-38a72b1cc5b4")
+                            ProvinceId = new Guid("8865a0bb-c237-425f-94da-38f5350d110f")
                         },
                         new
                         {
-                            CityId = new Guid("99229636-9537-4851-8e7b-4bfd1dc14c17"),
+                            CityId = new Guid("8f0e9d91-458c-4f81-91c3-d93db6bec4c4"),
                             Disabled = false,
                             Name = "Honda",
-                            ProvinceId = new Guid("3700be94-0cb0-493d-bd59-38a72b1cc5b4")
+                            ProvinceId = new Guid("8865a0bb-c237-425f-94da-38f5350d110f")
                         },
                         new
                         {
-                            CityId = new Guid("814716bb-78f9-4f5c-af5b-ff1f1fd281fb"),
+                            CityId = new Guid("236a0d01-78a9-45f4-994e-9564658e56ff"),
                             Disabled = false,
                             Name = "Armero Guayabal",
-                            ProvinceId = new Guid("3700be94-0cb0-493d-bd59-38a72b1cc5b4")
+                            ProvinceId = new Guid("8865a0bb-c237-425f-94da-38f5350d110f")
                         },
                         new
                         {
-                            CityId = new Guid("fdc18df1-1b0c-4bf0-9e86-044d192945f0"),
+                            CityId = new Guid("3cf0304f-ee5c-4e10-a911-dfb615427eef"),
                             Disabled = false,
                             Name = "Cali",
-                            ProvinceId = new Guid("82308b5d-7eb2-418c-bfa5-ccb118bfa337")
+                            ProvinceId = new Guid("1cd010f3-78a7-405f-bb32-871156a106f2")
                         },
                         new
                         {
-                            CityId = new Guid("02c81ef9-1454-4e47-b4fc-7d1a03174e22"),
+                            CityId = new Guid("f8d37e70-7ed1-45a5-8416-f46395623c5a"),
                             Disabled = false,
                             Name = "Palmira",
-                            ProvinceId = new Guid("82308b5d-7eb2-418c-bfa5-ccb118bfa337")
+                            ProvinceId = new Guid("1cd010f3-78a7-405f-bb32-871156a106f2")
                         },
                         new
                         {
-                            CityId = new Guid("d22d9893-fbd5-4722-a573-50981eb275d1"),
+                            CityId = new Guid("246b0448-c8c7-48d0-aa93-cc1a0f3d57fc"),
                             Disabled = false,
                             Name = "Buenaventura",
-                            ProvinceId = new Guid("82308b5d-7eb2-418c-bfa5-ccb118bfa337")
+                            ProvinceId = new Guid("1cd010f3-78a7-405f-bb32-871156a106f2")
                         },
                         new
                         {
-                            CityId = new Guid("2c1a5cc0-24e1-4fe5-87ae-675dd4fcd0bb"),
+                            CityId = new Guid("eaa5a7ee-8a12-4ff3-8785-7f0a784c5e90"),
                             Disabled = false,
                             Name = "Mitú",
-                            ProvinceId = new Guid("04bccc12-133f-4ea4-bf00-28a0024d1c36")
+                            ProvinceId = new Guid("a1e3b112-ec35-4648-bf41-84611cdbe571")
                         },
                         new
                         {
-                            CityId = new Guid("56dc6f8f-c13c-4217-95c6-7880439b46f2"),
+                            CityId = new Guid("3c969b03-8e01-4a8a-9fa3-1e3c674bfc30"),
                             Disabled = false,
                             Name = "Yavaraté",
-                            ProvinceId = new Guid("04bccc12-133f-4ea4-bf00-28a0024d1c36")
+                            ProvinceId = new Guid("a1e3b112-ec35-4648-bf41-84611cdbe571")
                         },
                         new
                         {
-                            CityId = new Guid("e846a9d4-601e-49c6-85ba-9e47a92d3eb7"),
+                            CityId = new Guid("b9115526-2070-4e38-8143-eb8d3604633f"),
                             Disabled = false,
                             Name = "Santa Rosalía",
-                            ProvinceId = new Guid("04bccc12-133f-4ea4-bf00-28a0024d1c36")
+                            ProvinceId = new Guid("a1e3b112-ec35-4648-bf41-84611cdbe571")
                         },
                         new
                         {
-                            CityId = new Guid("8413c7bc-7b41-48ce-8a5d-ffb7d8ab7f93"),
+                            CityId = new Guid("9c2a5e4a-fd34-4546-b3f5-8f52b68a81fb"),
                             Disabled = false,
                             Name = "Puerto Carreño",
-                            ProvinceId = new Guid("ca6c39e0-7fa8-42a7-9239-e9c0fb648c72")
+                            ProvinceId = new Guid("5428e9ad-c0b1-4bd2-9f68-cdffa64e9b8a")
                         },
                         new
                         {
-                            CityId = new Guid("9037104d-bb09-4002-84d9-5289720c3dcb"),
+                            CityId = new Guid("49c62d12-0532-4330-ad94-9b83afa5d970"),
                             Disabled = false,
                             Name = "La Primavera",
-                            ProvinceId = new Guid("ca6c39e0-7fa8-42a7-9239-e9c0fb648c72")
+                            ProvinceId = new Guid("5428e9ad-c0b1-4bd2-9f68-cdffa64e9b8a")
                         },
                         new
                         {
-                            CityId = new Guid("5884024c-5366-4cd3-b3fa-e41a8f1234ba"),
+                            CityId = new Guid("dcbbb149-ff30-48dc-8db0-60eeaf5b0ee5"),
                             Disabled = false,
                             Name = "Santa Helena",
-                            ProvinceId = new Guid("ca6c39e0-7fa8-42a7-9239-e9c0fb648c72")
+                            ProvinceId = new Guid("5428e9ad-c0b1-4bd2-9f68-cdffa64e9b8a")
                         },
                         new
                         {
-                            CityId = new Guid("7f5358f2-a49f-40a9-9e9c-e9132a9c176a"),
+                            CityId = new Guid("ba050f7e-429c-41cc-98c0-4a7302e02fcc"),
                             Disabled = false,
                             Name = "Cuenca",
-                            ProvinceId = new Guid("bf9117f5-6bce-486f-85ad-4de512cfe53d")
+                            ProvinceId = new Guid("857d10ab-4aa7-4e82-ba2e-dd8cef545d54")
                         },
                         new
                         {
-                            CityId = new Guid("4553f716-0047-4a36-86f6-54d66716c366"),
+                            CityId = new Guid("fa1a925f-e607-47c1-ae9f-6fd192a5e757"),
                             Disabled = false,
                             Name = "Girón",
-                            ProvinceId = new Guid("bf9117f5-6bce-486f-85ad-4de512cfe53d")
+                            ProvinceId = new Guid("857d10ab-4aa7-4e82-ba2e-dd8cef545d54")
                         },
                         new
                         {
-                            CityId = new Guid("6a7b93e5-a7f8-4f1c-b3ba-8cefe96ab38a"),
+                            CityId = new Guid("bd2c032f-33bd-4dd9-a40d-4a5e86bda818"),
                             Disabled = false,
                             Name = "Guaranda",
-                            ProvinceId = new Guid("efc9342f-749d-4529-ac1c-22733c4b61c3")
+                            ProvinceId = new Guid("403459bf-8c41-4de9-9a67-a9e065774684")
                         },
                         new
                         {
-                            CityId = new Guid("1a93a42a-1b3e-498f-811a-ec5263fbf8c1"),
+                            CityId = new Guid("439508d1-95d1-40da-9918-d218a5559678"),
                             Disabled = false,
                             Name = "San Miguel de Bolívar",
-                            ProvinceId = new Guid("efc9342f-749d-4529-ac1c-22733c4b61c3")
+                            ProvinceId = new Guid("403459bf-8c41-4de9-9a67-a9e065774684")
                         },
                         new
                         {
-                            CityId = new Guid("b884efa7-efea-4118-8cf0-3651fe8cba46"),
+                            CityId = new Guid("34500fda-6d73-4ceb-be91-ecb43fa60e81"),
                             Disabled = false,
                             Name = "Azogues",
-                            ProvinceId = new Guid("58a11708-f5ed-4884-8366-46e06dc72f63")
+                            ProvinceId = new Guid("34b26e27-b8fa-44b4-a17a-353ab354444a")
                         },
                         new
                         {
-                            CityId = new Guid("8ed69b27-3bd7-4ac6-9278-41d2ca756121"),
+                            CityId = new Guid("be1c943e-2b0c-42f9-9d88-87f77aaf011d"),
                             Disabled = false,
                             Name = "El Tambo",
-                            ProvinceId = new Guid("58a11708-f5ed-4884-8366-46e06dc72f63")
+                            ProvinceId = new Guid("34b26e27-b8fa-44b4-a17a-353ab354444a")
                         },
                         new
                         {
-                            CityId = new Guid("34a9c78d-82a7-4487-8ae0-30789803df63"),
+                            CityId = new Guid("3b8176f0-3772-4bb0-a7ac-7689bc9da513"),
                             Disabled = false,
                             Name = "Tulcán",
-                            ProvinceId = new Guid("c3039b7b-8f5a-44d1-ba4d-baf273109172")
+                            ProvinceId = new Guid("671d4cad-8899-4450-8787-c1a034a9ebc2")
                         },
                         new
                         {
-                            CityId = new Guid("9b279167-741d-46a6-8a5d-f4df72c62876"),
+                            CityId = new Guid("4ed168b1-47b5-4505-84d1-7d484ed3d739"),
                             Disabled = false,
                             Name = "El Guabo",
-                            ProvinceId = new Guid("c3039b7b-8f5a-44d1-ba4d-baf273109172")
+                            ProvinceId = new Guid("671d4cad-8899-4450-8787-c1a034a9ebc2")
                         },
                         new
                         {
-                            CityId = new Guid("9a63273e-6e5b-46ce-833a-7b7cdf56d5ce"),
+                            CityId = new Guid("4d5f7322-f576-4287-8032-8f82cdb3d53a"),
                             Disabled = false,
                             Name = "Riobamba",
-                            ProvinceId = new Guid("f951b8bb-bda3-4b02-af6a-2fb4e6cd22b6")
+                            ProvinceId = new Guid("bb9df834-f2e1-49b1-bb6b-570144c8c6cc")
                         },
                         new
                         {
-                            CityId = new Guid("5a5140f5-6932-4f98-ad0c-dc6b2945f093"),
+                            CityId = new Guid("5ce29e1d-976a-4113-be40-5026fb4919ea"),
                             Disabled = false,
                             Name = "Alausí",
-                            ProvinceId = new Guid("f951b8bb-bda3-4b02-af6a-2fb4e6cd22b6")
+                            ProvinceId = new Guid("bb9df834-f2e1-49b1-bb6b-570144c8c6cc")
                         },
                         new
                         {
-                            CityId = new Guid("b3647420-ba95-4785-948f-3c8f68ed8aa0"),
+                            CityId = new Guid("9fdfb841-f25f-456f-9b23-29cdc0449c67"),
                             Disabled = false,
                             Name = "Latacunga",
-                            ProvinceId = new Guid("d0f96ade-df12-46c7-9c82-cd63377b99e2")
+                            ProvinceId = new Guid("eb211039-a47c-468b-b26d-cb1f63bfb477")
                         },
                         new
                         {
-                            CityId = new Guid("6be2afca-a890-4b01-af73-206f47274708"),
+                            CityId = new Guid("f76d70d6-b9f7-4240-abef-82a1b9ac8b38"),
                             Disabled = false,
                             Name = "Salcedo",
-                            ProvinceId = new Guid("d0f96ade-df12-46c7-9c82-cd63377b99e2")
+                            ProvinceId = new Guid("eb211039-a47c-468b-b26d-cb1f63bfb477")
                         },
                         new
                         {
-                            CityId = new Guid("9ede208a-22bb-40d3-af1c-4a5a5cdce485"),
+                            CityId = new Guid("be7d36d1-d8e9-4bb7-a94e-418a8076e1d7"),
                             Disabled = false,
                             Name = "Machala",
-                            ProvinceId = new Guid("f8c6d5db-408f-4792-b5c2-dc7902174404")
+                            ProvinceId = new Guid("f9a3c156-1c03-4765-9eb0-57d0cff04bfe")
                         },
                         new
                         {
-                            CityId = new Guid("a42970a2-ae87-43d5-9a23-18577390ea0f"),
+                            CityId = new Guid("224bc6c0-dc0a-48fe-b1ad-dd3369bdf429"),
                             Disabled = false,
                             Name = "Santa Rosa",
-                            ProvinceId = new Guid("f8c6d5db-408f-4792-b5c2-dc7902174404")
+                            ProvinceId = new Guid("f9a3c156-1c03-4765-9eb0-57d0cff04bfe")
                         },
                         new
                         {
-                            CityId = new Guid("f955b475-aa16-4916-822a-25c9cb48f6d8"),
+                            CityId = new Guid("1da2b8f0-165b-49c0-8fda-c3e8a15cb92b"),
                             Disabled = false,
                             Name = "Esmeraldas",
-                            ProvinceId = new Guid("a800fe30-6d9c-4a67-a47f-6a4eda3ddf44")
+                            ProvinceId = new Guid("9382d430-f376-45a5-9efe-55666fd9d716")
                         },
                         new
                         {
-                            CityId = new Guid("1af6389c-de63-4269-96f6-684701aaed3b"),
+                            CityId = new Guid("8ead2766-4ae4-4dcc-bd8d-67579244a8f4"),
                             Disabled = false,
                             Name = "Atacames",
-                            ProvinceId = new Guid("a800fe30-6d9c-4a67-a47f-6a4eda3ddf44")
+                            ProvinceId = new Guid("9382d430-f376-45a5-9efe-55666fd9d716")
                         },
                         new
                         {
-                            CityId = new Guid("00fe986c-7a2d-4df7-9117-90b7d97640c2"),
+                            CityId = new Guid("83b2aa46-3c87-4ece-a50b-1e3e4283519d"),
                             Disabled = false,
                             Name = "Puerto Baquerizo Moreno",
-                            ProvinceId = new Guid("83535988-f964-4b9d-9588-baca6c784626")
+                            ProvinceId = new Guid("e3eb8706-31f4-47d8-b8e6-5b63e7e020c4")
                         },
                         new
                         {
-                            CityId = new Guid("d5965130-6cb2-41fb-af13-9164667cf0c0"),
+                            CityId = new Guid("7f191505-2744-4901-bc6a-4badb70c8172"),
                             Disabled = false,
                             Name = "San Cristóbal",
-                            ProvinceId = new Guid("83535988-f964-4b9d-9588-baca6c784626")
+                            ProvinceId = new Guid("e3eb8706-31f4-47d8-b8e6-5b63e7e020c4")
                         },
                         new
                         {
-                            CityId = new Guid("0ebad736-47c0-405f-bd14-7c79d59c1da5"),
+                            CityId = new Guid("2db51727-d0c2-463c-be39-4378d8c80541"),
                             Disabled = false,
                             Name = "Guayaquil",
-                            ProvinceId = new Guid("35d56e0d-03b3-4a19-8757-9a32f2b5723b")
+                            ProvinceId = new Guid("f0a80da8-a2c3-4aa8-8c30-8e35f0b81c96")
                         },
                         new
                         {
-                            CityId = new Guid("c8c47225-4ebf-4a36-a1c2-c81247d5670d"),
+                            CityId = new Guid("6c182de9-13ba-412e-a227-2f1c1cd1e360"),
                             Disabled = false,
                             Name = "Durán",
-                            ProvinceId = new Guid("35d56e0d-03b3-4a19-8757-9a32f2b5723b")
+                            ProvinceId = new Guid("f0a80da8-a2c3-4aa8-8c30-8e35f0b81c96")
                         },
                         new
                         {
-                            CityId = new Guid("c2a06c70-df14-4c96-a730-7e0942a830d9"),
+                            CityId = new Guid("fc6b5310-8321-404c-9f55-2e294416a44c"),
                             Disabled = false,
                             Name = "Ibarra",
-                            ProvinceId = new Guid("e877f38c-67e2-41e8-ab85-3ced74d81b85")
+                            ProvinceId = new Guid("9876392e-c0ad-4d04-9ea5-d9742d8fd5a3")
                         },
                         new
                         {
-                            CityId = new Guid("804b3784-b89b-455e-bb84-4b6f3754d418"),
+                            CityId = new Guid("b7753fe4-746a-4735-b5eb-c43958fbc27a"),
                             Disabled = false,
                             Name = "Otavalo",
-                            ProvinceId = new Guid("e877f38c-67e2-41e8-ab85-3ced74d81b85")
+                            ProvinceId = new Guid("9876392e-c0ad-4d04-9ea5-d9742d8fd5a3")
                         },
                         new
                         {
-                            CityId = new Guid("355d19bf-c03f-4feb-a747-473ff93ca9aa"),
+                            CityId = new Guid("8a6336ca-0b69-49f6-aa62-adf55c49ea02"),
                             Disabled = false,
                             Name = "Loja",
-                            ProvinceId = new Guid("4b9c2826-84f5-4bff-a941-d5387f54f5d7")
+                            ProvinceId = new Guid("1d6652b5-b071-4774-a040-91c4148ee2dc")
                         },
                         new
                         {
-                            CityId = new Guid("eae94c57-365f-4132-8dd0-eb85d5996216"),
+                            CityId = new Guid("c3c98f33-f385-4005-8af5-da4d06155827"),
                             Disabled = false,
                             Name = "Saraguro",
-                            ProvinceId = new Guid("4b9c2826-84f5-4bff-a941-d5387f54f5d7")
+                            ProvinceId = new Guid("1d6652b5-b071-4774-a040-91c4148ee2dc")
                         },
                         new
                         {
-                            CityId = new Guid("47f950ce-6e93-4ff5-a92e-0e334fd05bc0"),
+                            CityId = new Guid("bedcd48c-dea0-4187-9b14-9c832c33c8f5"),
                             Disabled = false,
                             Name = "Portoviejo",
-                            ProvinceId = new Guid("aec548aa-8d4e-4558-a99b-ef67e6eb338a")
+                            ProvinceId = new Guid("99060b8a-66ba-4838-b3da-f76c9a3e0e40")
                         },
                         new
                         {
-                            CityId = new Guid("11ee36be-c308-41b3-8959-12e18b6b0905"),
+                            CityId = new Guid("b4a98ee9-568d-4004-8321-3fa12527cb2c"),
                             Disabled = false,
                             Name = "Manta",
-                            ProvinceId = new Guid("aec548aa-8d4e-4558-a99b-ef67e6eb338a")
+                            ProvinceId = new Guid("99060b8a-66ba-4838-b3da-f76c9a3e0e40")
                         },
                         new
                         {
-                            CityId = new Guid("6e3b484d-b559-4256-8ff7-5cccbfcf4571"),
+                            CityId = new Guid("3ea6cbd7-329d-4789-8577-2ed38d687499"),
                             Disabled = false,
                             Name = "Chone",
-                            ProvinceId = new Guid("aec548aa-8d4e-4558-a99b-ef67e6eb338a")
+                            ProvinceId = new Guid("99060b8a-66ba-4838-b3da-f76c9a3e0e40")
                         },
                         new
                         {
-                            CityId = new Guid("e2719014-95a7-4703-9f6e-8b69d0e79e87"),
+                            CityId = new Guid("5a58251b-9369-4fd4-b767-d97e309fe4bf"),
                             Disabled = false,
                             Name = "Macas",
-                            ProvinceId = new Guid("1e0db1d1-9a57-4322-a623-35bc676df01b")
+                            ProvinceId = new Guid("3864444f-2e7a-42be-88fb-dff4b05b3a63")
                         },
                         new
                         {
-                            CityId = new Guid("ceeafd04-be9b-44b0-a3d7-ba6e37a821ed"),
+                            CityId = new Guid("60bade0d-bb59-4e6b-b717-a9a3ddd49143"),
                             Disabled = false,
                             Name = "Gualaquiza",
-                            ProvinceId = new Guid("1e0db1d1-9a57-4322-a623-35bc676df01b")
+                            ProvinceId = new Guid("3864444f-2e7a-42be-88fb-dff4b05b3a63")
                         },
                         new
                         {
-                            CityId = new Guid("ff65e481-3745-4153-b625-0d9b9c2cc9af"),
+                            CityId = new Guid("a8e585c5-c847-4f61-b2cb-082056207fd1"),
                             Disabled = false,
                             Name = "Tena",
-                            ProvinceId = new Guid("329b9370-522b-4919-982f-0702b9fc965f")
+                            ProvinceId = new Guid("b5094437-86b0-46fe-9d42-1dce44656b97")
                         },
                         new
                         {
-                            CityId = new Guid("b81f73d5-b654-4535-a2ed-8634651aa36c"),
+                            CityId = new Guid("210f241d-5d88-4a1d-8c96-bbc62e7daae5"),
                             Disabled = false,
                             Name = "Archidona",
-                            ProvinceId = new Guid("329b9370-522b-4919-982f-0702b9fc965f")
+                            ProvinceId = new Guid("b5094437-86b0-46fe-9d42-1dce44656b97")
                         });
                 });
 
@@ -958,109 +999,109 @@ namespace Profiles.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Colombia"
                         },
                         new
                         {
-                            CountryId = new Guid("1e1dcb29-8d4b-4e26-9678-a51735898a61"),
+                            CountryId = new Guid("25e87d92-fd5a-419b-920b-ac4e6a3ff25b"),
                             Disabled = false,
                             Name = "Ecuador"
                         },
                         new
                         {
-                            CountryId = new Guid("267c889a-414e-4a8c-9615-defa70730cd1"),
+                            CountryId = new Guid("0556ae46-2e51-4337-aa2a-5371c0943778"),
                             Disabled = false,
                             Name = "Venezuela"
                         },
                         new
                         {
-                            CountryId = new Guid("2ab9785d-1dc7-4722-8e44-ce176ca3e666"),
+                            CountryId = new Guid("e03e3bec-4cad-4338-93c6-5edca4c88939"),
                             Disabled = false,
                             Name = "Panamá"
                         },
                         new
                         {
-                            CountryId = new Guid("d0c1adc8-092a-46ed-aee0-d2e18e30f97d"),
+                            CountryId = new Guid("d46208ba-9f65-4901-8a29-c2ce82970de4"),
                             Disabled = false,
                             Name = "Costa Rica"
                         },
                         new
                         {
-                            CountryId = new Guid("58d00d84-9e9e-40cf-aa25-c7cea37bdecd"),
+                            CountryId = new Guid("651a56df-a1c6-4f4a-a6e6-1bbe06d26e46"),
                             Disabled = false,
                             Name = "Nicaragua"
                         },
                         new
                         {
-                            CountryId = new Guid("dec48fd2-d568-472a-bcad-90636ec1fefb"),
+                            CountryId = new Guid("8062697a-30e8-4a3b-95e8-5a38f0c9c0b6"),
                             Disabled = false,
                             Name = "Honduras"
                         },
                         new
                         {
-                            CountryId = new Guid("0c5438c6-88f6-4f40-8c3a-92ca0fd77fa0"),
+                            CountryId = new Guid("8076d7ca-5427-4f4e-ab26-7c75d68a5f31"),
                             Disabled = false,
                             Name = "Guatemala"
                         },
                         new
                         {
-                            CountryId = new Guid("85252b8c-3eac-4e3b-9fd6-a269e7546815"),
+                            CountryId = new Guid("ffac56bf-17a0-4a6f-88e9-b69540e20a24"),
                             Disabled = false,
                             Name = "El Salvador"
                         },
                         new
                         {
-                            CountryId = new Guid("0560cc93-05d4-4560-ac35-4c3273d8d2f7"),
+                            CountryId = new Guid("857d1410-f0ba-4463-8218-f950ac2b6437"),
                             Disabled = false,
                             Name = "Belize"
                         },
                         new
                         {
-                            CountryId = new Guid("f6ff1d7a-72ba-420f-9152-1954e095daad"),
+                            CountryId = new Guid("2053cb06-0490-49ad-a0d9-87a2783a5944"),
                             Disabled = false,
                             Name = "México"
                         },
                         new
                         {
-                            CountryId = new Guid("17b9f73e-54d9-4d88-a205-b7c19e45cffc"),
+                            CountryId = new Guid("0f08caf4-0cc1-43e7-98ac-4568880d6a79"),
                             Disabled = false,
                             Name = "Perú"
                         },
                         new
                         {
-                            CountryId = new Guid("9dce4008-8006-4e4e-b12e-5d8dfa49ee02"),
+                            CountryId = new Guid("20fec875-6da7-4ca2-84bb-386199755086"),
                             Disabled = false,
                             Name = "Chile"
                         },
                         new
                         {
-                            CountryId = new Guid("c2ad2be1-fc82-47d9-a369-d3f07c31e98b"),
+                            CountryId = new Guid("ee30a0d4-d111-465d-88cf-6ffd7c8dcbb0"),
                             Disabled = false,
                             Name = "Argentina"
                         },
                         new
                         {
-                            CountryId = new Guid("05447922-05c2-4493-8692-55aa2e128e62"),
+                            CountryId = new Guid("14767f35-d8dd-44c7-b21f-03e1fa968472"),
                             Disabled = false,
                             Name = "Brasil"
                         },
                         new
                         {
-                            CountryId = new Guid("c314ad3f-002f-4256-8ba8-78e279f48f04"),
+                            CountryId = new Guid("1eb270ab-1d6a-4d5c-bcf5-7340f9b61de8"),
                             Disabled = false,
                             Name = "Paraguay"
                         },
                         new
                         {
-                            CountryId = new Guid("d0d34c3f-fad7-4205-b001-de989db421af"),
+                            CountryId = new Guid("6188d92e-1937-432f-9507-4b36714eaf17"),
                             Disabled = false,
                             Name = "Uruguay"
                         },
                         new
                         {
-                            CountryId = new Guid("b8c23550-59ab-4d2d-9e8e-18d5decd835a"),
+                            CountryId = new Guid("36936209-99b4-495e-a5eb-e53ea36bfcf0"),
                             Disabled = false,
                             Name = "Bolivia"
                         });
@@ -1151,120 +1192,120 @@ namespace Profiles.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            ProfessionalId = new Guid("862edcda-3d9c-436d-b804-2d5a3444fa38"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(7052),
+                            ProfessionalId = new Guid("ad358bc5-40de-4c97-a6d9-2fef6a2c9426"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(1085),
                             Disabled = false,
                             Email = "juanperez@gmail.com",
                             Name = "Juan Pérez"
                         },
                         new
                         {
-                            ProfessionalId = new Guid("b982dc75-976a-49e6-8eae-295f3ed51d30"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(7058),
+                            ProfessionalId = new Guid("b86397ae-9f10-428d-a281-a865c72ad227"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(1090),
                             Disabled = false,
                             Email = "mariagarcia@gmail.com",
                             Name = "María García"
                         },
                         new
                         {
-                            ProfessionalId = new Guid("3ef1a9fc-df06-4b68-9a23-effac3c330ce"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(7062),
+                            ProfessionalId = new Guid("7ccf7f5d-2100-4008-a773-f5522a7926b9"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(1095),
                             Disabled = false,
                             Email = "pedrolopez@gmail.com",
                             Name = "Pedro López"
                         },
                         new
                         {
-                            ProfessionalId = new Guid("1b1160b9-6090-4bde-82e2-0f31295a4f38"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(7065),
+                            ProfessionalId = new Guid("93d3ae01-ca42-4c90-8cb2-5910d8cd9d49"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(1099),
                             Disabled = false,
                             Email = "anasanchez@gmail.com",
                             Name = "Ana Sánchez"
                         },
                         new
                         {
-                            ProfessionalId = new Guid("f087fb4f-7c42-4bfb-9e7c-2d11939289d3"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(7069),
+                            ProfessionalId = new Guid("edb91a7e-8c9f-4f33-bcff-8be9bd68ed8b"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(1103),
                             Disabled = false,
                             Email = "carlosrodriguez@gmail.com",
                             Name = "Carlos Rodríguez"
                         },
                         new
                         {
-                            ProfessionalId = new Guid("0f8aaebe-d0c2-4319-ab44-66309cdf5bbe"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(7074),
+                            ProfessionalId = new Guid("e2ec096b-46e2-4865-badb-e09cd06353ef"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(1107),
                             Disabled = false,
                             Email = "isabelmartinez@gmail.com",
                             Name = "Isabel Martínez"
                         },
                         new
                         {
-                            ProfessionalId = new Guid("8d0e207d-4ae1-4695-829d-a65d0da28637"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(7077),
+                            ProfessionalId = new Guid("bc8903e2-5558-41b2-8398-6108d70fc61e"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(1111),
                             Disabled = false,
                             Email = "diegogomez@gmail.com",
                             Name = "Diego Gómez"
                         },
                         new
                         {
-                            ProfessionalId = new Guid("de7d1824-28b0-4dad-bf49-92bd68e83579"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(7081),
+                            ProfessionalId = new Guid("c4f7ae23-fce9-4e70-b6fe-066b2d6e16d4"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(1115),
                             Disabled = false,
                             Email = "sandramoreno@gmail.com",
                             Name = "Sandra Moreno"
                         },
                         new
                         {
-                            ProfessionalId = new Guid("08cd8bb8-8f8e-44ca-bb67-ecac500d170a"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(7085),
+                            ProfessionalId = new Guid("2c75c5e1-9073-4833-869f-3b52d0ce3453"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(1119),
                             Disabled = false,
                             Email = "andresfernandez@gmail.com",
                             Name = "Andrés Fernández"
                         },
                         new
                         {
-                            ProfessionalId = new Guid("e04e1904-83dd-4e0d-97ac-480f968a8fe9"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(7089),
+                            ProfessionalId = new Guid("08d61714-0d32-4c0f-ac54-594bc2347edb"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(1124),
                             Disabled = false,
                             Email = "lauragonzalez@gmail.com",
                             Name = "Laura González"
                         },
                         new
                         {
-                            ProfessionalId = new Guid("7914a0f1-4020-4c2e-840d-a389cbdafb8b"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(7093),
+                            ProfessionalId = new Guid("519b07e4-801e-416a-ab8f-a0957a2f1507"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(1128),
                             Disabled = false,
                             Email = "javiermunoz@gmail.com",
                             Name = "Javier Muñoz"
                         },
                         new
                         {
-                            ProfessionalId = new Guid("32dda917-7e4b-4cdb-b2c9-7728234ef374"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(7097),
+                            ProfessionalId = new Guid("8a258665-ad51-4860-8952-3e8f59a2ba32"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(1132),
                             Disabled = false,
                             Email = "patriciablanco@gmail.com",
                             Name = "Patricia Blanco"
                         },
                         new
                         {
-                            ProfessionalId = new Guid("a08f9a78-4853-4542-8378-a788fff5ee38"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(7100),
+                            ProfessionalId = new Guid("f214d225-c48e-42e3-99c6-75ef31fa1a3b"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(1136),
                             Disabled = false,
                             Email = "josegutierrez@gmail.com",
                             Name = "José Gutiérrez"
                         },
                         new
                         {
-                            ProfessionalId = new Guid("1f8d99d6-9fd3-4118-9395-6609b0d21cf9"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(7104),
+                            ProfessionalId = new Guid("8a23906e-aa19-4d6c-895e-2b847af73efb"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(1140),
                             Disabled = false,
                             Email = "aliciaruis@gmail.com",
                             Name = "Alicia Ruiz"
                         },
                         new
                         {
-                            ProfessionalId = new Guid("a56ad525-83db-42c7-a9eb-ead1b23dc2f6"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(7108),
+                            ProfessionalId = new Guid("c234159d-7f6a-40fd-ae29-c8bba88b744e"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(1144),
                             Disabled = false,
                             Email = "luisvazquez@gmail.com",
                             Name = "Luis Vázquez"
@@ -1303,330 +1344,330 @@ namespace Profiles.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            ProvinceId = new Guid("8f5d4d86-b4aa-4866-94ad-e5e97687a007"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("b3069941-627f-4e09-9523-dd0c72253fae"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Amazonas"
                         },
                         new
                         {
-                            ProvinceId = new Guid("40425c6e-abe2-439a-aa3a-b4fba23eb116"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("149f741d-357b-49d0-b08e-28d789eb2e66"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Antioquia"
                         },
                         new
                         {
-                            ProvinceId = new Guid("60ad0eca-a433-4952-aedd-a5af106257e5"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("9b41ec32-7e41-4929-94fe-600e1d1f5294"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Arauca"
                         },
                         new
                         {
-                            ProvinceId = new Guid("0b0d286b-21c2-4d1d-9745-17d9c2e529f7"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("e2c590da-9bf6-4b7d-bd8b-13a454a92931"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Atlántico"
                         },
                         new
                         {
-                            ProvinceId = new Guid("aa2d2d92-3024-427f-81b9-6aec0b305a8a"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("4c5cbb38-c803-4306-86cd-3c948c7303b9"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Bolívar"
                         },
                         new
                         {
-                            ProvinceId = new Guid("4fbe7a63-ce0d-485e-b360-d94aa7a3c23e"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("055aef5a-47a8-4cee-9c8e-9609f3701cea"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Boyacá"
                         },
                         new
                         {
-                            ProvinceId = new Guid("662befe1-f710-4694-9c85-b9c29dc05fa0"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("b605f028-f6e9-4e21-aeb5-79a3068a0b15"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Caldas"
                         },
                         new
                         {
-                            ProvinceId = new Guid("eda9dc13-c0fe-42eb-ad4c-c5a7573ca4cf"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("f2de2cb3-c911-43e0-99ba-6a287c74e9f9"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Caquetá"
                         },
                         new
                         {
-                            ProvinceId = new Guid("f34f9f4c-44a2-40b0-a391-17182d6fcc67"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("bb2e0688-d812-444e-98d2-f15376ec8948"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Casanare"
                         },
                         new
                         {
-                            ProvinceId = new Guid("822cac7a-c804-4ba1-8d73-abfeaf566272"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("544675b9-3f99-4a42-a326-da2afe77deee"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Cauca"
                         },
                         new
                         {
-                            ProvinceId = new Guid("99a295e3-9403-41c2-bc92-f52ef186e7e3"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("cce65031-ee71-4dc0-9130-b03b1a220e7d"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Cesar"
                         },
                         new
                         {
-                            ProvinceId = new Guid("7d20ff47-fb82-4bec-9c91-cb3c0e28a9ec"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("fdb0669b-5c04-496b-86ec-07eafd64e20e"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Chocó"
                         },
                         new
                         {
-                            ProvinceId = new Guid("deaa059e-a368-4592-8ad9-2fc9a710fb4f"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("05e22edb-1694-4828-b079-440ea4d49cad"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Córdoba"
                         },
                         new
                         {
-                            ProvinceId = new Guid("4503b414-9297-4d41-9d34-43002159eab7"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("0bfbdcbb-f0b9-4587-ab00-48a0ff75d28a"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Cundinamarca"
                         },
                         new
                         {
-                            ProvinceId = new Guid("4ea7cf1e-51b9-485d-bf6e-8fc2f6775e7c"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("a86d4b73-6e6e-4581-9886-aa7a91778444"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Guainía"
                         },
                         new
                         {
-                            ProvinceId = new Guid("49782e32-f95a-4917-9861-0085faaa7b50"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("fcf437ff-6e6d-4dc0-9a5f-740817c9affd"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Guaviare"
                         },
                         new
                         {
-                            ProvinceId = new Guid("9f363aca-fb3f-4708-aef7-659190d7c141"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("39e39f8e-0648-4601-93f7-45c05ae0aaf7"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Huila"
                         },
                         new
                         {
-                            ProvinceId = new Guid("b8f089af-8038-4b8b-ad22-b189ec19aefc"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("ba768149-8ec4-4824-b681-0531ef20e37c"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "La Guajira"
                         },
                         new
                         {
-                            ProvinceId = new Guid("a367ce45-d4a6-4520-9906-1870d5849ab8"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("3096e523-ff62-4634-af4d-49200229c694"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Magdalena"
                         },
                         new
                         {
-                            ProvinceId = new Guid("209e5d47-00ed-4249-959d-f89d6749160a"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("83b109d6-6b7f-4664-b874-56a796d1ee80"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Meta"
                         },
                         new
                         {
-                            ProvinceId = new Guid("f9e082fa-0dee-41eb-aa67-02fddb3a0b3d"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("a55922e7-85fc-4fc5-b9d3-6486ee97a41d"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Nariño"
                         },
                         new
                         {
-                            ProvinceId = new Guid("40d8ebf1-ad2c-4ae1-987c-09280f659383"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("a88ee677-6b20-4a33-8488-31ec389893de"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Norte de Santander"
                         },
                         new
                         {
-                            ProvinceId = new Guid("3a76b9cf-39ec-48c9-9508-50f17df3b382"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("365cd5b0-a65e-4c4a-8833-1f75519ed2e7"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Putumayo"
                         },
                         new
                         {
-                            ProvinceId = new Guid("d68a25e8-59b0-4754-a240-5982fe7d773d"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("52599a84-2471-472f-a541-3a6ff2e10ac7"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Quindío"
                         },
                         new
                         {
-                            ProvinceId = new Guid("27599624-570d-43ba-9cea-ff41a017fe07"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("f57fc06e-3987-4aea-8e7e-424bb46f005b"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Risaralda"
                         },
                         new
                         {
-                            ProvinceId = new Guid("1e73edf9-f423-475e-a9eb-d400485e7c60"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("37204e28-16ed-49b9-b4a2-b75406ee5eb6"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "San Andrés y Providencia"
                         },
                         new
                         {
-                            ProvinceId = new Guid("5463bf9a-732a-4602-a13a-953e41d83619"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("17797eff-57f0-4717-8087-2adf40b0c0e6"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Santander"
                         },
                         new
                         {
-                            ProvinceId = new Guid("3b9322e8-e71f-477c-a51b-7d57092d5576"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("3c0f7582-7f3b-4222-a856-33ea2019c29b"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Sucre"
                         },
                         new
                         {
-                            ProvinceId = new Guid("3700be94-0cb0-493d-bd59-38a72b1cc5b4"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("8865a0bb-c237-425f-94da-38f5350d110f"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Tolima"
                         },
                         new
                         {
-                            ProvinceId = new Guid("82308b5d-7eb2-418c-bfa5-ccb118bfa337"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("1cd010f3-78a7-405f-bb32-871156a106f2"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Valle del Cauca"
                         },
                         new
                         {
-                            ProvinceId = new Guid("04bccc12-133f-4ea4-bf00-28a0024d1c36"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("a1e3b112-ec35-4648-bf41-84611cdbe571"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Vaupés"
                         },
                         new
                         {
-                            ProvinceId = new Guid("ca6c39e0-7fa8-42a7-9239-e9c0fb648c72"),
-                            CountryId = new Guid("4e67acf7-8f38-48b1-af88-5df6451fa4c6"),
+                            ProvinceId = new Guid("5428e9ad-c0b1-4bd2-9f68-cdffa64e9b8a"),
+                            CountryId = new Guid("1f22f04f-ca5c-454d-9ea8-6019de1be97f"),
                             Disabled = false,
                             Name = "Vichada"
                         },
                         new
                         {
-                            ProvinceId = new Guid("bf9117f5-6bce-486f-85ad-4de512cfe53d"),
-                            CountryId = new Guid("1e1dcb29-8d4b-4e26-9678-a51735898a61"),
+                            ProvinceId = new Guid("857d10ab-4aa7-4e82-ba2e-dd8cef545d54"),
+                            CountryId = new Guid("25e87d92-fd5a-419b-920b-ac4e6a3ff25b"),
                             Disabled = false,
                             Name = "Azuay"
                         },
                         new
                         {
-                            ProvinceId = new Guid("efc9342f-749d-4529-ac1c-22733c4b61c3"),
-                            CountryId = new Guid("1e1dcb29-8d4b-4e26-9678-a51735898a61"),
+                            ProvinceId = new Guid("403459bf-8c41-4de9-9a67-a9e065774684"),
+                            CountryId = new Guid("25e87d92-fd5a-419b-920b-ac4e6a3ff25b"),
                             Disabled = false,
                             Name = "Bolívar"
                         },
                         new
                         {
-                            ProvinceId = new Guid("58a11708-f5ed-4884-8366-46e06dc72f63"),
-                            CountryId = new Guid("1e1dcb29-8d4b-4e26-9678-a51735898a61"),
+                            ProvinceId = new Guid("34b26e27-b8fa-44b4-a17a-353ab354444a"),
+                            CountryId = new Guid("25e87d92-fd5a-419b-920b-ac4e6a3ff25b"),
                             Disabled = false,
                             Name = "Cañar"
                         },
                         new
                         {
-                            ProvinceId = new Guid("c3039b7b-8f5a-44d1-ba4d-baf273109172"),
-                            CountryId = new Guid("1e1dcb29-8d4b-4e26-9678-a51735898a61"),
+                            ProvinceId = new Guid("671d4cad-8899-4450-8787-c1a034a9ebc2"),
+                            CountryId = new Guid("25e87d92-fd5a-419b-920b-ac4e6a3ff25b"),
                             Disabled = false,
                             Name = "Carchi"
                         },
                         new
                         {
-                            ProvinceId = new Guid("f951b8bb-bda3-4b02-af6a-2fb4e6cd22b6"),
-                            CountryId = new Guid("1e1dcb29-8d4b-4e26-9678-a51735898a61"),
+                            ProvinceId = new Guid("bb9df834-f2e1-49b1-bb6b-570144c8c6cc"),
+                            CountryId = new Guid("25e87d92-fd5a-419b-920b-ac4e6a3ff25b"),
                             Disabled = false,
                             Name = "Chimborazo"
                         },
                         new
                         {
-                            ProvinceId = new Guid("d0f96ade-df12-46c7-9c82-cd63377b99e2"),
-                            CountryId = new Guid("1e1dcb29-8d4b-4e26-9678-a51735898a61"),
+                            ProvinceId = new Guid("eb211039-a47c-468b-b26d-cb1f63bfb477"),
+                            CountryId = new Guid("25e87d92-fd5a-419b-920b-ac4e6a3ff25b"),
                             Disabled = false,
                             Name = "Cotopaxi"
                         },
                         new
                         {
-                            ProvinceId = new Guid("f8c6d5db-408f-4792-b5c2-dc7902174404"),
-                            CountryId = new Guid("1e1dcb29-8d4b-4e26-9678-a51735898a61"),
+                            ProvinceId = new Guid("f9a3c156-1c03-4765-9eb0-57d0cff04bfe"),
+                            CountryId = new Guid("25e87d92-fd5a-419b-920b-ac4e6a3ff25b"),
                             Disabled = false,
                             Name = "El Oro"
                         },
                         new
                         {
-                            ProvinceId = new Guid("a800fe30-6d9c-4a67-a47f-6a4eda3ddf44"),
-                            CountryId = new Guid("1e1dcb29-8d4b-4e26-9678-a51735898a61"),
+                            ProvinceId = new Guid("9382d430-f376-45a5-9efe-55666fd9d716"),
+                            CountryId = new Guid("25e87d92-fd5a-419b-920b-ac4e6a3ff25b"),
                             Disabled = false,
                             Name = "Esmeraldas"
                         },
                         new
                         {
-                            ProvinceId = new Guid("83535988-f964-4b9d-9588-baca6c784626"),
-                            CountryId = new Guid("1e1dcb29-8d4b-4e26-9678-a51735898a61"),
+                            ProvinceId = new Guid("e3eb8706-31f4-47d8-b8e6-5b63e7e020c4"),
+                            CountryId = new Guid("25e87d92-fd5a-419b-920b-ac4e6a3ff25b"),
                             Disabled = false,
                             Name = "Galápagos"
                         },
                         new
                         {
-                            ProvinceId = new Guid("35d56e0d-03b3-4a19-8757-9a32f2b5723b"),
-                            CountryId = new Guid("1e1dcb29-8d4b-4e26-9678-a51735898a61"),
+                            ProvinceId = new Guid("f0a80da8-a2c3-4aa8-8c30-8e35f0b81c96"),
+                            CountryId = new Guid("25e87d92-fd5a-419b-920b-ac4e6a3ff25b"),
                             Disabled = false,
                             Name = "Guayas"
                         },
                         new
                         {
-                            ProvinceId = new Guid("e877f38c-67e2-41e8-ab85-3ced74d81b85"),
-                            CountryId = new Guid("1e1dcb29-8d4b-4e26-9678-a51735898a61"),
+                            ProvinceId = new Guid("9876392e-c0ad-4d04-9ea5-d9742d8fd5a3"),
+                            CountryId = new Guid("25e87d92-fd5a-419b-920b-ac4e6a3ff25b"),
                             Disabled = false,
                             Name = "Imbabura"
                         },
                         new
                         {
-                            ProvinceId = new Guid("4b9c2826-84f5-4bff-a941-d5387f54f5d7"),
-                            CountryId = new Guid("1e1dcb29-8d4b-4e26-9678-a51735898a61"),
+                            ProvinceId = new Guid("1d6652b5-b071-4774-a040-91c4148ee2dc"),
+                            CountryId = new Guid("25e87d92-fd5a-419b-920b-ac4e6a3ff25b"),
                             Disabled = false,
                             Name = "Loja"
                         },
                         new
                         {
-                            ProvinceId = new Guid("aec548aa-8d4e-4558-a99b-ef67e6eb338a"),
-                            CountryId = new Guid("1e1dcb29-8d4b-4e26-9678-a51735898a61"),
+                            ProvinceId = new Guid("99060b8a-66ba-4838-b3da-f76c9a3e0e40"),
+                            CountryId = new Guid("25e87d92-fd5a-419b-920b-ac4e6a3ff25b"),
                             Disabled = false,
                             Name = "Manabí"
                         },
                         new
                         {
-                            ProvinceId = new Guid("1e0db1d1-9a57-4322-a623-35bc676df01b"),
-                            CountryId = new Guid("1e1dcb29-8d4b-4e26-9678-a51735898a61"),
+                            ProvinceId = new Guid("3864444f-2e7a-42be-88fb-dff4b05b3a63"),
+                            CountryId = new Guid("25e87d92-fd5a-419b-920b-ac4e6a3ff25b"),
                             Disabled = false,
                             Name = "Morona Santiago"
                         },
                         new
                         {
-                            ProvinceId = new Guid("329b9370-522b-4919-982f-0702b9fc965f"),
-                            CountryId = new Guid("1e1dcb29-8d4b-4e26-9678-a51735898a61"),
+                            ProvinceId = new Guid("b5094437-86b0-46fe-9d42-1dce44656b97"),
+                            CountryId = new Guid("25e87d92-fd5a-419b-920b-ac4e6a3ff25b"),
                             Disabled = false,
                             Name = "Napo"
                         });
@@ -1675,88 +1716,123 @@ namespace Profiles.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            RoleId = new Guid("4ef97d56-b67b-45d1-b5b8-f51d2d159396"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(6868),
+                            RoleId = new Guid("75ea02a9-d982-40cc-ae6b-0c56efa17a51"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(869),
                             Disabled = false,
                             Name = "Developer"
                         },
                         new
                         {
-                            RoleId = new Guid("9c1fa9b2-41a9-4c82-9348-8779df44b7b5"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(6879),
+                            RoleId = new Guid("71d220c7-bda1-43dd-93a5-91fbdfe39ecf"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(875),
                             Disabled = false,
                             Name = "Designer"
                         },
                         new
                         {
-                            RoleId = new Guid("ed8e1c3e-1ae9-4d06-867a-86c9f2bf5968"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(6883),
+                            RoleId = new Guid("cd5373e7-49a8-4643-902f-10d70c1f4af2"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(879),
                             Disabled = false,
                             Name = "Manager"
                         },
                         new
                         {
-                            RoleId = new Guid("ab4b6739-49b3-486e-9b0b-0626943631ce"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(6887),
+                            RoleId = new Guid("08a9905f-3942-4895-95f4-033e54dd1ed2"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(883),
                             Disabled = false,
                             Name = "QA"
                         },
                         new
                         {
-                            RoleId = new Guid("732986a3-5923-4799-ab34-e866b6ec1f44"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(6891),
+                            RoleId = new Guid("9afcfbfb-f424-41fb-bd76-5c13c4a3da87"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(888),
                             Disabled = false,
                             Name = "DevOps"
                         },
                         new
                         {
-                            RoleId = new Guid("ef6f3038-725f-466b-95af-df0616ca2282"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(6895),
+                            RoleId = new Guid("a266bdd8-5c2f-425e-8261-ef680dac0b94"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(892),
                             Disabled = false,
                             Name = "Data Scientist"
                         },
                         new
                         {
-                            RoleId = new Guid("d28600cb-eb0d-419d-841a-47adcb5debff"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(6899),
+                            RoleId = new Guid("6845edbb-b529-492e-8891-2084788818f2"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(896),
                             Disabled = false,
                             Name = "UX/UI Designer"
                         },
                         new
                         {
-                            RoleId = new Guid("c21da06e-9edc-4082-a526-276ab7000ca7"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(6903),
+                            RoleId = new Guid("d597e53e-85d1-48d7-995f-4efe3a151d03"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(900),
                             Disabled = false,
                             Name = "Product Owner"
                         },
                         new
                         {
-                            RoleId = new Guid("d1eb0ee7-7341-4019-8524-80b9c5b478dc"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(6906),
+                            RoleId = new Guid("1d4285de-9555-4767-b771-338922ef64bd"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(905),
                             Disabled = false,
                             Name = "Scrum Master"
                         },
                         new
                         {
-                            RoleId = new Guid("e282d090-0cd3-411c-838a-a78746aa5d78"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(6911),
+                            RoleId = new Guid("17493f85-81a9-41b7-8bac-d03453138bf9"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(909),
                             Disabled = false,
                             Name = "Architect"
                         },
                         new
                         {
-                            RoleId = new Guid("792fd8ad-5d88-4a4a-ba83-01edfc13973b"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(6914),
+                            RoleId = new Guid("fbd30f73-be69-42b6-a4b3-3fb67acc4f34"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(913),
                             Disabled = false,
                             Name = "Lead Developer"
                         },
                         new
                         {
-                            RoleId = new Guid("23dd81e4-0d67-43d0-b236-d2e4341574ef"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(6918),
+                            RoleId = new Guid("61f23b17-ae5f-445b-9dc2-f7615fe27f2f"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(917),
                             Disabled = false,
                             Name = "Lead Designer"
                         });
+                });
+
+            modelBuilder.Entity("Profiles.Infrastructure.Persistence.Models.RolePerSkillModel", b =>
+                {
+                    b.Property<Guid>("RolePerSkillId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("rps_role_per_skill_id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("deleted_at");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("rol_role_id");
+
+                    b.Property<Guid>("SkillId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("ski_skill_id");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("RolePerSkillId");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("SkillId");
+
+                    b.ToTable("role_per_skill");
                 });
 
             modelBuilder.Entity("Profiles.Infrastructure.Persistence.Models.SkillModel", b =>
@@ -1797,106 +1873,106 @@ namespace Profiles.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            SkillId = new Guid("4821fb22-612c-4665-9ed4-df3cf5d9fa08"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(6940),
+                            SkillId = new Guid("4d77a36b-1215-4504-a16f-5d38bcc56c3b"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(941),
                             Disabled = false,
                             Name = "C#"
                         },
                         new
                         {
-                            SkillId = new Guid("177127c7-0073-46f3-bac4-1c864df4073c"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(6946),
+                            SkillId = new Guid("575d4020-cb04-4aec-b142-fe315e7ead05"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(948),
                             Disabled = false,
                             Name = "Java"
                         },
                         new
                         {
-                            SkillId = new Guid("78e1a3e5-fa3f-4e3a-bf38-7778c7713ced"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(6950),
+                            SkillId = new Guid("1d7674c7-1815-4828-9f20-b45fc44b4846"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(952),
                             Disabled = false,
                             Name = "Python"
                         },
                         new
                         {
-                            SkillId = new Guid("e93c6419-d2db-44ef-83b8-c45481639864"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(6954),
+                            SkillId = new Guid("cd5cb9f9-11a8-4cf6-b0d3-88b2724459b9"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(956),
                             Disabled = false,
                             Name = "JavaScript"
                         },
                         new
                         {
-                            SkillId = new Guid("c78142fa-834f-4f3b-bec7-1063076a1f00"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(6958),
+                            SkillId = new Guid("b724c457-71de-45ea-ba5d-c1a1d0d072c5"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(960),
                             Disabled = false,
                             Name = "TypeScript"
                         },
                         new
                         {
-                            SkillId = new Guid("8c48f59d-8c2a-4b58-96d5-a59fcbc1c725"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(6962),
+                            SkillId = new Guid("dd518bd5-48a8-459d-aa65-29aca0c3f5ee"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(964),
                             Disabled = false,
                             Name = "HTML"
                         },
                         new
                         {
-                            SkillId = new Guid("4b5c5993-0b25-4ae9-ba62-202fc15edeb5"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(6966),
+                            SkillId = new Guid("67a43e7a-45c9-41bd-9575-41c1987539da"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(968),
                             Disabled = false,
                             Name = "CSS"
                         },
                         new
                         {
-                            SkillId = new Guid("cf3865b3-2b79-409c-96cd-1c0971b40a0a"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(6969),
+                            SkillId = new Guid("90b375b6-ce20-4f61-a3ec-fe2e5a162136"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(972),
                             Disabled = false,
                             Name = "SQL"
                         },
                         new
                         {
-                            SkillId = new Guid("35ecef44-aa03-43b1-8f3e-f83b9cd38c85"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(6973),
+                            SkillId = new Guid("dd2247be-e42f-4a6a-88f8-60efd6ae4a89"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(976),
                             Disabled = false,
                             Name = "NoSQL"
                         },
                         new
                         {
-                            SkillId = new Guid("b5b84739-2c46-49ea-a73a-f02a53731ba6"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(6977),
+                            SkillId = new Guid("e92f72b1-40f9-4d23-986b-00a600388700"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(980),
                             Disabled = false,
                             Name = "Angular"
                         },
                         new
                         {
-                            SkillId = new Guid("a71ad0df-f8e6-45d9-9a57-8e50e6c95301"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(6984),
+                            SkillId = new Guid("dd803fcd-b478-4342-b243-2456bd3c83dc"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(987),
                             Disabled = false,
                             Name = "React"
                         },
                         new
                         {
-                            SkillId = new Guid("e6423792-7924-4ce7-8c5f-0a4dbe0c5bf9"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(6984),
+                            SkillId = new Guid("40d954a9-9f13-49c1-a673-34b5414fd883"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(988),
                             Disabled = false,
                             Name = "Vue"
                         },
                         new
                         {
-                            SkillId = new Guid("4f196ca3-6239-4006-936b-e3529c17bd40"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(6988),
+                            SkillId = new Guid("83fe2c45-314f-4fe2-880a-efc220fd38b1"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(992),
                             Disabled = false,
                             Name = "Node.js"
                         },
                         new
                         {
-                            SkillId = new Guid("c0b4678b-d297-4ab7-a53c-03c2c9e11ffa"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(6991),
+                            SkillId = new Guid("2f481652-55b2-458d-a68e-b24a95c463be"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(1046),
                             Disabled = false,
                             Name = "Spring Boot"
                         },
                         new
                         {
-                            SkillId = new Guid("b2b78da4-873b-49cf-8dc7-cb31fc1f1218"),
-                            CreatedAt = new DateTime(2024, 6, 8, 2, 57, 55, 700, DateTimeKind.Utc).AddTicks(6995),
+                            SkillId = new Guid("478b0523-34b0-4907-b4a7-f8c3e84ab7da"),
+                            CreatedAt = new DateTime(2024, 6, 8, 4, 37, 3, 644, DateTimeKind.Utc).AddTicks(1050),
                             Disabled = false,
                             Name = "Hibernate"
                         });
@@ -1980,6 +2056,33 @@ namespace Profiles.Infrastructure.Migrations
                     b.ToTable("subskill");
                 });
 
+            modelBuilder.Entity("Profiles.Infrastructure.Persistence.Models.AssessmentModel", b =>
+                {
+                    b.HasOne("Profiles.Infrastructure.Persistence.Models.ProfessionalModel", "Professional")
+                        .WithMany("Assessments")
+                        .HasForeignKey("ProfessionalId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Profiles.Infrastructure.Persistence.Models.RoleModel", "Role")
+                        .WithMany("Assessments")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Profiles.Infrastructure.Persistence.Models.SquadModel", "Squad")
+                        .WithMany("Assessments")
+                        .HasForeignKey("SquadId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Professional");
+
+                    b.Navigation("Role");
+
+                    b.Navigation("Squad");
+                });
+
             modelBuilder.Entity("Profiles.Infrastructure.Persistence.Models.CityModel", b =>
                 {
                     b.HasOne("Profiles.Infrastructure.Persistence.Models.ProvinceModel", "Province")
@@ -2002,6 +2105,25 @@ namespace Profiles.Infrastructure.Migrations
                     b.Navigation("Country");
                 });
 
+            modelBuilder.Entity("Profiles.Infrastructure.Persistence.Models.RolePerSkillModel", b =>
+                {
+                    b.HasOne("Profiles.Infrastructure.Persistence.Models.RoleModel", "Role")
+                        .WithMany("RolePerSkills")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Profiles.Infrastructure.Persistence.Models.SkillModel", "Skill")
+                        .WithMany("RolePerSkills")
+                        .HasForeignKey("SkillId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+
+                    b.Navigation("Skill");
+                });
+
             modelBuilder.Entity("Profiles.Infrastructure.Persistence.Models.SubSkillModel", b =>
                 {
                     b.HasOne("Profiles.Infrastructure.Persistence.Models.SkillModel", "Skill")
@@ -2018,14 +2140,33 @@ namespace Profiles.Infrastructure.Migrations
                     b.Navigation("Provinces");
                 });
 
+            modelBuilder.Entity("Profiles.Infrastructure.Persistence.Models.ProfessionalModel", b =>
+                {
+                    b.Navigation("Assessments");
+                });
+
             modelBuilder.Entity("Profiles.Infrastructure.Persistence.Models.ProvinceModel", b =>
                 {
                     b.Navigation("Cities");
                 });
 
+            modelBuilder.Entity("Profiles.Infrastructure.Persistence.Models.RoleModel", b =>
+                {
+                    b.Navigation("Assessments");
+
+                    b.Navigation("RolePerSkills");
+                });
+
             modelBuilder.Entity("Profiles.Infrastructure.Persistence.Models.SkillModel", b =>
                 {
+                    b.Navigation("RolePerSkills");
+
                     b.Navigation("SubSkills");
+                });
+
+            modelBuilder.Entity("Profiles.Infrastructure.Persistence.Models.SquadModel", b =>
+                {
+                    b.Navigation("Assessments");
                 });
 #pragma warning restore 612, 618
         }

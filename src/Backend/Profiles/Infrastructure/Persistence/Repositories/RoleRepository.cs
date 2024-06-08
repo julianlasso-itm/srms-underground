@@ -19,6 +19,19 @@ namespace Profiles.Infrastructure.Persistence.Repositories
         Description = entity.Description,
         Disabled = entity.Disabled,
       };
+
+      if (entity.Skills != null)
+      {
+        role.RolePerSkills = entity
+          .Skills.Select(skill => new RolePerSkillModel
+          {
+            RolePerSkillId = Guid.NewGuid(),
+            RoleId = role.RoleId,
+            SkillId = Guid.Parse(skill),
+          })
+          .ToList();
+      }
+
       return AddAsync(role);
     }
 
@@ -33,7 +46,24 @@ namespace Profiles.Infrastructure.Persistence.Repositories
       {
         role.Disabled = (bool)entity.Disabled;
       }
+      if (entity.Skills != null)
+      {
+        role.RolePerSkills = entity
+          .Skills.Select(skill => new RolePerSkillModel
+          {
+            RoleId = role.RoleId,
+            SkillId = Guid.Parse(skill),
+          })
+          .ToList();
+      }
       return UpdateAsync(id, role);
+    }
+
+    public new async Task<RoleModel> DeleteAsync(Guid id)
+    {
+      var data = await GetByIdAsync(id);
+      Console.WriteLine(data.RolePerSkills.Count);
+      return await base.DeleteAsync(id);
     }
   }
 }

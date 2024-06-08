@@ -25,5 +25,9 @@ namespace Profiles.Infrastructure.Persistence.Models
 
     [InverseProperty("Skill")]
     public ICollection<SubSkillModel> SubSkills { get; set; } = new List<SubSkillModel>();
+
+    [InverseProperty("Skill")]
+    public ICollection<RolePerSkillModel> RolePerSkills { get; set; } =
+      new List<RolePerSkillModel>();
   }
 }
