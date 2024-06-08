@@ -47,9 +47,9 @@ export class PodiumComponent {
         console.error(error.message);
         //TODO: Remove this mock data
         this.podiumUsers = [
-            { name: 'User 1', position: 'first', imageUrl: 'assets/user1.png' },
-            { name: 'User 2', position: 'second', imageUrl: 'assets/user2.png' },
-            { name: 'User 3', position: 'third', imageUrl: 'assets/user3.png' }
+            { name: 'User 1', mail:"mail@example.com", imageUrl: 'https://orderszulu2024.blob.core.windows.net/users/SRMS-694f6489-39c6-4547-876f-ff89f96eb653.webp' },
+            { name: 'User 2', mail:"mail@example.com", imageUrl: 'https://orderszulu2024.blob.core.windows.net/users/SRMS-694f6489-39c6-4547-876f-ff89f96eb653.webp' },
+            { name: 'User 3', mail:"mail@example.com", imageUrl: 'https://orderszulu2024.blob.core.windows.net/users/SRMS-694f6489-39c6-4547-876f-ff89f96eb653.webp' }
           ];
       },
     });
