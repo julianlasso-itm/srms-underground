@@ -13,7 +13,7 @@ namespace AccessControl.Domain.Aggregates.Helpers
       IHelper<RegisterCredentialDomainRequest, RegisterCredentialDomainResponse>
   {
     private const string AvatarExtension = ".webp";
-    private const string UserRoleId = "137bcadf-79bb-47f4-8622-e7381c7664ae";
+    private const string UserRoleId = "5602ac76-01b7-4a3b-a2c3-6d6d3ec393b5";
 
     public static RegisterCredentialDomainResponse Execute(
       RegisterCredentialDomainRequest registerData

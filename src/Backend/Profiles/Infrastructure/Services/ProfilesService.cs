@@ -1,3 +1,7 @@
+using Profiles.Application.Repositories;
+using Profiles.Application.Responses;
+using Profiles.Infrastructure.Persistence.Models;
+using Profiles.Infrastructure.Persistence.Repositories;
 using Profiles.Infrastructure.Services.Helpers;
 using ProtoBuf.Grpc;
 using Shared.Infrastructure.ProtocolBuffers.Profiles;
@@ -9,10 +13,15 @@ namespace Profiles.Infrastructure.Services
   internal class ProfilesService : IProfilesServices
   {
     private readonly ApplicationService _applicationService;
+    private readonly ISubSkillRepository<SubSkillModel> _subSkillRepository;
 
-    public ProfilesService(ApplicationService applicationService)
+    public ProfilesService(
+      ApplicationService applicationService,
+      ISubSkillRepository<SubSkillModel> subSkillRepository
+    )
     {
       _applicationService = applicationService;
+      _subSkillRepository = subSkillRepository;
     }
 
     public Task<DeleteCityProfilesResponse> DeleteCityAsync(
@@ -229,6 +238,87 @@ namespace Profiles.Infrastructure.Services
     {
       UpdateSkillHelper.SetApplication(_applicationService.GetApplication());
       return await UpdateSkillHelper.UpdateSkillAsync(request);
+    }
+
+    public async Task<RegisterSubSkillProfilesResponse> RegisterSubSkillAsync(
+      RegisterSubSkillProfilesRequest request,
+      CallContext context = default
+    )
+    {
+      var subskill = new SubSkillModel
+      {
+        SubSkillId = Guid.NewGuid(),
+        SkillId = Guid.Parse(request.SkillId),
+        Name = request.Name,
+        Disabled = false,
+      };
+      var result = await _subSkillRepository.AddAsync(subskill);
+      return new RegisterSubSkillProfilesResponse
+      {
+        SubSkillId = result.SubSkillId.ToString(),
+        SkillId = result.SkillId.ToString(),
+        Name = result.Name,
+        Disabled = result.Disabled,
+      };
+    }
+
+    public async Task<UpdateSubSkillProfilesResponse> UpdateSubSkillAsync(
+      UpdateSubSkillProfilesRequest request,
+      CallContext context = default
+    )
+    {
+      var subskill = new UpdateSubSkillApplicationResponse {
+        SubSkillId = request.SubSkillId!,
+        SkillId = request.SkillId,
+        Name = request.Name,
+        Disabled = !request.Disable,
+      };
+      var result = await _subSkillRepository.UpdateAsync(Guid.Parse(request.SubSkillId!), subskill);
+      return new UpdateSubSkillProfilesResponse
+      {
+        SubSkillId = result.SubSkillId.ToString(),
+        SkillId = result.SkillId.ToString(),
+        Name = result.Name,
+        Disabled = result.Disabled,
+      };
+    }
+
+    public async Task<DeleteSubSkillProfilesResponse> DeleteSubSkillAsync(
+      DeleteSubSkillProfilesRequest request,
+      CallContext context = default
+    )
+    {
+      var result = await _subSkillRepository.DeleteAsync(Guid.Parse(request.SubSkillId));
+      return new DeleteSubSkillProfilesResponse { SubSkillId = result.SubSkillId.ToString() };
+    }
+
+    public async Task<GetSubSkillsProfilesResponse> GetSubSkillAsync(
+      GetSubSkillsProfilesRequest request,
+      CallContext context = default
+    )
+    {
+      var result = await _subSkillRepository.GetWithPaginationAsync(
+        request.Page,
+        request.Limit,
+        request.Sort,
+        request.Order ?? "asc",
+        request.Filter,
+        request.FilterBy
+      );
+      var total = await _subSkillRepository.GetCountAsync(request.Filter, request.FilterBy);
+      return new GetSubSkillsProfilesResponse
+      {
+        SubSkills = result
+          .Select(subskill => new SubSkillProfiles
+          {
+            SubSkillId = subskill.SubSkillId.ToString(),
+            SkillId = subskill.SkillId.ToString(),
+            Name = subskill.Name,
+            Disabled = subskill.Disabled,
+          })
+          .ToList(),
+        Total = total,
+      };
     }
   }
 }

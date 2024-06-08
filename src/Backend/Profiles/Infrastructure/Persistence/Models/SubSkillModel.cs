@@ -5,25 +5,29 @@ using Shared.Infrastructure.Persistence.Models;
 
 namespace Profiles.Infrastructure.Persistence.Models
 {
-  [Index(nameof(Name), IsUnique = true)]
-  [Table("skill")]
-  public class SkillModel : AuditableEntity
+  [Index(nameof(Name), nameof(SkillId), IsUnique = true)]
+  [Table("subskill")]
+  public class SubSkillModel : AuditableEntity
   {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.None)]
+    [Column("sbskl_subskill_id")]
+    public Guid SubSkillId { get; set; }
+
+    [ForeignKey(nameof(SkillModel))]
     [Column("skl_skill_id")]
     public Guid SkillId { get; set; }
 
     [Required]
-    [Column("skl_name")]
-    [MaxLength(20)]
+    [Column("sbskl_name")]
+    [MaxLength(500)]
     public string Name { get; set; }
 
     [Required]
-    [Column("skl_disabled")]
+    [Column("sbskl_disabled")]
     public bool Disabled { get; set; } = false;
 
-    [InverseProperty("Skill")]
-    public ICollection<SubSkillModel> SubSkills { get; set; } = new List<SubSkillModel>();
+    [DeleteBehavior(DeleteBehavior.Restrict)]
+    public SkillModel Skill { get; set; }
   }
 }

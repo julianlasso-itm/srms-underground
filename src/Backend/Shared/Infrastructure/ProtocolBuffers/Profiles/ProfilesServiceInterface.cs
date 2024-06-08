@@ -151,5 +151,29 @@ namespace Shared.Infrastructure.ProtocolBuffers.Profiles
       UpdateProfessionalProfilesRequest request,
       CallContext context = default
     );
+
+    [OperationContract]
+    Task<RegisterSubSkillProfilesResponse> RegisterSubSkillAsync(
+      RegisterSubSkillProfilesRequest request,
+      CallContext context = default
+    );
+
+    [OperationContract]
+    Task<UpdateSubSkillProfilesResponse> UpdateSubSkillAsync(
+      UpdateSubSkillProfilesRequest request,
+      CallContext context = default
+    );
+
+    [OperationContract]
+    Task<DeleteSubSkillProfilesResponse> DeleteSubSkillAsync(
+      DeleteSubSkillProfilesRequest request,
+      CallContext context = default
+    );
+
+    [OperationContract]
+    Task<GetSubSkillsProfilesResponse> GetSubSkillAsync(
+      GetSubSkillsProfilesRequest request,
+      CallContext context = default
+    );
   }
 }

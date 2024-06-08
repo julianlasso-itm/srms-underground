@@ -236,5 +236,44 @@ namespace ApiGateway.Infrastructure.Controllers
         async () => Ok(await _profilesService.GetProfessionalAsync(request))
       );
     }
+
+    [Permissions]
+    [HttpPost("subskill")]
+    public async Task<IActionResult> RegisterSubSkillAsync(
+      [FromBody] RegisterSubSkillProfilesRequest request
+    )
+    {
+      return await HandleAsync(
+        async () => Ok(await _profilesService.RegisterSubSkillAsync(request))
+      );
+    }
+
+    [Permissions]
+    [HttpPut("subskill/{id}")]
+    public async Task<IActionResult> UpdateSubSkillAsync(
+      string id,
+      [FromBody] UpdateSubSkillProfilesRequest request
+    )
+    {
+      request.SubSkillId = id;
+      return await HandleAsync(async () => Ok(await _profilesService.UpdateSubSkillAsync(request)));
+    }
+
+    [Permissions]
+    [HttpDelete("subskill/{id}")]
+    public async Task<IActionResult> DeleteSubSkillAsync(string id)
+    {
+      var request = new DeleteSubSkillProfilesRequest { SubSkillId = id };
+      return await HandleAsync(async () => Ok(await _profilesService.DeleteSubSkillAsync(request)));
+    }
+
+    [Permissions]
+    [HttpGet("subskills")]
+    public async Task<IActionResult> GetSubSkillsAsync(
+      [FromQuery] GetSubSkillsProfilesRequest request
+    )
+    {
+      return await HandleAsync(async () => Ok(await _profilesService.GetSubSkillAsync(request)));
+    }
   }
 }

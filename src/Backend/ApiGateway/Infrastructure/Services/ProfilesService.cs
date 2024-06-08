@@ -207,5 +207,37 @@ namespace ApiGateway.Infrastructure.Services
     {
       return Client.UpdateProfessionalAsync(request);
     }
+
+    public Task<RegisterSubSkillProfilesResponse> RegisterSubSkillAsync(
+      RegisterSubSkillProfilesRequest request,
+      CallContext context = default
+    )
+    {
+      return Client.RegisterSubSkillAsync(request);
+    }
+
+    public Task<UpdateSubSkillProfilesResponse> UpdateSubSkillAsync(
+      UpdateSubSkillProfilesRequest request,
+      CallContext context = default
+    )
+    {
+      return Client.UpdateSubSkillAsync(request);
+    }
+
+    public Task<DeleteSubSkillProfilesResponse> DeleteSubSkillAsync(
+      DeleteSubSkillProfilesRequest request,
+      CallContext context = default
+    )
+    {
+      return Client.DeleteSubSkillAsync(request);
+    }
+
+    public Task<GetSubSkillsProfilesResponse> GetSubSkillAsync(
+      GetSubSkillsProfilesRequest request,
+      CallContext context = default
+    )
+    {
+      return Client.GetSubSkillAsync(request);
+    }
   }
 }
