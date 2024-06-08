@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AccessControl.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240519051417_CityToUser")]
-    partial class CityToUser
+    [Migration("20240607194907_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,120 +68,120 @@ namespace AccessControl.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            RoleId = new Guid("52564de7-43ae-4664-9188-73b1a0992f19"),
-                            CreatedAt = new DateTime(2024, 5, 19, 5, 14, 17, 88, DateTimeKind.Utc).AddTicks(1289),
+                            RoleId = new Guid("7bc67ff8-6144-4a1b-99f7-e7ef38d5d5a0"),
+                            CreatedAt = new DateTime(2024, 6, 7, 19, 49, 6, 505, DateTimeKind.Utc).AddTicks(7482),
                             Description = "Admin role",
                             Disabled = false,
                             Name = "Admin"
                         },
                         new
                         {
-                            RoleId = new Guid("5602ac76-01b7-4a3b-a2c3-6d6d3ec393b5"),
-                            CreatedAt = new DateTime(2024, 5, 19, 5, 14, 17, 88, DateTimeKind.Utc).AddTicks(1299),
+                            RoleId = new Guid("137bcadf-79bb-47f4-8622-e7381c7664ae"),
+                            CreatedAt = new DateTime(2024, 6, 7, 19, 49, 6, 505, DateTimeKind.Utc).AddTicks(7552),
                             Description = "User role",
                             Disabled = false,
                             Name = "User"
                         },
                         new
                         {
-                            RoleId = new Guid("62ba4193-6de8-4d86-a7f8-30ac047ccc89"),
-                            CreatedAt = new DateTime(2024, 5, 19, 5, 14, 17, 88, DateTimeKind.Utc).AddTicks(1303),
+                            RoleId = new Guid("ebcb515b-885e-4a32-ad7d-bbbda68153e8"),
+                            CreatedAt = new DateTime(2024, 6, 7, 19, 49, 6, 505, DateTimeKind.Utc).AddTicks(7585),
                             Description = "Guest role",
                             Disabled = false,
                             Name = "Guest"
                         },
                         new
                         {
-                            RoleId = new Guid("4442aea1-1c40-4ce7-a33e-7a63853db6cf"),
-                            CreatedAt = new DateTime(2024, 5, 19, 5, 14, 17, 88, DateTimeKind.Utc).AddTicks(1308),
+                            RoleId = new Guid("82dc7223-51c3-416f-b50f-3db9653f81cf"),
+                            CreatedAt = new DateTime(2024, 6, 7, 19, 49, 6, 505, DateTimeKind.Utc).AddTicks(7592),
                             Description = "SuperAdmin role",
                             Disabled = false,
                             Name = "SuperAdmin"
                         },
                         new
                         {
-                            RoleId = new Guid("c4bcaeb3-7233-4e1f-aeab-ffb64cb2917e"),
-                            CreatedAt = new DateTime(2024, 5, 19, 5, 14, 17, 88, DateTimeKind.Utc).AddTicks(1312),
+                            RoleId = new Guid("177b2108-513d-40b2-9275-416c1ffc4c22"),
+                            CreatedAt = new DateTime(2024, 6, 7, 19, 49, 6, 505, DateTimeKind.Utc).AddTicks(7599),
                             Description = "Moderator role",
                             Disabled = false,
                             Name = "Moderator"
                         },
                         new
                         {
-                            RoleId = new Guid("28d873cc-5a6d-44f8-b6d3-ea6afd262966"),
-                            CreatedAt = new DateTime(2024, 5, 19, 5, 14, 17, 88, DateTimeKind.Utc).AddTicks(1317),
+                            RoleId = new Guid("ef1d308c-9d9c-47ad-b7ef-3b190d1407d1"),
+                            CreatedAt = new DateTime(2024, 6, 7, 19, 49, 6, 505, DateTimeKind.Utc).AddTicks(7615),
                             Description = "Editor role",
                             Disabled = false,
                             Name = "Editor"
                         },
                         new
                         {
-                            RoleId = new Guid("cfc551fd-9914-4c0c-b3d5-1aa230cf631a"),
-                            CreatedAt = new DateTime(2024, 5, 19, 5, 14, 17, 88, DateTimeKind.Utc).AddTicks(1321),
+                            RoleId = new Guid("08c605e8-d107-4060-8d24-67ba37ee54f1"),
+                            CreatedAt = new DateTime(2024, 6, 7, 19, 49, 6, 505, DateTimeKind.Utc).AddTicks(7622),
                             Description = "Author role",
                             Disabled = false,
                             Name = "Author"
                         },
                         new
                         {
-                            RoleId = new Guid("6ec56bb4-a0ba-47e1-a426-7281e67cdf3e"),
-                            CreatedAt = new DateTime(2024, 5, 19, 5, 14, 17, 88, DateTimeKind.Utc).AddTicks(1326),
+                            RoleId = new Guid("7b48f05d-0506-4ec8-b619-657781887d58"),
+                            CreatedAt = new DateTime(2024, 6, 7, 19, 49, 6, 505, DateTimeKind.Utc).AddTicks(7629),
                             Description = "Contributor role",
                             Disabled = false,
                             Name = "Contributor"
                         },
                         new
                         {
-                            RoleId = new Guid("d7916bee-573a-490b-bf9a-e2d091160261"),
-                            CreatedAt = new DateTime(2024, 5, 19, 5, 14, 17, 88, DateTimeKind.Utc).AddTicks(1330),
+                            RoleId = new Guid("edf03f2c-f9a7-4206-aad7-602ddeda68b9"),
+                            CreatedAt = new DateTime(2024, 6, 7, 19, 49, 6, 505, DateTimeKind.Utc).AddTicks(7636),
                             Description = "Subscriber role",
                             Disabled = false,
                             Name = "Subscriber"
                         },
                         new
                         {
-                            RoleId = new Guid("41bac60b-a853-4a6e-b57c-1e85359fcbf8"),
-                            CreatedAt = new DateTime(2024, 5, 19, 5, 14, 17, 88, DateTimeKind.Utc).AddTicks(1335),
+                            RoleId = new Guid("ef5fdad0-9acb-48c7-8ed8-96c3dbcc1132"),
+                            CreatedAt = new DateTime(2024, 6, 7, 19, 49, 6, 505, DateTimeKind.Utc).AddTicks(7647),
                             Description = "Member role",
                             Disabled = false,
                             Name = "Member"
                         },
                         new
                         {
-                            RoleId = new Guid("332dfdba-ba90-4898-9424-571030b20619"),
-                            CreatedAt = new DateTime(2024, 5, 19, 5, 14, 17, 88, DateTimeKind.Utc).AddTicks(1339),
+                            RoleId = new Guid("97f63c8c-d5fa-4350-a27b-0d4d694dc865"),
+                            CreatedAt = new DateTime(2024, 6, 7, 19, 49, 6, 505, DateTimeKind.Utc).AddTicks(7662),
                             Description = "Customer role",
                             Disabled = false,
                             Name = "Customer"
                         },
                         new
                         {
-                            RoleId = new Guid("72775eea-49c2-48c1-a38a-a8bb39e7a434"),
-                            CreatedAt = new DateTime(2024, 5, 19, 5, 14, 17, 88, DateTimeKind.Utc).AddTicks(1343),
+                            RoleId = new Guid("3ccf777f-8cd7-4349-81de-ae8304cd8d50"),
+                            CreatedAt = new DateTime(2024, 6, 7, 19, 49, 6, 505, DateTimeKind.Utc).AddTicks(7806),
                             Description = "Client role",
                             Disabled = false,
                             Name = "Client"
                         },
                         new
                         {
-                            RoleId = new Guid("e622769c-4bf4-4a6a-b7a4-7637e8a408aa"),
-                            CreatedAt = new DateTime(2024, 5, 19, 5, 14, 17, 88, DateTimeKind.Utc).AddTicks(1347),
+                            RoleId = new Guid("1bb2b059-cd40-4142-af8e-87277cb58a87"),
+                            CreatedAt = new DateTime(2024, 6, 7, 19, 49, 6, 505, DateTimeKind.Utc).AddTicks(7814),
                             Description = "Viewer role",
                             Disabled = false,
                             Name = "Viewer"
                         },
                         new
                         {
-                            RoleId = new Guid("26e7cee5-590e-40df-9e66-f6c3d68e5745"),
-                            CreatedAt = new DateTime(2024, 5, 19, 5, 14, 17, 88, DateTimeKind.Utc).AddTicks(1350),
+                            RoleId = new Guid("10e85027-cd98-45e2-95bf-6945037f94ea"),
+                            CreatedAt = new DateTime(2024, 6, 7, 19, 49, 6, 505, DateTimeKind.Utc).AddTicks(7822),
                             Description = "Tester role",
                             Disabled = false,
                             Name = "Tester"
                         },
                         new
                         {
-                            RoleId = new Guid("75df4221-201f-4a44-8d05-6f5b5e891c5f"),
-                            CreatedAt = new DateTime(2024, 5, 19, 5, 14, 17, 88, DateTimeKind.Utc).AddTicks(1354),
+                            RoleId = new Guid("dce9c1b7-7bb6-4947-9c6f-51cb9213a7fe"),
+                            CreatedAt = new DateTime(2024, 6, 7, 19, 49, 6, 505, DateTimeKind.Utc).AddTicks(7829),
                             Description = "Developer role",
                             Disabled = false,
                             Name = "Developer"

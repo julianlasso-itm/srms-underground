@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace QueryBank.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class AddTableSkill : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

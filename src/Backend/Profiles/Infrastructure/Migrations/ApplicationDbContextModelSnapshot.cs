@@ -2111,3 +2111,4 @@ namespace Profiles.Infrastructure.Migrations
         }
     }
 }
+
