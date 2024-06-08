@@ -11,4 +11,9 @@ export const skillsRoutes: Routes = [
         loadComponent: () =>
             import('./skill/skill.component').then((m) => m.SkillComponent),
     },
+    {
+        path: ':id',
+        loadComponent: () =>
+            import('./skill-detail/skill-detail.component').then((m) => m.SkillDetailComponent),
+    },
 ];
