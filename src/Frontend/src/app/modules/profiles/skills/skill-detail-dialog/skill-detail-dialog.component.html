@@ -3,10 +3,10 @@
     (data().formType == formType().EDIT) { Editar enunciado }
 </h2>
 <mat-dialog-content>
-    <srms-skill-form
+    <srms-skill-detail-form
         [skill]="signal(data().skill ?? null)"
         (frmSkill)="skillForm($event)"
-    ></srms-skill-form>
+    ></srms-skill-detail-form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-flat-button class="min-width-110" (click)="onCancelClick()">

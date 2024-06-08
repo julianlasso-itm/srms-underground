@@ -48,7 +48,7 @@ const MIN_LENGTH = 10;
   styleUrl: './skill-detail.component.scss',
 })
 export class SkillDetailComponent implements OnInit {
-  private idSkill: string = '';
+  public skill: ISubSkill
   readonly displayedColumns: string[];
   dataSource = signal<ISubSkill[]>([]);
   totalRecords = signal(0);
@@ -68,7 +68,7 @@ export class SkillDetailComponent implements OnInit {
     public httpService: HttpService,
     public reloadDataService: ReloadDataService,
   ) {
-    this.idSkill = this.route.snapshot.paramMap.get('id')!;
+    this.skill = { skillId: this.route.snapshot.paramMap.get('id')! } as ISubSkill;
     this.displayedColumns = ['position', 'name', 'disabled', 'actions'];
     this.loading = false;
     this.loadingTable = false;
@@ -86,21 +86,22 @@ export class SkillDetailComponent implements OnInit {
     this.reloadData.unsubscribe();
   }
 
-  openDialogNew(): void {
+  openDialogNew(skill: ISubSkill): void {
     this.dialog.open(SkillDetailDialogComponent, {
-      data: signal({ formType: FormType.CREATE, skillId: this.idSkill }),
+      data: signal({ formType: FormType.CREATE, skill}),
       width: '450px',
     });
   }
 
   openDialogEdit(skill: ISubSkill): void {
     this.dialog.open(SkillDetailDialogComponent, {
-      data: signal({ formType: FormType.EDIT, skillId: skill.skillId}),
+      data: signal({ formType: FormType.EDIT, skill}),
       width: '450px',
     });
   }
 
   openDialogDelete(id: string): void {
+    console.log(id);
     this.dialog.open(DeleteDialogComponent, {
       data: { url: URL_SKILL_DETAILS, id },
       width: '400px',
@@ -117,7 +118,7 @@ export class SkillDetailComponent implements OnInit {
     let params = new HttpParams()
       .append('Page', pagination.Page.toString())
       .append('Limit', pagination.Limit.toString())
-      .append('Filter', this.idSkill)
+      .append('Filter', this.skill.skillId)
       .append('FilterBy','SkillId');
     if (this.filter().length > 0) {
       params = new HttpParams().appendAll({
