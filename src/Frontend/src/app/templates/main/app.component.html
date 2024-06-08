@@ -67,19 +67,19 @@
                             <mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-user-shield"></mat-icon>
                             Gestión de roles (Seguridad)
                         </a>    
-                        <a mat-list-item routerLink="./profiles/squads" routerLinkActive="is-activated">
+                        <a mat-list-item routerLink="./profiles/squads" routerLinkActive="is-activated" *ngIf="isAdmin()">
                             <mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-people-group"></mat-icon>
                             Gestión de equipos
                         </a>        
-                        <a mat-list-item routerLink="./profiles/professionals" routerLinkActive="is-activated">
+                        <a mat-list-item routerLink="./profiles/professionals" routerLinkActive="is-activated" *ngIf="isAdmin()">
                             <mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-list-check"></mat-icon>
                             Gestión de evaluaciones
                         </a>
-                        <a mat-list-item routerLink="./profiles/professionals" routerLinkActive="is-activated">
+                        <a mat-list-item routerLink="./profiles/professionals" routerLinkActive="is-activated" *ngIf="isAdmin()">
                             <mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-circle-check"></mat-icon>
                             Evaluar profesionales
                         </a>
-                        <a mat-list-item routerLink="./profiles/professionals" routerLinkActive="is-activated">
+                        <a mat-list-item routerLink="./profiles/professionals" routerLinkActive="is-activated" *ngIf="isAdmin()">
                             <mat-icon matListItemIcon fontSet="fa-solid" fontIcon="fa-square-poll-vertical"></mat-icon>
                             Resultados de evaluación
                         </a>

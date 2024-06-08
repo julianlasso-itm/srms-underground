@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Profiles.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using Profiles.Infrastructure.Persistence;
 namespace Profiles.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240608073929_inita")]
+    partial class inita
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1670,54 +1673,6 @@ namespace Profiles.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Profiles.Infrastructure.Persistence.Models.ResultModel", b =>
-                {
-                    b.Property<Guid>("ResultId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("res_result_id");
-
-                    b.Property<Guid>("AssessmentId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("asm_assessment_id");
-
-                    b.Property<string>("Comment")
-                        .HasMaxLength(2048)
-                        .HasColumnType("character varying(2048)")
-                        .HasColumnName("res_comment");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
-
-                    b.Property<DateTime?>("DateTime")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("res_date_time");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("deleted_at");
-
-                    b.Property<int>("Result")
-                        .HasColumnType("integer")
-                        .HasColumnName("res_result");
-
-                    b.Property<Guid>("SubSkillId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("sub_sub_skill_id");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
-
-                    b.HasKey("ResultId");
-
-                    b.HasIndex("AssessmentId");
-
-                    b.HasIndex("SubSkillId");
-
-                    b.ToTable("result");
-                });
-
             modelBuilder.Entity("Profiles.Infrastructure.Persistence.Models.RoleModel", b =>
                 {
                     b.Property<Guid>("RoleId")
@@ -2374,31 +2329,12 @@ namespace Profiles.Infrastructure.Migrations
                     b.Navigation("Country");
                 });
 
-            modelBuilder.Entity("Profiles.Infrastructure.Persistence.Models.ResultModel", b =>
-                {
-                    b.HasOne("Profiles.Infrastructure.Persistence.Models.AssessmentModel", "Assessment")
-                        .WithMany("Results")
-                        .HasForeignKey("AssessmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Profiles.Infrastructure.Persistence.Models.SubSkillModel", "SubSkill")
-                        .WithMany("Results")
-                        .HasForeignKey("SubSkillId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Assessment");
-
-                    b.Navigation("SubSkill");
-                });
-
             modelBuilder.Entity("Profiles.Infrastructure.Persistence.Models.RolePerSkillModel", b =>
                 {
                     b.HasOne("Profiles.Infrastructure.Persistence.Models.RoleModel", "Role")
                         .WithMany("RolePerSkills")
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Profiles.Infrastructure.Persistence.Models.SkillModel", "Skill")
@@ -2421,11 +2357,6 @@ namespace Profiles.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Skill");
-                });
-
-            modelBuilder.Entity("Profiles.Infrastructure.Persistence.Models.AssessmentModel", b =>
-                {
-                    b.Navigation("Results");
                 });
 
             modelBuilder.Entity("Profiles.Infrastructure.Persistence.Models.CountryModel", b =>
@@ -2460,11 +2391,6 @@ namespace Profiles.Infrastructure.Migrations
             modelBuilder.Entity("Profiles.Infrastructure.Persistence.Models.SquadModel", b =>
                 {
                     b.Navigation("Assessments");
-                });
-
-            modelBuilder.Entity("Profiles.Infrastructure.Persistence.Models.SubSkillModel", b =>
-                {
-                    b.Navigation("Results");
                 });
 #pragma warning restore 612, 618
         }

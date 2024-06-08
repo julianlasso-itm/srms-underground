@@ -1,0 +1,41 @@
+<form id="frmSkill" [formGroup]="frmSkill()" (submit)="onSubmit()">
+    @if (skill()?.skillId != null) {
+    <input type="text" class="hidden" formControlName="skillId" />
+    }
+    <p>
+        <mat-form-field class="width-100">
+            <mat-label>Nombre</mat-label>
+            <input
+                matInput
+                type="text"
+                formControlName="name"
+                placeholder="Detalle de la habilidad"
+            />
+            @if (frmSkill().get('name')?.errors?.['required']) {
+            <mat-error>El nombre es requerido</mat-error>
+            } @if (frmSkill().get('name')?.errors?.['maxlength']) {
+            <mat-error
+                >El nombre debe tener un máximo de 50 caracteres</mat-error
+            >
+            }
+        </mat-form-field>
+    </p>
+    @if (skill()?.skillId != null) {
+    <p>
+        <mat-slide-toggle
+            formControlName="disabled"
+            [checked]="frmSkill().get('disabled')?.value"
+        >
+            @if (frmSkill().get('disabled')?.value) {
+            <span class="color-red">Habilitado</span>
+            } @else {
+            <span class="color-green">Deshabilitado</span>
+            }
+        </mat-slide-toggle>
+    </p>
+    @if (frmSkill().get('id')?.errors?.['required']) {
+    <mat-error>El id es requerido</mat-error>
+    } @if (frmSkill().get('id')?.errors?.['pattern']) {
+    <mat-error>El id debe tener un valor válido</mat-error>
+    } }
+</form>
