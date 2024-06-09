@@ -16,6 +16,8 @@ namespace Profiles.Infrastructure.Persistence
     public DbSet<SquadModel> Squads { get; set; }
     public DbSet<AssessmentModel> Assessments { get; set; }
     public DbSet<RolePerSkillModel> RolePerSkills { get; set; }
+    public DbSet<ResultModel> Results { get; set; }
+    public DbSet<PodiumModel> Podium { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
       : base(options) { }

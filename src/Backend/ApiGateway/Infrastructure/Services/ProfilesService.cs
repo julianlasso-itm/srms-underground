@@ -303,5 +303,13 @@ namespace ApiGateway.Infrastructure.Services
     {
       return Client.GetAssessmentsAsync(request);
     }
+
+    public Task<GetPodiumProfilesResponse> GetPodiumsAsync(
+      GetPodiumProfilesRequest request,
+      CallContext context = default
+    )
+    {
+      return Client.GetPodiumsAsync(request);
+    }
   }
 }

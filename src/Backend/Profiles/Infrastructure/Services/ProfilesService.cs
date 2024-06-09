@@ -15,18 +15,21 @@ namespace Profiles.Infrastructure.Services
     private readonly ISubSkillRepository<SubSkillModel> _subSkillRepository;
     private readonly ISquadRepository<SquadModel> _squadRepository;
     private readonly IAssessmentRepository<AssessmentModel> _assessmentRepository;
+    private readonly IPodiumRepository<PodiumModel> _podiumRepository;
 
     public ProfilesService(
       ApplicationService applicationService,
       ISubSkillRepository<SubSkillModel> subSkillRepository,
       ISquadRepository<SquadModel> squadRepository,
-      IAssessmentRepository<AssessmentModel> assessmentRepository
+      IAssessmentRepository<AssessmentModel> assessmentRepository,
+      IPodiumRepository<PodiumModel> podiumRepository
     )
     {
       _applicationService = applicationService;
       _subSkillRepository = subSkillRepository;
       _squadRepository = squadRepository;
       _assessmentRepository = assessmentRepository;
+      _podiumRepository = podiumRepository;
     }
 
     public Task<DeleteCityProfilesResponse> DeleteCityAsync(
@@ -528,6 +531,35 @@ namespace Profiles.Infrastructure.Services
                   .ToList(),
               })
               .ToList(),
+          })
+          .ToList(),
+        Total = total,
+      };
+    }
+
+    public async Task<GetPodiumProfilesResponse> GetPodiumsAsync(
+      GetPodiumProfilesRequest request,
+      CallContext context = default
+    )
+    {
+      var podiums = await _podiumRepository.GetWithPaginationAsync(
+        request.Page,
+        request.Limit,
+        request.Sort,
+        request.Order ?? "asc",
+        request.Filter,
+        request.FilterBy
+      );
+      var total = await _podiumRepository.GetCountAsync(request.Filter, request.FilterBy);
+      return new GetPodiumProfilesResponse
+      {
+        Podium = podiums
+          .Select(podium => new PodiumProfiles
+          {
+            PodiumId = podium.PodiumId.ToString(),
+            Name = podium.Name,
+            Email = podium.Email,
+            Photo = podium.Photo,
           })
           .ToList(),
         Total = total,

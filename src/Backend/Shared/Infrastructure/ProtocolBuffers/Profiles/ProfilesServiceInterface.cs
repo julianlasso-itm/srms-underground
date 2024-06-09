@@ -223,5 +223,11 @@ namespace Shared.Infrastructure.ProtocolBuffers.Profiles
       GetAssessmentsProfilesRequest request,
       CallContext context = default
     );
+
+    [OperationContract]
+    Task<GetPodiumProfilesResponse> GetPodiumsAsync(
+      GetPodiumProfilesRequest request,
+      CallContext context = default
+    );
   }
 }

@@ -351,9 +351,13 @@ namespace ApiGateway.Infrastructure.Controllers
       [FromQuery] GetAssessmentsProfilesRequest request
     )
     {
-      return await HandleAsync(
-        async () => Ok(await _profilesService.GetAssessmentsAsync(request))
-      );
+      return await HandleAsync(async () => Ok(await _profilesService.GetAssessmentsAsync(request)));
+    }
+
+    [HttpGet("podiums")]
+    public async Task<IActionResult> GetPodiumsAsync([FromQuery] GetPodiumProfilesRequest request)
+    {
+      return await HandleAsync(async () => Ok(await _profilesService.GetPodiumsAsync(request)));
     }
   }
 }

@@ -39,6 +39,7 @@ builder.Services.AddScoped<ISquadRepository<SquadModel>, SquadRepository>();
 builder.Services.AddScoped<IProfessionalRepository<ProfessionalModel>, ProfessionalRepository>();
 builder.Services.AddScoped<IAssessmentRepository<AssessmentModel>, AssessmentRepository>();
 builder.Services.AddScoped<ILevelRepository<LevelModel>, LevelRepository>();
+builder.Services.AddScoped<IPodiumRepository<PodiumModel>, PodiumRepository>();
 // ============================
 
 // == Configure dependency injection for services ==
