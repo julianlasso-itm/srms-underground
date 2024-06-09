@@ -9,6 +9,6 @@ export interface IAssesment {
 }
 
 export interface IAssesments {
-    assesments: IAssesment[];
+    assessments: IAssesment[];
     total: number;
 }

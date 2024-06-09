@@ -16,4 +16,11 @@ export const assesmentsRoutes: Routes = [
         loadComponent: () =>
             import('./assesment/assesment.component').then((m) => m.AssesmentComponent),
     },
+    {
+        path: 'go/:id',
+        loadComponent: () =>
+          import('../assesments/go-assessment/go-assessment.component').then(
+            (m) => m.GoAssessmentComponent
+          ),
+      },
 ];

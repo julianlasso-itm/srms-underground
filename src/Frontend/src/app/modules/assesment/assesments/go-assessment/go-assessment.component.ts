@@ -16,8 +16,8 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { ActivatedRoute } from '@angular/router';
 import { ChartConfiguration } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import { Constant } from '../../shared/constants/constants';
-import { HttpService } from '../../shared/services/http.service';
+import { Constant } from '../../../shared/constants/constants';
+import { HttpService } from '../../../shared/services/http.service';
 import { Assessments, SkillData, SubSkillData } from './interfaces';
 
 const ranking = {

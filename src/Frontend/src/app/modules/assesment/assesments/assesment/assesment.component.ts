@@ -10,7 +10,7 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DeleteDialogComponent } from '../../../shared/components/delete-dialog/delete-dialog.component';
 import { InputFilterComponent } from '../../../shared/components/input-filter/input-filter.component';
@@ -21,7 +21,7 @@ import { ReloadDataService } from '../../../shared/services/reload-data.service'
 import { SharedModule } from '../../../shared/shared.module';
 import { AssesmentDialogComponent } from '../assesment-dialog/assesment-dialog.component';
 import { FormType } from '../assesment-dialog/dialog.type';
-import { IAssesments, IAssesment } from './assesment.interface';
+import { IAssesment, IAssesments } from './assesment.interface';
 
 const URL_GET_ASSESMENTS = `${Constant.URL_BASE}${Constant.URL_GET_ASSESMENTS}`;
 const URL_ASSESMENT = `${Constant.URL_BASE}${Constant.URL_ASSESMENT}`;
@@ -63,13 +63,14 @@ export class AssesmentComponent implements OnInit, OnDestroy {
         public dialog: MatDialog,
         public httpService: HttpService,
         public reloadDataService: ReloadDataService,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private readonly router: Router,
     ) {
         this.displayedColumns = [
             'position',
-            'name',
-            'province',
-            'disabled',
+            'professional',
+            'role',
+            'squad',
             'actions',
         ];
         this.loading = false;
@@ -92,6 +93,10 @@ export class AssesmentComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.reloadData.unsubscribe();
+    }
+
+    openAssesmentResults(assesment: string) {
+        this.router.navigate([`/assesment/assesments/go/${assesment}`]);;
     }
 
     openDialogNew(): void {
@@ -135,9 +140,9 @@ export class AssesmentComponent implements OnInit, OnDestroy {
         }
         this.httpService.get<IAssesments>(URL_GET_ASSESMENTS, params).subscribe({
             next: (data) => {
-                console.log(data);
-                if (data.assesments !== null) {
-                    this.dataSource.update(() => data.assesments);
+                if (data.assessments !== null) {
+                    this.dataSource.update(() => data.assessments);
+                    console.log(data.assessments);
                     this.totalRecords.update(() => data.total);
                 } else {
                     this.dataSource.update(() => []);

@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Profiles.Application.Repositories;
 using Profiles.Infrastructure.AntiCorruption;
 using Profiles.Infrastructure.AntiCorruption.Interfaces;
@@ -18,7 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
   options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionDataBase"));
-});
+}, ServiceLifetime.Transient);
 // ==========================================
 
 // == Configure connection to Redis ==
