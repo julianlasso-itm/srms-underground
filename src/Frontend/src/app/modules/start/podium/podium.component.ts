@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { HttpService } from '../../shared/services/http.service';
 import { Constant } from '../../shared/constants/constants';
 import { IPodium } from './podium.interface';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'srms-podium',
@@ -32,11 +33,14 @@ export class PodiumComponent {
   }
 
   private obtenerPodium(): void {
+
+    let params = new HttpParams()
+      .append('Page', '1')
+      .append('Limit', '3')
     console.log('Obteniendo podium');
     const URL_GET_PODIUM = `${Constant.URL_BASE}${Constant.URL_GET_PODIUM}`;
-    this.httpService.get<IPodium>(URL_GET_PODIUM).subscribe({
+    this.httpService.get<IPodium>(URL_GET_PODIUM, params).subscribe({
       next: (data) => {
-        console.log(data);
         if (data.podium !== null) {
           this.podiumUsers = data.podium;
         } else {
@@ -44,13 +48,7 @@ export class PodiumComponent {
         }
       },
       error: (error) => {
-        console.error(error.message);
-        //TODO: Remove this mock data
-        this.podiumUsers = [
-            { name: 'User 1', mail:"mail@example.com", imageUrl: 'https://orderszulu2024.blob.core.windows.net/users/SRMS-694f6489-39c6-4547-876f-ff89f96eb653.webp' },
-            { name: 'User 2', mail:"mail@example.com", imageUrl: 'https://orderszulu2024.blob.core.windows.net/users/SRMS-694f6489-39c6-4547-876f-ff89f96eb653.webp' },
-            { name: 'User 3', mail:"mail@example.com", imageUrl: 'https://orderszulu2024.blob.core.windows.net/users/SRMS-694f6489-39c6-4547-876f-ff89f96eb653.webp' }
-          ];
+        console.error(error.message);        
       },
     });
   }

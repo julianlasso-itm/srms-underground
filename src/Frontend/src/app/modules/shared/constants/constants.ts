@@ -25,7 +25,7 @@ export enum Constant {
     URL_RESET_PASSWORD = '/api/access-control/reset-password',
     URL_CHANGE_PASSWORD = '/api/access-control/change-password',
     URL_UPDATE_USER = '/api/access-control/update-user',
-    URL_GET_PODIUM = "/api/access-control/podium",
+    URL_GET_PODIUM = "/api/profiles/podiums",
     URL_GET_SKILLS_DETAILS = "/api/profiles/subskills",
     URL_SKILL_DETAIL = "/api/profiles/subskill",
     URL_GET_ASSESSMENTS = "/api/profiles/assessments",
