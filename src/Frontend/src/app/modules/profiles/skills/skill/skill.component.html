@@ -15,14 +15,14 @@
     </button>
 </div>
 }
-
+<div *ngIf="!role.roleId">
 <srms-input-filter
     [loadingTable]="loadingTable"
     [filter]="filter"
     (filterData)="filterData($event)"
     [loadingFromFilter]="loadingFromFilter"
 ></srms-input-filter>
-
+</div>
 <table
     mat-table
     [dataSource]="dataSource()"
