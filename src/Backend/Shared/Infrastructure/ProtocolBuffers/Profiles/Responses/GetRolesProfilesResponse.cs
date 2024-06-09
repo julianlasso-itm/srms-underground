@@ -28,6 +28,6 @@ namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Responses
     public required bool Disabled { get; set; }
 
     [DataMember(Order = 5)]
-    public required IEnumerable<SkillProfiles> Skills { get; set; }
+    public IEnumerable<SkillProfiles> Skills { get; set; }
   }
 }
