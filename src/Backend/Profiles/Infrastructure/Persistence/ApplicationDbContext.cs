@@ -32,6 +32,7 @@ namespace Profiles.Infrastructure.Persistence
       SeedsSubSkills.SeedSubSkills(modelBuilder);
       SeedsRolesPerSkills.SeedRolesPerSkills(modelBuilder);
       SeedsProfessionals.SeedProfessionals(modelBuilder);
+      SeedsPodiums.SeedPodiums(modelBuilder);
     }
   }
 }
