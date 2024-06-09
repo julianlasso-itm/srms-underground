@@ -1,7 +1,6 @@
 using Profiles.Application.Repositories;
 using Profiles.Application.Responses;
 using Profiles.Infrastructure.Persistence.Models;
-using Profiles.Infrastructure.Persistence.Repositories;
 using Profiles.Infrastructure.Services.Helpers;
 using ProtoBuf.Grpc;
 using Shared.Infrastructure.ProtocolBuffers.Profiles;
@@ -483,6 +482,52 @@ namespace Profiles.Infrastructure.Services
             ProfessionalId = assessment.ProfessionalId.ToString(),
             RoleId = assessment.RoleId.ToString(),
             SquadId = assessment.SquadId.ToString(),
+            Professional = new ProfessionalProfiles
+            {
+              ProfessionalId = assessment.Professional.ProfessionalId.ToString(),
+              Name = assessment.Professional.Name,
+              Email = assessment.Professional.Email,
+              Disabled = assessment.Professional.Disabled,
+            },
+            Role = new RoleProfiles
+            {
+              RoleId = assessment.Role.RoleId.ToString(),
+              Name = assessment.Role.Name,
+              Description = assessment.Role.Description,
+              Disabled = assessment.Role.Disabled,
+            },
+            Squad = new SquadProfiles
+            {
+              SquadId = assessment.Squad.SquadId.ToString(),
+              Name = assessment.Squad.Name,
+              Disabled = assessment.Squad.Disabled,
+            },
+            Skills = assessment
+              .Role.RolePerSkills.Select(rolePerSkill => new SkillWithSubSkillsProfiles
+              {
+                SkillId = rolePerSkill.Skill.SkillId.ToString(),
+                Name = rolePerSkill.Skill.Name,
+                Disabled = rolePerSkill.Skill.Disabled,
+                SubSkills = rolePerSkill
+                  .Skill.SubSkills.Select(subskill => new SubSkillWithResultProfiles
+                  {
+                    SubSkillId = subskill.SubSkillId.ToString(),
+                    SkillId = subskill.SkillId.ToString(),
+                    Name = subskill.Name,
+                    Disabled = subskill.Disabled,
+                    Results = subskill.Results.Select(result => new ResultProfiles
+                    {
+                      ResultId = result.ResultId.ToString(),
+                      AssessmentId = result.AssessmentId.ToString(),
+                      SubSkillId = result.SubSkillId.ToString(),
+                      Result = result.Result,
+                      Comment = result.Comment,
+                      DateTime = result.DateTime ?? DateTime.UtcNow,
+                    })
+                  })
+                  .ToList(),
+              })
+              .ToList(),
           })
           .ToList(),
         Total = total,

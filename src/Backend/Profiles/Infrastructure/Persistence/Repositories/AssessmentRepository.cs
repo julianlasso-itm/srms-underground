@@ -1,4 +1,5 @@
-﻿using Profiles.Application.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using Profiles.Application.Repositories;
 using Profiles.Application.Responses;
 using Profiles.Infrastructure.Persistence.Models;
 using Shared.Infrastructure.Persistence.Repositories;
@@ -74,6 +75,79 @@ namespace Profiles.Infrastructure.Persistence.Repositories
         Assessment.SquadId = Guid.Parse(entity.SquadId);
       }
       return UpdateAsync(id, Assessment);
+    }
+
+    public new async Task<IEnumerable<AssessmentModel>> GetWithPaginationAsync(
+      int page,
+      int limit,
+      string? sort = null,
+      string order = "asc",
+      string? filter = null,
+      string? filterBy = null
+    )
+    {
+      var assessments = await base.GetWithPaginationAsync(
+        page,
+        limit,
+        sort,
+        order,
+        filter,
+        filterBy
+      );
+
+      if (assessments.Count() > 0)
+      {
+        var data = assessments.Select(async assessment =>
+        {
+          var assessmentEntry = Context.Entry(assessment);
+          if (!assessmentEntry.Reference(a => a.Professional).IsLoaded)
+          {
+            await assessmentEntry.Reference(a => a.Professional).LoadAsync();
+          }
+          if (!assessmentEntry.Reference(a => a.Role).IsLoaded)
+          {
+            await assessmentEntry.Reference(a => a.Role).LoadAsync();
+          }
+          if (!assessmentEntry.Reference(a => a.Squad).IsLoaded)
+          {
+            await assessmentEntry.Reference(a => a.Squad).LoadAsync();
+          }
+
+          var roleEntry = Context.Entry(assessment.Role);
+          if (!roleEntry.Collection(r => r.RolePerSkills).IsLoaded)
+          {
+            await roleEntry.Collection(r => r.RolePerSkills).LoadAsync();
+          }
+
+          foreach (var rolePerSkill in assessment.Role.RolePerSkills)
+          {
+            var rolePerSkillEntry = Context.Entry(rolePerSkill);
+            if (!rolePerSkillEntry.Reference(rps => rps.Skill).IsLoaded)
+            {
+              await rolePerSkillEntry.Reference(rps => rps.Skill).LoadAsync();
+            }
+
+            var skillEntry = Context.Entry(rolePerSkill.Skill);
+            if (!skillEntry.Collection(s => s.SubSkills).IsLoaded)
+            {
+              await skillEntry.Collection(s => s.SubSkills).LoadAsync();
+            }
+
+            foreach (var subSkill in rolePerSkill.Skill.SubSkills)
+            {
+              subSkill.Results = await Context
+                .Set<ResultModel>()
+                .Where(r =>
+                  r.SubSkillId == subSkill.SubSkillId && r.AssessmentId == assessment.AssessmentId
+                )
+                .ToListAsync();
+            }
+          }
+        });
+        await Task.WhenAll(data);
+      }
+
+      return assessments;
     }
   }
 }
