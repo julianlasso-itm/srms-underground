@@ -10,12 +10,12 @@
         ></mat-icon>
         Gestión de Habilidades
     </h3>
-    <button mat-flat-button color="primary" (click)="openDialogNew()">
+    <button mat-flat-button color="primary" (click)="openDialogNew(role!)">
         Agregar
     </button>
 </div>
 }
-<div *ngIf="!role.roleId">
+<div *ngIf="!role?.roleId">
 <srms-input-filter
     [loadingTable]="loadingTable"
     [filter]="filter"
