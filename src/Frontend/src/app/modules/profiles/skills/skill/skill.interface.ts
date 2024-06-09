@@ -1,6 +1,9 @@
+import { IRole } from "../../roles/role/role.interface";
+
 export interface ISkill {
     skillId: string;
     name: string;
+    role: IRole;
     disabled: boolean;
 }
 

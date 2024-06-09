@@ -32,6 +32,14 @@ const routes: Routes = [
       import('./modules/user/user.module').then((m) => m.UserModule),
   },
   {
+    path: 'assesment',
+    canActivateChild: [authGuard],
+    loadChildren: () =>
+      import('./modules/assesment/assesments.module').then(
+        (m) => m.AssesmentsModule
+      ),
+  },
+  {
     path: 'home',
     canActivate: [authGuard],
     loadComponent: () =>
@@ -43,14 +51,6 @@ const routes: Routes = [
     loadComponent: () =>
       import('./modules/start/index/start.component').then(
         (m) => m.StartComponent
-      ),
-  },
-  {
-    path: 'assessment',
-    canActivateChild: [authGuard],
-    loadChildren: () =>
-      import('./modules/assessment/assessment.module').then(
-        (m) => m.AssessmentModule
       ),
   },
 ];

@@ -23,9 +23,10 @@ import { SkillDialogComponent } from '../skill-dialog/skill-dialog.component';
 import { ISkill, ISkills } from './skill.interface';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { IRole } from '../../roles/role/role.interface';
+import { IRole, IRoles } from '../../roles/role/role.interface';
 
 const URL_GET_SKILLS = `${Constant.URL_BASE}${Constant.URL_GET_SKILLS}`;
+const URL_GET_ROLES = `${Constant.URL_BASE}${Constant.URL_GET_ROLES}`;
 const URL_SKILL = `${Constant.URL_BASE}${Constant.URL_SKILL}`;
 const MIN_LENGTH = 10;
 
@@ -60,7 +61,8 @@ export class SkillComponent implements OnInit, OnDestroy {
   filter = signal('');
   loadingFromFilter = signal(false);
 
-  public role: IRole;
+  public role: IRole | undefined;
+  public rolePath: string;
   private pageIndex: number;
   private reloadData!: Subscription;
 
@@ -71,7 +73,7 @@ export class SkillComponent implements OnInit, OnDestroy {
     private readonly router: Router,
     private route: ActivatedRoute
   ) {
-    this.role = { roleId: this.route.snapshot.paramMap.get('id')! } as IRole;
+    this.rolePath = this.route.snapshot.paramMap.get('id') as string;
     this.displayedColumns = ['position', 'name', 'disabled', 'actions'];
     this.loading = false;
     this.loadingTable = false;
@@ -79,19 +81,29 @@ export class SkillComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getSkills();
-    this.reloadData = this.reloadDataService.changeData.subscribe((data) => {
+    if (this.rolePath) {
+      this.getSkillsByRole();
+      this.reloadData = this.reloadDataService.changeData.subscribe((data) => {
+        this.getSkillsByRole();
+      });
+    } else {
       this.getSkills();
-    });
+      this.reloadData = this.reloadDataService.changeData.subscribe((data) => {
+        this.getSkills();
+      });
+    }
   }
 
   ngOnDestroy(): void {
     this.reloadData.unsubscribe();
   }
 
-  openDialogNew(): void {
+  openDialogNew(rol: IRole): void {
+    const skill = {
+      role: this.role,
+    };
     this.dialog.open(SkillDialogComponent, {
-      data: signal({ formType: FormType.CREATE }),
+      data: signal({ formType: FormType.CREATE, skill }),
       width: '450px',
     });
   }
@@ -115,6 +127,48 @@ export class SkillComponent implements OnInit, OnDestroy {
     });
   }
 
+  private getSkillsByRole(loadingTable: boolean = false): void {
+    this.tableLoadingTrue(loadingTable);
+    const pagination: IPagination = {
+      Page: this.pageIndex + 1,
+      Limit: this.pageSize(),
+    };
+    let params = new HttpParams()
+      .append('Page', pagination.Page.toString())
+      .append('Limit', pagination.Limit.toString())
+      .append('Filter', this.rolePath)
+      .append('FilterBy', 'RoleId');
+    if (this.filter().length > 0) {
+      params = new HttpParams().appendAll({
+        Page: pagination.Page.toString(),
+        Limit: pagination.Limit.toString(),
+        Filter: this.filter(),
+      });
+    }
+    this.httpService.get<IRoles>(URL_GET_ROLES, params).subscribe({
+      next: (data) => {
+        if (data.roles !== null) {
+          this.role = data.roles[0];
+          this.dataSource.update(() => data.roles[0].skills);
+          this.totalRecords.update(() => data.total);
+        } else {
+          this.dataSource.update(() => []);
+          this.totalRecords.update(() => 0);
+        }
+      },
+      complete: () => {
+        this.tableLoadingFalse(loadingTable);
+        this.loadingFromFilter.update(() => false);
+        console.log('Skills loaded');
+      },
+      error: (error) => {
+        this.tableLoadingFalse(loadingTable);
+        this.loadingFromFilter.update(() => false);
+        console.error(error);
+      },
+    });
+  }
+
   private getSkills(loadingTable: boolean = false): void {
     this.tableLoadingTrue(loadingTable);
     const pagination: IPagination = {
@@ -125,12 +179,6 @@ export class SkillComponent implements OnInit, OnDestroy {
       .append('Page', pagination.Page.toString())
       .append('Limit', pagination.Limit.toString());
 
-    if (this.role.roleId !== null) {
-      console.log(this.role.roleId);
-      params = params
-        .append('Filter', this.role.roleId)
-        .append('FilterBy', 'roleId');
-    }
     if (this.filter().length > 0) {
       params = new HttpParams().appendAll({
         Page: pagination.Page.toString(),
