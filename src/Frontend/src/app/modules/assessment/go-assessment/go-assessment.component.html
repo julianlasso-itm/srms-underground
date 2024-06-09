@@ -1,0 +1,71 @@
+@if (items.length > 0) {
+<h1>{{ nameProfessional }}</h1>
+<div class="container">
+  <div class="assessment">
+    <form [formGroup]="frmGoAssessment">
+      <mat-stepper orientation="vertical" [linear]="false" #stepper>
+        @for (item of items; track item) {
+        <mat-step>
+          <ng-template matStepLabel
+            >{{ item.description }} ({{ item.name }}) .::. Ranking:
+            {{ calculateRanking(item.value) }}</ng-template
+          >
+          @for (subskill of item.skills; track subskill) {
+          <div class="step-item">
+            <p>{{ subskill.description }} ({{ subskill.name }})</p>
+            <div class="step-item__content">
+              <mat-button-toggle-group
+                formControlName="subskill-{{ subskill.id }}"
+                name="subskill-{{ subskill.id }}"
+                (change)="onSubskillChange($event.value, item.id, subskill.id)"
+              >
+                <mat-button-toggle value="0"> No conoce </mat-button-toggle>
+                <mat-button-toggle value="1"> Conoce </mat-button-toggle>
+                <mat-button-toggle value="2"> Comprende </mat-button-toggle>
+                <mat-button-toggle value="3"> Practica </mat-button-toggle>
+                <mat-button-toggle value="4"> Domina </mat-button-toggle>
+                <mat-button-toggle value="5"> Experto </mat-button-toggle>
+              </mat-button-toggle-group>
+              <mat-form-field
+                class="step-item__content__field"
+                appearance="fill"
+              >
+                <mat-label>Observaciones</mat-label>
+                <textarea
+                  matInput
+                  name="subskill-{{ subskill.id }}-observations"
+                  formControlName="subskill-{{ subskill.id }}-observations"
+                ></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+          }
+        </mat-step>
+        }
+      </mat-stepper>
+    </form>
+  </div>
+  <div class="viewer">
+    <div class="graph">
+      <canvas
+        style="width: 640px"
+        baseChart
+        [datasets]="radarChartDatasets"
+        [options]="radarChartOptions"
+        [labels]="radarChartLabels"
+        [type]="radarChartType"
+      >
+      </canvas>
+      <div style="margin-top: 16px">
+        {{ roleProfessional }}<br />
+        <h2>{{ generalRanking }}</h2>
+      </div>
+    </div>
+  </div>
+</div>
+} @else {
+<div>
+  <p>Cargando...</p>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+}

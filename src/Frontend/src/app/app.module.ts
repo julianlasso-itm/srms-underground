@@ -19,6 +19,7 @@ import { StoreService } from './modules/shared/services/store.service';
 import { ProfileComponent } from './modules/user/profile/profile.component';
 import { AppComponent } from './templates/main/app.component';
 import { NameService } from './modules/shared/services/name.service';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 @NgModule({
     declarations: [AppComponent],
@@ -49,6 +50,7 @@ import { NameService } from './modules/shared/services/name.service';
             multi: true,
         },
         ProfileComponent,
+        provideCharts(withDefaultRegisterables()),
     ],
     bootstrap: [AppComponent],
 })

@@ -28,4 +28,5 @@ export enum Constant {
     URL_GET_PODIUM = "/api/access-control/podium",
     URL_GET_SKILLS_DETAILS = "/api/profiles/subskills",
     URL_SKILL_DETAIL = "/api/profiles/subskill",
+    URL_GET_ASSESSMENTS = "/api/profiles/assessments",
 }
