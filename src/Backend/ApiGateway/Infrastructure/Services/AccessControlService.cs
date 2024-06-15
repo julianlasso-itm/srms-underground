@@ -9,12 +9,10 @@ namespace ApiGateway.Infrastructure.Services
 {
   public class AccessControlService : BaseServices<IAccessControlServices>, IAccessControlServices
   {
-    const string UrlMicroservice = "http://localhost:5297";
-
-    public AccessControlService(HttpClientHandler? httpClientHandler = null)
+    public AccessControlService(string urlMicroservice, HttpClientHandler? httpClientHandler = null)
       : base(httpClientHandler)
     {
-      CreateChannel(UrlMicroservice);
+      CreateChannel(urlMicroservice);
     }
 
     public Task<RegisterUserResponse> RegisterUserAsync(

@@ -8,12 +8,10 @@ namespace ApiGateway.Infrastructure.Services
 {
   public class AnalyticsService : BaseServices<IAnalyticsServices>, IAnalyticsServices
   {
-    const string UrlMicroservice = "http://localhost:5098";
-
-    public AnalyticsService(HttpClientHandler? httpClientHandler = null)
+    public AnalyticsService(string urlMicroservice, HttpClientHandler? httpClientHandler = null)
       : base(httpClientHandler)
     {
-      CreateChannel(UrlMicroservice);
+      CreateChannel(urlMicroservice);
     }
 
     public Task<RegisterLevelAnalyticsResponse> RegisterLevelAsync(

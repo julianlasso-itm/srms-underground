@@ -10,18 +10,12 @@ namespace ApiGateway.Infrastructure.Controllers
 {
   [ApiController]
   [Route("api/access-control")]
-  public class AccessControlController : BaseController
+  public class AccessControlController(
+    AccessControlService accessControlService,
+    ICacheService cacheService
+    ) : BaseController(cacheService)
   {
-    private readonly AccessControlService _accessControlService;
-
-    public AccessControlController(
-      AccessControlService accessControlService,
-      ICacheService cacheService
-    )
-      : base(cacheService)
-    {
-      _accessControlService = accessControlService;
-    }
+    private readonly AccessControlService _accessControlService = accessControlService;
 
     [HttpPost("sign-up")]
     public async Task<IActionResult> RegisterUserAsync([FromForm] RegisterUserRequestDto request)

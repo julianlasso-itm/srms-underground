@@ -8,12 +8,10 @@ namespace ApiGateway.Infrastructure.Services
 {
   public class ProfilesService : BaseServices<IProfilesServices>, IProfilesServices
   {
-    const string UrlMicroservice = "http://localhost:5199";
-
-    public ProfilesService(HttpClientHandler? httpClientHandler = null)
+    public ProfilesService(string urlMicroservice, HttpClientHandler? httpClientHandler = null)
       : base(httpClientHandler)
     {
-      CreateChannel(UrlMicroservice);
+      CreateChannel(urlMicroservice);
     }
 
     public Task<DeleteCityProfilesResponse> DeleteCityAsync(
