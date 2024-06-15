@@ -16,16 +16,16 @@ namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Responses
   public class RoleProfiles
   {
     [DataMember(Order = 1)]
-    public required string RoleId { get; set; }
+    public string RoleId { get; set; }
 
     [DataMember(Order = 2)]
-    public required string Name { get; set; }
+    public string Name { get; set; }
 
     [DataMember(Order = 3, IsRequired = false)]
     public string? Description { get; set; }
 
     [DataMember(Order = 4)]
-    public required bool Disabled { get; set; }
+    public bool Disabled { get; set; }
 
     [DataMember(Order = 5)]
     public IEnumerable<SkillProfiles> Skills { get; set; }

@@ -1,5 +1,5 @@
 export enum Constant {
-    URL_BASE = 'https://ljwk7gt6-5042.use.devtunnels.ms', // 'http://localhost:5042',
+    URL_BASE = 'http://localhost:5042',
     URL_SIGN_UP = '/api/access-control/sign-up',
     URL_GET_ROLES_SECURITY = '/api/access-control/roles',
     URL_ROLE_SECURITY = '/api/access-control/role',
