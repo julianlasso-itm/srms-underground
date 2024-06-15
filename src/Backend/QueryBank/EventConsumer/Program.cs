@@ -32,20 +32,16 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // ==========================================
 
 // == Configure repositories ==
-builder.Services.AddSingleton<ISkillRepository<SkillModel>, SkillRepository>(serviceProvider =>
-{
-  var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
-  return new SkillRepository(dbContext);
-});
+builder.Services.AddScoped<ISkillRepository<SkillModel>, SkillRepository>();
 // ============================
 
 // == Configure dependency injection for services ==
 builder.Services.AddSingleton<SharedEventHandler>();
-builder.Services.AddSingleton<ApplicationService>();
-builder.Services.AddSingleton<QueryBankServiceForSubscribers>();
+builder.Services.AddScoped<ApplicationService>();
+builder.Services.AddScoped<QueryBankServiceForSubscribers>();
 builder.Services.AddScoped<AntiCorruptionLayerService<AntiCorruptionLayer>>();
 // =================================================
 
-var app = builder.Build();
+var host = builder.Build();
 
-app.Run();
+host.Run();

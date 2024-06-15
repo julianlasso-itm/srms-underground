@@ -7,23 +7,23 @@ namespace QueryBank.EventConsumer.Subscribers
 {
   public class QueryBankSubscriber : BackgroundService
   {
-    protected readonly IConnectionMultiplexer _connectionMultiplexer;
-    protected readonly ISubscriber _subscriber;
-    protected readonly QueryBankServiceForSubscribers _queryBankServiceForSubscribers;
+    protected readonly IConnectionMultiplexer ConnectionMultiplexer;
+    protected readonly ISubscriber Subscriber;
+    protected readonly IServiceProvider ServiceProvider;
 
     public QueryBankSubscriber(
       IConnectionMultiplexer connectionMultiplexer,
-      QueryBankServiceForSubscribers queryBankServiceForSubscribers
+      IServiceProvider serviceProvider
     )
     {
-      _connectionMultiplexer = connectionMultiplexer;
-      _subscriber = _connectionMultiplexer.GetSubscriber();
-      _queryBankServiceForSubscribers = queryBankServiceForSubscribers;
+      ConnectionMultiplexer = connectionMultiplexer;
+      Subscriber = ConnectionMultiplexer.GetSubscriber();
+      ServiceProvider = serviceProvider;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-      await _subscriber.SubscribeAsync(
+      await Subscriber.SubscribeAsync(
         new RedisChannel("Profiles.SkillRegistered", RedisChannel.PatternMode.Literal),
         async (channel, message) =>
         {
@@ -34,11 +34,17 @@ namespace QueryBank.EventConsumer.Subscribers
           {
             return;
           }
-          await _queryBankServiceForSubscribers.RegisterSkillAsync(data);
+
+          using (var scope = ServiceProvider.CreateScope())
+          {
+            var queryBankServiceForSubscribers =
+              scope.ServiceProvider.GetRequiredService<QueryBankServiceForSubscribers>();
+            await queryBankServiceForSubscribers.RegisterSkillAsync(data);
+          }
         }
       );
 
-      await _subscriber.SubscribeAsync(
+      await Subscriber.SubscribeAsync(
         new RedisChannel("Profiles.SkillUpdated", RedisChannel.PatternMode.Literal),
         async (channel, message) =>
         {
@@ -49,11 +55,17 @@ namespace QueryBank.EventConsumer.Subscribers
           {
             return;
           }
-          await _queryBankServiceForSubscribers.UpdateSkillRoleAsync(data);
+
+          using (var scope = ServiceProvider.CreateScope())
+          {
+            var queryBankServiceForSubscribers =
+              scope.ServiceProvider.GetRequiredService<QueryBankServiceForSubscribers>();
+            await queryBankServiceForSubscribers.UpdateSkillRoleAsync(data);
+          }
         }
       );
 
-      await _subscriber.SubscribeAsync(
+      await Subscriber.SubscribeAsync(
         new RedisChannel("Profiles.SkillDeleted", RedisChannel.PatternMode.Literal),
         async (channel, message) =>
         {
@@ -64,7 +76,13 @@ namespace QueryBank.EventConsumer.Subscribers
           {
             return;
           }
-          await _queryBankServiceForSubscribers.DeleteSkillAsync(data);
+
+          using (var scope = ServiceProvider.CreateScope())
+          {
+            var queryBankServiceForSubscribers =
+              scope.ServiceProvider.GetRequiredService<QueryBankServiceForSubscribers>();
+            await queryBankServiceForSubscribers.DeleteSkillAsync(data);
+          }
         }
       );
 
