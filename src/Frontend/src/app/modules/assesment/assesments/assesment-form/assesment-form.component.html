@@ -1,37 +1,71 @@
 <form id="frmAssesment" [formGroup]="frmAssesment()" (submit)="onSubmit()">
-    <!-- Rol -->
-    <mat-form-field class="width-100">
-        <input matInput placeholder="Rol" [formControl]="roleIdControl" [matAutocomplete]="autoRole">
-        <mat-autocomplete #autoRole (optionSelected)="onRoleSelected($event)" [displayWith]="displayOption">
-            <mat-option *ngFor="let role of filteredRoles | async" [value]="role">
-                {{ role.name }}
-            </mat-option>
-        </mat-autocomplete>
-        <mat-error *ngIf="!squadIdControl.valid">El rol es requerido</mat-error>
-    </mat-form-field>
+  <!-- Rol -->
+  <mat-form-field class="width-100">
+    <input
+      matInput
+      placeholder="Rol"
+      [formControl]="roleIdControl"
+      [matAutocomplete]="autoRole"
+    />
+    <mat-autocomplete
+      #autoRole
+      (optionSelected)="onRoleSelected($event)"
+      [displayWith]="displayOption"
+    >
+      <mat-option *ngFor="let role of filteredRoles | async" [value]="role">
+        {{ role.name }}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="!squadIdControl.valid">El rol es requerido</mat-error>
+  </mat-form-field>
 
-    <!-- Equipo -->
-    <mat-form-field class="width-100">
-        <input matInput placeholder="Equipo" [formControl]="squadIdControl" [matAutocomplete]="autoSquad">
-        <mat-autocomplete #autoSquad (optionSelected)="onSquadSelected($event)" [displayWith]="displayOption">
-            <mat-option *ngFor="let squad of filteredSquads | async" [value]="squad">
-                {{ squad.name }}
-            </mat-option>
-        </mat-autocomplete>
-        <mat-error *ngIf="!squadIdControl.valid">El equipo es requerido</mat-error>
-    </mat-form-field>
+  <!-- Equipo -->
+  <mat-form-field class="width-100">
+    <input
+      matInput
+      placeholder="Equipo"
+      [formControl]="squadIdControl"
+      [matAutocomplete]="autoSquad"
+    />
+    <mat-autocomplete
+      #autoSquad
+      (optionSelected)="onSquadSelected($event)"
+      [displayWith]="displayOption"
+    >
+      <mat-option *ngFor="let squad of filteredSquads | async" [value]="squad">
+        {{ squad.name }}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="!squadIdControl.valid">El equipo es requerido</mat-error>
+  </mat-form-field>
 
-    <!-- Profesional -->
-    <mat-form-field class="width-100">
-        <input matInput placeholder="Profesional" [formControl]="professionalIdControl" [matAutocomplete]="autoProfessional">
-        <mat-autocomplete #autoProfessional (optionSelected)="onProfessionalSelected($event)" [displayWith]="displayOption">
-            <mat-option *ngFor="let professional of filteredProfessionals | async" [value]="professional">
-                {{ professional.name }}
-            </mat-option>
-        </mat-autocomplete>
-        <mat-error *ngIf="!squadIdControl.valid">El profesional es requerido</mat-error>
-    </mat-form-field>
+  <!-- Profesional -->
+  <mat-form-field class="width-100">
+    <input
+      matInput
+      placeholder="Profesional"
+      [formControl]="professionalIdControl"
+      [matAutocomplete]="autoProfessional"
+    />
+    <mat-autocomplete
+      #autoProfessional
+      (optionSelected)="onProfessionalSelected($event)"
+      [displayWith]="displayOption"
+    >
+      <mat-option
+        *ngFor="let professional of filteredProfessionals | async"
+        [value]="professional"
+      >
+        {{ professional.name }}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="!squadIdControl.valid"
+      >El profesional es requerido</mat-error
+    >
+  </mat-form-field>
 
-    <!-- Mensaje de advertencia -->
-    <p *ngIf="!frmAssesment().valid" class="warning-message">Por favor selecciona una opción para cada campo.</p>
+  <!-- Mensaje de advertencia -->
+  <p *ngIf="!frmAssesment().valid" class="warning-message">
+    Por favor selecciona una opción para cada campo.
+  </p>
 </form>
