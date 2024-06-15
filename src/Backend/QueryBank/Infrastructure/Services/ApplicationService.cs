@@ -8,29 +8,34 @@ using Shared.Infrastructure.Services;
 
 namespace QueryBank.Infrastructure.Services
 {
-  public class ApplicationService
-  {
-    private readonly Application<SkillModel> _application;
-
-    public ApplicationService(
-      SharedEventHandler eventHandler,
-      ISkillRepository<SkillModel> skillRepository,
-      AntiCorruptionLayerService<AntiCorruptionLayer> antiCorruptionLayerService
+  public class ApplicationService(
+    IServiceProvider serviceProvider,
+    SharedEventHandler eventHandler,
+    ISkillRepository<SkillModel> skillRepository
     )
-    {
-      _application = new Application<SkillModel>(
-        antiCorruptionLayerService.GetAntiCorruptionLayer().GetApplicationToDomain(),
-        antiCorruptionLayerService.GetAntiCorruptionLayer().GetDomainToApplication(),
-        skillRepository
-      )
-      {
-        AggregateRoot = new CatalogAggregateRoot(eventHandler)
-      };
-    }
+  {
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
+    private readonly SharedEventHandler _eventHandler = eventHandler;
+    private readonly ISkillRepository<SkillModel> _skillRepository = skillRepository;
 
     public Application<SkillModel> GetApplication()
     {
-      return _application;
+      using (var scope = _serviceProvider.CreateScope())
+      {
+        var antiCorruptionLayerService = scope.ServiceProvider.GetRequiredService<
+          AntiCorruptionLayerService<AntiCorruptionLayer>
+        >();
+        var antiCorruptionLayer = antiCorruptionLayerService.GetAntiCorruptionLayer();
+
+        return new Application<SkillModel>(
+          antiCorruptionLayer.GetApplicationToDomain(),
+          antiCorruptionLayer.GetDomainToApplication(),
+          _skillRepository
+        )
+        {
+          AggregateRoot = new CatalogAggregateRoot(_eventHandler)
+        };
+      }
     }
   }
 }
