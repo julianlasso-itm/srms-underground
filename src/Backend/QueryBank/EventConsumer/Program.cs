@@ -13,6 +13,21 @@ using StackExchange.Redis;
 
 var builder = Host.CreateApplicationBuilder(args);
 
+// == Configure the app configuration ==
+builder
+  .Configuration.AddJsonFile(
+    "appsettings.QueryBank.EventConsumer.json",
+    optional: false,
+    reloadOnChange: true
+  )
+  .AddJsonFile(
+    $"appsettings.QueryBank.EventConsumer.{builder.Environment.EnvironmentName}.json",
+    optional: true,
+    reloadOnChange: true
+  )
+  .AddEnvironmentVariables();
+// =====================================
+
 // == Configure connection to Redis for subscribing to messages ==
 var connectionString = builder.Configuration.GetConnectionString("BrokerConnection");
 if (connectionString != null)

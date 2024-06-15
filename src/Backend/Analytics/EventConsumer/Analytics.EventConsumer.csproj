@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>dotnet-QueryBank.EventConsumer-38e680bd-8f66-4495-bad5-926168e0cf33</UserSecretsId>
+    <UserSecretsId>dotnet-Analytics.EventConsumer-8a50dc70-90e9-4176-a852-cb6d207c0f7d</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,15 +12,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Infrastructure\QueryBank.Infrastructure.csproj" />
+    <ProjectReference Include="..\Infrastructure\Analytics.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Shared\EventConsumer\Shared.EventConsumer.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="appsettings.QueryBank.EventConsumer.json">
+    <None Update="appsettings.Analytics.EventConsumer.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="appsettings.QueryBank.EventConsumer.Development.json">
+    <None Update="appsettings.Analytics.EventConsumer.Development.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

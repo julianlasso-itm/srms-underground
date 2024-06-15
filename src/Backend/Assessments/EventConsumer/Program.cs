@@ -3,12 +3,12 @@ var builder = Host.CreateApplicationBuilder(args);
 // == Configure the app configuration ==
 builder
   .Configuration.AddJsonFile(
-    "appsettings.Profiles.EventConsumer.json",
+    "appsettings.Assessments.EventConsumer.json",
     optional: false,
     reloadOnChange: true
   )
   .AddJsonFile(
-    $"appsettings.Profiles.EventConsumer.{builder.Environment.EnvironmentName}.json",
+    $"appsettings.Assessments.EventConsumer.{builder.Environment.EnvironmentName}.json",
     optional: true,
     reloadOnChange: true
   )
@@ -18,5 +18,4 @@ builder
 // builder.Services.AddHostedService<Worker>();
 
 var host = builder.Build();
-
 host.Run();

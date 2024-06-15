@@ -17,16 +17,34 @@
       "projectPath": "${workspaceFolder}/src/Backend/AccessControl/Infrastructure/AccessControl.Infrastructure.csproj",
     },
     {
+      "name": "C#: AccessControl.EventConsumer Debug",
+      "type": "dotnet",
+      "request": "launch",
+      "projectPath": "${workspaceFolder}/src/Backend/AccessControl/EventConsumer/AccessControl.EventConsumer.csproj",
+    },
+    {
       "name": "C#: Analytics Debug",
       "type": "dotnet",
       "request": "launch",
       "projectPath": "${workspaceFolder}/src/Backend/Analytics/Infrastructure/Analytics.Infrastructure.csproj",
     },
     {
+      "name": "C#: Analytics.EventConsumer Debug",
+      "type": "dotnet",
+      "request": "launch",
+      "projectPath": "${workspaceFolder}/src/Backend/Analytics/EventConsumer/Analytics.EventConsumer.csproj",
+    },
+    {
       "name": "C#: Profiles Debug",
       "type": "dotnet",
       "request": "launch",
       "projectPath": "${workspaceFolder}/src/Backend/Profiles/Infrastructure/Profiles.Infrastructure.csproj",
+    },
+    {
+      "name": "C#: Profiles.EventConsumer Debug",
+      "type": "dotnet",
+      "request": "launch",
+      "projectPath": "${workspaceFolder}/src/Backend/Profiles/EventConsumer/Profiles.EventConsumer.csproj",
     },
     {
       "name": "C#: QueryBank Debug",
@@ -47,8 +65,11 @@
       "configurations": [
         "C#: ApiGateway Debug",
         "C#: AccessControl Debug",
+        "C#: AccessControl.EventConsumer Debug",
         "C#: Analytics Debug",
+        "C#: Analytics.EventConsumer Debug",
         "C#: Profiles Debug",
+        "C#: Profiles.EventConsumer Debug",
         "C#: QueryBank Debug",
         "C#: QueryBank.EventConsumer Debug",
       ]

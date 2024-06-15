@@ -14,6 +14,21 @@ using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// == Configure the app configuration ==
+builder
+  .Configuration.AddJsonFile(
+    "appsettings.Profiles.Infrastructure.json",
+    optional: false,
+    reloadOnChange: true
+  )
+  .AddJsonFile(
+    $"appsettings.Profiles.Infrastructure.{builder.Environment.EnvironmentName}.json",
+    optional: true,
+    reloadOnChange: true
+  )
+  .AddEnvironmentVariables();
+// =====================================
+
 // == Configure connection to the database ==
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
