@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using Profiles.Application.Repositories;
 using Profiles.Application.Responses;
 using Profiles.Infrastructure.Persistence.Models;
@@ -10,16 +11,8 @@ namespace Profiles.Infrastructure.Persistence.Repositories
     : BaseRepository<AssessmentModel>,
       IAssessmentRepository<AssessmentModel>
   {
-    private readonly DbContextOptions<ApplicationDbContext> _contextOptions;
-
-    public AssessmentRepository(
-      ApplicationDbContext context,
-      DbContextOptions<ApplicationDbContext> contextOptions
-    )
-      : base(context)
-    {
-      _contextOptions = contextOptions;
-    }
+    public AssessmentRepository(ApplicationDbContext context)
+      : base(context) { }
 
     public async Task<AssessmentModel> AddAsync(RegisterAssessmentApplicationResponse entity)
     {
@@ -31,25 +24,18 @@ namespace Profiles.Infrastructure.Persistence.Repositories
         SquadId = Guid.Parse(entity.SquadId),
       };
 
-      var role = new RoleModel { RoleId = assessment.RoleId };
-      var roleEntry = Context.Entry(role);
-
-      if (!roleEntry.Collection(r => r.RolePerSkills).IsLoaded)
-      {
-        await roleEntry.Collection(r => r.RolePerSkills).LoadAsync();
-      }
+      var role =
+        await Context
+          .Set<RoleModel>()
+          .Include(r => r.RolePerSkills)
+          .ThenInclude(rps => rps.Skill)
+          .ThenInclude(s => s.SubSkills)
+          .FirstOrDefaultAsync(r => r.RoleId == assessment.RoleId)
+        ?? throw new Exception("Role not found");
 
       foreach (var rolePerSkill in role.RolePerSkills)
       {
-        var skill = new SkillModel { SkillId = rolePerSkill.SkillId };
-        var skillEntry = Context.Entry(skill);
-
-        if (!skillEntry.Collection(s => s.SubSkills).IsLoaded)
-        {
-          await skillEntry.Collection(s => s.SubSkills).LoadAsync();
-        }
-
-        foreach (var subSkill in skill.SubSkills)
+        foreach (var subSkill in rolePerSkill.Skill.SubSkills)
         {
           assessment.Results.Add(
             new ResultModel
@@ -64,7 +50,7 @@ namespace Profiles.Infrastructure.Persistence.Repositories
         }
       }
 
-      return await AddAsync(assessment);
+      return await base.AddAsync(assessment);
     }
 
     public Task<AssessmentModel> UpdateAsync(Guid id, UpdateAssessmentApplicationResponse entity)
@@ -94,68 +80,126 @@ namespace Profiles.Infrastructure.Persistence.Repositories
       string? filterBy = null
     )
     {
-      var assessments = await base.GetWithPaginationAsync(
-        page,
-        limit,
-        sort,
-        order,
-        filter,
-        filterBy
-      );
+      var query = Context
+        .Set<AssessmentModel>()
+        .Include(a => a.Squad)
+        .Include(a => a.Professional)
+        .Include(a => a.Role)
+        .ThenInclude(r => r.RolePerSkills)
+        .ThenInclude(rps => rps.Skill)
+        .ThenInclude(s => s.SubSkills)
+        .ThenInclude(ss => ss.Results)
+        .AsQueryable();
 
-      if (assessments.Count() > 0)
+      if (!string.IsNullOrEmpty(filter) && !string.IsNullOrEmpty(filterBy))
       {
-        var data = assessments.Select(assessment => LoadAssessmentReferencesAsync(assessment));
-        await Task.WhenAll(data);
+        query = ApplyFilter(query, filterBy, filter);
       }
+
+      if (!string.IsNullOrEmpty(sort))
+      {
+        query = ApplySorting(query, sort, order);
+      }
+
+      var assessments = await query.Skip((page - 1) * limit).Take(limit).ToListAsync();
+
       return assessments;
     }
 
-    private async Task LoadAssessmentReferencesAsync(AssessmentModel assessment)
+    private IQueryable<AssessmentModel> ApplyFilter(
+      IQueryable<AssessmentModel> query,
+      string filterBy,
+      string filter
+    )
     {
-      using (var newContext = new ApplicationDbContext(_contextOptions))
+      var parameter = Expression.Parameter(typeof(AssessmentModel), "a");
+      var property = Expression.Property(parameter, filterBy);
+      var value = Expression.Constant(filter);
+      Expression filterExpression;
+
+      if (property.Type == typeof(string))
       {
-        var assessmentEntry = newContext.Entry(assessment);
-        if (!assessmentEntry.Reference(a => a.Professional).IsLoaded)
+        filterExpression = Expression.Call(property, "Contains", null, value);
+      }
+      else if (property.Type == typeof(Guid))
+      {
+        if (Guid.TryParse(filter, out var guidValue))
         {
-          await assessmentEntry.Reference(a => a.Professional).LoadAsync();
+          value = Expression.Constant(guidValue, typeof(Guid));
+          filterExpression = Expression.Equal(property, value);
         }
-        if (!assessmentEntry.Reference(a => a.Role).IsLoaded)
+        else
         {
-          await assessmentEntry.Reference(a => a.Role).LoadAsync();
-        }
-        if (!assessmentEntry.Reference(a => a.Squad).IsLoaded)
-        {
-          await assessmentEntry.Reference(a => a.Squad).LoadAsync();
-        }
-        var roleEntry = newContext.Entry(assessment.Role);
-        if (!roleEntry.Collection(r => r.RolePerSkills).IsLoaded)
-        {
-          await roleEntry.Collection(r => r.RolePerSkills).LoadAsync();
-        }
-        foreach (var rolePerSkill in assessment.Role.RolePerSkills)
-        {
-          var rolePerSkillEntry = newContext.Entry(rolePerSkill);
-          if (!rolePerSkillEntry.Reference(rps => rps.Skill).IsLoaded)
-          {
-            await rolePerSkillEntry.Reference(rps => rps.Skill).LoadAsync();
-          }
-          var skillEntry = newContext.Entry(rolePerSkill.Skill);
-          if (!skillEntry.Collection(s => s.SubSkills).IsLoaded)
-          {
-            await skillEntry.Collection(s => s.SubSkills).LoadAsync();
-          }
-          foreach (var subSkill in rolePerSkill.Skill.SubSkills)
-          {
-            subSkill.Results = await newContext
-              .Set<ResultModel>()
-              .Where(r =>
-                r.SubSkillId == subSkill.SubSkillId && r.AssessmentId == assessment.AssessmentId
-              )
-              .ToListAsync();
-          }
+          throw new ArgumentException("Invalid GUID format");
         }
       }
+      else if (property.Type == typeof(bool))
+      {
+        if (bool.TryParse(filter, out var boolValue))
+        {
+          value = Expression.Constant(boolValue, typeof(bool));
+          filterExpression = Expression.Equal(property, value);
+        }
+        else
+        {
+          throw new ArgumentException("Invalid boolean format");
+        }
+      }
+      else if (property.Type == typeof(int))
+      {
+        if (int.TryParse(filter, out var intValue))
+        {
+          value = Expression.Constant(intValue, typeof(int));
+          filterExpression = Expression.Equal(property, value);
+        }
+        else
+        {
+          throw new ArgumentException("Invalid integer format");
+        }
+      }
+      else if (property.Type == typeof(long))
+      {
+        if (long.TryParse(filter, out var longValue))
+        {
+          value = Expression.Constant(longValue, typeof(long));
+          filterExpression = Expression.Equal(property, value);
+        }
+        else
+        {
+          throw new ArgumentException("Invalid long format");
+        }
+      }
+      else
+      {
+        throw new NotSupportedException($"Filtering not supported for type {property.Type}");
+      }
+
+      var lambda = Expression.Lambda<Func<AssessmentModel, bool>>(filterExpression, parameter);
+      return query.Where(lambda);
+    }
+
+    private IQueryable<AssessmentModel> ApplySorting(
+      IQueryable<AssessmentModel> query,
+      string sort,
+      string order
+    )
+    {
+      var parameter = Expression.Parameter(typeof(AssessmentModel), "a");
+      var property = Expression.Property(parameter, sort);
+      var lambda = Expression.Lambda(property, parameter);
+
+      var methodName = order.Equals("asc", StringComparison.CurrentCultureIgnoreCase)
+        ? "OrderBy"
+        : "OrderByDescending";
+      var resultExpression = Expression.Call(
+        typeof(Queryable),
+        methodName,
+        new Type[] { query.ElementType, property.Type },
+        query.Expression,
+        lambda
+      );
+
+      return query.Provider.CreateQuery<AssessmentModel>(resultExpression);
     }
   }
 }

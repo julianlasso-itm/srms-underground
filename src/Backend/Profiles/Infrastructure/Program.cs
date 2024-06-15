@@ -18,7 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
   options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionDataBase"));
-}, ServiceLifetime.Transient);
+}, ServiceLifetime.Scoped);
 // ==========================================
 
 // == Configure connection to Redis ==
