@@ -43,7 +43,7 @@ namespace AccessControl.Domain.Entities
     private static long GetExpirationInSeconds()
     {
       var expirationTime = DateTime.UtcNow.AddHours(ExpirationInHours);
-      var unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+      var unixEpoch = DateTime.UnixEpoch;
       return (long)(expirationTime - unixEpoch).TotalSeconds;
     }
   }
