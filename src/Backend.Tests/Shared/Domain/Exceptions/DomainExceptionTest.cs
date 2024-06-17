@@ -12,8 +12,8 @@ namespace Shared.Domain.Exceptions
       var expectedMessage = "Test exception message";
       var expectedErrors = new List<ErrorValueObject>
       {
-        new ErrorValueObject("Field1", "Error message 1"),
-        new ErrorValueObject("Field2", "Error message 2")
+        new("Field1", "Error message 1"),
+        new("Field2", "Error message 2")
       };
 
       // Act
@@ -35,8 +35,8 @@ namespace Shared.Domain.Exceptions
       var expectedMessage = "Test exception message";
       var expectedErrors = new List<ErrorValueObject>
       {
-        new ErrorValueObject("Field1", "Error message 1"),
-        new ErrorValueObject("Field2", "Error message 2")
+        new("Field1", "Error message 1"),
+        new("Field2", "Error message 2")
       };
       Exception expectedInnerException = new InvalidOperationException("Inner exception message");
 

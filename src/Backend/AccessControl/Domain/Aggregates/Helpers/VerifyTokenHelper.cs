@@ -7,7 +7,6 @@ using AccessControl.Domain.ValueObjects;
 using Shared.Domain.Aggregate.Helpers;
 using Shared.Domain.Aggregate.Interfaces;
 using Shared.Domain.Exceptions;
-using Shared.Domain.ValueObjects;
 
 namespace AccessControl.Domain.Aggregates.Helpers
 {
@@ -25,18 +24,12 @@ namespace AccessControl.Domain.Aggregates.Helpers
       var jwt = new JwtHandler(record.PrivateKeyPath.Value, record.PublicKeyPath.Value);
       if (!jwt.VerifyToken(record.Token.Value))
       {
-        throw new DomainException(
-          "Invalid token",
-          new List<ErrorValueObject> { new ErrorValueObject("token", "Invalid token") }
-        );
+        throw new DomainException("Invalid token", [new("token", "Invalid token")]);
       }
       var data = jwt.DecodeToken(record.Token.Value);
       if (IsTokenExpired(data.Expiration))
       {
-        throw new DomainException(
-          "Expired token",
-          new List<ErrorValueObject> { new ErrorValueObject("token", "Expired token") }
-        );
+        throw new DomainException("Expired token", [new("token", "Expired token")]);
       }
       return new VerifyTokenDomainResponse
       {

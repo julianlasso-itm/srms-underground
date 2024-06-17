@@ -5,8 +5,7 @@ namespace AccessControl.Infrastructure.Services
   public class EnvironmentService : IEnvironment
   {
     private readonly IConfiguration _configuration;
-    private readonly Dictionary<string, string> _environmentVariables =
-      new Dictionary<string, string>();
+    private readonly Dictionary<string, string> _environmentVariables = [];
 
     public EnvironmentService(IConfiguration configuration)
     {

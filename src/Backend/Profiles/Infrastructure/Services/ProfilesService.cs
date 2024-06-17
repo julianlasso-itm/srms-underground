@@ -532,11 +532,11 @@ namespace Profiles.Infrastructure.Services
                             Comment = result.Comment,
                             DateTime = result.DateTime ?? DateTime.UtcNow,
                           })
-                          .ToList() ?? new List<ResultProfiles>()
+                          .ToList() ?? []
                     })
-                    .ToList() ?? new List<SubSkillWithResultProfiles>()
+                    .ToList() ?? []
               })
-              .ToList() ?? new List<SkillWithSubSkillsProfiles>()
+              .ToList() ?? []
         })
         .ToList();
 

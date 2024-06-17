@@ -4,7 +4,7 @@ namespace Shared.Domain.ValueObjects.Base
   {
     public override void Validate()
     {
-      Errors = new List<ErrorValueObject>();
+      Errors = [];
       if (!(Value == false || Value == true))
       {
         AddError(new ErrorValueObject(Name, $"{Name} is required"));

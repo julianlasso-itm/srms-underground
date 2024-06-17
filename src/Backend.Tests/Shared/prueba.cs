@@ -149,8 +149,8 @@ namespace Shared.Tests.Infrastructure.Persistence.Repositories
       var mockContext = new Mock<DbContext>();
       var testData = new List<TestEntity>
       {
-        new TestEntity { Id = Guid.NewGuid() },
-        new TestEntity { Id = Guid.NewGuid() }
+        new() { Id = Guid.NewGuid() },
+        new() { Id = Guid.NewGuid() }
       };
       var mockSet = TestingUtilities.MockDbSet(testData);
       mockContext.Setup(c => c.Set<TestEntity>()).Returns(mockSet.Object);

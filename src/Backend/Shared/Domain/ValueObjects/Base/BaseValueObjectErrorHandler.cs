@@ -7,7 +7,7 @@ namespace Shared.Domain.ValueObjects.Base
 
     public BaseValueObjectErrorHandler()
     {
-      Errors = new List<ErrorValueObject>();
+      Errors = [];
       ErrorMessage = "There are some errors in the data provided";
     }
 

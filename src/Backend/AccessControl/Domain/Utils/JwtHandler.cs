@@ -2,7 +2,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using Shared.Domain.Exceptions;
-using Shared.Domain.ValueObjects;
 
 namespace AccessControl.Domain.Utils
 {
@@ -47,10 +46,7 @@ namespace AccessControl.Domain.Utils
       var parts = token.Split('.');
       if (parts.Length != 3 || !VerifyToken(token))
       {
-        throw new DomainException(
-          "Invalid payload",
-          new List<ErrorValueObject>() { new ErrorValueObject("Payload", "Invalid payload") }
-        );
+        throw new DomainException("Invalid payload", [new("Payload", "Invalid payload")]);
       }
       var payloadJson = Encoding.UTF8.GetString(Base64UrlDecode(parts[1]));
       return DeserializePayload(payloadJson);
@@ -119,10 +115,7 @@ namespace AccessControl.Domain.Utils
     private static JwtPayload DeserializePayload(string json)
     {
       return JsonSerializer.Deserialize<JwtPayload>(json)
-        ?? throw new DomainException(
-          "Invalid payload",
-          new List<ErrorValueObject>() { new ErrorValueObject("Payload", "Invalid payload") }
-        );
+        ?? throw new DomainException("Invalid payload", [new("Payload", "Invalid payload")]);
     }
   }
 }

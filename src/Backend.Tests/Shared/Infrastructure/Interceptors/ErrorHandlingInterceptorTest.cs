@@ -3,7 +3,6 @@ using Grpc.Core;
 using Grpc.Core.Testing;
 using Moq;
 using Shared.Domain.Exceptions;
-using Shared.Domain.ValueObjects;
 using ApplicationException = Shared.Application.Exceptions.ApplicationException;
 
 namespace Shared.Infrastructure.Interceptors
@@ -23,7 +22,7 @@ namespace Shared.Infrastructure.Interceptors
         "method",
         "host",
         DateTime.UtcNow.AddSeconds(30),
-        new Metadata(),
+        [],
         CancellationToken.None,
         "peer",
         null,
@@ -60,10 +59,7 @@ namespace Shared.Infrastructure.Interceptors
     public async Task Should_ThrowRpcException_When_DomainExceptionThrown()
     {
       // Arrange
-      var domainException = new DomainException(
-        "Test error",
-        new List<ErrorValueObject> { new ErrorValueObject("Field", "Error message") }
-      );
+      var domainException = new DomainException("Test error", [new("Field", "Error message")]);
       _continuation
         .Setup(c => c.Invoke(It.IsAny<object>(), It.IsAny<ServerCallContext>()))
         .ThrowsAsync(domainException);
