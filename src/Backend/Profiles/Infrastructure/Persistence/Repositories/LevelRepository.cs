@@ -5,11 +5,10 @@ using Shared.Infrastructure.Persistence.Repositories;
 
 namespace Profiles.Infrastructure.Persistence.Repositories
 {
-  public class LevelRepository : BaseRepository<LevelModel>, ILevelRepository<LevelModel>
+  public class LevelRepository(ApplicationDbContext context)
+    : BaseRepository<LevelModel>(context),
+      ILevelRepository<LevelModel>
   {
-    public LevelRepository(ApplicationDbContext context)
-      : base(context) { }
-
     public Task<LevelModel> AddAsync(RegisterLevelApplicationResponse entity)
     {
       var level = new LevelModel

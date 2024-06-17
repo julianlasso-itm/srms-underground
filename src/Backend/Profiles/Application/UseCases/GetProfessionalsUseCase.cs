@@ -7,28 +7,23 @@ using Shared.Application.Base;
 
 namespace Profiles.Application.UseCases
 {
-  internal class GetProfessionalsUseCase<TProfessionalEntity>
+  internal class GetProfessionalsUseCase<TProfessionalEntity>(
+    IPersonnelAggregateRoot aggregateRoot,
+    IProfessionalRepository<TProfessionalEntity> professionalRepository,
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication
+  )
     : BaseUseCase<
       GetProfessionalsCommand,
       GetProfessionalsApplicationResponse<TProfessionalEntity>,
       IPersonnelAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, applicationToDomain, domainToApplication)
     where TProfessionalEntity : class
   {
-    private readonly IProfessionalRepository<TProfessionalEntity> _professionalRepository;
-
-    public GetProfessionalsUseCase(
-      IPersonnelAggregateRoot aggregateRoot,
-      IProfessionalRepository<TProfessionalEntity> professionalRepository,
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication
-    )
-      : base(aggregateRoot, applicationToDomain, domainToApplication)
-    {
-      _professionalRepository = professionalRepository;
-    }
+    private readonly IProfessionalRepository<TProfessionalEntity> _professionalRepository =
+      professionalRepository;
 
     public override async Task<GetProfessionalsApplicationResponse<TProfessionalEntity>> Handle(
       GetProfessionalsCommand request

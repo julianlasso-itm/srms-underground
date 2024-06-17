@@ -5,11 +5,10 @@ using Shared.Infrastructure.Persistence.Repositories;
 
 namespace AccessControl.Infrastructure.Persistence.Repositories
 {
-  public class RoleRepository : BaseRepository<RoleModel>, IRoleRepository<RoleModel>
+  public class RoleRepository(ApplicationDbContext context)
+    : BaseRepository<RoleModel>(context),
+      IRoleRepository<RoleModel>
   {
-    public RoleRepository(ApplicationDbContext context)
-      : base(context) { }
-
     public Task<RoleModel> AddAsync(RegisterRoleApplicationResponse entity)
     {
       var role = new RoleModel

@@ -11,35 +11,28 @@ using Shared.Application.Interfaces;
 
 namespace AccessControl.Application
 {
-  public class Application<TUserEntity, TRoleEntity>
-    : BaseApplication<ISecurityAggregateRoot, IApplicationToDomain, IDomainToApplication>,
+  public class Application<TUserEntity, TRoleEntity>(
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication,
+    IMessageService messageService,
+    ICacheService cacheService,
+    IStoreService storeService,
+    IUserRepository<TUserEntity> userRepository,
+    IRoleRepository<TRoleEntity> roleRepository
+  )
+    : BaseApplication<ISecurityAggregateRoot, IApplicationToDomain, IDomainToApplication>(
+      applicationToDomain,
+      domainToApplication
+    ),
       IApplication<TUserEntity, TRoleEntity>
     where TUserEntity : class
     where TRoleEntity : class
   {
-    private readonly IMessageService _messageService;
-    private readonly ICacheService _cacheService;
-    private readonly IStoreService _storeService;
-    private readonly IUserRepository<TUserEntity> _userRepository;
-    private readonly IRoleRepository<TRoleEntity> _roleRepository;
-
-    public Application(
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication,
-      IMessageService messageService,
-      ICacheService cacheService,
-      IStoreService storeService,
-      IUserRepository<TUserEntity> userRepository,
-      IRoleRepository<TRoleEntity> roleRepository
-    )
-      : base(applicationToDomain, domainToApplication)
-    {
-      _messageService = messageService;
-      _cacheService = cacheService;
-      _storeService = storeService;
-      _userRepository = userRepository;
-      _roleRepository = roleRepository;
-    }
+    private readonly IMessageService _messageService = messageService;
+    private readonly ICacheService _cacheService = cacheService;
+    private readonly IStoreService _storeService = storeService;
+    private readonly IUserRepository<TUserEntity> _userRepository = userRepository;
+    private readonly IRoleRepository<TRoleEntity> _roleRepository = roleRepository;
 
     public Task<RegisterUserApplicationResponse> RegisterUser(RegisterUserCommand request)
     {

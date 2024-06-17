@@ -5,13 +5,10 @@ using Shared.Infrastructure.Persistence.Repositories;
 
 namespace Profiles.Infrastructure.Persistence.Repositories
 {
-  public class ProfessionalRepository
-    : BaseRepository<ProfessionalModel>,
+  public class ProfessionalRepository(ApplicationDbContext context)
+    : BaseRepository<ProfessionalModel>(context),
       IProfessionalRepository<ProfessionalModel>
   {
-    public ProfessionalRepository(ApplicationDbContext context)
-      : base(context) { }
-
     public Task<ProfessionalModel> AddAsync(RegisterProfessionalApplicationResponse entity)
     {
       var professional = new ProfessionalModel

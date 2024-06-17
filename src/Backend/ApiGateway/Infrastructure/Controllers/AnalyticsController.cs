@@ -9,15 +9,10 @@ namespace ApiGateway.Infrastructure.Controllers
 {
   [ApiController]
   [Route("api/access-control")]
-  public class AnalyticsController : BaseController
+  public class AnalyticsController(AnalyticsService analyticsService, ICacheService cacheService)
+    : BaseController(cacheService)
   {
-    private readonly AnalyticsService _analyticsService;
-
-    public AnalyticsController(AnalyticsService analyticsService, ICacheService cacheService)
-      : base(cacheService)
-    {
-      _analyticsService = analyticsService;
-    }
+    private readonly AnalyticsService _analyticsService = analyticsService;
 
     [Permissions]
     [HttpPost("level")]

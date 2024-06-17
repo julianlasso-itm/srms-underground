@@ -8,9 +8,7 @@ namespace Profiles.Infrastructure.Persistence
     private static Guid FullStackDeveloperRoleId = Guid.Parse(
       "359edb6c-cfdf-4a5c-9cd7-f07418f4719c"
     );
-    private static Guid BackEndDeveloperRoleId = Guid.Parse(
-      "9186211b-adf4-4b18-bfe2-4516f5cdbb1c"
-    );
+    private static Guid BackEndDeveloperRoleId = Guid.Parse("9186211b-adf4-4b18-bfe2-4516f5cdbb1c");
     private static Guid FrontEndDeveloperRoleId = Guid.Parse(
       "a4fa468c-8837-48a1-b5fd-b21354eb0eb4"
     );
@@ -69,7 +67,6 @@ namespace Profiles.Infrastructure.Persistence
           RoleId = FullStackDeveloperRoleId,
           SkillId = NoSqlMongoDbSkillId,
         },
-
         // Back-end Developer (Java, Python)
         new()
         {
@@ -101,7 +98,6 @@ namespace Profiles.Infrastructure.Persistence
           RoleId = BackEndDeveloperRoleId,
           SkillId = SqlSkillId,
         },
-
         // Front-end Developer (React, Angular)
         new()
         {

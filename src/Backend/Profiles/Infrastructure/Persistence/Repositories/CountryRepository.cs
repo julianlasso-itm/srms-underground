@@ -5,11 +5,10 @@ using Shared.Infrastructure.Persistence.Repositories;
 
 namespace Profiles.Infrastructure.Persistence.Repositories
 {
-  public class CountryRepository : BaseRepository<CountryModel>, ICountryRepository<CountryModel>
+  public class CountryRepository(ApplicationDbContext context)
+    : BaseRepository<CountryModel>(context),
+      ICountryRepository<CountryModel>
   {
-    public CountryRepository(ApplicationDbContext context)
-      : base(context) { }
-
     public Task<CountryModel> AddAsync(RegisterCountryApplicationResponse entity)
     {
       var country = new CountryModel

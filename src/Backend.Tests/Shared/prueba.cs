@@ -119,14 +119,9 @@ internal class TestAsyncEnumerable<T> : EnumerableQuery<T>, IAsyncEnumerable<T>,
   }
 }
 
-internal class TestAsyncEnumerator<T> : IAsyncEnumerator<T>
+internal class TestAsyncEnumerator<T>(IEnumerator<T> inner) : IAsyncEnumerator<T>
 {
-  private readonly IEnumerator<T> _inner;
-
-  public TestAsyncEnumerator(IEnumerator<T> inner)
-  {
-    _inner = inner;
-  }
+  private readonly IEnumerator<T> _inner = inner;
 
   public T Current => _inner.Current;
 
@@ -194,10 +189,6 @@ namespace Shared.Tests.Infrastructure.Persistence.Repositories
       public Guid Id { get; set; }
     }
 
-    public class TestRepository : BaseRepository<TestEntity>
-    {
-      public TestRepository(DbContext context)
-        : base(context) { }
-    }
+    public class TestRepository(DbContext context) : BaseRepository<TestEntity>(context) { }
   }
 }

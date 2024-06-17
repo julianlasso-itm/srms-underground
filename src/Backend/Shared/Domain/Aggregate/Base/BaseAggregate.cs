@@ -3,14 +3,9 @@ using Shared.Domain.Events.Interfaces;
 
 namespace Shared.Domain.Aggregate.Base
 {
-  public abstract class BaseAggregateRoot : IAggregateRoot
+  public abstract class BaseAggregateRoot(IEvent eventInterface) : IAggregateRoot
   {
-    protected readonly IEvent EventInterface;
-
-    public BaseAggregateRoot(IEvent eventInterface)
-    {
-      EventInterface = eventInterface;
-    }
+    protected readonly IEvent EventInterface = eventInterface;
 
     public void EmitEvent(string channel, string data)
     {

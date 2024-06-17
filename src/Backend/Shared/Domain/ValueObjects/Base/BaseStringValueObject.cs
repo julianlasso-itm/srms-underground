@@ -1,10 +1,7 @@
 namespace Shared.Domain.ValueObjects.Base
 {
-  public abstract class BaseStringValueObject : BaseValueObject<string>
+  public abstract class BaseStringValueObject(string value) : BaseValueObject<string>(value)
   {
-    public BaseStringValueObject(string value)
-      : base(value) { }
-
     public override void Validate()
     {
       Errors = new List<ErrorValueObject>();

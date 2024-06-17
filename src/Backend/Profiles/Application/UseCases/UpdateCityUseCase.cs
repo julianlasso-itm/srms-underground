@@ -11,29 +11,23 @@ using Shared.Application.Base;
 
 namespace Profiles.Application.UseCases
 {
-  public sealed class UpdateCityUseCase<TEntity>
+  public sealed class UpdateCityUseCase<TEntity>(
+    IPersonnelAggregateRoot aggregateRoot,
+    ICityRepository<TEntity> cityRepository,
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication
+  )
     : BaseUseCase<
       UpdateCityCommand,
       UpdateCityApplicationResponse,
       IPersonnelAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, applicationToDomain, domainToApplication)
     where TEntity : class
   {
-    private readonly ICityRepository<TEntity> _cityRepository;
+    private readonly ICityRepository<TEntity> _cityRepository = cityRepository;
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventCityUpdated}";
-
-    public UpdateCityUseCase(
-      IPersonnelAggregateRoot aggregateRoot,
-      ICityRepository<TEntity> cityRepository,
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication
-    )
-      : base(aggregateRoot, applicationToDomain, domainToApplication)
-    {
-      _cityRepository = cityRepository;
-    }
 
     public override async Task<UpdateCityApplicationResponse> Handle(UpdateCityCommand request)
     {

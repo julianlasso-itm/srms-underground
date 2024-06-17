@@ -8,10 +8,10 @@ using Shared.Application.Interfaces;
 
 namespace Shared.Infrastructure.Persistence.Repositories
 {
-  public abstract class BaseRepository<TEntity> : IRepository<TEntity>
+  public abstract class BaseRepository<TEntity>(DbContext context) : IRepository<TEntity>
     where TEntity : class
   {
-    protected readonly DbContext Context;
+    protected readonly DbContext Context = context;
     protected DbSet<TEntity> DbSet => Context.Set<TEntity>();
 
     private const string Id = "Id";
@@ -19,11 +19,6 @@ namespace Shared.Infrastructure.Persistence.Repositories
     private const string CreatedAt = "CreatedAt";
     private const string UpdatedAt = "UpdatedAt";
     private const string DeletedAt = "DeletedAt";
-
-    public BaseRepository(DbContext context)
-    {
-      Context = context;
-    }
 
     public async Task<TEntity> GetFirstAsync(Expression<Func<TEntity, bool>> predicate)
     {

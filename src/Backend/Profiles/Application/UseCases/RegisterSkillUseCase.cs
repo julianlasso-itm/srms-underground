@@ -11,30 +11,24 @@ using Shared.Application.Base;
 
 namespace Profiles.Application.UseCases
 {
-  public class RegisterSkillUseCase<TEntity>
+  public class RegisterSkillUseCase<TEntity>(
+    IPersonnelAggregateRoot aggregateRoot,
+    ISkillRepository<TEntity> skillRepository,
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication
+  )
     : BaseUseCase<
       RegisterSkillCommand,
       RegisterSkillApplicationResponse,
       IPersonnelAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, applicationToDomain, domainToApplication)
     where TEntity : class
   {
-    private readonly ISkillRepository<TEntity> _skillRepository;
+    private readonly ISkillRepository<TEntity> _skillRepository = skillRepository;
 
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventSkillRegistered}";
-
-    public RegisterSkillUseCase(
-      IPersonnelAggregateRoot aggregateRoot,
-      ISkillRepository<TEntity> skillRepository,
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication
-    )
-      : base(aggregateRoot, applicationToDomain, domainToApplication)
-    {
-      _skillRepository = skillRepository;
-    }
 
     public override async Task<RegisterSkillApplicationResponse> Handle(
       RegisterSkillCommand request

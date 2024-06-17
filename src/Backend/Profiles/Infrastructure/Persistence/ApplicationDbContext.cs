@@ -3,7 +3,8 @@ using Profiles.Infrastructure.Persistence.Models;
 
 namespace Profiles.Infrastructure.Persistence
 {
-  public class ApplicationDbContext : DbContext
+  public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+    : DbContext(options)
   {
     public DbSet<CountryModel> Country { get; set; }
     public DbSet<ProvinceModel> Province { get; set; }
@@ -18,9 +19,6 @@ namespace Profiles.Infrastructure.Persistence
     public DbSet<RolePerSkillModel> RolePerSkills { get; set; }
     public DbSet<ResultModel> Results { get; set; }
     public DbSet<PodiumModel> Podium { get; set; }
-
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-      : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

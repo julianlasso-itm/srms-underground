@@ -11,29 +11,23 @@ using Shared.Application.Base;
 
 namespace Profiles.Application.UseCases
 {
-  public sealed class DeleteRoleUseCase<TEntity>
+  public sealed class DeleteRoleUseCase<TEntity>(
+    IPersonnelAggregateRoot aggregateRoot,
+    IRoleRepository<TEntity> roleRepository,
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication
+  )
     : BaseUseCase<
       DeleteRoleCommand,
       DeleteRoleApplicationResponse,
       IPersonnelAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, applicationToDomain, domainToApplication)
     where TEntity : class
   {
-    private readonly IRoleRepository<TEntity> _roleRepository;
+    private readonly IRoleRepository<TEntity> _roleRepository = roleRepository;
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventRoleDeleted}";
-
-    public DeleteRoleUseCase(
-      IPersonnelAggregateRoot aggregateRoot,
-      IRoleRepository<TEntity> roleRepository,
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication
-    )
-      : base(aggregateRoot, applicationToDomain, domainToApplication)
-    {
-      _roleRepository = roleRepository;
-    }
 
     public override async Task<DeleteRoleApplicationResponse> Handle(DeleteRoleCommand request)
     {

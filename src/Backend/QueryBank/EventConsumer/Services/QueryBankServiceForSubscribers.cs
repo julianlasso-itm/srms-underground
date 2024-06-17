@@ -4,14 +4,9 @@ using QueryBank.Infrastructure.Services;
 
 namespace QueryBank.EventConsumer.Services
 {
-  public class QueryBankServiceForSubscribers
+  public class QueryBankServiceForSubscribers(ApplicationService applicationService)
   {
-    private readonly ApplicationService _applicationService;
-
-    public QueryBankServiceForSubscribers(ApplicationService applicationService)
-    {
-      _applicationService = applicationService;
-    }
+    private readonly ApplicationService _applicationService = applicationService;
 
     public async Task DeleteSkillAsync(DeleteSkillQueryBankRequest request)
     {

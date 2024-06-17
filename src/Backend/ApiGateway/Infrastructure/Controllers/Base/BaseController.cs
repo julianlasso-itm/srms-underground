@@ -7,15 +7,10 @@ using Shared.Infrastructure.Exceptions;
 
 namespace ApiGateway.Infrastructure.Controllers.Base
 {
-  public abstract class BaseController : Controller
+  public abstract class BaseController(ICacheService cacheService) : Controller
   {
     const string ContentType = "application/json";
-    protected readonly ICacheService CacheService;
-
-    public BaseController(ICacheService cacheService)
-    {
-      CacheService = cacheService;
-    }
+    protected readonly ICacheService CacheService = cacheService;
 
     [NonAction]
     protected async Task<IActionResult> HandleAsync(Func<Task<IActionResult>> action)

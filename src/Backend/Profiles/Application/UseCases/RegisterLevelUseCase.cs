@@ -9,28 +9,22 @@ using Shared.Application.Base;
 
 namespace Profiles.Application.UseCases
 {
-  public sealed class RegisterLevelUseCase<TEntity>
+  public sealed class RegisterLevelUseCase<TEntity>(
+    IPersonnelAggregateRoot aggregateRoot,
+    ILevelRepository<TEntity> levelRepository,
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication
+  )
     : BaseUseCase<
       RegisterLevelCommand,
       RegisterLevelApplicationResponse,
       IPersonnelAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, applicationToDomain, domainToApplication)
     where TEntity : class
   {
-    private readonly ILevelRepository<TEntity> _levelRepository;
-
-    public RegisterLevelUseCase(
-      IPersonnelAggregateRoot aggregateRoot,
-      ILevelRepository<TEntity> levelRepository,
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication
-    )
-      : base(aggregateRoot, applicationToDomain, domainToApplication)
-    {
-      _levelRepository = levelRepository;
-    }
+    private readonly ILevelRepository<TEntity> _levelRepository = levelRepository;
 
     public override async Task<RegisterLevelApplicationResponse> Handle(
       RegisterLevelCommand request

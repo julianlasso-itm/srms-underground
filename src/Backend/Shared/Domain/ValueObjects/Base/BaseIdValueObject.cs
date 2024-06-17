@@ -1,10 +1,7 @@
 namespace Shared.Domain.ValueObjects.Base
 {
-  public abstract class BaseIdValueObject : BaseStringValueObject
+  public abstract class BaseIdValueObject(string value) : BaseStringValueObject(value)
   {
-    protected BaseIdValueObject(string value)
-      : base(value) { }
-
     public override void Validate()
     {
       base.Validate();

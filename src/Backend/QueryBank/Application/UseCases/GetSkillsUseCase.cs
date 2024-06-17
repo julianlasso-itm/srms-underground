@@ -7,28 +7,22 @@ using Shared.Application.Base;
 
 namespace QueryBank.Application.UseCases
 {
-  internal class GetSkillsUseCase<TSkillEntity>
+  internal class GetSkillsUseCase<TSkillEntity>(
+    ICatalogAggregateRoot aggregateRoot,
+    ISkillRepository<TSkillEntity> skillRepository,
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication
+  )
     : BaseUseCase<
       GetSkillsCommand,
       GetSkillsApplicationResponse<TSkillEntity>,
       ICatalogAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, applicationToDomain, domainToApplication)
     where TSkillEntity : class
   {
-    private readonly ISkillRepository<TSkillEntity> _skillRepository;
-
-    public GetSkillsUseCase(
-      ICatalogAggregateRoot aggregateRoot,
-      ISkillRepository<TSkillEntity> skillRepository,
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication
-    )
-      : base(aggregateRoot, applicationToDomain, domainToApplication)
-    {
-      _skillRepository = skillRepository;
-    }
+    private readonly ISkillRepository<TSkillEntity> _skillRepository = skillRepository;
 
     public override async Task<GetSkillsApplicationResponse<TSkillEntity>> Handle(
       GetSkillsCommand request

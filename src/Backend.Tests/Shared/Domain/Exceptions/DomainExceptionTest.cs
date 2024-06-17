@@ -41,11 +41,7 @@ namespace Shared.Domain.Exceptions
       Exception expectedInnerException = new InvalidOperationException("Inner exception message");
 
       // Act
-      var exception = new DomainException(
-        expectedMessage,
-        expectedErrors,
-        expectedInnerException
-      );
+      var exception = new DomainException(expectedMessage, expectedErrors, expectedInnerException);
 
       // Assert
       Assert.AreEqual(expectedMessage, exception.Message, "The message was not set correctly.");

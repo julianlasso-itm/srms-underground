@@ -3,11 +3,9 @@ using QueryBank.Infrastructure.Persistence.Models;
 
 namespace QueryBank.Infrastructure.Persistence
 {
-  public class ApplicationDbContext : DbContext
+  public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+    : DbContext(options)
   {
     public DbSet<SkillModel> Skills { get; set; }
-
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-      : base(options) { }
   }
 }

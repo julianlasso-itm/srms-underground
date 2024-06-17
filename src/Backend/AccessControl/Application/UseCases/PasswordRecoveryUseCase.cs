@@ -10,35 +10,27 @@ using Shared.Application.Interfaces;
 
 namespace AccessControl.Application.UseCases
 {
-  public sealed class PasswordRecoveryUseCase<TEntity>
+  public sealed class PasswordRecoveryUseCase<TEntity>(
+    IUserRepository<TEntity> userRepository,
+    ICacheService cacheService,
+    IMessageService messageService,
+    ISecurityAggregateRoot aggregateRoot,
+    IApplicationToDomain aclInputMapper,
+    IDomainToApplication aclOutputMapper
+  )
     : BaseUseCase<
       PasswordRecoveryCommand,
       PasswordRecoveryApplicationResponse,
       ISecurityAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, aclInputMapper, aclOutputMapper)
     where TEntity : class
   {
     private const int MaxTokenMinutes = 30;
-    private readonly IUserRepository<TEntity> _userRepository;
-    private readonly ICacheService _cacheService;
-    private readonly IMessageService _messageService;
-
-    public PasswordRecoveryUseCase(
-      IUserRepository<TEntity> userRepository,
-      ICacheService cacheService,
-      IMessageService messageService,
-      ISecurityAggregateRoot aggregateRoot,
-      IApplicationToDomain aclInputMapper,
-      IDomainToApplication aclOutputMapper
-    )
-      : base(aggregateRoot, aclInputMapper, aclOutputMapper)
-    {
-      _userRepository = userRepository;
-      _cacheService = cacheService;
-      _messageService = messageService;
-    }
+    private readonly IUserRepository<TEntity> _userRepository = userRepository;
+    private readonly ICacheService _cacheService = cacheService;
+    private readonly IMessageService _messageService = messageService;
 
     public override async Task<PasswordRecoveryApplicationResponse> Handle(
       PasswordRecoveryCommand request

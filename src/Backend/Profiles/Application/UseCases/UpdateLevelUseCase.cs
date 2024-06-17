@@ -9,28 +9,22 @@ using Shared.Application.Base;
 
 namespace Profiles.Application.UseCases
 {
-  public sealed class UpdateLevelUseCase<TEntity>
+  public sealed class UpdateLevelUseCase<TEntity>(
+    IPersonnelAggregateRoot aggregateRoot,
+    ILevelRepository<TEntity> levelRepository,
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication
+  )
     : BaseUseCase<
       UpdateLevelCommand,
       UpdateLevelApplicationResponse,
       IPersonnelAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, applicationToDomain, domainToApplication)
     where TEntity : class
   {
-    private readonly ILevelRepository<TEntity> _levelRepository;
-
-    public UpdateLevelUseCase(
-      IPersonnelAggregateRoot aggregateRoot,
-      ILevelRepository<TEntity> levelRepository,
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication
-    )
-      : base(aggregateRoot, applicationToDomain, domainToApplication)
-    {
-      _levelRepository = levelRepository;
-    }
+    private readonly ILevelRepository<TEntity> _levelRepository = levelRepository;
 
     public override async Task<UpdateLevelApplicationResponse> Handle(UpdateLevelCommand request)
     {

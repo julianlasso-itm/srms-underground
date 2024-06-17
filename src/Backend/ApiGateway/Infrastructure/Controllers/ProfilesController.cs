@@ -9,15 +9,10 @@ namespace ApiGateway.Infrastructure.Controllers
 {
   [ApiController]
   [Route("api/profiles")]
-  public class ProfilesController : BaseController
+  public class ProfilesController(ProfilesService profilesService, ICacheService cache)
+    : BaseController(cache)
   {
-    private readonly ProfilesService _profilesService;
-
-    public ProfilesController(ProfilesService profilesService, ICacheService cache)
-      : base(cache)
-    {
-      _profilesService = profilesService;
-    }
+    private readonly ProfilesService _profilesService = profilesService;
 
     [HttpPost("country")]
     public async Task<IActionResult> RegisterCountryAsync(

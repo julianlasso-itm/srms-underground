@@ -7,28 +7,22 @@ using Shared.Application.Base;
 
 namespace Profiles.Application.UseCases
 {
-  public sealed class GetProvincesUseCase<TEntity>
+  public sealed class GetProvincesUseCase<TEntity>(
+    IPersonnelAggregateRoot aggregateRoot,
+    IProvinceRepository<TEntity> countryRepository,
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication
+  )
     : BaseUseCase<
       GetProvincesCommand,
       GetProvincesApplicationResponse<TEntity>,
       IPersonnelAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, applicationToDomain, domainToApplication)
     where TEntity : class
   {
-    private readonly IProvinceRepository<TEntity> _countryRepository;
-
-    public GetProvincesUseCase(
-      IPersonnelAggregateRoot aggregateRoot,
-      IProvinceRepository<TEntity> countryRepository,
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication
-    )
-      : base(aggregateRoot, applicationToDomain, domainToApplication)
-    {
-      _countryRepository = countryRepository;
-    }
+    private readonly IProvinceRepository<TEntity> _countryRepository = countryRepository;
 
     public override async Task<GetProvincesApplicationResponse<TEntity>> Handle(
       GetProvincesCommand request

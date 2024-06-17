@@ -26,6 +26,7 @@ builder
     reloadOnChange: true
   )
   .AddEnvironmentVariables();
+
 // =====================================
 
 // == Configure connection to Redis for subscribing to messages ==
@@ -37,6 +38,7 @@ if (connectionString != null)
   );
 }
 builder.Services.AddHostedService<QueryBankSubscriber>();
+
 // ===============================================================
 
 // == Configure connection to the database ==
@@ -44,10 +46,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
   options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionDataBase"));
 });
+
 // ==========================================
 
 // == Configure repositories ==
 builder.Services.AddScoped<ISkillRepository<SkillModel>, SkillRepository>();
+
 // ============================
 
 // == Configure dependency injection for services ==
@@ -55,6 +59,7 @@ builder.Services.AddSingleton<SharedEventHandler>();
 builder.Services.AddScoped<ApplicationService>();
 builder.Services.AddScoped<QueryBankServiceForSubscribers>();
 builder.Services.AddScoped<AntiCorruptionLayerService<AntiCorruptionLayer>>();
+
 // =================================================
 
 var host = builder.Build();

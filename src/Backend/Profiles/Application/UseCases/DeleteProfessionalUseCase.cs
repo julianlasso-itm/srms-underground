@@ -11,30 +11,25 @@ using Shared.Application.Base;
 
 namespace Profiles.Application.UseCases
 {
-  internal class DeleteProfessionalUseCase<TProfessionalEntity>
+  internal class DeleteProfessionalUseCase<TProfessionalEntity>(
+    IPersonnelAggregateRoot aggregateRoot,
+    IProfessionalRepository<TProfessionalEntity> professionalRepository,
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication
+  )
     : BaseUseCase<
       DeleteProfessionalCommand,
       DeleteProfessionalApplicationResponse,
       IPersonnelAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, applicationToDomain, domainToApplication)
     where TProfessionalEntity : class
   {
-    private readonly IProfessionalRepository<TProfessionalEntity> _professionalRepository;
+    private readonly IProfessionalRepository<TProfessionalEntity> _professionalRepository =
+      professionalRepository;
 
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventProfessionalDeleted}";
-
-    public DeleteProfessionalUseCase(
-      IPersonnelAggregateRoot aggregateRoot,
-      IProfessionalRepository<TProfessionalEntity> professionalRepository,
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication
-    )
-      : base(aggregateRoot, applicationToDomain, domainToApplication)
-    {
-      _professionalRepository = professionalRepository;
-    }
 
     public override async Task<DeleteProfessionalApplicationResponse> Handle(
       DeleteProfessionalCommand request

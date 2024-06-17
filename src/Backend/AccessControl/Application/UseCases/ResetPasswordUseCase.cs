@@ -10,31 +10,24 @@ using ApplicationException = Shared.Application.Exceptions.ApplicationException;
 
 namespace Application.UseCases
 {
-  public class ResetPasswordUseCase<TEntity>
+  public class ResetPasswordUseCase<TEntity>(
+    ICacheService cacheService,
+    IUserRepository<TEntity> repository,
+    ISecurityAggregateRoot aggregateRoot,
+    IApplicationToDomain aclInputMapper,
+    IDomainToApplication aclOutputMapper
+  )
     : BaseUseCase<
       ResetPasswordCommand,
       ResetPasswordApplicationResponse,
       ISecurityAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, aclInputMapper, aclOutputMapper)
     where TEntity : class
   {
-    private readonly ICacheService _cacheService;
-    private readonly IUserRepository<TEntity> _repository;
-
-    public ResetPasswordUseCase(
-      ICacheService cacheService,
-      IUserRepository<TEntity> repository,
-      ISecurityAggregateRoot aggregateRoot,
-      IApplicationToDomain aclInputMapper,
-      IDomainToApplication aclOutputMapper
-    )
-      : base(aggregateRoot, aclInputMapper, aclOutputMapper)
-    {
-      _cacheService = cacheService;
-      _repository = repository;
-    }
+    private readonly ICacheService _cacheService = cacheService;
+    private readonly IUserRepository<TEntity> _repository = repository;
 
     public override async Task<ResetPasswordApplicationResponse> Handle(
       ResetPasswordCommand request

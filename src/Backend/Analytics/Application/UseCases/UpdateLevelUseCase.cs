@@ -11,29 +11,23 @@ using Shared.Application.Base;
 
 namespace Analytics.Application.UseCases
 {
-  public sealed class UpdateLevelUseCase<TEntity>
+  public sealed class UpdateLevelUseCase<TEntity>(
+    IAggregateRoot aggregateRoot,
+    ILevelRepository<TEntity> levelRepository,
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication
+  )
     : BaseUseCase<
       UpdateLevelCommand,
       UpdateLevelApplicationResponse,
       IAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, applicationToDomain, domainToApplication)
     where TEntity : class
   {
-    private readonly ILevelRepository<TEntity> _levelRepository;
+    private readonly ILevelRepository<TEntity> _levelRepository = levelRepository;
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventLevelUpdated}";
-
-    public UpdateLevelUseCase(
-      IAggregateRoot aggregateRoot,
-      ILevelRepository<TEntity> levelRepository,
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication
-    )
-      : base(aggregateRoot, applicationToDomain, domainToApplication)
-    {
-      _levelRepository = levelRepository;
-    }
 
     public override async Task<UpdateLevelApplicationResponse> Handle(UpdateLevelCommand request)
     {

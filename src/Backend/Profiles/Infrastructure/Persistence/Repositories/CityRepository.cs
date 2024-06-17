@@ -5,11 +5,10 @@ using Shared.Infrastructure.Persistence.Repositories;
 
 namespace Profiles.Infrastructure.Persistence.Repositories
 {
-  public class CityRepository : BaseRepository<CityModel>, ICityRepository<CityModel>
+  public class CityRepository(ApplicationDbContext context)
+    : BaseRepository<CityModel>(context),
+      ICityRepository<CityModel>
   {
-    public CityRepository(ApplicationDbContext context)
-      : base(context) { }
-
     public new async Task<IEnumerable<CityModel>> GetWithPaginationAsync(
       int page,
       int limit,

@@ -13,6 +13,7 @@ builder
     reloadOnChange: true
   )
   .AddEnvironmentVariables();
+
 // =====================================
 
 // Add services to the container.

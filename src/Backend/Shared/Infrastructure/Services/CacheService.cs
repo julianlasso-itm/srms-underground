@@ -3,14 +3,9 @@ using StackExchange.Redis;
 
 namespace Shared.Infrastructure.Services
 {
-  public class CacheService : ICacheService
+  public class CacheService(IConnectionMultiplexer connection) : ICacheService
   {
-    private readonly IDatabase _database;
-
-    public CacheService(IConnectionMultiplexer connection)
-    {
-      _database = connection.GetDatabase();
-    }
+    private readonly IDatabase _database = connection.GetDatabase();
 
     public string? Get(string key)
     {

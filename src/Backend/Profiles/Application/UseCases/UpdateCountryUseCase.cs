@@ -11,29 +11,23 @@ using Shared.Application.Base;
 
 namespace Profiles.Application.UseCases
 {
-  public sealed class UpdateCountryUseCase<TEntity>
+  public sealed class UpdateCountryUseCase<TEntity>(
+    IPersonnelAggregateRoot aggregateRoot,
+    ICountryRepository<TEntity> countryRepository,
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication
+  )
     : BaseUseCase<
       UpdateCountryCommand,
       UpdateCountryApplicationResponse,
       IPersonnelAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, applicationToDomain, domainToApplication)
     where TEntity : class
   {
-    private readonly ICountryRepository<TEntity> _countryRepository;
+    private readonly ICountryRepository<TEntity> _countryRepository = countryRepository;
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventCountryUpdated}";
-
-    public UpdateCountryUseCase(
-      IPersonnelAggregateRoot aggregateRoot,
-      ICountryRepository<TEntity> countryRepository,
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication
-    )
-      : base(aggregateRoot, applicationToDomain, domainToApplication)
-    {
-      _countryRepository = countryRepository;
-    }
 
     public override async Task<UpdateCountryApplicationResponse> Handle(
       UpdateCountryCommand request

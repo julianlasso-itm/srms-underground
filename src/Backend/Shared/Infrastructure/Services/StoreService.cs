@@ -3,14 +3,9 @@ using Shared.Application.Interfaces;
 
 namespace Shared.Infrastructure.Services
 {
-  public class StoreService : IStoreService
+  public class StoreService(BlobServiceClient blobServiceClient) : IStoreService
   {
-    private readonly BlobServiceClient _blobServiceClient;
-
-    public StoreService(BlobServiceClient blobServiceClient)
-    {
-      _blobServiceClient = blobServiceClient;
-    }
+    private readonly BlobServiceClient _blobServiceClient = blobServiceClient;
 
     public async Task<string> AddAsync(byte[] data, string extension, string containerName)
     {

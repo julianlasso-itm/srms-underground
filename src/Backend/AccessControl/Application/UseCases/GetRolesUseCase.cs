@@ -7,28 +7,22 @@ using Shared.Application.Base;
 
 namespace AccessControl.Application.UseCases
 {
-  public sealed class GetRolesUseCase<TEntity>
+  public sealed class GetRolesUseCase<TEntity>(
+    ISecurityAggregateRoot aggregateRoot,
+    IRoleRepository<TEntity> roleRepository,
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication
+  )
     : BaseUseCase<
       GetRolesCommand,
       GetRolesApplicationResponse<TEntity>,
       ISecurityAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, applicationToDomain, domainToApplication)
     where TEntity : class
   {
-    private readonly IRoleRepository<TEntity> _roleRepository;
-
-    public GetRolesUseCase(
-      ISecurityAggregateRoot aggregateRoot,
-      IRoleRepository<TEntity> roleRepository,
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication
-    )
-      : base(aggregateRoot, applicationToDomain, domainToApplication)
-    {
-      _roleRepository = roleRepository;
-    }
+    private readonly IRoleRepository<TEntity> _roleRepository = roleRepository;
 
     public override async Task<GetRolesApplicationResponse<TEntity>> Handle(GetRolesCommand request)
     {

@@ -11,30 +11,24 @@ using Shared.Application.Base;
 
 namespace QueryBank.Application.UseCases
 {
-  public class UpdateSkillUseCase<TSkillEntity>
+  public class UpdateSkillUseCase<TSkillEntity>(
+    ICatalogAggregateRoot aggregateRoot,
+    ISkillRepository<TSkillEntity> skillRepository,
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication
+  )
     : BaseUseCase<
       UpdateSkillCommand,
       UpdateSkillApplicationResponse,
       ICatalogAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, applicationToDomain, domainToApplication)
     where TSkillEntity : class
   {
-    private readonly ISkillRepository<TSkillEntity> _skillRepository;
+    private readonly ISkillRepository<TSkillEntity> _skillRepository = skillRepository;
 
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventSkillUpdated}";
-
-    public UpdateSkillUseCase(
-      ICatalogAggregateRoot aggregateRoot,
-      ISkillRepository<TSkillEntity> skillRepository,
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication
-    )
-      : base(aggregateRoot, applicationToDomain, domainToApplication)
-    {
-      _skillRepository = skillRepository;
-    }
 
     public override async Task<UpdateSkillApplicationResponse> Handle(UpdateSkillCommand request)
     {

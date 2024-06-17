@@ -7,28 +7,22 @@ using Shared.Application.Base;
 
 namespace Profiles.Application.UseCases
 {
-  internal class GetSkillsUseCase<TSkillEntity>
+  internal class GetSkillsUseCase<TSkillEntity>(
+    IPersonnelAggregateRoot aggregateRoot,
+    ISkillRepository<TSkillEntity> skillRepository,
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication
+  )
     : BaseUseCase<
       GetSkillsCommand,
       GetSkillsApplicationResponse<TSkillEntity>,
       IPersonnelAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, applicationToDomain, domainToApplication)
     where TSkillEntity : class
   {
-    private readonly ISkillRepository<TSkillEntity> _skillRepository;
-
-    public GetSkillsUseCase(
-      IPersonnelAggregateRoot aggregateRoot,
-      ISkillRepository<TSkillEntity> skillRepository,
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication
-    )
-      : base(aggregateRoot, applicationToDomain, domainToApplication)
-    {
-      _skillRepository = skillRepository;
-    }
+    private readonly ISkillRepository<TSkillEntity> _skillRepository = skillRepository;
 
     public override async Task<GetSkillsApplicationResponse<TSkillEntity>> Handle(
       GetSkillsCommand request

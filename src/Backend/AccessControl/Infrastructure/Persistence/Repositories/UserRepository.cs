@@ -8,11 +8,10 @@ using Shared.Infrastructure.Persistence.Repositories;
 
 namespace AccessControl.Infrastructure.Persistence.Repositories
 {
-  public class UserRepository : BaseRepository<UserModel>, IUserRepository<UserModel>
+  public class UserRepository(ApplicationDbContext context)
+    : BaseRepository<UserModel>(context),
+      IUserRepository<UserModel>
   {
-    public UserRepository(ApplicationDbContext context)
-      : base(context) { }
-
     public Task<UserModel> AddAsync(RegisterUserApplicationResponse entity)
     {
       var user = new UserModel

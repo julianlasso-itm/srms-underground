@@ -7,11 +7,10 @@ using Shared.Domain.Events.Interfaces;
 
 namespace Analytics.Domain.Aggregates
 {
-  public class AggregateRoot : BaseAggregateRoot, IAggregateRoot
+  public class AggregateRoot(IEvent eventInterface)
+    : BaseAggregateRoot(eventInterface),
+      IAggregateRoot
   {
-    public AggregateRoot(IEvent eventInterface)
-      : base(eventInterface) { }
-
     public DeleteLevelDomainResponse DeleteLevel(DeleteLevelDomainRequest request)
     {
       return DeleteLevelHelper.Execute(request);

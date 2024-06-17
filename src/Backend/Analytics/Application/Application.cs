@@ -8,21 +8,18 @@ using Shared.Application.Base;
 
 namespace Analytics.Application
 {
-  public class Application<TLevelEntity>
-    : BaseApplication<IAggregateRoot, IApplicationToDomain, IDomainToApplication>
+  public class Application<TLevelEntity>(
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication,
+    ILevelRepository<TLevelEntity> levelRepository
+  )
+    : BaseApplication<IAggregateRoot, IApplicationToDomain, IDomainToApplication>(
+      applicationToDomain,
+      domainToApplication
+    )
     where TLevelEntity : class
   {
-    private readonly ILevelRepository<TLevelEntity> _levelRepository;
-
-    public Application(
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication,
-      ILevelRepository<TLevelEntity> levelRepository
-    )
-      : base(applicationToDomain, domainToApplication)
-    {
-      _levelRepository = levelRepository;
-    }
+    private readonly ILevelRepository<TLevelEntity> _levelRepository = levelRepository;
 
     public Task<RegisterLevelApplicationResponse> RegisterLevel(RegisterLevelCommand request)
     {

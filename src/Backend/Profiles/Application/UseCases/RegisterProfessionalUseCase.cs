@@ -11,31 +11,26 @@ using Shared.Application.Base;
 
 namespace Profiles.Application.UseCases
 {
-  public class RegisterProfessionalUseCase<TProfessionalEntity>
+  public class RegisterProfessionalUseCase<TProfessionalEntity>(
+    IPersonnelAggregateRoot aggregateRoot,
+    IProfessionalRepository<TProfessionalEntity> professionalRepository,
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication
+  )
     : BaseUseCase<
       RegisterProfessionalCommand,
       RegisterProfessionalApplicationResponse,
       IPersonnelAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, applicationToDomain, domainToApplication)
     where TProfessionalEntity : class
   {
-    private readonly IProfessionalRepository<TProfessionalEntity> _professionalRepository;
+    private readonly IProfessionalRepository<TProfessionalEntity> _professionalRepository =
+      professionalRepository;
 
     private const string Channel =
       $"{EventsConst.Prefix}.{EventsConst.EventProfessionalRegistered}";
-
-    public RegisterProfessionalUseCase(
-      IPersonnelAggregateRoot aggregateRoot,
-      IProfessionalRepository<TProfessionalEntity> professionalRepository,
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication
-    )
-      : base(aggregateRoot, applicationToDomain, domainToApplication)
-    {
-      _professionalRepository = professionalRepository;
-    }
 
     public override async Task<RegisterProfessionalApplicationResponse> Handle(
       RegisterProfessionalCommand request

@@ -3,17 +3,14 @@ using ProtoBuf.Grpc.Client;
 
 namespace ApiGateway.Infrastructure.Services.Base
 {
-  public abstract class BaseServices<TMicroServiceClient>
+  public abstract class BaseServices<TMicroServiceClient>(
+    HttpClientHandler? httpClientHandler = null
+  )
     where TMicroServiceClient : class
   {
-    private readonly HttpClientHandler? _httpClientHandler;
+    private readonly HttpClientHandler? _httpClientHandler = httpClientHandler;
     private GrpcChannel? _channel;
     protected TMicroServiceClient Client { get; private set; } = default!;
-
-    public BaseServices(HttpClientHandler? httpClientHandler = null)
-    {
-      _httpClientHandler = httpClientHandler;
-    }
 
     protected void CreateChannel(string baseAddress)
     {

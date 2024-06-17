@@ -7,15 +7,11 @@ using Shared.Domain.Events.Interfaces;
 
 namespace Profiles.Domain.Aggregates
 {
-  public class PersonnelAggregateRoot : BaseAggregateRoot, IPersonnelAggregateRoot
+  public class PersonnelAggregateRoot(IEvent eventHandler)
+    : BaseAggregateRoot(eventHandler),
+      IPersonnelAggregateRoot
   {
-    private AccountAggregate AccountAggregate { get; init; }
-
-    public PersonnelAggregateRoot(IEvent eventHandler)
-      : base(eventHandler)
-    {
-      AccountAggregate = new AccountAggregate();
-    }
+    private AccountAggregate AccountAggregate { get; init; } = new AccountAggregate();
 
     public RegisterCountryDomainResponse RegisterCountry(RegisterCountryDomainRequest request)
     {

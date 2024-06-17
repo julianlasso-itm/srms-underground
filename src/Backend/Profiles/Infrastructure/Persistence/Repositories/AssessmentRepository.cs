@@ -7,13 +7,10 @@ using Shared.Infrastructure.Persistence.Repositories;
 
 namespace Profiles.Infrastructure.Persistence.Repositories
 {
-  public class AssessmentRepository
-    : BaseRepository<AssessmentModel>,
+  public class AssessmentRepository(ApplicationDbContext context)
+    : BaseRepository<AssessmentModel>(context),
       IAssessmentRepository<AssessmentModel>
   {
-    public AssessmentRepository(ApplicationDbContext context)
-      : base(context) { }
-
     public async Task<AssessmentModel> AddAsync(RegisterAssessmentApplicationResponse entity)
     {
       var assessment = new AssessmentModel

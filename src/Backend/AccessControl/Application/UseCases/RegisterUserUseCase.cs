@@ -11,39 +11,30 @@ using Shared.Application.Interfaces;
 
 namespace AccessControl.Application.UseCases
 {
-  public sealed class RegisterUserUseCase<TEntity>
+  public sealed class RegisterUserUseCase<TEntity>(
+    ISecurityAggregateRoot aggregateRoot,
+    IUserRepository<TEntity> userRepository,
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication,
+    IMessageService messageService,
+    ICacheService cacheService,
+    IStoreService storeService
+  )
     : BaseUseCase<
       RegisterUserCommand,
       RegisterUserApplicationResponse,
       ISecurityAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, applicationToDomain, domainToApplication)
     where TEntity : class
   {
     private const string ContainerName = "users";
-    private readonly IUserRepository<TEntity> _userRepository;
+    private readonly IUserRepository<TEntity> _userRepository = userRepository;
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventCredentialRegistered}";
-    private readonly ICacheService _cacheService;
-    private readonly IStoreService _storeService;
-    private readonly IMessageService _messageService;
-
-    public RegisterUserUseCase(
-      ISecurityAggregateRoot aggregateRoot,
-      IUserRepository<TEntity> userRepository,
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication,
-      IMessageService messageService,
-      ICacheService cacheService,
-      IStoreService storeService
-    )
-      : base(aggregateRoot, applicationToDomain, domainToApplication)
-    {
-      _userRepository = userRepository;
-      _cacheService = cacheService;
-      _storeService = storeService;
-      _messageService = messageService;
-    }
+    private readonly ICacheService _cacheService = cacheService;
+    private readonly IStoreService _storeService = storeService;
+    private readonly IMessageService _messageService = messageService;
 
     public override async Task<RegisterUserApplicationResponse> Handle(RegisterUserCommand request)
     {

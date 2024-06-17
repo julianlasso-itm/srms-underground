@@ -5,13 +5,10 @@ using Shared.Infrastructure.Persistence.Repositories;
 
 namespace Profiles.Infrastructure.Persistence.Repositories
 {
-  public class ProvinceRepository
-    : BaseRepository<ProvinceModel>,
+  public class ProvinceRepository(ApplicationDbContext context)
+    : BaseRepository<ProvinceModel>(context),
       IProvinceRepository<ProvinceModel>
   {
-    public ProvinceRepository(ApplicationDbContext context)
-      : base(context) { }
-
     public new async Task<IEnumerable<ProvinceModel>> GetWithPaginationAsync(
       int page,
       int limit,

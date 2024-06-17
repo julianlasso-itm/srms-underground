@@ -1,10 +1,7 @@
 namespace Shared.Domain.ValueObjects.Base
 {
-  public abstract class BaseBooleanValueObject : BaseValueObject<bool>
+  public abstract class BaseBooleanValueObject(bool value) : BaseValueObject<bool>(value)
   {
-    protected BaseBooleanValueObject(bool value)
-      : base(value) { }
-
     public override void Validate()
     {
       Errors = new List<ErrorValueObject>();

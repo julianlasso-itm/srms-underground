@@ -7,28 +7,22 @@ using Shared.Application.Base;
 
 namespace Profiles.Application.UseCases
 {
-  public sealed class GetCitiesUseCase<TEntity>
+  public sealed class GetCitiesUseCase<TEntity>(
+    IPersonnelAggregateRoot aggregateRoot,
+    ICityRepository<TEntity> cityRepository,
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication
+  )
     : BaseUseCase<
       GetCitiesCommand,
       GetCitiesApplicationResponse<TEntity>,
       IPersonnelAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, applicationToDomain, domainToApplication)
     where TEntity : class
   {
-    private readonly ICityRepository<TEntity> _cityRepository;
-
-    public GetCitiesUseCase(
-      IPersonnelAggregateRoot aggregateRoot,
-      ICityRepository<TEntity> cityRepository,
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication
-    )
-      : base(aggregateRoot, applicationToDomain, domainToApplication)
-    {
-      _cityRepository = cityRepository;
-    }
+    private readonly ICityRepository<TEntity> _cityRepository = cityRepository;
 
     public override async Task<GetCitiesApplicationResponse<TEntity>> Handle(
       GetCitiesCommand request

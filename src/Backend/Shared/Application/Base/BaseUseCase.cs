@@ -8,23 +8,12 @@ namespace Shared.Application.Base
     TAggregateRoot,
     TAclInputMapper,
     TAclOutputMapper
-  >
+  >(TAggregateRoot aggregateRoot, TAclInputMapper aclInputMapper, TAclOutputMapper aclOutputMapper)
     where TAggregateRoot : IAggregateRoot
   {
-    protected readonly TAggregateRoot AggregateRoot;
-    protected readonly TAclInputMapper AclInputMapper;
-    protected readonly TAclOutputMapper AclOutputMapper;
-
-    protected BaseUseCase(
-      TAggregateRoot aggregateRoot,
-      TAclInputMapper aclInputMapper,
-      TAclOutputMapper aclOutputMapper
-    )
-    {
-      AggregateRoot = aggregateRoot;
-      AclInputMapper = aclInputMapper;
-      AclOutputMapper = aclOutputMapper;
-    }
+    protected readonly TAggregateRoot AggregateRoot = aggregateRoot;
+    protected readonly TAclInputMapper AclInputMapper = aclInputMapper;
+    protected readonly TAclOutputMapper AclOutputMapper = aclOutputMapper;
 
     public abstract Task<TResponse> Handle(TCommand request);
 

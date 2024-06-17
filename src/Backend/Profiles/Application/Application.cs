@@ -16,7 +16,21 @@ namespace Profiles.Application
     TSkillEntity,
     TProfessionalEntity,
     TLevelEntity
-  > : BaseApplication<IPersonnelAggregateRoot, IApplicationToDomain, IDomainToApplication>
+  >(
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication,
+    ICountryRepository<TCountryEntity> countryRepository,
+    IProvinceRepository<TProvinceEntity> provinceRepository,
+    ICityRepository<TCityEntity> cityRepository,
+    IRoleRepository<TRoleEntity> roleRepository,
+    ISkillRepository<TSkillEntity> skillRepository,
+    IProfessionalRepository<TProfessionalEntity> professionalRepository,
+    ILevelRepository<TLevelEntity> levelRepository
+  )
+    : BaseApplication<IPersonnelAggregateRoot, IApplicationToDomain, IDomainToApplication>(
+      applicationToDomain,
+      domainToApplication
+    )
     where TCountryEntity : class
     where TProvinceEntity : class
     where TCityEntity : class
@@ -25,35 +39,14 @@ namespace Profiles.Application
     where TProfessionalEntity : class
     where TLevelEntity : class
   {
-    private readonly ICountryRepository<TCountryEntity> _countryRepository;
-    private readonly IProvinceRepository<TProvinceEntity> _provinceRepository;
-    private readonly ICityRepository<TCityEntity> _cityRepository;
-    private readonly IRoleRepository<TRoleEntity> _roleRepository;
-    private readonly ISkillRepository<TSkillEntity> _skillRepository;
-    private readonly IProfessionalRepository<TProfessionalEntity> _professionalRepository;
-    private readonly ILevelRepository<TLevelEntity> _levelRepository;
-
-    public Application(
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication,
-      ICountryRepository<TCountryEntity> countryRepository,
-      IProvinceRepository<TProvinceEntity> provinceRepository,
-      ICityRepository<TCityEntity> cityRepository,
-      IRoleRepository<TRoleEntity> roleRepository,
-      ISkillRepository<TSkillEntity> skillRepository,
-      IProfessionalRepository<TProfessionalEntity> professionalRepository,
-      ILevelRepository<TLevelEntity> levelRepository
-    )
-      : base(applicationToDomain, domainToApplication)
-    {
-      _countryRepository = countryRepository;
-      _provinceRepository = provinceRepository;
-      _cityRepository = cityRepository;
-      _roleRepository = roleRepository;
-      _skillRepository = skillRepository;
-      _professionalRepository = professionalRepository;
-      _levelRepository = levelRepository;
-    }
+    private readonly ICountryRepository<TCountryEntity> _countryRepository = countryRepository;
+    private readonly IProvinceRepository<TProvinceEntity> _provinceRepository = provinceRepository;
+    private readonly ICityRepository<TCityEntity> _cityRepository = cityRepository;
+    private readonly IRoleRepository<TRoleEntity> _roleRepository = roleRepository;
+    private readonly ISkillRepository<TSkillEntity> _skillRepository = skillRepository;
+    private readonly IProfessionalRepository<TProfessionalEntity> _professionalRepository =
+      professionalRepository;
+    private readonly ILevelRepository<TLevelEntity> _levelRepository = levelRepository;
 
     public Task<GetCountriesApplicationResponse<TCountryEntity>> GetCountries(
       GetCountriesCommand request

@@ -11,29 +11,23 @@ using Shared.Application.Base;
 
 namespace Analytics.Application.UseCases
 {
-  public sealed class DeleteLevelUseCase<TEntity>
+  public sealed class DeleteLevelUseCase<TEntity>(
+    IAggregateRoot aggregateRoot,
+    ILevelRepository<TEntity> levelRepository,
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication
+  )
     : BaseUseCase<
       DeleteLevelCommand,
       DeleteLevelApplicationResponse,
       IAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, applicationToDomain, domainToApplication)
     where TEntity : class
   {
-    private readonly ILevelRepository<TEntity> _levelRepository;
+    private readonly ILevelRepository<TEntity> _levelRepository = levelRepository;
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventLevelDeleted}";
-
-    public DeleteLevelUseCase(
-      IAggregateRoot aggregateRoot,
-      ILevelRepository<TEntity> levelRepository,
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication
-    )
-      : base(aggregateRoot, applicationToDomain, domainToApplication)
-    {
-      _levelRepository = levelRepository;
-    }
 
     public override async Task<DeleteLevelApplicationResponse> Handle(DeleteLevelCommand request)
     {

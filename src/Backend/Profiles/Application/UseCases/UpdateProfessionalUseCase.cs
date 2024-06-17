@@ -10,30 +10,24 @@ using Shared.Application.Base;
 
 namespace Profiles.Application.UseCases
 {
-  public class UpdateProfessionalUseCase<TEntity>
+  public class UpdateProfessionalUseCase<TEntity>(
+    IPersonnelAggregateRoot aggregateRoot,
+    IProfessionalRepository<TEntity> professionalRepository,
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication
+  )
     : BaseUseCase<
       UpdateProfessionalCommand,
       UpdateProfessionalApplicationResponse,
       IPersonnelAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, applicationToDomain, domainToApplication)
     where TEntity : class
   {
-    private IProfessionalRepository<TEntity> _professionalRepository;
+    private IProfessionalRepository<TEntity> _professionalRepository = professionalRepository;
 
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventProfessionalUpdated}";
-
-    public UpdateProfessionalUseCase(
-      IPersonnelAggregateRoot aggregateRoot,
-      IProfessionalRepository<TEntity> professionalRepository,
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication
-    )
-      : base(aggregateRoot, applicationToDomain, domainToApplication)
-    {
-      _professionalRepository = professionalRepository;
-    }
 
     public override async Task<UpdateProfessionalApplicationResponse> Handle(
       UpdateProfessionalCommand request

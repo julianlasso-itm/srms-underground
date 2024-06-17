@@ -30,7 +30,7 @@ namespace AccessControl.Domain.ValueObjects
       }
     }
 
-    private bool IsValidRsaPrivateKeyFile(string filePath)
+    private static bool IsValidRsaPrivateKeyFile(string filePath)
     {
       try
       {

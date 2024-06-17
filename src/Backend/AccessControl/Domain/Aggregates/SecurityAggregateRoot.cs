@@ -7,11 +7,10 @@ using Shared.Domain.Events.Interfaces;
 
 namespace AccessControl.Domain.Aggregates
 {
-  public class SecurityAggregateRoot : BaseAggregateRoot, ISecurityAggregateRoot
+  public class SecurityAggregateRoot(IEvent eventInterface)
+    : BaseAggregateRoot(eventInterface),
+      ISecurityAggregateRoot
   {
-    public SecurityAggregateRoot(IEvent eventInterface)
-      : base(eventInterface) { }
-
     public RegisterCredentialDomainResponse RegisterCredential(
       RegisterCredentialDomainRequest registerData
     )

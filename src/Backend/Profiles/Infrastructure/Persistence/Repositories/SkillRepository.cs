@@ -5,11 +5,10 @@ using Shared.Infrastructure.Persistence.Repositories;
 
 namespace Profiles.Infrastructure.Persistence.Repositories
 {
-  public class SkillRepository : BaseRepository<SkillModel>, ISkillRepository<SkillModel>
+  public class SkillRepository(ApplicationDbContext context)
+    : BaseRepository<SkillModel>(context),
+      ISkillRepository<SkillModel>
   {
-    public SkillRepository(ApplicationDbContext context)
-      : base(context) { }
-
     public Task<SkillModel> AddAsync(RegisterSkillApplicationResponse entity)
     {
       var skill = new SkillModel

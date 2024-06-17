@@ -9,28 +9,20 @@ using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
 
 namespace Profiles.Infrastructure.Services
 {
-  internal class ProfilesService : IProfilesServices
+  internal class ProfilesService(
+    ApplicationService applicationService,
+    ISubSkillRepository<SubSkillModel> subSkillRepository,
+    ISquadRepository<SquadModel> squadRepository,
+    IAssessmentRepository<AssessmentModel> assessmentRepository,
+    IPodiumRepository<PodiumModel> podiumRepository
+  ) : IProfilesServices
   {
-    private readonly ApplicationService _applicationService;
-    private readonly ISubSkillRepository<SubSkillModel> _subSkillRepository;
-    private readonly ISquadRepository<SquadModel> _squadRepository;
-    private readonly IAssessmentRepository<AssessmentModel> _assessmentRepository;
-    private readonly IPodiumRepository<PodiumModel> _podiumRepository;
-
-    public ProfilesService(
-      ApplicationService applicationService,
-      ISubSkillRepository<SubSkillModel> subSkillRepository,
-      ISquadRepository<SquadModel> squadRepository,
-      IAssessmentRepository<AssessmentModel> assessmentRepository,
-      IPodiumRepository<PodiumModel> podiumRepository
-    )
-    {
-      _applicationService = applicationService;
-      _subSkillRepository = subSkillRepository;
-      _squadRepository = squadRepository;
-      _assessmentRepository = assessmentRepository;
-      _podiumRepository = podiumRepository;
-    }
+    private readonly ApplicationService _applicationService = applicationService;
+    private readonly ISubSkillRepository<SubSkillModel> _subSkillRepository = subSkillRepository;
+    private readonly ISquadRepository<SquadModel> _squadRepository = squadRepository;
+    private readonly IAssessmentRepository<AssessmentModel> _assessmentRepository =
+      assessmentRepository;
+    private readonly IPodiumRepository<PodiumModel> _podiumRepository = podiumRepository;
 
     public Task<DeleteCityProfilesResponse> DeleteCityAsync(
       DeleteCityProfilesRequest request,

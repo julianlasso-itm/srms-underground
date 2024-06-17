@@ -1,14 +1,8 @@
 namespace Shared.Domain.ValueObjects
 {
-  public class ErrorValueObject
+  public class ErrorValueObject(string field, string message)
   {
-    public string Field { get; }
-    public string Message { get; }
-
-    public ErrorValueObject(string field, string message)
-    {
-      Field = field;
-      Message = message;
-    }
+    public string Field { get; } = field;
+    public string Message { get; } = message;
   }
 }

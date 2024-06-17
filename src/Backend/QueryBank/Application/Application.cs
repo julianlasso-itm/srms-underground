@@ -8,21 +8,18 @@ using Shared.Application.Base;
 
 namespace QueryBank.Application
 {
-  public class Application<TSkillEntity>
-    : BaseApplication<ICatalogAggregateRoot, IApplicationToDomain, IDomainToApplication>
+  public class Application<TSkillEntity>(
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication,
+    ISkillRepository<TSkillEntity> skillRepository
+  )
+    : BaseApplication<ICatalogAggregateRoot, IApplicationToDomain, IDomainToApplication>(
+      applicationToDomain,
+      domainToApplication
+    )
     where TSkillEntity : class
   {
-    private readonly ISkillRepository<TSkillEntity> _skillRepository;
-
-    public Application(
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication,
-      ISkillRepository<TSkillEntity> skillRepository
-    )
-      : base(applicationToDomain, domainToApplication)
-    {
-      _skillRepository = skillRepository;
-    }
+    private readonly ISkillRepository<TSkillEntity> _skillRepository = skillRepository;
 
     public Task<RegisterSkillApplicationResponse> RegisterSkill(RegisterSkillCommand request)
     {

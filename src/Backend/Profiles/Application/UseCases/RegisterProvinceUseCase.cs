@@ -11,29 +11,23 @@ using Shared.Application.Base;
 
 namespace Profiles.Application.UseCases
 {
-  public sealed class RegisterProvinceUseCase<TEntity>
+  public sealed class RegisterProvinceUseCase<TEntity>(
+    IPersonnelAggregateRoot aggregateRoot,
+    IProvinceRepository<TEntity> provinceRepository,
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication
+  )
     : BaseUseCase<
       RegisterProvinceCommand,
       RegisterProvinceApplicationResponse,
       IPersonnelAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, applicationToDomain, domainToApplication)
     where TEntity : class
   {
-    private readonly IProvinceRepository<TEntity> _provinceRepository;
+    private readonly IProvinceRepository<TEntity> _provinceRepository = provinceRepository;
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventProvinceRegistered}";
-
-    public RegisterProvinceUseCase(
-      IPersonnelAggregateRoot aggregateRoot,
-      IProvinceRepository<TEntity> provinceRepository,
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication
-    )
-      : base(aggregateRoot, applicationToDomain, domainToApplication)
-    {
-      _provinceRepository = provinceRepository;
-    }
 
     public override async Task<RegisterProvinceApplicationResponse> Handle(
       RegisterProvinceCommand request

@@ -7,28 +7,22 @@ using Shared.Application.Base;
 
 namespace AccessControl.Application.UseCases
 {
-  public sealed class VerifyTokenUseCase<TEntity>
+  public sealed class VerifyTokenUseCase<TEntity>(
+    IUserRepository<TEntity> userRepository,
+    ISecurityAggregateRoot aggregateRoot,
+    IApplicationToDomain aclInputMapper,
+    IDomainToApplication aclOutputMapper
+  )
     : BaseUseCase<
       VerifyTokenCommand,
       VerifyTokenApplicationResponse,
       ISecurityAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, aclInputMapper, aclOutputMapper)
     where TEntity : class
   {
-    private readonly IUserRepository<TEntity> _userRepository;
-
-    public VerifyTokenUseCase(
-      IUserRepository<TEntity> userRepository,
-      ISecurityAggregateRoot aggregateRoot,
-      IApplicationToDomain aclInputMapper,
-      IDomainToApplication aclOutputMapper
-    )
-      : base(aggregateRoot, aclInputMapper, aclOutputMapper)
-    {
-      _userRepository = userRepository;
-    }
+    private readonly IUserRepository<TEntity> _userRepository = userRepository;
 
     public override async Task<VerifyTokenApplicationResponse> Handle(VerifyTokenCommand request)
     {

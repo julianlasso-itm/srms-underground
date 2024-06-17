@@ -9,22 +9,15 @@ using Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses;
 
 namespace AccessControl.Infrastructure.Services
 {
-  public class AccessControlService : IAccessControlServices
+  public class AccessControlService(
+    ApplicationService applicationService,
+    IAntiCorruptionLayer antiCorruptionLayer,
+    IEnvironment environmentService
+  ) : IAccessControlServices
   {
-    private readonly ApplicationService _applicationService;
-    private readonly IAntiCorruptionLayer _antiCorruptionLayerService;
-    private readonly IEnvironment _environmentService;
-
-    public AccessControlService(
-      ApplicationService applicationService,
-      IAntiCorruptionLayer antiCorruptionLayer,
-      IEnvironment environmentService
-    )
-    {
-      _applicationService = applicationService;
-      _antiCorruptionLayerService = antiCorruptionLayer;
-      _environmentService = environmentService;
-    }
+    private readonly ApplicationService _applicationService = applicationService;
+    private readonly IAntiCorruptionLayer _antiCorruptionLayerService = antiCorruptionLayer;
+    private readonly IEnvironment _environmentService = environmentService;
 
     public async Task<RegisterUserResponse> RegisterUserAsync(
       RegisterUserRequest request,

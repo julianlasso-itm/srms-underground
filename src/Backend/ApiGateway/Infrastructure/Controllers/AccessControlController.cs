@@ -13,7 +13,7 @@ namespace ApiGateway.Infrastructure.Controllers
   public class AccessControlController(
     AccessControlService accessControlService,
     ICacheService cacheService
-    ) : BaseController(cacheService)
+  ) : BaseController(cacheService)
   {
     private readonly AccessControlService _accessControlService = accessControlService;
 

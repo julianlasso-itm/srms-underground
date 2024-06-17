@@ -5,11 +5,10 @@ using Shared.Infrastructure.Persistence.Repositories;
 
 namespace Profiles.Infrastructure.Persistence.Repositories
 {
-  public class SquadRepository : BaseRepository<SquadModel>, ISquadRepository<SquadModel>
+  public class SquadRepository(ApplicationDbContext context)
+    : BaseRepository<SquadModel>(context),
+      ISquadRepository<SquadModel>
   {
-    public SquadRepository(ApplicationDbContext context)
-      : base(context) { }
-
     public Task<SquadModel> AddAsync(RegisterSquadApplicationResponse entity)
     {
       var Squad = new SquadModel

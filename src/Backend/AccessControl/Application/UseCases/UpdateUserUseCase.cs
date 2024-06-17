@@ -8,35 +8,27 @@ using Shared.Application.Interfaces;
 
 namespace Application.UseCases
 {
-  public sealed class UpdateUserUseCase<TEntity>
+  public sealed class UpdateUserUseCase<TEntity>(
+    IUserRepository<TEntity> roleRepository,
+    ICacheService cachingService,
+    IStoreService storeService,
+    ISecurityAggregateRoot aggregateRoot,
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication
+  )
     : BaseUseCase<
       UpdateUserCommand,
       UpdateUserApplicationResponse,
       ISecurityAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, applicationToDomain, domainToApplication)
     where TEntity : class
   {
     private const string ContainerName = "users";
-    private readonly IUserRepository<TEntity> _roleRepository;
-    private readonly ICacheService _cacheService;
-    private readonly IStoreService _storeService;
-
-    public UpdateUserUseCase(
-      IUserRepository<TEntity> roleRepository,
-      ICacheService cachingService,
-      IStoreService storeService,
-      ISecurityAggregateRoot aggregateRoot,
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication
-    )
-      : base(aggregateRoot, applicationToDomain, domainToApplication)
-    {
-      _roleRepository = roleRepository;
-      _cacheService = cachingService;
-      _storeService = storeService;
-    }
+    private readonly IUserRepository<TEntity> _roleRepository = roleRepository;
+    private readonly ICacheService _cacheService = cachingService;
+    private readonly IStoreService _storeService = storeService;
 
     public override async Task<UpdateUserApplicationResponse> Handle(UpdateUserCommand request)
     {

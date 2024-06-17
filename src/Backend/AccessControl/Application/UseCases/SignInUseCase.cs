@@ -11,35 +11,28 @@ using ApplicationException = Shared.Application.Exceptions.ApplicationException;
 
 namespace AccessControl.Application.UseCases
 {
-  public sealed class SignInUseCase<TEntity>
+  public sealed class SignInUseCase<TEntity>(
+    IUserRepository<TEntity> userRepository,
+    ICacheService cacheService,
+    ISecurityAggregateRoot aggregateRoot,
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication
+  )
     : BaseUseCase<
       SignInCommand,
       SignInApplicationResponse,
       ISecurityAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, applicationToDomain, domainToApplication)
     where TEntity : class
   {
     // private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventCredentialActivated}";
-    private readonly IUserRepository<TEntity> _userRepository;
-    private readonly ICacheService _cacheService;
+    private readonly IUserRepository<TEntity> _userRepository = userRepository;
+    private readonly ICacheService _cacheService = cacheService;
     private const int MaxAttempts = 3;
     private const int MaxAttemptsMinutes = 5;
     private const int MaxBlockMinutes = 5;
-
-    public SignInUseCase(
-      IUserRepository<TEntity> userRepository,
-      ICacheService cacheService,
-      ISecurityAggregateRoot aggregateRoot,
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication
-    )
-      : base(aggregateRoot, applicationToDomain, domainToApplication)
-    {
-      _userRepository = userRepository;
-      _cacheService = cacheService;
-    }
 
     public override async Task<SignInApplicationResponse> Handle(SignInCommand request)
     {

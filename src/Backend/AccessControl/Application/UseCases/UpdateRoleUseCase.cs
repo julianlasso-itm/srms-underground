@@ -9,29 +9,23 @@ using Shared.Application.Base;
 
 namespace AccessControl.Application.UseCases
 {
-  public sealed class UpdateRoleUseCase<TEntity>
+  public sealed class UpdateRoleUseCase<TEntity>(
+    ISecurityAggregateRoot aggregateRoot,
+    IRoleRepository<TEntity> roleRepository,
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication
+  )
     : BaseUseCase<
       UpdateRoleCommand,
       UpdateRoleApplicationResponse,
       ISecurityAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, applicationToDomain, domainToApplication)
     where TEntity : class
   {
-    private readonly IRoleRepository<TEntity> _roleRepository;
+    private readonly IRoleRepository<TEntity> _roleRepository = roleRepository;
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventRoleUpdated}";
-
-    public UpdateRoleUseCase(
-      ISecurityAggregateRoot aggregateRoot,
-      IRoleRepository<TEntity> roleRepository,
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication
-    )
-      : base(aggregateRoot, applicationToDomain, domainToApplication)
-    {
-      _roleRepository = roleRepository;
-    }
 
     public override async Task<UpdateRoleApplicationResponse> Handle(UpdateRoleCommand request)
     {

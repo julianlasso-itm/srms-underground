@@ -7,11 +7,10 @@ using Shared.Domain.Events.Interfaces;
 
 namespace QueryBank.Domain.Aggregates
 {
-  public class CatalogAggregateRoot : BaseAggregateRoot, ICatalogAggregateRoot
+  public class CatalogAggregateRoot(IEvent eventHandler)
+    : BaseAggregateRoot(eventHandler),
+      ICatalogAggregateRoot
   {
-    public CatalogAggregateRoot(IEvent eventHandler)
-      : base(eventHandler) { }
-
     public RegisterSkillDomainResponse RegisterSkill(RegisterSkillDomainRequest skillData)
     {
       return RegisterSkillHelper.Execute(skillData);

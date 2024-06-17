@@ -7,28 +7,22 @@ using Shared.Application.Base;
 
 namespace Analytics.Application.UseCases
 {
-  public sealed class GetLevelsUseCase<TEntity>
+  public sealed class GetLevelsUseCase<TEntity>(
+    IAggregateRoot aggregateRoot,
+    ILevelRepository<TEntity> levelRepository,
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication
+  )
     : BaseUseCase<
       GetLevelsCommand,
       GetLevelsApplicationResponse<TEntity>,
       IAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, applicationToDomain, domainToApplication)
     where TEntity : class
   {
-    private readonly ILevelRepository<TEntity> _levelRepository;
-
-    public GetLevelsUseCase(
-      IAggregateRoot aggregateRoot,
-      ILevelRepository<TEntity> levelRepository,
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication
-    )
-      : base(aggregateRoot, applicationToDomain, domainToApplication)
-    {
-      _levelRepository = levelRepository;
-    }
+    private readonly ILevelRepository<TEntity> _levelRepository = levelRepository;
 
     public override async Task<GetLevelsApplicationResponse<TEntity>> Handle(
       GetLevelsCommand request

@@ -12,32 +12,25 @@ using ApplicationException = Shared.Application.Exceptions.ApplicationException;
 
 namespace AccessControl.Application.UseCases
 {
-  public sealed class ActivateTokenUseCase<TEntity>
+  public sealed class ActivateTokenUseCase<TEntity>(
+    IUserRepository<TEntity> userRepository,
+    ICacheService cacheService,
+    ISecurityAggregateRoot aggregateRoot,
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication
+  )
     : BaseUseCase<
       ActivateTokenCommand,
       ActivationTokenApplicationResponse,
       ISecurityAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, applicationToDomain, domainToApplication)
     where TEntity : class
   {
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventCredentialActivated}";
-    private readonly IUserRepository<TEntity> _userRepository;
-    private readonly ICacheService _cacheService;
-
-    public ActivateTokenUseCase(
-      IUserRepository<TEntity> userRepository,
-      ICacheService cacheService,
-      ISecurityAggregateRoot aggregateRoot,
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication
-    )
-      : base(aggregateRoot, applicationToDomain, domainToApplication)
-    {
-      _userRepository = userRepository;
-      _cacheService = cacheService;
-    }
+    private readonly IUserRepository<TEntity> _userRepository = userRepository;
+    private readonly ICacheService _cacheService = cacheService;
 
     public override async Task<ActivationTokenApplicationResponse> Handle(
       ActivateTokenCommand request

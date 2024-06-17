@@ -6,14 +6,9 @@ using Shared.Infrastructure.ProtocolBuffers.Analytics.Responses;
 
 namespace Analytics.Infrastructure.Services
 {
-  public class AnalyticsService : IAnalyticsServices
+  public class AnalyticsService(ApplicationService applicationService) : IAnalyticsServices
   {
-    private readonly ApplicationService _applicationService;
-
-    public AnalyticsService(ApplicationService applicationService)
-    {
-      _applicationService = applicationService;
-    }
+    private readonly ApplicationService _applicationService = applicationService;
 
     public async Task<RegisterLevelAnalyticsResponse> RegisterLevelAsync(
       RegisterLevelAnalyticsRequest request,

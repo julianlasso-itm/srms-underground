@@ -3,14 +3,9 @@ using StackExchange.Redis;
 
 namespace Shared.Infrastructure.Events.Base
 {
-  public abstract class BaseEvent : IEvent
+  public abstract class BaseEvent(IConnectionMultiplexer connection) : IEvent
   {
-    private ISubscriber Subscriber { get; }
-
-    protected BaseEvent(IConnectionMultiplexer connection)
-    {
-      Subscriber = connection.GetSubscriber();
-    }
+    private ISubscriber Subscriber { get; } = connection.GetSubscriber();
 
     public void Emit(string channel, string data)
     {

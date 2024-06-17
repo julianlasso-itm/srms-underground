@@ -11,29 +11,23 @@ using Shared.Application.Base;
 
 namespace Profiles.Application.UseCases
 {
-  public sealed class DeleteProvinceUseCase<TEntity>
+  public sealed class DeleteProvinceUseCase<TEntity>(
+    IPersonnelAggregateRoot aggregateRoot,
+    IProvinceRepository<TEntity> provinceRepository,
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication
+  )
     : BaseUseCase<
       DeleteProvinceCommand,
       DeleteProvinceApplicationResponse,
       IPersonnelAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, applicationToDomain, domainToApplication)
     where TEntity : class
   {
-    private readonly IProvinceRepository<TEntity> _provinceRepository;
+    private readonly IProvinceRepository<TEntity> _provinceRepository = provinceRepository;
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventProvinceDeleted}";
-
-    public DeleteProvinceUseCase(
-      IPersonnelAggregateRoot aggregateRoot,
-      IProvinceRepository<TEntity> provinceRepository,
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication
-    )
-      : base(aggregateRoot, applicationToDomain, domainToApplication)
-    {
-      _provinceRepository = provinceRepository;
-    }
 
     public override async Task<DeleteProvinceApplicationResponse> Handle(
       DeleteProvinceCommand request

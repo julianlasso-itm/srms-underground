@@ -10,29 +10,23 @@ using Shared.Application.Base;
 
 namespace AccessControl.Application.UseCases
 {
-  public sealed class RegisterRoleUseCase<TEntity>
+  public sealed class RegisterRoleUseCase<TEntity>(
+    ISecurityAggregateRoot aggregateRoot,
+    IRoleRepository<TEntity> roleRepository,
+    IApplicationToDomain applicationToDomain,
+    IDomainToApplication domainToApplication
+  )
     : BaseUseCase<
       RegisterRoleCommand,
       RegisterRoleApplicationResponse,
       ISecurityAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
-    >
+    >(aggregateRoot, applicationToDomain, domainToApplication)
     where TEntity : class
   {
-    private readonly IRoleRepository<TEntity> _roleRepository;
+    private readonly IRoleRepository<TEntity> _roleRepository = roleRepository;
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventRoleRegistered}";
-
-    public RegisterRoleUseCase(
-      ISecurityAggregateRoot aggregateRoot,
-      IRoleRepository<TEntity> roleRepository,
-      IApplicationToDomain applicationToDomain,
-      IDomainToApplication domainToApplication
-    )
-      : base(aggregateRoot, applicationToDomain, domainToApplication)
-    {
-      _roleRepository = roleRepository;
-    }
 
     public override async Task<RegisterRoleApplicationResponse> Handle(RegisterRoleCommand request)
     {

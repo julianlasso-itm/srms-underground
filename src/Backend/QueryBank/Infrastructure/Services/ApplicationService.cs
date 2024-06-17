@@ -12,7 +12,7 @@ namespace QueryBank.Infrastructure.Services
     IServiceProvider serviceProvider,
     SharedEventHandler eventHandler,
     ISkillRepository<SkillModel> skillRepository
-    )
+  )
   {
     private readonly IServiceProvider _serviceProvider = serviceProvider;
     private readonly SharedEventHandler _eventHandler = eventHandler;

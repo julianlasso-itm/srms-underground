@@ -18,6 +18,7 @@ builder
     reloadOnChange: true
   )
   .AddEnvironmentVariables();
+
 // =====================================
 
 // == Configure connection to Redis ==
@@ -25,6 +26,7 @@ var multiplexer = ConnectionMultiplexer.Connect(
   builder.Configuration.GetConnectionString("RedisConnection")!
 );
 builder.Services.AddSingleton<IConnectionMultiplexer>(multiplexer);
+
 // ===================================
 
 // Add services to the container.
@@ -46,6 +48,7 @@ var grpcAnalyticsUrl = builder.Configuration.GetConnectionString("gRPCAnalytics"
 var grpcAssessmentUrl = builder.Configuration.GetConnectionString("gRPCAssessment") ?? "";
 var grpcProfilesUrl = builder.Configuration.GetConnectionString("gRPCProfiles") ?? "";
 var grpcQueryBank = builder.Configuration.GetConnectionString("gRPCQueryBank") ?? "";
+
 // ================================
 
 if (builder.Environment.IsDevelopment())
@@ -106,17 +109,20 @@ builder.Services.AddCors(options =>
     }
   );
 });
+
 // ========================
 
 // == Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle ==
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 // ===========================================================================================
 
 var app = builder.Build();
 
 // == Enable CORS ==
 app.UseCors("AllowAll");
+
 // =================
 
 // == Enable Swagger only in development environment ==
@@ -125,6 +131,7 @@ if (app.Environment.IsDevelopment())
   app.UseSwagger();
   app.UseSwaggerUI();
 }
+
 // ====================================================
 
 app.UseHttpsRedirection();
