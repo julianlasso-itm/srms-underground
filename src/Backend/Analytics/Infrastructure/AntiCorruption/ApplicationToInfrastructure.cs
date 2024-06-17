@@ -1,7 +1,4 @@
-using Analytics.Application.Responses;
 using Analytics.Infrastructure.AntiCorruption.Interfaces;
-using Analytics.Infrastructure.Persistence.Models;
-using Shared.Infrastructure.ProtocolBuffers.Analytics.Responses;
 
 namespace Analytics.Infrastructure.AntiCorruption
 {

@@ -1,7 +1,4 @@
-using Profiles.Application.Responses;
 using Profiles.Infrastructure.AntiCorruption.Interfaces;
-using Profiles.Infrastructure.Persistence.Models;
-using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
 
 namespace Profiles.Infrastructure.AntiCorruption
 {

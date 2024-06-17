@@ -1,4 +1,3 @@
-using Shared.Domain.Exceptions;
 using Shared.Domain.ValueObjects;
 
 namespace Shared.Domain.Exceptions

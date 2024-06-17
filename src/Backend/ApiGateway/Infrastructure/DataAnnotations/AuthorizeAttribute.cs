@@ -30,41 +30,41 @@ namespace Infrastructure.DataAnnotations
       ActionExecutionDelegate next
     )
     {
-      await next();
-      // var accessControlServices =
-      //   context.HttpContext.RequestServices.GetRequiredService<AccessControlService>();
-      // var token = context
-      //   .HttpContext.Request.Headers.Authorization.ToString()
-      //   .Replace("Bearer ", "");
-      // try
-      // {
-      //   var data = await accessControlServices.VerifyTokenAsync(
-      //     new VerifyTokenAccessControlRequest { Token = token }
-      //   );
+      // await next();
+      var accessControlServices =
+        context.HttpContext.RequestServices.GetRequiredService<AccessControlService>();
+      var token = context
+        .HttpContext.Request.Headers.Authorization.ToString()
+        .Replace("Bearer ", "");
+      try
+      {
+        var data = await accessControlServices.VerifyTokenAsync(
+          new VerifyTokenAccessControlRequest { Token = token }
+        );
 
-      //   if (Data != null && !Data.Contains(data.Roles.FirstOrDefault()))
-      //   {
-      //     context.Result = new ContentResult
-      //     {
-      //       Content = JsonSerializer.Serialize(new { Message = "Unauthorized" }),
-      //       StatusCode = StatusCodes.Status401Unauthorized,
-      //       ContentType = ContentType
-      //     };
-      //     return;
-      //   }
-      //   context.HttpContext.Items.Add("UserId", data.UserId);
-      //   context.HttpContext.Items.Add("Photo", data.Photo);
-      //   await next();
-      // }
-      // catch (RpcException e)
-      // {
-      //   context.Result = new ContentResult
-      //   {
-      //     Content = e.Status.Detail,
-      //     StatusCode = (int)StatusCodeConverter.GetHttpStatusCodeFromGrpcStatus(e.StatusCode),
-      //     ContentType = ContentType
-      //   };
-      // }
+        if (Data != null && !Data.Contains(data.Roles.FirstOrDefault()))
+        {
+          context.Result = new ContentResult
+          {
+            Content = JsonSerializer.Serialize(new { Message = "Unauthorized" }),
+            StatusCode = StatusCodes.Status401Unauthorized,
+            ContentType = ContentType
+          };
+          return;
+        }
+        context.HttpContext.Items.Add("UserId", data.UserId);
+        context.HttpContext.Items.Add("Photo", data.Photo);
+        await next();
+      }
+      catch (RpcException e)
+      {
+        context.Result = new ContentResult
+        {
+          Content = e.Status.Detail,
+          StatusCode = (int)StatusCodeConverter.GetHttpStatusCodeFromGrpcStatus(e.StatusCode),
+          ContentType = ContentType
+        };
+      }
     }
   }
 }

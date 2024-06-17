@@ -1,6 +1,3 @@
-using Assessments.Infrastructure;
-using Grpc.Core;
-
 namespace Assessments.Infrastructure.Services;
 
 
