@@ -4,15 +4,12 @@ namespace Shared.Common
 {
   public class SuccessResult<Type> : Result
   {
-    public Type Data { get; private set; }
+    public Type? Data { get; internal set; }
 
     public SuccessResult(Type data)
-      : base(true)
-    {
-      Data = data;
-    }
+      : base(true, data) { }
 
     public SuccessResult()
-      : base(true) { }
+      : base(true, default) { }
   }
 }

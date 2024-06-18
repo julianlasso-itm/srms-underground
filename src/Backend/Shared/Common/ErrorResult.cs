@@ -3,10 +3,14 @@ using Shared.Common.Enums;
 
 namespace Shared.Common
 {
-  public class ErrorResult(string errorMessage, ErrorEnum errorCode, object? details = null) : Result(false)
+  public class ErrorResult : Result
   {
-    public string Message { get; private set; } = errorMessage;
-    public ErrorEnum Code { get; private set; } = errorCode;
-    public object? Details { get; private set; } = details;
+    public ErrorResult(string message, ErrorEnum code, object? details)
+      : base(false, details)
+    {
+      Message = message;
+      Code = code;
+      Details = details;
+    }
   }
 }

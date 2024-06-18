@@ -5,9 +5,12 @@ using AccessControl.Application.Commands;
 using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
 using AccessControl.Domain.Aggregates.Constants;
+using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 using Shared.Application.Interfaces;
+using Shared.Common;
+using Shared.Common.Bases;
 using ApplicationException = Shared.Application.Exceptions.ApplicationException;
 
 namespace AccessControl.Application.UseCases
@@ -21,7 +24,6 @@ namespace AccessControl.Application.UseCases
   )
     : BaseUseCase<
       ActivateTokenCommand,
-      ActivationTokenApplicationResponse,
       ISecurityAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
@@ -32,21 +34,30 @@ namespace AccessControl.Application.UseCases
     private readonly IUserRepository<TEntity> _userRepository = userRepository;
     private readonly ICacheService _cacheService = cacheService;
 
-    public override async Task<ActivationTokenApplicationResponse> Handle(
-      ActivateTokenCommand request
-    )
+    public override async Task<Result> Handle(ActivateTokenCommand request)
     {
       var command = AclInputMapper.ToActivateTokenDomainRequest(request);
+
       var response = AggregateRoot.ValidateActivationToken(command);
-      var userId = GetUserIdFromCache(response.ActivationToken);
-      var requestForDomain = AclInputMapper.ToActiveCredentialDomainRequest(
-        new ActiveUserCommand { UserId = userId }
-      );
-      var user = AggregateRoot.ActiveCredential(requestForDomain);
-      await ChangeUserStatusInDatabase(userId);
-      RemoveTokenFromCache(response.ActivationToken);
-      EmitEvent(Channel, JsonSerializer.Serialize(user));
-      return AclOutputMapper.ToActivationTokenApplicationResponse(response);
+      var confirm = response.GetData<ActivateTokenDomainResponse>(out var data);
+
+      if (confirm && data != null && response.IsSuccess)
+      {
+        var userId = GetUserIdFromCache(data.ActivationToken);
+        var requestForDomain = AclInputMapper.ToActiveCredentialDomainRequest(
+          new ActiveUserCommand { UserId = userId }
+        );
+        var user = AggregateRoot.ActiveCredential(requestForDomain);
+        await ChangeUserStatusInDatabase(userId);
+        RemoveTokenFromCache(data.ActivationToken);
+        EmitEvent(Channel, JsonSerializer.Serialize(user));
+
+        return new SuccessResult<ActivationTokenApplicationResponse>(
+          AclOutputMapper.ToActivationTokenApplicationResponse(data)
+        );
+      }
+
+      return response;
     }
 
     private string GetUserIdFromCache(string token)

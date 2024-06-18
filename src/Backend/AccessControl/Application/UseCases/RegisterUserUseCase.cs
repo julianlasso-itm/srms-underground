@@ -8,6 +8,7 @@ using AccessControl.Domain.Aggregates.Constants;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 using Shared.Application.Interfaces;
+using Shared.Common.Bases;
 
 namespace AccessControl.Application.UseCases
 {
@@ -22,7 +23,6 @@ namespace AccessControl.Application.UseCases
   )
     : BaseUseCase<
       RegisterUserCommand,
-      RegisterUserApplicationResponse,
       ISecurityAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
@@ -36,7 +36,7 @@ namespace AccessControl.Application.UseCases
     private readonly IStoreService _storeService = storeService;
     private readonly IMessageService _messageService = messageService;
 
-    public override async Task<RegisterUserApplicationResponse> Handle(RegisterUserCommand request)
+    public override async Task<Result> Handle(RegisterUserCommand request)
     {
       request = AssignAvatarBlobAndDeleteFromCache(request);
       var command = AclInputMapper.ToRegisterCredentialDomainRequest(request);

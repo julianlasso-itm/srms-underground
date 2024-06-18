@@ -1,3 +1,4 @@
+using Shared.Common.Bases;
 using Shared.Domain.Aggregate.Interfaces;
 
 namespace Shared.Application.Base
@@ -15,7 +16,7 @@ namespace Shared.Application.Base
     protected readonly TAclInputMapper AclInputMapper = aclInputMapper;
     protected readonly TAclOutputMapper AclOutputMapper = aclOutputMapper;
 
-    public abstract Task<TResponse> Handle(TCommand request);
+    public abstract Task<Result> Handle(TCommand request);
 
     protected void EmitEvent(string channel, string data)
     {
