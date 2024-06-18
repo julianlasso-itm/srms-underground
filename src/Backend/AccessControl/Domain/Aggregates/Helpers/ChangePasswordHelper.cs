@@ -3,24 +3,33 @@ using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Entities;
 using AccessControl.Domain.Entities.Records;
 using AccessControl.Domain.ValueObjects;
-using Shared.Domain.Aggregate.Helpers;
+using Shared.Common;
+using Shared.Common.Bases;
+using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Helpers
 {
-  internal class ChangePasswordHelper
-    : BaseHelper,
-      IHelper<ChangePasswordDomainRequest, ChangePasswordDomainResponse>
+  internal class ChangePasswordHelper : BaseHelper, IHelper<ChangePasswordDomainRequest>
   {
-    public static ChangePasswordDomainResponse Execute(ChangePasswordDomainRequest data)
+    public static Result Execute(ChangePasswordDomainRequest data)
     {
       var record = GetUpdatePasswordRecord(data);
-      ValidateRecordFields(record);
+
+      var resultValidation = ValidateRecordFields(record);
+      if (resultValidation.IsFailure)
+      {
+        return resultValidation;
+      }
+
       var credential = new CredentialEntity(
         new CredentialRecord { CredentialId = record.CredentialId }
       );
       credential.UpdatePassword(record.NewPassword);
-      return MapToResponse(credential, record.OldPassword.Value);
+
+      return new SuccessResult<ChangePasswordDomainResponse>(
+        MapToResponse(credential, record.OldPassword.Value)
+      );
     }
 
     private static UpdatePasswordRecord GetUpdatePasswordRecord(ChangePasswordDomainRequest data)

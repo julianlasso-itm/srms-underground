@@ -2,20 +2,28 @@ using AccessControl.Domain.Aggregates.Dto.Requests;
 using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Entities.Records;
 using AccessControl.Domain.ValueObjects;
-using Shared.Domain.Aggregate.Helpers;
+using Shared.Common;
+using Shared.Common.Bases;
+using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Helpers
 {
   internal class ValidateEmailAndEncryptPasswordHelper
     : BaseHelper,
-      IHelper<SignInDataInitialsDomainRequest, SignInDataInitialsDomainResponse>
+      IHelper<SignInDataInitialsDomainRequest>
   {
-    public static SignInDataInitialsDomainResponse Execute(SignInDataInitialsDomainRequest request)
+    public static Result Execute(SignInDataInitialsDomainRequest request)
     {
       var record = GetCredentialRecord(request);
-      ValidateRecordFields(record);
-      return MapToResponse(record);
+
+      var resultValidation = ValidateRecordFields(record);
+      if (resultValidation.IsFailure)
+      {
+        return resultValidation;
+      }
+
+      return new SuccessResult<SignInDataInitialsDomainResponse>(MapToResponse(record));
     }
 
     private static CredentialRecord GetCredentialRecord(SignInDataInitialsDomainRequest request)

@@ -3,18 +3,18 @@ using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Entities;
 using AccessControl.Domain.Entities.Records;
 using AccessControl.Domain.ValueObjects;
-using Shared.Domain.Aggregate.Helpers;
+using Shared.Common;
+using Shared.Common.Bases;
+using Shared.Common.Enums;
+using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Aggregate.Interfaces;
-using Shared.Domain.Exceptions;
 using Shared.Domain.ValueObjects;
 
 namespace AccessControl.Domain.Aggregates.Helpers
 {
-  internal class UpdateRoleHelper
-    : BaseHelper,
-      IHelper<UpdateRoleDomainRequest, UpdateRoleDomainResponse>
+  internal class UpdateRoleHelper : BaseHelper, IHelper<UpdateRoleDomainRequest>
   {
-    public static UpdateRoleDomainResponse Execute(UpdateRoleDomainRequest data)
+    public static Result Execute(UpdateRoleDomainRequest data)
     {
       var record = GetRoleRecord(data);
       var role = new RoleEntity(record);
@@ -47,10 +47,19 @@ namespace AccessControl.Domain.Aggregates.Helpers
         response.Disabled = role.Disabled.Value;
       }
 
-      ValidateRecordFields(role);
-      ValidateAmountDataToBeUpdated(response);
+      var resultValidationFields = ValidateRecordFields(role);
+      if (resultValidationFields.IsFailure)
+      {
+        return resultValidationFields;
+      }
 
-      return response;
+      var resultValidationAmountDataToBeUpdated = ValidateAmountDataToBeUpdated(response);
+      if (resultValidationAmountDataToBeUpdated.IsFailure)
+      {
+        return resultValidationAmountDataToBeUpdated;
+      }
+
+      return new SuccessResult<UpdateRoleDomainResponse>(response);
     }
 
     private static RoleRecord GetRoleRecord(UpdateRoleDomainRequest data)
@@ -59,16 +68,19 @@ namespace AccessControl.Domain.Aggregates.Helpers
       return new RoleRecord { RoleId = id };
     }
 
-    private static void ValidateAmountDataToBeUpdated(UpdateRoleDomainResponse response)
+    private static Result ValidateAmountDataToBeUpdated(UpdateRoleDomainResponse response)
     {
       var count = response.GetType().GetProperties().Count(x => x.GetValue(response) != null);
       if (count == 1)
       {
-        throw new DomainException(
+        return new ErrorResult(
           "No data to update",
-          [new ErrorValueObject("No fields to update", "No fields to update")]
+          ErrorEnum.BAD_REQUEST,
+          new ErrorValueObject("fields", "No fields to update")
         );
       }
+
+      return new SuccessResult<bool>();
     }
   }
 }

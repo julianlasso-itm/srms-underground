@@ -1,35 +1,24 @@
 using AccessControl.Domain.Aggregates.Dto.Requests;
 using AccessControl.Domain.Aggregates.Dto.Responses;
+using Shared.Common.Bases;
 using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Interfaces
 {
   public interface ISecurityAggregateRoot : IAggregateRoot
   {
-    public RegisterCredentialDomainResponse RegisterCredential(
-      RegisterCredentialDomainRequest registerData
-    );
-    public RegisterRoleDomainResponse RegisterRole(RegisterRoleDomainRequest registerData);
-    public UpdateRoleDomainResponse UpdateRole(UpdateRoleDomainRequest updateData);
-    public DeleteRoleDomainResponse DeleteRole(DeleteRoleDomainRequest deleteData);
-    public ActivateTokenDomainResponse ValidateActivationToken(
-      ActivateTokenDomainRequest activateData
-    );
-    public ActiveCredentialDomainResponse ActiveCredential(
-      ActiveCredentialDomainRequest activeData
-    );
-    public SignInDataInitialsDomainResponse ValidateEmailAndEncryptPassword(
-      SignInDataInitialsDomainRequest signInData
-    );
-    public SignInDomainResponse GenerateTokenForSignIn(SignInDomainRequest signInData);
-    public VerifyTokenDomainResponse VerifyToken(VerifyTokenDomainRequest verifyData);
-    public ChangePasswordDomainResponse ChangePassword(ChangePasswordDomainRequest changeData);
-    public PasswordRecoveryDomainResponse PasswordRecovery(
-      PasswordRecoveryDomainRequest recoveryData
-    );
-    public UpdateCredentialDomainResponse UpdateCredential(
-      UpdateCredentialDomainRequest updateData
-    );
-    public ResetPasswordDomainResponse ResetPassword(ResetPasswordDomainRequest resetData);
+    public Result RegisterCredential(RegisterCredentialDomainRequest registerData);
+    public Result RegisterRole(RegisterRoleDomainRequest registerData);
+    public Result UpdateRole(UpdateRoleDomainRequest updateData);
+    public Result DeleteRole(DeleteRoleDomainRequest deleteData);
+    public Result ValidateActivationToken(ActivateTokenDomainRequest activateData);
+    public Result ActiveCredential(ActiveCredentialDomainRequest activeData);
+    public Result ValidateEmailAndEncryptPassword(SignInDataInitialsDomainRequest signInData);
+    public Result GenerateTokenForSignIn(SignInDomainRequest signInData);
+    public Result VerifyToken(VerifyTokenDomainRequest verifyData);
+    public Result ChangePassword(ChangePasswordDomainRequest changeData);
+    public Result PasswordRecovery(PasswordRecoveryDomainRequest recoveryData);
+    public Result UpdateCredential(UpdateCredentialDomainRequest updateData);
+    public Result ResetPassword(ResetPasswordDomainRequest resetData);
   }
 }

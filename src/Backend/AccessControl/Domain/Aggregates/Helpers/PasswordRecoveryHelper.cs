@@ -2,20 +2,26 @@ using AccessControl.Domain.Aggregates.Dto.Requests;
 using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Entities.Records;
 using AccessControl.Domain.ValueObjects;
-using Shared.Domain.Aggregate.Helpers;
+using Shared.Common;
+using Shared.Common.Bases;
+using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Helpers
 {
-  internal class PasswordRecoveryHelper
-    : BaseHelper,
-      IHelper<PasswordRecoveryDomainRequest, PasswordRecoveryDomainResponse>
+  internal class PasswordRecoveryHelper : BaseHelper, IHelper<PasswordRecoveryDomainRequest>
   {
-    public static PasswordRecoveryDomainResponse Execute(PasswordRecoveryDomainRequest request)
+    public static Result Execute(PasswordRecoveryDomainRequest request)
     {
       var record = GetCredentialRecord(request);
-      ValidateRecordFields(record);
-      return MapStructToResponse(record);
+
+      var resultValidation = ValidateRecordFields(record);
+      if (resultValidation.IsFailure)
+      {
+        return resultValidation;
+      }
+
+      return new SuccessResult<PasswordRecoveryDomainResponse>(MapStructToResponse(record));
     }
 
     private static CredentialRecord GetCredentialRecord(PasswordRecoveryDomainRequest request)

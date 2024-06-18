@@ -3,21 +3,28 @@ using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Entities;
 using AccessControl.Domain.Entities.Records;
 using AccessControl.Domain.ValueObjects;
-using Shared.Domain.Aggregate.Helpers;
+using Shared.Common;
+using Shared.Common.Bases;
+using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Helpers
 {
-  internal class ActiveCredentialHelper
-    : BaseHelper,
-      IHelper<ActiveCredentialDomainRequest, ActiveCredentialDomainResponse>
+  internal class ActiveCredentialHelper : BaseHelper, IHelper<ActiveCredentialDomainRequest>
   {
-    public static ActiveCredentialDomainResponse Execute(ActiveCredentialDomainRequest data)
+    public static Result Execute(ActiveCredentialDomainRequest data)
     {
       var record = GetCredentialRecord(data);
-      ValidateRecordFields(record);
+
+      var resultValidation = ValidateRecordFields(record);
+      if (resultValidation.IsFailure)
+      {
+        return resultValidation;
+      }
+
       var credential = ActiveCredential(record);
-      return MapToResponse(credential);
+
+      return new SuccessResult<ActiveCredentialDomainResponse>(MapToResponse(credential));
     }
 
     private static CredentialRecord GetCredentialRecord(ActiveCredentialDomainRequest data)

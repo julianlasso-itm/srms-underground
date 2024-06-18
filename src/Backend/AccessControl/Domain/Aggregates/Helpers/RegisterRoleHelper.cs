@@ -3,24 +3,29 @@ using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Entities;
 using AccessControl.Domain.Entities.Records;
 using AccessControl.Domain.ValueObjects;
-using Shared.Domain.Aggregate.Helpers;
+using Shared.Common;
+using Shared.Common.Bases;
+using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Helpers
 {
-  internal class RegisterRoleHelper
-    : BaseHelper,
-      IHelper<RegisterRoleDomainRequest, RegisterRoleDomainResponse>
+  internal class RegisterRoleHelper : BaseHelper, IHelper<RegisterRoleDomainRequest>
   {
-    public static RegisterRoleDomainResponse Execute(RegisterRoleDomainRequest request)
+    public static Result Execute(RegisterRoleDomainRequest request)
     {
       var record = GetRoleRecord(request);
-      ValidateRecordFields(record);
+      var resultValidation = ValidateRecordFields(record);
+
+      if (resultValidation.IsFailure)
+      {
+        return resultValidation;
+      }
 
       var role = new RoleEntity();
       role.Register(record.Name, record.Description);
 
-      return MapToResponse(role);
+      return new SuccessResult<RegisterRoleDomainResponse>(MapToResponse(role));
     }
 
     private static RoleRecord GetRoleRecord(RegisterRoleDomainRequest request)

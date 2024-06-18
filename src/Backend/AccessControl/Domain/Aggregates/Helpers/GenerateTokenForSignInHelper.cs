@@ -3,22 +3,31 @@ using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Entities;
 using AccessControl.Domain.Entities.Records;
 using AccessControl.Domain.ValueObjects;
-using Shared.Domain.Aggregate.Helpers;
+using Shared.Common;
+using Shared.Common.Bases;
+using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Helpers
 {
-  internal class GenerateTokenForSignInHelper
-    : BaseHelper,
-      IHelper<SignInDomainRequest, SignInDomainResponse>
+  internal class GenerateTokenForSignInHelper : BaseHelper, IHelper<SignInDomainRequest>
   {
-    public static SignInDomainResponse Execute(SignInDomainRequest request)
+    public static Result Execute(SignInDomainRequest request)
     {
       var record = TokenRecord(request);
-      ValidateRecordFields(record);
+
+      var resultValidation = ValidateRecordFields(record);
+      if (resultValidation.IsFailure)
+      {
+        return resultValidation;
+      }
+
       var token = new TokenEntity(record);
       token.Register(record.FullName, record.Email, record.Photo, record.Roles);
-      return new SignInDomainResponse { Token = token.Jwt.Value };
+
+      return new SuccessResult<SignInDomainResponse>(
+        new SignInDomainResponse { Token = token.Jwt.Value }
+      );
     }
 
     private static TokenRecord TokenRecord(SignInDomainRequest request)

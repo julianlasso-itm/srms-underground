@@ -2,7 +2,8 @@ using AccessControl.Domain.Aggregates.Dto.Requests;
 using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Aggregates.Helpers;
 using AccessControl.Domain.Aggregates.Interfaces;
-using Shared.Domain.Aggregate.Base;
+using Shared.Common.Bases;
+using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Events.Interfaces;
 
 namespace AccessControl.Domain.Aggregates
@@ -11,75 +12,67 @@ namespace AccessControl.Domain.Aggregates
     : BaseAggregateRoot(eventInterface),
       ISecurityAggregateRoot
   {
-    public RegisterCredentialDomainResponse RegisterCredential(
-      RegisterCredentialDomainRequest registerData
-    )
+    public Result RegisterCredential(RegisterCredentialDomainRequest registerData)
     {
       return RegisterCredentialHelper.Execute(registerData);
     }
 
-    public RegisterRoleDomainResponse RegisterRole(RegisterRoleDomainRequest registerData)
+    public Result RegisterRole(RegisterRoleDomainRequest registerData)
     {
       return RegisterRoleHelper.Execute(registerData);
     }
 
-    public UpdateRoleDomainResponse UpdateRole(UpdateRoleDomainRequest updateData)
+    public Result UpdateRole(UpdateRoleDomainRequest updateData)
     {
       return UpdateRoleHelper.Execute(updateData);
     }
 
-    public DeleteRoleDomainResponse DeleteRole(DeleteRoleDomainRequest deleteData)
+    public Result DeleteRole(DeleteRoleDomainRequest deleteData)
     {
       return DeleteRoleHelper.Execute(deleteData);
     }
 
-    public ActivateTokenDomainResponse ValidateActivationToken(
-      ActivateTokenDomainRequest activateData
-    )
+    public Result ValidateActivationToken(ActivateTokenDomainRequest activateData)
     {
       return ValidateActivationTokenHelper.Execute(activateData);
     }
 
-    public ActiveCredentialDomainResponse ActiveCredential(ActiveCredentialDomainRequest activeData)
+    public Result ActiveCredential(ActiveCredentialDomainRequest activeData)
     {
       return ActiveCredentialHelper.Execute(activeData);
     }
 
-    public SignInDataInitialsDomainResponse ValidateEmailAndEncryptPassword(
-      SignInDataInitialsDomainRequest signInData
-    )
+    public Result ValidateEmailAndEncryptPassword(SignInDataInitialsDomainRequest signInData)
     {
       return ValidateEmailAndEncryptPasswordHelper.Execute(signInData);
     }
 
-    public SignInDomainResponse GenerateTokenForSignIn(SignInDomainRequest signInData)
+    public Result GenerateTokenForSignIn(SignInDomainRequest signInData)
     {
       return GenerateTokenForSignInHelper.Execute(signInData);
     }
 
-    public VerifyTokenDomainResponse VerifyToken(VerifyTokenDomainRequest verifyData)
+    public Result VerifyToken(VerifyTokenDomainRequest verifyData)
     {
       return VerifyTokenHelper.Execute(verifyData);
     }
 
-    public ChangePasswordDomainResponse ChangePassword(ChangePasswordDomainRequest changeData)
+    public Result ChangePassword(ChangePasswordDomainRequest changeData)
     {
       return ChangePasswordHelper.Execute(changeData);
     }
 
-    public PasswordRecoveryDomainResponse PasswordRecovery(
-      PasswordRecoveryDomainRequest recoveryData
-    )
+    public Result PasswordRecovery(PasswordRecoveryDomainRequest recoveryData)
     {
       return PasswordRecoveryHelper.Execute(recoveryData);
     }
 
-    public UpdateCredentialDomainResponse UpdateCredential(UpdateCredentialDomainRequest updateData)
+    public Result UpdateCredential(UpdateCredentialDomainRequest updateData)
     {
       return UpdateCredentialHelper.Execute(updateData);
     }
 
-    public ResetPasswordDomainResponse ResetPassword(ResetPasswordDomainRequest resetData)
+    public Result ResetPassword(ResetPasswordDomainRequest resetData)
     {
       return ResetPasswordHelper.Execute(resetData);
     }
