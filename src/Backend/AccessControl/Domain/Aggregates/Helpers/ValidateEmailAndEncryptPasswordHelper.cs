@@ -23,7 +23,7 @@ namespace AccessControl.Domain.Aggregates.Helpers
         return resultValidation;
       }
 
-      return new SuccessResult(MapToResponse(record));
+      return new SuccessResult<SignInDataInitialsDomainResponse>(MapToResponse(record));
     }
 
     private static CredentialRecord GetCredentialRecord(SignInDataInitialsDomainRequest request)

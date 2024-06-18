@@ -1,9 +1,6 @@
-using AccessControl.Domain.Aggregates.Dto.Responses.Bases;
-using AccessControl.Domain.Aggregates.Dto.Responses.Interfaces;
-
 namespace AccessControl.Domain.Aggregates.Dto.Responses
 {
-  public sealed class UpdateCredentialDomainResponse : DomainResponse
+  public sealed class UpdateCredentialDomainResponse
   {
     public string CredentialId { get; set; }
     public string? Name { get; set; }
@@ -12,10 +9,5 @@ namespace AccessControl.Domain.Aggregates.Dto.Responses
     public string? Photo { get; set; }
     public bool? Disabled { get; set; }
     public string? CityId { get; set; }
-
-    public override Type Accept<Type>(IDomainResponseVisitor<Type> visitor)
-    {
-      return visitor.Visit(this);
-    }
   }
 }

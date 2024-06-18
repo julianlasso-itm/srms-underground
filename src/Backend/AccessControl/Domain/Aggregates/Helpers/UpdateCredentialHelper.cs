@@ -67,7 +67,7 @@ namespace AccessControl.Domain.Aggregates.Helpers
         return resultValidationAmountDataToBeUpdated;
       }
 
-      return new SuccessResult(response);
+      return new SuccessResult<UpdateCredentialDomainResponse>(response);
     }
 
     private static CredentialRecord GetCredentialRecord(UpdateCredentialDomainRequest data)

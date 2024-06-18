@@ -37,7 +37,7 @@ namespace AccessControl.Domain.Aggregates.Helpers
         new RoleEntity(new RoleRecord { RoleId = new RoleIdValueObject(UserRoleId) })
       );
 
-      return new SuccessResult(
+      return new SuccessResult<RegisterCredentialDomainResponse>(
         new RegisterCredentialDomainResponse
         {
           CredentialId = credential.CredentialId.Value,

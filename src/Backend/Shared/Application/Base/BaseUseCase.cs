@@ -3,12 +3,11 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace Shared.Application.Base
 {
-  public abstract class BaseUseCase<
-    TCommand,
-    TAggregateRoot,
-    TAclInputMapper,
-    TAclOutputMapper
-  >(TAggregateRoot aggregateRoot, TAclInputMapper aclInputMapper, TAclOutputMapper aclOutputMapper)
+  public abstract class BaseUseCase<TCommand, TAggregateRoot, TAclInputMapper, TAclOutputMapper>(
+    TAggregateRoot aggregateRoot,
+    TAclInputMapper aclInputMapper,
+    TAclOutputMapper aclOutputMapper
+  )
     where TAggregateRoot : IAggregateRoot
   {
     protected readonly TAggregateRoot AggregateRoot = aggregateRoot;

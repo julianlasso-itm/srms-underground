@@ -21,7 +21,7 @@ namespace AccessControl.Domain.Aggregates.Helpers
         return resultValidation;
       }
 
-      return new SuccessResult(MapToResponse(record));
+      return new SuccessResult<DeleteRoleDomainResponse>(MapToResponse(record));
     }
 
     private static RoleRecord GetRoleRecord(DeleteRoleDomainRequest request)

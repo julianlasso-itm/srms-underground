@@ -27,7 +27,9 @@ namespace AccessControl.Domain.Aggregates.Helpers
       );
       credential.UpdatePassword(record.NewPassword);
 
-      return new SuccessResult(MapToResponse(credential, record.OldPassword.Value));
+      return new SuccessResult<ChangePasswordDomainResponse>(
+        MapToResponse(credential, record.OldPassword.Value)
+      );
     }
 
     private static UpdatePasswordRecord GetUpdatePasswordRecord(ChangePasswordDomainRequest data)

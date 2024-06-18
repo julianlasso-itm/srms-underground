@@ -24,7 +24,7 @@ namespace AccessControl.Domain.Aggregates.Helpers
 
       var credential = ActiveCredential(record);
 
-      return new SuccessResult(MapToResponse(credential));
+      return new SuccessResult<ActiveCredentialDomainResponse>(MapToResponse(credential));
     }
 
     private static CredentialRecord GetCredentialRecord(ActiveCredentialDomainRequest data)

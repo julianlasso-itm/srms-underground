@@ -3,6 +3,21 @@ using Shared.Common.Enums;
 
 namespace Shared.Common
 {
-  public class ErrorResult(string message, ErrorEnum code, object? details)
-    : Result(null ?? new object(), false, message, code, details) { }
+  public class ErrorResult: Result
+  {
+    public ErrorResult(string message, ErrorEnum code)
+    {
+      IsSuccess = false;
+      Message = message;
+      Code = code;
+    }
+
+    public ErrorResult(string message, ErrorEnum code, object details)
+    {
+      IsSuccess = false;
+      Message = message;
+      Code = code;
+      Details = details;
+    }
+  }
 }
