@@ -1,12 +1,14 @@
-using Shared.Domain.Exceptions;
+using Shared.Common;
+using Shared.Common.Bases;
+using Shared.Common.Enums;
 using Shared.Domain.ValueObjects;
 using Shared.Domain.ValueObjects.Base;
 
-namespace Shared.Domain.Aggregate.Helpers
+namespace Shared.Domain.Aggregate.Bases
 {
   public abstract class BaseHelper
   {
-    protected static bool ValidateRecordFields(object data)
+    protected static Result ValidateRecordFields(object data)
     {
       var errors = new List<ErrorValueObject>();
       var type = data.GetType();
@@ -26,10 +28,10 @@ namespace Shared.Domain.Aggregate.Helpers
 
       if (errors.Count > 0)
       {
-        throw new DomainException("Invalid data structure", errors);
+        return new ErrorResult("Invalid data", ErrorEnum.BAD_REQUEST, errors);
       }
 
-      return true;
+      return new SuccessResult<bool>();
     }
   }
 }

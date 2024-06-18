@@ -72,6 +72,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Analytics.EventConsumer", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessControl.EventConsumer", "src\Backend\AccessControl\EventConsumer\AccessControl.EventConsumer.csproj", "{E9E0AF45-A5D8-4912-ACF8-BF51DA49F251}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Common", "src\Backend\Shared\Common\Shared.Common.csproj", "{BFA3881B-A2D0-47EE-A362-DA2EC1FEB734}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -182,6 +184,10 @@ Global
 		{E9E0AF45-A5D8-4912-ACF8-BF51DA49F251}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9E0AF45-A5D8-4912-ACF8-BF51DA49F251}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9E0AF45-A5D8-4912-ACF8-BF51DA49F251}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFA3881B-A2D0-47EE-A362-DA2EC1FEB734}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFA3881B-A2D0-47EE-A362-DA2EC1FEB734}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFA3881B-A2D0-47EE-A362-DA2EC1FEB734}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFA3881B-A2D0-47EE-A362-DA2EC1FEB734}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -221,6 +227,7 @@ Global
 		{AD60FA83-490B-46AF-9B43-E534E2C38178} = {4A7DD316-F681-4107-86B9-2915F9FD38E0}
 		{5D76A9C3-7A93-49AF-856C-9ACBF99CE218} = {44810BD7-3FE6-42F2-9603-4B52BEDFEEB6}
 		{E9E0AF45-A5D8-4912-ACF8-BF51DA49F251} = {C00D5C59-7985-43D2-BE2A-D3C77C401D4E}
+		{BFA3881B-A2D0-47EE-A362-DA2EC1FEB734} = {BDEE5055-C1C0-4755-91E2-51C73CB6E406}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {01EDF1FB-D904-4880-A626-BD449B0F60B1}

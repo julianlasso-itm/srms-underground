@@ -1,7 +1,7 @@
 using Shared.Domain.Aggregate.Interfaces;
 using Shared.Domain.Events.Interfaces;
 
-namespace Shared.Domain.Aggregate.Base
+namespace Shared.Domain.Aggregate.Bases
 {
   public abstract class BaseAggregateRoot(IEvent eventInterface) : IAggregateRoot
   {
