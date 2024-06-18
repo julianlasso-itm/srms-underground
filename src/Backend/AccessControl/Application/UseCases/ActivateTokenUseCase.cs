@@ -39,25 +39,24 @@ namespace AccessControl.Application.UseCases
       var command = AclInputMapper.ToActivateTokenDomainRequest(request);
 
       var response = AggregateRoot.ValidateActivationToken(command);
-      var confirm = response.GetData<ActivateTokenDomainResponse>(out var data);
-
-      if (confirm && data != null && response.IsSuccess)
+      if (response.IsFailure)
       {
-        var userId = GetUserIdFromCache(data.ActivationToken);
-        var requestForDomain = AclInputMapper.ToActiveCredentialDomainRequest(
-          new ActiveUserCommand { UserId = userId }
-        );
-        var user = AggregateRoot.ActiveCredential(requestForDomain);
-        await ChangeUserStatusInDatabase(userId);
-        RemoveTokenFromCache(data.ActivationToken);
-        EmitEvent(Channel, JsonSerializer.Serialize(user));
-
-        return new SuccessResult<ActivationTokenApplicationResponse>(
-          AclOutputMapper.ToActivationTokenApplicationResponse(data)
-        );
+        return response;
       }
 
-      return response;
+      var visitor = new DomainResponseVisitor();
+      var data = response.Data.Accept(visitor);
+
+      var userId = GetUserIdFromCache(data.ActivationToken);
+      var requestForDomain = AclInputMapper.ToActiveCredentialDomainRequest(
+        new ActiveUserCommand { UserId = userId }
+      );
+      var user = AggregateRoot.ActiveCredential(requestForDomain);
+      await ChangeUserStatusInDatabase(userId);
+      RemoveTokenFromCache(data.ActivationToken);
+      EmitEvent(Channel, JsonSerializer.Serialize(user));
+
+      return new SuccessResult(AclOutputMapper.ToActivationTokenApplicationResponse(data));
     }
 
     private string GetUserIdFromCache(string token)

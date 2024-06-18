@@ -59,7 +59,7 @@ namespace AccessControl.Domain.Aggregates.Helpers
         return resultValidationAmountDataToBeUpdated;
       }
 
-      return new SuccessResult<UpdateRoleDomainResponse>(response);
+      return new SuccessResult(response);
     }
 
     private static RoleRecord GetRoleRecord(UpdateRoleDomainRequest data)
@@ -80,7 +80,7 @@ namespace AccessControl.Domain.Aggregates.Helpers
         );
       }
 
-      return new SuccessResult<bool>();
+      return new SuccessResult();
     }
   }
 }

@@ -5,7 +5,6 @@ namespace Shared.Application.Base
 {
   public abstract class BaseUseCase<
     TCommand,
-    TResponse,
     TAggregateRoot,
     TAclInputMapper,
     TAclOutputMapper

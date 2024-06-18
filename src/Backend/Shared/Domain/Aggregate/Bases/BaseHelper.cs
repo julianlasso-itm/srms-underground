@@ -16,7 +16,6 @@ namespace Shared.Domain.Aggregate.Bases
       foreach (var property in type.GetProperties())
       {
         var propertyValue = property.GetValue(data);
-
         if (propertyValue is BaseValueObjectErrorHandler baseValueObject)
         {
           if (!baseValueObject.IsValid())
@@ -31,7 +30,7 @@ namespace Shared.Domain.Aggregate.Bases
         return new ErrorResult("Invalid data", ErrorEnum.BAD_REQUEST, errors);
       }
 
-      return new SuccessResult<bool>();
+      return new SuccessResult();
     }
   }
 }

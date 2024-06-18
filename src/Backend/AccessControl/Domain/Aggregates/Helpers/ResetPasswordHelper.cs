@@ -19,7 +19,7 @@ namespace AccessControl.Domain.Aggregates.Helpers
       {
         return resultValidation;
       }
-      return new SuccessResult<ResetPasswordDomainResponse>(
+      return new SuccessResult(
         new ResetPasswordDomainResponse { Password = record.Password.Value }
       );
     }

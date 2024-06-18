@@ -25,7 +25,7 @@ namespace AccessControl.Domain.Aggregates.Helpers
       var role = new RoleEntity();
       role.Register(record.Name, record.Description);
 
-      return new SuccessResult<RegisterRoleDomainResponse>(MapToResponse(role));
+      return new SuccessResult(MapToResponse(role));
     }
 
     private static RoleRecord GetRoleRecord(RegisterRoleDomainRequest request)

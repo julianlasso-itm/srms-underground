@@ -21,7 +21,7 @@ namespace AccessControl.Domain.Aggregates.Helpers
         return resultValidation;
       }
 
-      return new SuccessResult<PasswordRecoveryDomainResponse>(MapStructToResponse(record));
+      return new SuccessResult(MapStructToResponse(record));
     }
 
     private static CredentialRecord GetCredentialRecord(PasswordRecoveryDomainRequest request)

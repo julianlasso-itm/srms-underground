@@ -7,7 +7,6 @@ using Shared.Common;
 using Shared.Common.Bases;
 using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Aggregate.Interfaces;
-using Shared.Domain.Exceptions;
 using Shared.Domain.ValueObjects;
 
 namespace AccessControl.Domain.Aggregates.Helpers
@@ -68,7 +67,7 @@ namespace AccessControl.Domain.Aggregates.Helpers
         return resultValidationAmountDataToBeUpdated;
       }
 
-      return new SuccessResult<UpdateCredentialDomainResponse>(response);
+      return new SuccessResult(response);
     }
 
     private static CredentialRecord GetCredentialRecord(UpdateCredentialDomainRequest data)
@@ -89,7 +88,7 @@ namespace AccessControl.Domain.Aggregates.Helpers
         );
       }
 
-      return new SuccessResult<bool>();
+      return new SuccessResult();
     }
   }
 }

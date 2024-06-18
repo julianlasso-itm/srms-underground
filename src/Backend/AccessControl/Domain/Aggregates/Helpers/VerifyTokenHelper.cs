@@ -47,7 +47,7 @@ namespace AccessControl.Domain.Aggregates.Helpers
         );
       }
 
-      return new SuccessResult<VerifyTokenDomainResponse>(
+      return new SuccessResult(
         new VerifyTokenDomainResponse
         {
           Email = data.Email,

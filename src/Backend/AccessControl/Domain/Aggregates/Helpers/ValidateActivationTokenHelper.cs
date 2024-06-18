@@ -21,7 +21,7 @@ namespace AccessControl.Domain.Aggregates.Helpers
         return resultValidation;
       }
 
-      return new SuccessResult<ActivateTokenDomainResponse>(MapToResponse(activationToken));
+      return new SuccessResult(MapToResponse(activationToken));
     }
 
     private static ActivateTokenDomainResponse MapToResponse(

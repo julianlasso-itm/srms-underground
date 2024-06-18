@@ -2,35 +2,19 @@ using Shared.Common.Enums;
 
 namespace Shared.Common.Bases
 {
-  public abstract class Result(bool isSuccess, dynamic? data)
+  public abstract class Result(
+    object data,
+    bool isSuccess,
+    string? message = null,
+    ErrorEnum? code = null,
+    object? details = null
+  )
   {
-    private dynamic? Data { get; } = data;
-    public bool IsSuccess { get; protected set; } = isSuccess;
+    public object Data { get; protected set; } = data;
+    public bool IsSuccess { get; private set; } = isSuccess;
     public bool IsFailure => !IsSuccess;
-    public string? Message { get; protected set; }
-    public ErrorEnum? Code { get; protected set; }
-    public object? Details { get; protected set; }
-
-    public bool GetData<Type>(out Type? data)
-    {
-      if (IsSuccess && this is SuccessResult<Type> successResult)
-      {
-        data = successResult.Data;
-        return true;
-      }
-      data = default;
-      return false;
-    }
-
-    public bool GetError(out ErrorResult? error)
-    {
-      if (IsFailure && this is ErrorResult errorResult)
-      {
-        error = errorResult;
-        return true;
-      }
-      error = null;
-      return false;
-    }
+    public string? Message { get; protected set; } = message;
+    public ErrorEnum? Code { get; protected set; } = code;
+    public object? Details { get; protected set; } = details;
   }
 }

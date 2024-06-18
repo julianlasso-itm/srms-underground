@@ -25,9 +25,7 @@ namespace AccessControl.Domain.Aggregates.Helpers
       var token = new TokenEntity(record);
       token.Register(record.FullName, record.Email, record.Photo, record.Roles);
 
-      return new SuccessResult<SignInDomainResponse>(
-        new SignInDomainResponse { Token = token.Jwt.Value }
-      );
+      return new SuccessResult(new SignInDomainResponse { Token = token.Jwt.Value });
     }
 
     private static TokenRecord TokenRecord(SignInDomainRequest request)
