@@ -2,7 +2,7 @@ using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Aggregates.Helpers;
 using Profiles.Domain.Aggregates.Interfaces;
-using Shared.Domain.Aggregate.Base;
+using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Events.Interfaces;
 
 namespace Profiles.Domain.Aggregates
