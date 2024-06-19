@@ -11,19 +11,25 @@ namespace AccessControl.Domain.Aggregates.Helpers
 {
   internal class ValidateEmailAndEncryptPasswordHelper
     : BaseHelper,
-      IHelper<SignInDataInitialsDomainRequest>
+      IHelper<SignInDataInitialsDomainRequest, SignInDataInitialsDomainResponse>
   {
-    public static Result Execute(SignInDataInitialsDomainRequest request)
+    public static Result<SignInDataInitialsDomainResponse> Execute(
+      SignInDataInitialsDomainRequest request
+    )
     {
       var record = GetCredentialRecord(request);
 
       var resultValidation = ValidateRecordFields(record);
       if (resultValidation.IsFailure)
       {
-        return resultValidation;
+        return Response<SignInDataInitialsDomainResponse>.Failure(
+          resultValidation.Message,
+          resultValidation.Code,
+          resultValidation.Details
+        );
       }
 
-      return new SuccessResult<SignInDataInitialsDomainResponse>(MapToResponse(record));
+      return Response<SignInDataInitialsDomainResponse>.Success(MapToResponse(record));
     }
 
     private static CredentialRecord GetCredentialRecord(SignInDataInitialsDomainRequest request)

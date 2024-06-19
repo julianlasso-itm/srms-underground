@@ -1,18 +1,15 @@
-using System.Net;
 using System.Text.Json;
 using AccessControl.Application.AntiCorruption.Interfaces;
 using AccessControl.Application.Commands;
 using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
 using AccessControl.Domain.Aggregates.Constants;
-using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 using Shared.Application.Interfaces;
 using Shared.Common;
 using Shared.Common.Bases;
 using Shared.Common.Enums;
-using ApplicationException = Shared.Application.Exceptions.ApplicationException;
 
 namespace AccessControl.Application.UseCases
 {
@@ -25,6 +22,7 @@ namespace AccessControl.Application.UseCases
   )
     : BaseUseCase<
       ActivateTokenCommand,
+      ActivationTokenApplicationResponse,
       ISecurityAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
@@ -35,40 +33,41 @@ namespace AccessControl.Application.UseCases
     private readonly IUserRepository<TEntity> _userRepository = userRepository;
     private readonly ICacheService _cacheService = cacheService;
 
-    public override async Task<Result> Handle(ActivateTokenCommand request)
+    public override async Task<Result<ActivationTokenApplicationResponse>> Handle(
+      ActivateTokenCommand request
+    )
     {
       var command = AclInputMapper.ToActivateTokenDomainRequest(request);
       var response = AggregateRoot.ValidateActivationToken(command);
 
       if (response.IsFailure)
       {
-        return response;
+        return Response<ActivationTokenApplicationResponse>.Failure(
+          response.Message,
+          response.Code,
+          response.Details
+        );
       }
 
-      if (response is SuccessResult<ActivateTokenDomainResponse> successResult)
+      var data = response.Data;
+      var userId = GetUserIdFromCache(data.ActivationToken);
+      if (string.IsNullOrEmpty(userId))
       {
-        var data = successResult.Data;
-        var userId = GetUserIdFromCache(data.ActivationToken);
-        if (string.IsNullOrEmpty(userId))
-        {
-          return new ErrorResult("Token not found in cache", ErrorEnum.NOT_FOUND);
-        }
-        var requestForDomain = AclInputMapper.ToActiveCredentialDomainRequest(
-          new ActiveUserCommand { UserId = userId }
-        );
-        var user = AggregateRoot.ActiveCredential(requestForDomain);
-        await ChangeUserStatusInDatabase(userId);
-        RemoveTokenFromCache(data.ActivationToken);
-        EmitEvent(Channel, JsonSerializer.Serialize(user));
-
-        return new SuccessResult<ActivationTokenApplicationResponse>(
-          AclOutputMapper.ToActivationTokenApplicationResponse(data)
+        return Response<ActivationTokenApplicationResponse>.Failure(
+          "Token not found in cache",
+          ErrorEnum.NOT_FOUND
         );
       }
+      var requestForDomain = AclInputMapper.ToActiveCredentialDomainRequest(
+        new ActiveUserCommand { UserId = userId }
+      );
+      var user = AggregateRoot.ActiveCredential(requestForDomain);
+      await ChangeUserStatusInDatabase(userId);
+      RemoveTokenFromCache(data.ActivationToken);
+      EmitEvent(Channel, JsonSerializer.Serialize(user));
 
-      throw new ApplicationException(
-        "Invalid response into ActivateTokenUseCase for AccessControl application",
-        HttpStatusCode.InternalServerError
+      return new SuccessResult<ActivationTokenApplicationResponse>(
+        AclOutputMapper.ToActivationTokenApplicationResponse(data)
       );
     }
 

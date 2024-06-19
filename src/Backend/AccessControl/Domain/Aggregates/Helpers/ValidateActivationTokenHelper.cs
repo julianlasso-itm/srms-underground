@@ -8,9 +8,11 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Helpers
 {
-  internal class ValidateActivationTokenHelper : BaseHelper, IHelper<ActivateTokenDomainRequest>
+  internal class ValidateActivationTokenHelper
+    : BaseHelper,
+      IHelper<ActivateTokenDomainRequest, ActivateTokenDomainResponse>
   {
-    public static Result Execute(ActivateTokenDomainRequest request)
+    public static Result<ActivateTokenDomainResponse> Execute(ActivateTokenDomainRequest request)
     {
       var activationToken = new ActivationTokenValueObject(request.ActivationToken);
       var record = new { activationToken };
@@ -18,10 +20,14 @@ namespace AccessControl.Domain.Aggregates.Helpers
       var resultValidation = ValidateRecordFields(record);
       if (resultValidation.IsFailure)
       {
-        return resultValidation;
+        return Response<ActivateTokenDomainResponse>.Failure(
+          resultValidation.Message,
+          resultValidation.Code,
+          resultValidation.Details
+        );
       }
 
-      return new SuccessResult<ActivateTokenDomainResponse>(MapToResponse(activationToken));
+      return Response<ActivateTokenDomainResponse>.Success(MapToResponse(activationToken));
     }
 
     private static ActivateTokenDomainResponse MapToResponse(

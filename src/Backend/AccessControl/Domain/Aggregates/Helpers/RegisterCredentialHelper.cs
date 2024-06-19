@@ -10,19 +10,27 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Helpers
 {
-  internal class RegisterCredentialHelper : BaseHelper, IHelper<RegisterCredentialDomainRequest>
+  internal class RegisterCredentialHelper
+    : BaseHelper,
+      IHelper<RegisterCredentialDomainRequest, RegisterCredentialDomainResponse>
   {
     private const string AvatarExtension = ".webp";
     private const string UserRoleId = "dce27d6c-a019-4ba6-b7fa-9b3296dfec1b";
 
-    public static Result Execute(RegisterCredentialDomainRequest registerData)
+    public static Result<RegisterCredentialDomainResponse> Execute(
+      RegisterCredentialDomainRequest registerData
+    )
     {
       var record = GetCredentialRecord(registerData);
       var resultValidation = ValidateRecordFields(record);
 
       if (resultValidation.IsFailure)
       {
-        return resultValidation;
+        return Response<RegisterCredentialDomainResponse>.Failure(
+          resultValidation.Message,
+          resultValidation.Code,
+          resultValidation.Details
+        );
       }
 
       var credential = new CredentialEntity();
@@ -37,7 +45,7 @@ namespace AccessControl.Domain.Aggregates.Helpers
         new RoleEntity(new RoleRecord { RoleId = new RoleIdValueObject(UserRoleId) })
       );
 
-      return new SuccessResult<RegisterCredentialDomainResponse>(
+      return Response<RegisterCredentialDomainResponse>.Success(
         new RegisterCredentialDomainResponse
         {
           CredentialId = credential.CredentialId.Value,

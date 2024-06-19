@@ -10,21 +10,27 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Helpers
 {
-  internal class ActiveCredentialHelper : BaseHelper, IHelper<ActiveCredentialDomainRequest>
+  internal class ActiveCredentialHelper
+    : BaseHelper,
+      IHelper<ActiveCredentialDomainRequest, ActiveCredentialDomainResponse>
   {
-    public static Result Execute(ActiveCredentialDomainRequest data)
+    public static Result<ActiveCredentialDomainResponse> Execute(ActiveCredentialDomainRequest data)
     {
       var record = GetCredentialRecord(data);
 
       var resultValidation = ValidateRecordFields(record);
       if (resultValidation.IsFailure)
       {
-        return resultValidation;
+        return Response<ActiveCredentialDomainResponse>.Failure(
+          resultValidation.Message,
+          resultValidation.Code,
+          resultValidation.Details
+        );
       }
 
       var credential = ActiveCredential(record);
 
-      return new SuccessResult<ActiveCredentialDomainResponse>(MapToResponse(credential));
+      return Response<ActiveCredentialDomainResponse>.Success(MapToResponse(credential));
     }
 
     private static CredentialRecord GetCredentialRecord(ActiveCredentialDomainRequest data)

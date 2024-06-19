@@ -9,19 +9,27 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Helpers
 {
-  internal class PasswordRecoveryHelper : BaseHelper, IHelper<PasswordRecoveryDomainRequest>
+  internal class PasswordRecoveryHelper
+    : BaseHelper,
+      IHelper<PasswordRecoveryDomainRequest, PasswordRecoveryDomainResponse>
   {
-    public static Result Execute(PasswordRecoveryDomainRequest request)
+    public static Result<PasswordRecoveryDomainResponse> Execute(
+      PasswordRecoveryDomainRequest request
+    )
     {
       var record = GetCredentialRecord(request);
 
       var resultValidation = ValidateRecordFields(record);
       if (resultValidation.IsFailure)
       {
-        return resultValidation;
+        return Response<PasswordRecoveryDomainResponse>.Failure(
+          resultValidation.Message,
+          resultValidation.Code,
+          resultValidation.Details
+        );
       }
 
-      return new SuccessResult<PasswordRecoveryDomainResponse>(MapStructToResponse(record));
+      return Response<PasswordRecoveryDomainResponse>.Success(MapStructToResponse(record));
     }
 
     private static CredentialRecord GetCredentialRecord(PasswordRecoveryDomainRequest request)

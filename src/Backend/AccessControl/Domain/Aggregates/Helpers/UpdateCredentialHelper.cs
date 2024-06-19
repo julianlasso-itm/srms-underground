@@ -11,9 +11,11 @@ using Shared.Domain.ValueObjects;
 
 namespace AccessControl.Domain.Aggregates.Helpers
 {
-  internal class UpdateCredentialHelper : BaseHelper, IHelper<UpdateCredentialDomainRequest>
+  internal class UpdateCredentialHelper
+    : BaseHelper,
+      IHelper<UpdateCredentialDomainRequest, UpdateCredentialDomainResponse>
   {
-    public static Result Execute(UpdateCredentialDomainRequest data)
+    public static Result<UpdateCredentialDomainResponse> Execute(UpdateCredentialDomainRequest data)
     {
       var record = GetCredentialRecord(data);
       var credential = new CredentialEntity(record);
@@ -58,16 +60,24 @@ namespace AccessControl.Domain.Aggregates.Helpers
       var resultValidationFields = ValidateRecordFields(credential);
       if (resultValidationFields.IsFailure)
       {
-        return resultValidationFields;
+        return Response<UpdateCredentialDomainResponse>.Failure(
+          resultValidationFields.Message,
+          resultValidationFields.Code,
+          resultValidationFields.Details
+        );
       }
 
       var resultValidationAmountDataToBeUpdated = ValidateAmountDataToBeUpdated(response);
       if (resultValidationAmountDataToBeUpdated.IsFailure)
       {
-        return resultValidationAmountDataToBeUpdated;
+        return Response<UpdateCredentialDomainResponse>.Failure(
+          resultValidationAmountDataToBeUpdated.Message,
+          resultValidationAmountDataToBeUpdated.Code,
+          resultValidationAmountDataToBeUpdated.Details
+        );
       }
 
-      return new SuccessResult<UpdateCredentialDomainResponse>(response);
+      return Response<UpdateCredentialDomainResponse>.Success(response);
     }
 
     private static CredentialRecord GetCredentialRecord(UpdateCredentialDomainRequest data)
@@ -76,19 +86,21 @@ namespace AccessControl.Domain.Aggregates.Helpers
       return new CredentialRecord { CredentialId = id };
     }
 
-    private static Result ValidateAmountDataToBeUpdated(UpdateCredentialDomainResponse response)
+    private static Result<bool> ValidateAmountDataToBeUpdated(
+      UpdateCredentialDomainResponse response
+    )
     {
       var count = response.GetType().GetProperties().Count(x => x.GetValue(response) != null);
       if (count == 1)
       {
-        return new ErrorResult(
+        return Response<bool>.Failure(
           "No data to update",
           Shared.Common.Enums.ErrorEnum.BAD_REQUEST,
           new ErrorValueObject("fields", "No fields to update")
         );
       }
 
-      return new SuccessResult();
+      return Response<bool>.Success();
     }
   }
 }

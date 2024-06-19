@@ -9,19 +9,25 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Helpers
 {
-  internal class DeleteRoleHelper : BaseHelper, IHelper<DeleteRoleDomainRequest>
+  internal class DeleteRoleHelper
+    : BaseHelper,
+      IHelper<DeleteRoleDomainRequest, DeleteRoleDomainResponse>
   {
-    public static Result Execute(DeleteRoleDomainRequest request)
+    public static Result<DeleteRoleDomainResponse> Execute(DeleteRoleDomainRequest request)
     {
       var record = GetRoleRecord(request);
 
       var resultValidation = ValidateRecordFields(record);
       if (resultValidation.IsFailure)
       {
-        return resultValidation;
+        return Response<DeleteRoleDomainResponse>.Failure(
+          resultValidation.Message,
+          resultValidation.Code,
+          resultValidation.Details
+        );
       }
 
-      return new SuccessResult<DeleteRoleDomainResponse>(MapToResponse(record));
+      return Response<DeleteRoleDomainResponse>.Success(MapToResponse(record));
     }
 
     private static RoleRecord GetRoleRecord(DeleteRoleDomainRequest request)

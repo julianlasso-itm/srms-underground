@@ -3,7 +3,7 @@ using Shared.Common.Enums;
 
 namespace Shared.Common
 {
-  public class ErrorResult: Result
+  public class ErrorResult<Type> : Result<Type>
   {
     public ErrorResult(string message, ErrorEnum code)
     {

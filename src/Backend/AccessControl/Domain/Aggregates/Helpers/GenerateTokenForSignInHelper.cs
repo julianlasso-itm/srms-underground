@@ -10,22 +10,28 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Helpers
 {
-  internal class GenerateTokenForSignInHelper : BaseHelper, IHelper<SignInDomainRequest>
+  internal class GenerateTokenForSignInHelper
+    : BaseHelper,
+      IHelper<SignInDomainRequest, SignInDomainResponse>
   {
-    public static Result Execute(SignInDomainRequest request)
+    public static Result<SignInDomainResponse> Execute(SignInDomainRequest request)
     {
       var record = TokenRecord(request);
 
       var resultValidation = ValidateRecordFields(record);
       if (resultValidation.IsFailure)
       {
-        return resultValidation;
+        return Response<SignInDomainResponse>.Failure(
+          resultValidation.Message,
+          resultValidation.Code,
+          resultValidation.Details
+        );
       }
 
       var token = new TokenEntity(record);
       token.Register(record.FullName, record.Email, record.Photo, record.Roles);
 
-      return new SuccessResult<SignInDomainResponse>(
+      return Response<SignInDomainResponse>.Success(
         new SignInDomainResponse { Token = token.Jwt.Value }
       );
     }

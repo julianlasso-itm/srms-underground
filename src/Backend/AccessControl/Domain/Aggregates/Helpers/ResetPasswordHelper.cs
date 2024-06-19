@@ -9,17 +9,24 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Helpers
 {
-  internal class ResetPasswordHelper : BaseHelper, IHelper<ResetPasswordDomainRequest>
+  internal class ResetPasswordHelper
+    : BaseHelper,
+      IHelper<ResetPasswordDomainRequest, ResetPasswordDomainResponse>
   {
-    public static Result Execute(ResetPasswordDomainRequest data)
+    public static Result<ResetPasswordDomainResponse> Execute(ResetPasswordDomainRequest data)
     {
       var record = new ResetPasswordRecord { Password = new PasswordValueObject(data.Password) };
       var resultValidation = ValidateRecordFields(record);
       if (resultValidation.IsFailure)
       {
-        return resultValidation;
+        return Response<ResetPasswordDomainResponse>.Failure(
+          resultValidation.Message,
+          resultValidation.Code,
+          resultValidation.Details
+        );
       }
-      return new SuccessResult<ResetPasswordDomainResponse>(
+
+      return Response<ResetPasswordDomainResponse>.Success(
         new ResetPasswordDomainResponse { Password = record.Password.Value }
       );
     }

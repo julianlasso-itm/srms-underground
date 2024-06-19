@@ -13,24 +13,30 @@ using Shared.Domain.ValueObjects;
 
 namespace AccessControl.Domain.Aggregates.Helpers
 {
-  internal partial class VerifyTokenHelper : BaseHelper, IHelper<VerifyTokenDomainRequest>
+  internal partial class VerifyTokenHelper
+    : BaseHelper,
+      IHelper<VerifyTokenDomainRequest, VerifyTokenDomainResponse>
   {
     [GeneratedRegex(@"[^/]+$")]
     private static partial Regex ExtractNameFile();
 
-    public static Result Execute(VerifyTokenDomainRequest request)
+    public static Result<VerifyTokenDomainResponse> Execute(VerifyTokenDomainRequest request)
     {
       var record = GetTokenRecord(request);
       var resultValidation = ValidateRecordFields(record);
       if (resultValidation.IsFailure)
       {
-        return resultValidation;
+        return Response<VerifyTokenDomainResponse>.Failure(
+          resultValidation.Message,
+          resultValidation.Code,
+          resultValidation.Details
+        );
       }
 
       var jwt = new JwtHandler(record.PrivateKeyPath.Value, record.PublicKeyPath.Value);
       if (!jwt.VerifyToken(record.Token.Value))
       {
-        return new ErrorResult(
+        return Response<VerifyTokenDomainResponse>.Failure(
           "Invalid token",
           ErrorEnum.BAD_REQUEST,
           new ErrorValueObject("token", "Invalid token")
@@ -40,14 +46,14 @@ namespace AccessControl.Domain.Aggregates.Helpers
       var data = jwt.DecodeToken(record.Token.Value);
       if (IsTokenExpired(data.Expiration))
       {
-        return new ErrorResult(
+        return Response<VerifyTokenDomainResponse>.Failure(
           "Expired token",
           ErrorEnum.BAD_REQUEST,
           new ErrorValueObject("token", "Expired token")
         );
       }
 
-      return new SuccessResult<VerifyTokenDomainResponse>(
+      return Response<VerifyTokenDomainResponse>.Success(
         new VerifyTokenDomainResponse
         {
           Email = data.Email,

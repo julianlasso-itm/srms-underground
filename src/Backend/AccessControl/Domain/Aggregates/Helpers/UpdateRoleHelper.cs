@@ -12,9 +12,11 @@ using Shared.Domain.ValueObjects;
 
 namespace AccessControl.Domain.Aggregates.Helpers
 {
-  internal class UpdateRoleHelper : BaseHelper, IHelper<UpdateRoleDomainRequest>
+  internal class UpdateRoleHelper
+    : BaseHelper,
+      IHelper<UpdateRoleDomainRequest, UpdateRoleDomainResponse>
   {
-    public static Result Execute(UpdateRoleDomainRequest data)
+    public static Result<UpdateRoleDomainResponse> Execute(UpdateRoleDomainRequest data)
     {
       var record = GetRoleRecord(data);
       var role = new RoleEntity(record);
@@ -50,16 +52,24 @@ namespace AccessControl.Domain.Aggregates.Helpers
       var resultValidationFields = ValidateRecordFields(role);
       if (resultValidationFields.IsFailure)
       {
-        return resultValidationFields;
+        return Response<UpdateRoleDomainResponse>.Failure(
+          resultValidationFields.Message,
+          resultValidationFields.Code,
+          resultValidationFields.Details
+        );
       }
 
       var resultValidationAmountDataToBeUpdated = ValidateAmountDataToBeUpdated(response);
       if (resultValidationAmountDataToBeUpdated.IsFailure)
       {
-        return resultValidationAmountDataToBeUpdated;
+        return Response<UpdateRoleDomainResponse>.Failure(
+          resultValidationAmountDataToBeUpdated.Message,
+          resultValidationAmountDataToBeUpdated.Code,
+          resultValidationAmountDataToBeUpdated.Details
+        );
       }
 
-      return new SuccessResult<UpdateRoleDomainResponse>(response);
+      return Response<UpdateRoleDomainResponse>.Success(response);
     }
 
     private static RoleRecord GetRoleRecord(UpdateRoleDomainRequest data)
@@ -68,19 +78,19 @@ namespace AccessControl.Domain.Aggregates.Helpers
       return new RoleRecord { RoleId = id };
     }
 
-    private static Result ValidateAmountDataToBeUpdated(UpdateRoleDomainResponse response)
+    private static Result<bool> ValidateAmountDataToBeUpdated(UpdateRoleDomainResponse response)
     {
       var count = response.GetType().GetProperties().Count(x => x.GetValue(response) != null);
       if (count == 1)
       {
-        return new ErrorResult(
+        return Response<bool>.Failure(
           "No data to update",
           ErrorEnum.BAD_REQUEST,
           new ErrorValueObject("fields", "No fields to update")
         );
       }
 
-      return new SuccessResult();
+      return Response<bool>.Success();
     }
   }
 }

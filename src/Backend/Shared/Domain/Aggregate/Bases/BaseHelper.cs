@@ -8,7 +8,7 @@ namespace Shared.Domain.Aggregate.Bases
 {
   public abstract class BaseHelper
   {
-    protected static Result ValidateRecordFields(object data)
+    protected static Result<bool> ValidateRecordFields(object data)
     {
       var errors = new List<ErrorValueObject>();
       var type = data.GetType();
@@ -27,10 +27,10 @@ namespace Shared.Domain.Aggregate.Bases
 
       if (errors.Count > 0)
       {
-        return new ErrorResult("Invalid data", ErrorEnum.BAD_REQUEST, errors);
+        return Response<bool>.Failure("Invalid data", ErrorEnum.BAD_REQUEST, errors);
       }
 
-      return new SuccessResult();
+      return Response<bool>.Success();
     }
   }
 }

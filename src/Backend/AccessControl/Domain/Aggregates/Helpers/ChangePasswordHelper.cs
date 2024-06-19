@@ -10,16 +10,22 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Helpers
 {
-  internal class ChangePasswordHelper : BaseHelper, IHelper<ChangePasswordDomainRequest>
+  internal class ChangePasswordHelper
+    : BaseHelper,
+      IHelper<ChangePasswordDomainRequest, ChangePasswordDomainResponse>
   {
-    public static Result Execute(ChangePasswordDomainRequest data)
+    public static Result<ChangePasswordDomainResponse> Execute(ChangePasswordDomainRequest data)
     {
       var record = GetUpdatePasswordRecord(data);
 
       var resultValidation = ValidateRecordFields(record);
       if (resultValidation.IsFailure)
       {
-        return resultValidation;
+        return Response<ChangePasswordDomainResponse>.Failure(
+          resultValidation.Message,
+          resultValidation.Code,
+          resultValidation.Details
+        );
       }
 
       var credential = new CredentialEntity(
@@ -27,7 +33,7 @@ namespace AccessControl.Domain.Aggregates.Helpers
       );
       credential.UpdatePassword(record.NewPassword);
 
-      return new SuccessResult<ChangePasswordDomainResponse>(
+      return Response<ChangePasswordDomainResponse>.Success(
         MapToResponse(credential, record.OldPassword.Value)
       );
     }

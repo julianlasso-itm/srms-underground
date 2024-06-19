@@ -10,22 +10,28 @@ using Shared.Domain.Aggregate.Interfaces;
 
 namespace AccessControl.Domain.Aggregates.Helpers
 {
-  internal class RegisterRoleHelper : BaseHelper, IHelper<RegisterRoleDomainRequest>
+  internal class RegisterRoleHelper
+    : BaseHelper,
+      IHelper<RegisterRoleDomainRequest, RegisterRoleDomainResponse>
   {
-    public static Result Execute(RegisterRoleDomainRequest request)
+    public static Result<RegisterRoleDomainResponse> Execute(RegisterRoleDomainRequest request)
     {
       var record = GetRoleRecord(request);
       var resultValidation = ValidateRecordFields(record);
 
       if (resultValidation.IsFailure)
       {
-        return resultValidation;
+        return Response<RegisterRoleDomainResponse>.Failure(
+          resultValidation.Message,
+          resultValidation.Code,
+          resultValidation.Details
+        );
       }
 
       var role = new RoleEntity();
       role.Register(record.Name, record.Description);
 
-      return new SuccessResult<RegisterRoleDomainResponse>(MapToResponse(role));
+      return Response<RegisterRoleDomainResponse>.Success(MapToResponse(role));
     }
 
     private static RoleRecord GetRoleRecord(RegisterRoleDomainRequest request)
