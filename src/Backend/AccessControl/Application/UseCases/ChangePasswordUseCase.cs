@@ -1,14 +1,11 @@
-using System.Net;
 using AccessControl.Application.AntiCorruption.Interfaces;
 using AccessControl.Application.Commands;
 using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
-using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 using Shared.Common;
 using Shared.Common.Bases;
-using ApplicationException = Shared.Application.Exceptions.ApplicationException;
 
 namespace AccessControl.Application.UseCases
 {
@@ -20,6 +17,7 @@ namespace AccessControl.Application.UseCases
   )
     : BaseUseCase<
       ChangePasswordCommand,
+      ChangePasswordApplicationResponse,
       ISecurityAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
@@ -28,29 +26,27 @@ namespace AccessControl.Application.UseCases
   {
     private readonly IUserRepository<TEntity> _userRepository = userRepository;
 
-    public override async Task<Result> Handle(ChangePasswordCommand request)
+    public override async Task<Result<ChangePasswordApplicationResponse>> Handle(
+      ChangePasswordCommand request
+    )
     {
       var command = AclInputMapper.ToChangePasswordDomainRequest(request);
       var response = AggregateRoot.ChangePassword(command);
 
       if (response.IsFailure)
       {
-        return response;
-      }
-
-      if (response is SuccessResult<ChangePasswordDomainResponse> successResult)
-      {
-        var user = successResult.Data;
-        await VerifyCurrentPassword(user.CredentialId, user.OldPassword);
-        await UpdatePasswordInDatabase(user.CredentialId, user.NewPassword);
-        return new SuccessResult<ChangePasswordApplicationResponse>(
-          AclOutputMapper.ToChangePasswordApplicationResponse()
+        return Response<ChangePasswordApplicationResponse>.Failure(
+          response.Message,
+          response.Code,
+          response.Details
         );
       }
 
-      throw new ApplicationException(
-        "Invalid response into ChangePasswordUseCase for AccessControl application",
-        HttpStatusCode.InternalServerError
+      var user = response.Data;
+      await VerifyCurrentPassword(user.CredentialId, user.OldPassword);
+      await UpdatePasswordInDatabase(user.CredentialId, user.NewPassword);
+      return Response<ChangePasswordApplicationResponse>.Success(
+        AclOutputMapper.ToChangePasswordApplicationResponse()
       );
     }
 

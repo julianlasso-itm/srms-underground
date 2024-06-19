@@ -1,16 +1,13 @@
-using System.Net;
 using System.Text.Json;
 using AccessControl.Application.AntiCorruption.Interfaces;
 using AccessControl.Application.Commands;
 using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
 using AccessControl.Domain.Aggregates.Constants;
-using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 using Shared.Common;
 using Shared.Common.Bases;
-using ApplicationException = Shared.Application.Exceptions.ApplicationException;
 
 namespace AccessControl.Application.UseCases
 {
@@ -22,6 +19,7 @@ namespace AccessControl.Application.UseCases
   )
     : BaseUseCase<
       DeleteRoleCommand,
+      DeleteRoleApplicationResponse,
       ISecurityAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
@@ -31,28 +29,26 @@ namespace AccessControl.Application.UseCases
     private readonly IRoleRepository<TEntity> _roleRepository = roleRepository;
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventRoleDeleted}";
 
-    public override async Task<Result> Handle(DeleteRoleCommand request)
+    public override async Task<Result<DeleteRoleApplicationResponse>> Handle(
+      DeleteRoleCommand request
+    )
     {
       var dataDeleteRole = AclInputMapper.ToDeleteRoleDomainRequest(request);
       var response = AggregateRoot.DeleteRole(dataDeleteRole);
 
       if (response.IsFailure)
       {
-        return response;
+        return Response<DeleteRoleApplicationResponse>.Failure(
+          response.Message,
+          response.Code,
+          response.Details
+        );
       }
 
-      if (response is SuccessResult<DeleteRoleDomainResponse> successResult)
-      {
-        var result = AclOutputMapper.ToDeleteRoleApplicationResponse(successResult.Data);
-        _ = await Persistence(result);
-        EmitEvent(Channel, JsonSerializer.Serialize(result));
-        return new SuccessResult<DeleteRoleApplicationResponse>(result);
-      }
-
-      throw new ApplicationException(
-        "Invalid response into DeleteRoleUseCase for AccessControl application",
-        HttpStatusCode.InternalServerError
-      );
+      var result = AclOutputMapper.ToDeleteRoleApplicationResponse(response.Data);
+      _ = await Persistence(result);
+      EmitEvent(Channel, JsonSerializer.Serialize(result));
+      return Response<DeleteRoleApplicationResponse>.Success(result);
     }
 
     private async Task<TEntity> Persistence(DeleteRoleApplicationResponse response)

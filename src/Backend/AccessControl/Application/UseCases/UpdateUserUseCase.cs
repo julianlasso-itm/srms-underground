@@ -1,16 +1,13 @@
-using System.Net;
 using AccessControl.Application.AntiCorruption.Interfaces;
 using AccessControl.Application.Commands;
 using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
-using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 using Shared.Application.Interfaces;
 using Shared.Common;
 using Shared.Common.Bases;
 using Shared.Common.Enums;
-using ApplicationException = Shared.Application.Exceptions.ApplicationException;
 
 namespace AccessControl.Application.UseCases
 {
@@ -24,6 +21,7 @@ namespace AccessControl.Application.UseCases
   )
     : BaseUseCase<
       UpdateUserCommand,
+      UpdateUserApplicationResponse,
       ISecurityAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
@@ -35,57 +33,56 @@ namespace AccessControl.Application.UseCases
     private readonly ICacheService _cacheService = cachingService;
     private readonly IStoreService _storeService = storeService;
 
-    public override async Task<Result> Handle(UpdateUserCommand request)
+    public override async Task<Result<UpdateUserApplicationResponse>> Handle(
+      UpdateUserCommand request
+    )
     {
       if (request.Avatar is not null && request.AvatarExtension is not null)
       {
         var requestFromCache = AssignAvatarBlobAndDeleteFromCache(request);
         if (requestFromCache.IsFailure)
         {
-          return requestFromCache;
+          return Response<UpdateUserApplicationResponse>.Failure(
+            requestFromCache.Message,
+            requestFromCache.Code,
+            requestFromCache.Details
+          );
         }
 
-        if (requestFromCache is SuccessResult<UpdateUserCommand> successRequest)
-        {
-          request = successRequest.Data;
-        }
+        request = requestFromCache.Data;
       }
 
       var dataUpdateUser = AclInputMapper.ToUpdateUserDomainRequest(request);
       var response = AggregateRoot.UpdateCredential(dataUpdateUser);
       if (response.IsFailure)
       {
-        return response;
+        return Response<UpdateUserApplicationResponse>.Failure(
+          response.Message,
+          response.Code,
+          response.Details
+        );
       }
 
-      if (response is SuccessResult<UpdateCredentialDomainResponse> successResponse)
+      var user = response.Data;
+      if (request.Avatar is not null && request.AvatarExtension is not null)
       {
-        var user = successResponse.Data;
-        if (request.Avatar is not null && request.AvatarExtension is not null)
-        {
-          user.Photo = await StoreAvatar(user.Avatar!, user.AvatarExtension!);
-          await RemoveOldPhoto(request.OldPhoto!);
-        }
-        var result = AclOutputMapper.ToUpdateUserApplicationResponse(user);
-        _ = await Persistence(result);
-        return new SuccessResult<UpdateUserApplicationResponse>(result);
+        user.Photo = await StoreAvatar(user.Avatar!, user.AvatarExtension!);
+        await RemoveOldPhoto(request.OldPhoto!);
       }
-
-      throw new ApplicationException(
-        "Invalid response into UpdateUserUseCase for AccessControl application",
-        HttpStatusCode.InternalServerError
-      );
+      var result = AclOutputMapper.ToUpdateUserApplicationResponse(user);
+      _ = await Persistence(result);
+      return new SuccessResult<UpdateUserApplicationResponse>(result);
     }
 
-    private Result AssignAvatarBlobAndDeleteFromCache(UpdateUserCommand request)
+    private Result<UpdateUserCommand> AssignAvatarBlobAndDeleteFromCache(UpdateUserCommand request)
     {
       request.AvatarBytes = GetAvatarBlob(request.Avatar!);
       if (request.AvatarBytes.Length == 0)
       {
-        return new ErrorResult("Avatar not found", ErrorEnum.NOT_FOUND);
+        return Response<UpdateUserCommand>.Failure("Avatar not found", ErrorEnum.NOT_FOUND);
       }
       DeleteAvatarFromCache(request.Avatar!);
-      return new SuccessResult<UpdateUserCommand>(request);
+      return Response<UpdateUserCommand>.Success(request);
     }
 
     private byte[] GetAvatarBlob(string avatar)

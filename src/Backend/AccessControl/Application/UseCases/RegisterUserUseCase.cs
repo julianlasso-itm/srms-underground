@@ -1,4 +1,3 @@
-using System.Net;
 using System.Text.Json;
 using AccessControl.Application.AntiCorruption.Interfaces;
 using AccessControl.Application.Commands;
@@ -6,14 +5,12 @@ using AccessControl.Application.Interfaces;
 using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
 using AccessControl.Domain.Aggregates.Constants;
-using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 using Shared.Application.Interfaces;
 using Shared.Common;
 using Shared.Common.Bases;
 using Shared.Common.Enums;
-using ApplicationException = Shared.Application.Exceptions.ApplicationException;
 
 namespace AccessControl.Application.UseCases
 {
@@ -28,6 +25,7 @@ namespace AccessControl.Application.UseCases
   )
     : BaseUseCase<
       RegisterUserCommand,
+      RegisterUserApplicationResponse,
       ISecurityAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
@@ -41,54 +39,55 @@ namespace AccessControl.Application.UseCases
     private readonly IStoreService _storeService = storeService;
     private readonly IMessageService _messageService = messageService;
 
-    public override async Task<Result> Handle(RegisterUserCommand request)
+    public override async Task<Result<RegisterUserApplicationResponse>> Handle(
+      RegisterUserCommand request
+    )
     {
       var newRequest = AssignAvatarBlobAndDeleteFromCache(request);
 
       if (newRequest.IsFailure)
       {
-        return newRequest;
+        return Response<RegisterUserApplicationResponse>.Failure(
+          newRequest.Message,
+          newRequest.Code,
+          newRequest.Details
+        );
       }
 
-      if (newRequest is SuccessResult<RegisterUserCommand> successRequest)
-      {
-        request = successRequest.Data;
-      }
-
+      request = newRequest.Data;
       var command = AclInputMapper.ToRegisterCredentialDomainRequest(request);
       var response = AggregateRoot.RegisterCredential(command);
 
       if (response.IsFailure)
       {
-        return response;
+        return Response<RegisterUserApplicationResponse>.Failure(
+          response.Message,
+          response.Code,
+          response.Details
+        );
       }
 
-      if (response is SuccessResult<RegisterCredentialDomainResponse> successResult)
-      {
-        var data = successResult.Data;
-        data.Photo = await StoreAvatar(data.Avatar, data.AvatarExtension);
-        var result = AclOutputMapper.ToRegisterUserApplicationResponse(data, request.CityId);
-        _ = await Persist(result);
-        SendConfirmationEmail(result);
-        EmitEvent(Channel, JsonSerializer.Serialize(result));
-        return new SuccessResult<RegisterUserApplicationResponse>(result);
-      }
+      var data = response.Data;
+      data.Photo = await StoreAvatar(data.Avatar, data.AvatarExtension);
+      var result = AclOutputMapper.ToRegisterUserApplicationResponse(data, request.CityId);
+      _ = await Persist(result);
+      SendConfirmationEmail(result);
+      EmitEvent(Channel, JsonSerializer.Serialize(result));
 
-      throw new ApplicationException(
-        "Invalid response into RegisterUserUseCase for AccessControl application",
-        HttpStatusCode.InternalServerError
-      );
+      return Response<RegisterUserApplicationResponse>.Success(result);
     }
 
-    private Result AssignAvatarBlobAndDeleteFromCache(RegisterUserCommand request)
+    private Result<RegisterUserCommand> AssignAvatarBlobAndDeleteFromCache(
+      RegisterUserCommand request
+    )
     {
       request.AvatarBytes = GetAvatarBlob(request.Avatar);
       if (request.AvatarBytes.Length == 0)
       {
-        return new ErrorResult("Avatar not found.", ErrorEnum.NOT_FOUND);
+        return Response<RegisterUserCommand>.Failure("Avatar not found.", ErrorEnum.NOT_FOUND);
       }
       DeleteAvatarFromCache(request.Avatar);
-      return new SuccessResult<RegisterUserCommand>(request);
+      return Response<RegisterUserCommand>.Success(request);
     }
 
     private async Task<TEntity> Persist(RegisterUserApplicationResponse response)

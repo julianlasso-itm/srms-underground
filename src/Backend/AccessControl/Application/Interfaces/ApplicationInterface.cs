@@ -1,21 +1,24 @@
 using AccessControl.Application.Commands;
+using AccessControl.Application.Responses;
 using Shared.Common.Bases;
 
 namespace AccessControl.Application.Interfaces
 {
-  public interface IApplication
+  public interface IApplication<TRoleEntity>
+    where TRoleEntity : class
   {
-    Task<Result> RegisterUser(RegisterUserCommand request);
-    Task<Result> RegisterRole(RegisterRoleCommand request);
-    Task<Result> UpdateRole(UpdateRoleCommand request);
-    Task<Result> DeleteRole(DeleteRoleCommand request);
-    Task<Result> GetRoles(GetRolesCommand request);
-    Task<Result> ActivateToken(ActivateTokenCommand request);
-    Task<Result> SignIn(SignInCommand request);
-    Task<Result> VerifyToken(VerifyTokenCommand request);
-    Task<Result> ChangePassword(ChangePasswordCommand request);
-    Task<Result> PasswordRecovery(PasswordRecoveryCommand request);
-    Task<Result> UpdateUser(UpdateUserCommand request);
-    Task<Result> ResetPassword(ResetPasswordCommand request);
+    Task<Result<RegisterUserApplicationResponse>> RegisterUser(RegisterUserCommand request);
+    Task<Result<RegisterRoleApplicationResponse>> RegisterRole(RegisterRoleCommand request);
+    Task<Result<UpdateRoleApplicationResponse>> UpdateRole(UpdateRoleCommand request);
+    Task<Result<DeleteRoleApplicationResponse>> DeleteRole(DeleteRoleCommand request);
+    Task<Result<GetRolesApplicationResponse<TRoleEntity>>> GetRoles(GetRolesCommand request);
+    Task<Result<ActivationTokenApplicationResponse>> ActivateToken(ActivateTokenCommand request);
+    Task<Result<SignInApplicationResponse>> SignIn(SignInCommand request);
+    Task<Result<VerifyTokenApplicationResponse>> VerifyToken(VerifyTokenCommand request);
+    Task<Result<ChangePasswordApplicationResponse>> ChangePassword(ChangePasswordCommand request);
+    Task<Result<PasswordRecoveryApplicationResponse>> PasswordRecovery(
+      PasswordRecoveryCommand request
+    );
+    Task<Result<UpdateUserApplicationResponse>> UpdateUser(UpdateUserCommand request);
   }
 }

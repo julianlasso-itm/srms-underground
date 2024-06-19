@@ -4,7 +4,6 @@ using AccessControl.Application.Commands;
 using AccessControl.Application.Dto;
 using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
-using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 using Shared.Application.Interfaces;
@@ -24,6 +23,7 @@ namespace AccessControl.Application.UseCases
   )
     : BaseUseCase<
       SignInCommand,
+      SignInApplicationResponse,
       ISecurityAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
@@ -36,39 +36,41 @@ namespace AccessControl.Application.UseCases
     private const int MaxAttemptsMinutes = 5;
     private const int MaxBlockMinutes = 5;
 
-    public override async Task<Result> Handle(SignInCommand request)
+    public override async Task<Result<SignInApplicationResponse>> Handle(SignInCommand request)
     {
       var check = CheckIfUserIsTemporarilyBlocked(request.Email);
       if (check.IsFailure)
       {
-        return check;
+        return Response<SignInApplicationResponse>.Failure(
+          check.Message,
+          check.Code,
+          check.Details
+        );
       }
 
       var command = AclInputMapper.ToSignInInitialsDomainRequest(request);
       var response = AggregateRoot.ValidateEmailAndEncryptPassword(command);
       if (response.IsFailure)
       {
-        return response;
+        return Response<SignInApplicationResponse>.Failure(
+          response.Message,
+          response.Code,
+          response.Details
+        );
       }
 
-      if (response is not SuccessResult<SignInDataInitialsDomainResponse> successResult)
-      {
-        return SignInUseCase<TEntity>.HandleFailure("ValidateEmailAndEncryptPassword");
-      }
-
-      var user = successResult.Data;
+      var user = response.Data;
       var verify = await VerifyUserAndPassword(user.Email, user.Password);
       if (verify.IsFailure)
       {
-        return verify;
+        return Response<SignInApplicationResponse>.Failure(
+          verify.Message,
+          verify.Code,
+          verify.Details
+        );
       }
 
-      if (verify is not SuccessResult<UserDataForSigInDto> successVerify)
-      {
-        return SignInUseCase<TEntity>.HandleFailure("VerifyUserAndPassword");
-      }
-
-      var data = successVerify.Data;
+      var data = verify.Data;
       var signInData = AclInputMapper.ToSignInDomainRequest(
         user,
         data.UserId,
@@ -81,63 +83,60 @@ namespace AccessControl.Application.UseCases
       var result = AggregateRoot.GenerateTokenForSignIn(signInData);
       if (result.IsFailure)
       {
-        return result;
-      }
-
-      if (result is not SuccessResult<SignInDomainResponse> successSignIn)
-      {
-        return SignInUseCase<TEntity>.HandleFailure("GenerateTokenForSignIn");
+        return Response<SignInApplicationResponse>.Failure(
+          result.Message,
+          result.Code,
+          result.Details
+        );
       }
 
       return new SuccessResult<SignInApplicationResponse>(
-        AclOutputMapper.ToSignInApplicationResponse(successSignIn.Data)
+        AclOutputMapper.ToSignInApplicationResponse(result.Data)
       );
     }
 
-    private static Result HandleFailure(string methodName)
-    {
-      throw new ApplicationException(
-        $"Invalid response into SignInUseCase for AccessControl application. {methodName}",
-        HttpStatusCode.InternalServerError
-      );
-    }
-
-    private Result CheckIfUserIsTemporarilyBlocked(string email)
+    private Result<bool> CheckIfUserIsTemporarilyBlocked(string email)
     {
       if (_cacheService.Get($"{email}_temporarily_blocked") != null)
       {
-        return new ErrorResult("User is temporarily blocked", ErrorEnum.FORBIDDEN);
+        return Response<bool>.Failure("User is temporarily blocked", ErrorEnum.FORBIDDEN);
       }
-      return new SuccessResult();
+      return Response<bool>.Success();
     }
 
-    private ErrorResult BlockUserTemporarily(string email)
+    private Result<bool> BlockUserTemporarily(string email)
     {
       _cacheService.Set(
         $"{email}_temporarily_blocked",
         email,
         TimeSpan.FromMinutes(MaxBlockMinutes)
       );
-      return new ErrorResult("User is temporarily blocked", ErrorEnum.FORBIDDEN);
+      return Response<bool>.Failure("User is temporarily blocked", ErrorEnum.FORBIDDEN);
     }
 
-    private async Task<Result> VerifyUserAndPassword(string email, string password)
+    private async Task<Result<UserDataForSigInDto>> VerifyUserAndPassword(
+      string email,
+      string password
+    )
     {
       try
       {
         var data = await _userRepository.GetByEmailAndPassword(email, password);
         DeletePreviousAttempts(email);
-        return new SuccessResult<UserDataForSigInDto>(data);
+        return Response<UserDataForSigInDto>.Success(data);
       }
       catch (Exception)
       {
         var verify = VerifyPreviousAttempts(email);
         if (verify.IsFailure)
         {
-          return verify;
+          return Response<UserDataForSigInDto>.Failure(verify.Message, verify.Code, verify.Details);
         }
 
-        return new ErrorResult("User not found or credentials incorrect", ErrorEnum.UNAUTHORIZED);
+        return Response<UserDataForSigInDto>.Failure(
+          "User not found or credentials incorrect",
+          ErrorEnum.UNAUTHORIZED
+        );
       }
     }
 
@@ -146,7 +145,7 @@ namespace AccessControl.Application.UseCases
       _cacheService.Remove($"{email}_attempts");
     }
 
-    private Result VerifyPreviousAttempts(string email)
+    private Result<bool> VerifyPreviousAttempts(string email)
     {
       var path = $"{email}_attempts";
       var attempts = _cacheService.GetListLength(path);
@@ -154,13 +153,13 @@ namespace AccessControl.Application.UseCases
       if (attempts == 0)
       {
         _cacheService.AddToList(path, "strike", TimeSpan.FromMinutes(MaxAttemptsMinutes));
-        return new SuccessResult();
+        return Response<bool>.Success();
       }
 
       if (attempts < MaxAttempts - 1)
       {
         _cacheService.AddToList(path, "strike");
-        return new SuccessResult();
+        return Response<bool>.Success();
       }
 
       if (attempts == MaxAttempts - 1)
@@ -169,7 +168,10 @@ namespace AccessControl.Application.UseCases
         return BlockUserTemporarily(email);
       }
 
-      return SignInUseCase<TEntity>.HandleFailure("VerifyPreviousAttempts");
+      throw new ApplicationException(
+        $"Invalid response into SignInUseCase for AccessControl application. VerifyPreviousAttempts",
+        HttpStatusCode.InternalServerError
+      );
     }
   }
 }

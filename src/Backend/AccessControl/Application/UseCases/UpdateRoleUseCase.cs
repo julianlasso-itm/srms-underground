@@ -1,16 +1,13 @@
-using System.Net;
 using System.Text.Json;
 using AccessControl.Application.AntiCorruption.Interfaces;
 using AccessControl.Application.Commands;
 using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
 using AccessControl.Domain.Aggregates.Constants;
-using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 using Shared.Common;
 using Shared.Common.Bases;
-using ApplicationException = Shared.Application.Exceptions.ApplicationException;
 
 namespace AccessControl.Application.UseCases
 {
@@ -22,6 +19,7 @@ namespace AccessControl.Application.UseCases
   )
     : BaseUseCase<
       UpdateRoleCommand,
+      UpdateRoleApplicationResponse,
       ISecurityAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
@@ -31,27 +29,26 @@ namespace AccessControl.Application.UseCases
     private readonly IRoleRepository<TEntity> _roleRepository = roleRepository;
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventRoleUpdated}";
 
-    public override async Task<Result> Handle(UpdateRoleCommand request)
+    public override async Task<Result<UpdateRoleApplicationResponse>> Handle(
+      UpdateRoleCommand request
+    )
     {
       var dataUpdateRole = AclInputMapper.ToUpdateRoleDomainRequest(request);
       var response = AggregateRoot.UpdateRole(dataUpdateRole);
       if (response.IsFailure)
       {
-        return response;
-      }
-      if (response is SuccessResult<UpdateRoleDomainResponse> successResponse)
-      {
-        var data = successResponse.Data;
-        var result = AclOutputMapper.ToUpdateRoleApplicationResponse(data);
-        _ = await Persistence(result);
-        EmitEvent(Channel, JsonSerializer.Serialize(result));
-        return new SuccessResult<UpdateRoleApplicationResponse>(result);
+        return Response<UpdateRoleApplicationResponse>.Failure(
+          response.Message,
+          response.Code,
+          response.Details
+        );
       }
 
-      throw new ApplicationException(
-        "Invalid response into UpdateRoleUseCase for AccessControl application",
-        HttpStatusCode.InternalServerError
-      );
+      var data = response.Data;
+      var result = AclOutputMapper.ToUpdateRoleApplicationResponse(data);
+      _ = await Persistence(result);
+      EmitEvent(Channel, JsonSerializer.Serialize(result));
+      return Response<UpdateRoleApplicationResponse>.Success(result);
     }
 
     private async Task<TEntity> Persistence(UpdateRoleApplicationResponse response)

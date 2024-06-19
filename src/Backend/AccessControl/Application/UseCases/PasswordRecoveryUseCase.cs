@@ -1,17 +1,14 @@
-using System.Net;
 using AccessControl.Application.AntiCorruption.Interfaces;
 using AccessControl.Application.Commands;
 using AccessControl.Application.Dto;
 using AccessControl.Application.Interfaces;
 using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
-using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 using Shared.Application.Interfaces;
 using Shared.Common;
 using Shared.Common.Bases;
-using ApplicationException = Shared.Application.Exceptions.ApplicationException;
 
 namespace AccessControl.Application.UseCases
 {
@@ -25,6 +22,7 @@ namespace AccessControl.Application.UseCases
   )
     : BaseUseCase<
       PasswordRecoveryCommand,
+      PasswordRecoveryApplicationResponse,
       ISecurityAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
@@ -36,7 +34,9 @@ namespace AccessControl.Application.UseCases
     private readonly ICacheService _cacheService = cacheService;
     private readonly IMessageService _messageService = messageService;
 
-    public override async Task<Result> Handle(PasswordRecoveryCommand request)
+    public override async Task<Result<PasswordRecoveryApplicationResponse>> Handle(
+      PasswordRecoveryCommand request
+    )
     {
       try
       {
@@ -45,33 +45,29 @@ namespace AccessControl.Application.UseCases
 
         if (response.IsFailure)
         {
-          return response;
-        }
-
-        if (response is SuccessResult<PasswordRecoveryDomainResponse> successResult)
-        {
-          var data = successResult.Data;
-          var user = await VerifyEmail(data.Email);
-          var token = Guid.NewGuid().ToString().Replace("-", string.Empty);
-
-          _messageService.SendPasswordRecoveryEmail(user.Name, data.Email, token);
-          _cacheService.Set($"recovery:{token}", data.Email, TimeSpan.FromMinutes(MaxTokenMinutes));
-
-          return new SuccessResult<PasswordRecoveryApplicationResponse>(
-            AclOutputMapper.ToPasswordRecoveryApplicationResponse()
+          return Response<PasswordRecoveryApplicationResponse>.Failure(
+            response.Message,
+            response.Code,
+            response.Details
           );
         }
 
-        throw new ApplicationException(
-          "Invalid response into PasswordRecoveryUseCase for AccessControl application",
-          HttpStatusCode.InternalServerError
+        var data = response.Data;
+        var user = await VerifyEmail(data.Email);
+        var token = Guid.NewGuid().ToString().Replace("-", string.Empty);
+
+        _messageService.SendPasswordRecoveryEmail(user.Name, data.Email, token);
+        _cacheService.Set($"recovery:{token}", data.Email, TimeSpan.FromMinutes(MaxTokenMinutes));
+
+        return Response<PasswordRecoveryApplicationResponse>.Success(
+          AclOutputMapper.ToPasswordRecoveryApplicationResponse()
         );
       }
       catch (Exception exception)
       {
         if (exception.Message == "Data not found")
         {
-          return new SuccessResult<PasswordRecoveryApplicationResponse>(
+          return Response<PasswordRecoveryApplicationResponse>.Success(
             AclOutputMapper.ToPasswordRecoveryApplicationResponse()
           );
         }
