@@ -1,12 +1,18 @@
+using System.Net;
 using AccessControl.Application.AntiCorruption.Interfaces;
 using AccessControl.Application.Commands;
 using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
+using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 using Shared.Application.Interfaces;
+using Shared.Common;
+using Shared.Common.Bases;
+using Shared.Common.Enums;
+using ApplicationException = Shared.Application.Exceptions.ApplicationException;
 
-namespace Application.UseCases
+namespace AccessControl.Application.UseCases
 {
   public sealed class UpdateUserUseCase<TEntity>(
     IUserRepository<TEntity> roleRepository,
@@ -18,7 +24,6 @@ namespace Application.UseCases
   )
     : BaseUseCase<
       UpdateUserCommand,
-      UpdateUserApplicationResponse,
       ISecurityAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
@@ -30,36 +35,62 @@ namespace Application.UseCases
     private readonly ICacheService _cacheService = cachingService;
     private readonly IStoreService _storeService = storeService;
 
-    public override async Task<UpdateUserApplicationResponse> Handle(UpdateUserCommand request)
+    public override async Task<Result> Handle(UpdateUserCommand request)
     {
       if (request.Avatar is not null && request.AvatarExtension is not null)
       {
-        request = AssignAvatarBlobAndDeleteFromCache(request);
+        var requestFromCache = AssignAvatarBlobAndDeleteFromCache(request);
+        if (requestFromCache.IsFailure)
+        {
+          return requestFromCache;
+        }
+
+        if (requestFromCache is SuccessResult<UpdateUserCommand> successRequest)
+        {
+          request = successRequest.Data;
+        }
       }
+
       var dataUpdateUser = AclInputMapper.ToUpdateUserDomainRequest(request);
-      var user = AggregateRoot.UpdateCredential(dataUpdateUser);
-      if (request.Avatar is not null && request.AvatarExtension is not null)
+      var response = AggregateRoot.UpdateCredential(dataUpdateUser);
+      if (response.IsFailure)
       {
-        user.Photo = await StoreAvatar(user.Avatar!, user.AvatarExtension!);
-        await RemoveOldPhoto(request.OldPhoto!);
+        return response;
       }
-      var response = AclOutputMapper.ToUpdateUserApplicationResponse(user);
-      _ = await Persistence(response);
-      return response;
+
+      if (response is SuccessResult<UpdateCredentialDomainResponse> successResponse)
+      {
+        var user = successResponse.Data;
+        if (request.Avatar is not null && request.AvatarExtension is not null)
+        {
+          user.Photo = await StoreAvatar(user.Avatar!, user.AvatarExtension!);
+          await RemoveOldPhoto(request.OldPhoto!);
+        }
+        var result = AclOutputMapper.ToUpdateUserApplicationResponse(user);
+        _ = await Persistence(result);
+        return new SuccessResult<UpdateUserApplicationResponse>(result);
+      }
+
+      throw new ApplicationException(
+        "Invalid response into UpdateUserUseCase for AccessControl application",
+        HttpStatusCode.InternalServerError
+      );
     }
 
-    private UpdateUserCommand AssignAvatarBlobAndDeleteFromCache(UpdateUserCommand request)
+    private Result AssignAvatarBlobAndDeleteFromCache(UpdateUserCommand request)
     {
       request.AvatarBytes = GetAvatarBlob(request.Avatar!);
+      if (request.AvatarBytes.Length == 0)
+      {
+        return new ErrorResult("Avatar not found", ErrorEnum.NOT_FOUND);
+      }
       DeleteAvatarFromCache(request.Avatar!);
-      return request;
+      return new SuccessResult<UpdateUserCommand>(request);
     }
 
     private byte[] GetAvatarBlob(string avatar)
     {
-      var avatarBlob =
-        _cacheService.GetBytes(avatar) ?? throw new InvalidOperationException("Avatar not found.");
-      return avatarBlob;
+      return _cacheService.GetBytes(avatar) ?? [];
     }
 
     private void DeleteAvatarFromCache(string avatar)

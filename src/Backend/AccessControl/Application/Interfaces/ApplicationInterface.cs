@@ -1,23 +1,21 @@
 using AccessControl.Application.Commands;
-using AccessControl.Application.Responses;
+using Shared.Common.Bases;
 
 namespace AccessControl.Application.Interfaces
 {
-  public interface IApplication<TUserEntity, TRoleEntity>
-    where TUserEntity : class
-    where TRoleEntity : class
+  public interface IApplication
   {
-    Task<RegisterUserApplicationResponse> RegisterUser(RegisterUserCommand request);
-    Task<RegisterRoleApplicationResponse> RegisterRole(RegisterRoleCommand request);
-    Task<UpdateRoleApplicationResponse> UpdateRole(UpdateRoleCommand request);
-    Task<DeleteRoleApplicationResponse> DeleteRole(DeleteRoleCommand request);
-    Task<GetRolesApplicationResponse<TRoleEntity>> GetRoles(GetRolesCommand request);
-    Task<ActivationTokenApplicationResponse> ActivateToken(ActivateTokenCommand request);
-    Task<SignInApplicationResponse> SignIn(SignInCommand request);
-    Task<VerifyTokenApplicationResponse> VerifyToken(VerifyTokenCommand request);
-    Task<ChangePasswordApplicationResponse> ChangePassword(ChangePasswordCommand request);
-    Task<PasswordRecoveryApplicationResponse> PasswordRecovery(PasswordRecoveryCommand request);
-    Task<UpdateUserApplicationResponse> UpdateUser(UpdateUserCommand request);
-    Task<ResetPasswordApplicationResponse> ResetPassword(ResetPasswordCommand request);
+    Task<Result> RegisterUser(RegisterUserCommand request);
+    Task<Result> RegisterRole(RegisterRoleCommand request);
+    Task<Result> UpdateRole(UpdateRoleCommand request);
+    Task<Result> DeleteRole(DeleteRoleCommand request);
+    Task<Result> GetRoles(GetRolesCommand request);
+    Task<Result> ActivateToken(ActivateTokenCommand request);
+    Task<Result> SignIn(SignInCommand request);
+    Task<Result> VerifyToken(VerifyTokenCommand request);
+    Task<Result> ChangePassword(ChangePasswordCommand request);
+    Task<Result> PasswordRecovery(PasswordRecoveryCommand request);
+    Task<Result> UpdateUser(UpdateUserCommand request);
+    Task<Result> ResetPassword(ResetPasswordCommand request);
   }
 }

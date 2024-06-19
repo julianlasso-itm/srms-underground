@@ -2,12 +2,11 @@ using AccessControl.Application.AntiCorruption.Interfaces;
 using AccessControl.Application.Commands;
 using AccessControl.Application.Interfaces;
 using AccessControl.Application.Repositories;
-using AccessControl.Application.Responses;
 using AccessControl.Application.UseCases;
 using AccessControl.Domain.Aggregates.Interfaces;
-using Application.UseCases;
 using Shared.Application.Base;
 using Shared.Application.Interfaces;
+using Shared.Common.Bases;
 
 namespace AccessControl.Application
 {
@@ -24,7 +23,7 @@ namespace AccessControl.Application
       applicationToDomain,
       domainToApplication
     ),
-      IApplication<TUserEntity, TRoleEntity>
+      IApplication
     where TUserEntity : class
     where TRoleEntity : class
   {
@@ -34,7 +33,7 @@ namespace AccessControl.Application
     private readonly IUserRepository<TUserEntity> _userRepository = userRepository;
     private readonly IRoleRepository<TRoleEntity> _roleRepository = roleRepository;
 
-    public Task<RegisterUserApplicationResponse> RegisterUser(RegisterUserCommand request)
+    public Task<Result> RegisterUser(RegisterUserCommand request)
     {
       var useCase = new RegisterUserUseCase<TUserEntity>(
         AggregateRoot,
@@ -48,7 +47,7 @@ namespace AccessControl.Application
       return useCase.Handle(request);
     }
 
-    public Task<RegisterRoleApplicationResponse> RegisterRole(RegisterRoleCommand request)
+    public Task<Result> RegisterRole(RegisterRoleCommand request)
     {
       var useCase = new RegisterRoleUseCase<TRoleEntity>(
         AggregateRoot,
@@ -59,7 +58,7 @@ namespace AccessControl.Application
       return useCase.Handle(request);
     }
 
-    public Task<UpdateRoleApplicationResponse> UpdateRole(UpdateRoleCommand request)
+    public Task<Result> UpdateRole(UpdateRoleCommand request)
     {
       var useCase = new UpdateRoleUseCase<TRoleEntity>(
         AggregateRoot,
@@ -70,7 +69,7 @@ namespace AccessControl.Application
       return useCase.Handle(request);
     }
 
-    public Task<DeleteRoleApplicationResponse> DeleteRole(DeleteRoleCommand request)
+    public Task<Result> DeleteRole(DeleteRoleCommand request)
     {
       var useCase = new DeleteRoleUseCase<TRoleEntity>(
         AggregateRoot,
@@ -81,7 +80,7 @@ namespace AccessControl.Application
       return useCase.Handle(request);
     }
 
-    public Task<GetRolesApplicationResponse<TRoleEntity>> GetRoles(GetRolesCommand request)
+    public Task<Result> GetRoles(GetRolesCommand request)
     {
       var useCase = new GetRolesUseCase<TRoleEntity>(
         AggregateRoot,
@@ -92,7 +91,7 @@ namespace AccessControl.Application
       return useCase.Handle(request);
     }
 
-    public Task<ActivationTokenApplicationResponse> ActivateToken(ActivateTokenCommand request)
+    public Task<Result> ActivateToken(ActivateTokenCommand request)
     {
       var useCase = new ActivateTokenUseCase<TUserEntity>(
         _userRepository,
@@ -104,7 +103,7 @@ namespace AccessControl.Application
       return useCase.Handle(request);
     }
 
-    public Task<SignInApplicationResponse> SignIn(SignInCommand request)
+    public Task<Result> SignIn(SignInCommand request)
     {
       var useCase = new SignInUseCase<TUserEntity>(
         _userRepository,
@@ -116,7 +115,7 @@ namespace AccessControl.Application
       return useCase.Handle(request);
     }
 
-    public Task<VerifyTokenApplicationResponse> VerifyToken(VerifyTokenCommand request)
+    public Task<Result> VerifyToken(VerifyTokenCommand request)
     {
       var useCase = new VerifyTokenUseCase<TUserEntity>(
         _userRepository,
@@ -127,7 +126,7 @@ namespace AccessControl.Application
       return useCase.Handle(request);
     }
 
-    public Task<ChangePasswordApplicationResponse> ChangePassword(ChangePasswordCommand request)
+    public Task<Result> ChangePassword(ChangePasswordCommand request)
     {
       var useCase = new ChangePasswordUseCase<TUserEntity>(
         _userRepository,
@@ -138,9 +137,7 @@ namespace AccessControl.Application
       return useCase.Handle(request);
     }
 
-    public Task<PasswordRecoveryApplicationResponse> PasswordRecovery(
-      PasswordRecoveryCommand request
-    )
+    public Task<Result> PasswordRecovery(PasswordRecoveryCommand request)
     {
       var useCase = new PasswordRecoveryUseCase<TUserEntity>(
         _userRepository,
@@ -153,7 +150,7 @@ namespace AccessControl.Application
       return useCase.Handle(request);
     }
 
-    public Task<UpdateUserApplicationResponse> UpdateUser(UpdateUserCommand request)
+    public Task<Result> UpdateUser(UpdateUserCommand request)
     {
       var useCase = new UpdateUserUseCase<TUserEntity>(
         _userRepository,
@@ -166,7 +163,7 @@ namespace AccessControl.Application
       return useCase.Handle(request);
     }
 
-    public Task<ResetPasswordApplicationResponse> ResetPassword(ResetPasswordCommand request)
+    public Task<Result> ResetPassword(ResetPasswordCommand request)
     {
       var useCase = new ResetPasswordUseCase<TUserEntity>(
         _cacheService,

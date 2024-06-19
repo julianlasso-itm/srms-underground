@@ -4,6 +4,8 @@ using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 
 namespace AccessControl.Application.UseCases
 {
@@ -15,7 +17,6 @@ namespace AccessControl.Application.UseCases
   )
     : BaseUseCase<
       GetRolesCommand,
-      GetRolesApplicationResponse<TEntity>,
       ISecurityAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
@@ -24,12 +25,12 @@ namespace AccessControl.Application.UseCases
   {
     private readonly IRoleRepository<TEntity> _roleRepository = roleRepository;
 
-    public override async Task<GetRolesApplicationResponse<TEntity>> Handle(GetRolesCommand request)
+    public override async Task<Result> Handle(GetRolesCommand request)
     {
       var data = await QueryRoles(request);
       var count = await QueryRolesCount(request);
       var response = AclOutputMapper.ToGetRolesApplicationResponse(data, count);
-      return response;
+      return new SuccessResult<GetRolesApplicationResponse<TEntity>>(response);
     }
 
     private async Task<IEnumerable<TEntity>> QueryRoles(GetRolesCommand request)

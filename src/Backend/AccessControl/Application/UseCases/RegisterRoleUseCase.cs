@@ -1,3 +1,4 @@
+using System.Net;
 using System.Text.Json;
 using AccessControl.Application.AntiCorruption.Interfaces;
 using AccessControl.Application.Commands;
@@ -7,6 +8,9 @@ using AccessControl.Domain.Aggregates.Constants;
 using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
+using Shared.Common;
+using Shared.Common.Bases;
+using ApplicationException = Shared.Application.Exceptions.ApplicationException;
 
 namespace AccessControl.Application.UseCases
 {
@@ -18,7 +22,6 @@ namespace AccessControl.Application.UseCases
   )
     : BaseUseCase<
       RegisterRoleCommand,
-      RegisterRoleApplicationResponse,
       ISecurityAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
@@ -28,14 +31,29 @@ namespace AccessControl.Application.UseCases
     private readonly IRoleRepository<TEntity> _roleRepository = roleRepository;
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventRoleRegistered}";
 
-    public override async Task<RegisterRoleApplicationResponse> Handle(RegisterRoleCommand request)
+    public override async Task<Result> Handle(RegisterRoleCommand request)
     {
       var newRole = AclInputMapper.ToRegisterRoleDomainRequest(request);
-      var role = AggregateRoot.RegisterRole(newRole);
-      var response = MapToResponse(role);
-      _ = await Persistence(response);
-      EmitEvent(Channel, JsonSerializer.Serialize(response));
-      return response;
+      var response = AggregateRoot.RegisterRole(newRole);
+
+      if (response.IsFailure)
+      {
+        return response;
+      }
+
+      if (response is SuccessResult<RegisterRoleDomainResponse> successResult)
+      {
+        var data = successResult.Data;
+        var result = MapToResponse(data);
+        _ = await Persistence(result);
+        EmitEvent(Channel, JsonSerializer.Serialize(result));
+        return new SuccessResult<RegisterRoleApplicationResponse>(result);
+      }
+
+      throw new ApplicationException(
+        "Invalid response into RegisterRoleUseCase for AccessControl application",
+        HttpStatusCode.InternalServerError
+      );
     }
 
     private RegisterRoleApplicationResponse MapToResponse(RegisterRoleDomainResponse role)

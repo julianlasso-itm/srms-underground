@@ -1,3 +1,4 @@
+using System.Net;
 using System.Text.Json;
 using AccessControl.Application.AntiCorruption.Interfaces;
 using AccessControl.Application.Commands;
@@ -5,10 +6,14 @@ using AccessControl.Application.Interfaces;
 using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
 using AccessControl.Domain.Aggregates.Constants;
+using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 using Shared.Application.Interfaces;
+using Shared.Common;
 using Shared.Common.Bases;
+using Shared.Common.Enums;
+using ApplicationException = Shared.Application.Exceptions.ApplicationException;
 
 namespace AccessControl.Application.UseCases
 {
@@ -38,22 +43,52 @@ namespace AccessControl.Application.UseCases
 
     public override async Task<Result> Handle(RegisterUserCommand request)
     {
-      request = AssignAvatarBlobAndDeleteFromCache(request);
+      var newRequest = AssignAvatarBlobAndDeleteFromCache(request);
+
+      if (newRequest.IsFailure)
+      {
+        return newRequest;
+      }
+
+      if (newRequest is SuccessResult<RegisterUserCommand> successRequest)
+      {
+        request = successRequest.Data;
+      }
+
       var command = AclInputMapper.ToRegisterCredentialDomainRequest(request);
-      var user = AggregateRoot.RegisterCredential(command);
-      user.Photo = await StoreAvatar(user.Avatar, user.AvatarExtension);
-      var response = AclOutputMapper.ToRegisterUserApplicationResponse(user, request.CityId);
-      _ = await Persist(response);
-      SendConfirmationEmail(response);
-      EmitEvent(Channel, JsonSerializer.Serialize(response));
-      return response;
+      var response = AggregateRoot.RegisterCredential(command);
+
+      if (response.IsFailure)
+      {
+        return response;
+      }
+
+      if (response is SuccessResult<RegisterCredentialDomainResponse> successResult)
+      {
+        var data = successResult.Data;
+        data.Photo = await StoreAvatar(data.Avatar, data.AvatarExtension);
+        var result = AclOutputMapper.ToRegisterUserApplicationResponse(data, request.CityId);
+        _ = await Persist(result);
+        SendConfirmationEmail(result);
+        EmitEvent(Channel, JsonSerializer.Serialize(result));
+        return new SuccessResult<RegisterUserApplicationResponse>(result);
+      }
+
+      throw new ApplicationException(
+        "Invalid response into RegisterUserUseCase for AccessControl application",
+        HttpStatusCode.InternalServerError
+      );
     }
 
-    private RegisterUserCommand AssignAvatarBlobAndDeleteFromCache(RegisterUserCommand request)
+    private Result AssignAvatarBlobAndDeleteFromCache(RegisterUserCommand request)
     {
       request.AvatarBytes = GetAvatarBlob(request.Avatar);
+      if (request.AvatarBytes.Length == 0)
+      {
+        return new ErrorResult("Avatar not found.", ErrorEnum.NOT_FOUND);
+      }
       DeleteAvatarFromCache(request.Avatar);
-      return request;
+      return new SuccessResult<RegisterUserCommand>(request);
     }
 
     private async Task<TEntity> Persist(RegisterUserApplicationResponse response)
@@ -63,8 +98,7 @@ namespace AccessControl.Application.UseCases
 
     private byte[] GetAvatarBlob(string avatar)
     {
-      var avatarBlob =
-        _cacheService.GetBytes(avatar) ?? throw new InvalidOperationException("Avatar not found.");
+      var avatarBlob = _cacheService.GetBytes(avatar) ?? [];
       return avatarBlob;
     }
 

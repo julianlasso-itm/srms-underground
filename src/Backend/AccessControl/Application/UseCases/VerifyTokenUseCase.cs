@@ -1,9 +1,14 @@
+using System.Net;
 using AccessControl.Application.AntiCorruption.Interfaces;
 using AccessControl.Application.Commands;
 using AccessControl.Application.Repositories;
 using AccessControl.Application.Responses;
+using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
+using Shared.Common;
+using Shared.Common.Bases;
+using ApplicationException = Shared.Application.Exceptions.ApplicationException;
 
 namespace AccessControl.Application.UseCases
 {
@@ -15,7 +20,6 @@ namespace AccessControl.Application.UseCases
   )
     : BaseUseCase<
       VerifyTokenCommand,
-      VerifyTokenApplicationResponse,
       ISecurityAggregateRoot,
       IApplicationToDomain,
       IDomainToApplication
@@ -24,12 +28,29 @@ namespace AccessControl.Application.UseCases
   {
     private readonly IUserRepository<TEntity> _userRepository = userRepository;
 
-    public override async Task<VerifyTokenApplicationResponse> Handle(VerifyTokenCommand request)
+    public override async Task<Result> Handle(VerifyTokenCommand request)
     {
       var token = AclInputMapper.ToVerifyTokenDomainRequest(request);
       var response = AggregateRoot.VerifyToken(token);
-      var userId = await _userRepository.GetIdByEmail(response.Email);
-      return AclOutputMapper.ToVerifyTokenApplicationResponse(response, userId, response.Photo);
+
+      if (response.IsFailure)
+      {
+        return response;
+      }
+
+      if (response is SuccessResult<VerifyTokenDomainResponse> successResponse)
+      {
+        var data = successResponse.Data;
+        var userId = await _userRepository.GetIdByEmail(data.Email);
+        return new SuccessResult<VerifyTokenApplicationResponse>(
+          AclOutputMapper.ToVerifyTokenApplicationResponse(data, userId, data.Photo)
+        );
+      }
+
+      throw new ApplicationException(
+        "Invalid response into VerifyTokenUseCase for AccessControl application",
+        HttpStatusCode.InternalServerError
+      );
     }
   }
 }
