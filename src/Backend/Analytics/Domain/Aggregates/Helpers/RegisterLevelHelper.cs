@@ -3,7 +3,9 @@ using Analytics.Domain.Aggregates.Dto.Responses;
 using Analytics.Domain.Entities;
 using Analytics.Domain.Entities.Records;
 using Analytics.Domain.ValueObjects;
-using Shared.Domain.Aggregate.Helpers;
+using Shared.Common;
+using Shared.Common.Bases;
+using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Aggregate.Interfaces;
 
 namespace Analytics.Domain.Aggregates.Helpers
@@ -12,15 +14,24 @@ namespace Analytics.Domain.Aggregates.Helpers
     : BaseHelper,
       IHelper<RegisterLevelDomainRequest, RegisterLevelDomainResponse>
   {
-    public static RegisterLevelDomainResponse Execute(RegisterLevelDomainRequest request)
+    public static Result<RegisterLevelDomainResponse> Execute(RegisterLevelDomainRequest request)
     {
       var record = GetLevelRecord(request);
-      ValidateRecordFields(record);
+      var response = ValidateRecordFields(record);
 
-      var Level = new LevelEntity();
-      Level.Register(record.Name, record.Description);
+      if (response.IsFailure)
+      {
+        return Response<RegisterLevelDomainResponse>.Failure(
+          response.Message,
+          response.Code,
+          response.Details
+        );
+      }
 
-      return MapToResponse(Level);
+      var level = new LevelEntity();
+      level.Register(record.Name, record.Description);
+
+      return Response<RegisterLevelDomainResponse>.Success(MapToResponse(level));
     }
 
     private static LevelRecords GetLevelRecord(RegisterLevelDomainRequest request)

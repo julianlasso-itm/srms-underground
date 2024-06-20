@@ -3,7 +3,10 @@ using Analytics.Domain.Aggregates.Dto.Responses;
 using Analytics.Domain.Entities;
 using Analytics.Domain.Entities.Records;
 using Analytics.Domain.ValueObjects;
-using Shared.Domain.Aggregate.Helpers;
+using Shared.Common;
+using Shared.Common.Bases;
+using Shared.Common.Enums;
+using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Aggregate.Interfaces;
 using Shared.Domain.Exceptions;
 using Shared.Domain.ValueObjects;
@@ -14,43 +17,62 @@ namespace Analytics.Domain.Aggregates.Helpers
     : BaseHelper,
       IHelper<UpdateLevelDomainRequest, UpdateLevelDomainResponse>
   {
-    public static UpdateLevelDomainResponse Execute(UpdateLevelDomainRequest data)
+    public static Result<UpdateLevelDomainResponse> Execute(UpdateLevelDomainRequest data)
     {
       var record = GetLevelRecord(data);
-      var Level = new LevelEntity(record);
-      var response = new UpdateLevelDomainResponse { LevelId = Level.LevelId.Value };
+      var level = new LevelEntity(record);
+      var response = new UpdateLevelDomainResponse { LevelId = level.LevelId.Value };
 
       if (data.Name != null)
       {
         var name = new NameValueObject(data.Name);
-        Level.UpdateName(name);
-        response.Name = Level.Name.Value;
+        level.UpdateName(name);
+        response.Name = level.Name.Value;
       }
 
       if (data.Description != null)
       {
         var description = new DescriptionValueObject(data.Description);
-        Level.UpdateDescription(description);
-        response.Description = Level.Description?.Value;
+        level.UpdateDescription(description);
+        response.Description = level.Description?.Value;
       }
 
       if (data.Disable != null)
       {
         if (data.Disable == true)
         {
-          Level.Disable();
+          level.Disable();
         }
         else
         {
-          Level.Enable();
+          level.Enable();
         }
-        response.Disabled = Level.Disabled.Value;
+        response.Disabled = level.Disabled.Value;
       }
 
-      ValidateRecordFields(Level);
-      ValidateAmountDataToBeUpdated(response);
+      var validateRecordFields = ValidateRecordFields(level);
 
-      return response;
+      if (validateRecordFields.IsFailure)
+      {
+        return Response<UpdateLevelDomainResponse>.Failure(
+          validateRecordFields.Message,
+          validateRecordFields.Code,
+          validateRecordFields.Details
+        );
+      }
+
+      var validateAmountDataToBeUpdated = ValidateAmountDataToBeUpdated(response);
+
+      if (validateAmountDataToBeUpdated.IsFailure)
+      {
+        return Response<UpdateLevelDomainResponse>.Failure(
+          validateAmountDataToBeUpdated.Message,
+          validateAmountDataToBeUpdated.Code,
+          validateAmountDataToBeUpdated.Details
+        );
+      }
+
+      return Response<UpdateLevelDomainResponse>.Success(response);
     }
 
     private static LevelRecords GetLevelRecord(UpdateLevelDomainRequest data)
@@ -59,16 +81,19 @@ namespace Analytics.Domain.Aggregates.Helpers
       return new LevelRecords { LevelId = id };
     }
 
-    private static void ValidateAmountDataToBeUpdated(UpdateLevelDomainResponse response)
+    private static Result<bool> ValidateAmountDataToBeUpdated(UpdateLevelDomainResponse response)
     {
       var count = response.GetType().GetProperties().Count(x => x.GetValue(response) != null);
       if (count == 1)
       {
-        throw new DomainException(
+        return Response<bool>.Failure(
           "No data to update",
-          [new ErrorValueObject("No fields to update", "No fields to update")]
+          ErrorEnum.BAD_REQUEST,
+          new List<ErrorValueObject> { new ErrorValueObject("No fields to update", "No fields to update") }
         );
       }
+
+      return Response<bool>.Success();
     }
   }
 }
