@@ -4,6 +4,8 @@ using Analytics.Application.Repositories;
 using Analytics.Application.Responses;
 using Analytics.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 
 namespace Analytics.Application.UseCases
 {
@@ -24,14 +26,14 @@ namespace Analytics.Application.UseCases
   {
     private readonly ILevelRepository<TEntity> _levelRepository = levelRepository;
 
-    public override async Task<GetLevelsApplicationResponse<TEntity>> Handle(
+    public override async Task<Result<GetLevelsApplicationResponse<TEntity>>> Handle(
       GetLevelsCommand request
     )
     {
       var data = await QueryLevels(request);
       var count = await QueryLevelsCount(request);
       var response = MapToResponse(data, count);
-      return response;
+      return Response<GetLevelsApplicationResponse<TEntity>>.Success(response);
     }
 
     private async Task<IEnumerable<TEntity>> QueryLevels(GetLevelsCommand request)

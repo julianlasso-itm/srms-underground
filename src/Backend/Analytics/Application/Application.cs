@@ -5,6 +5,7 @@ using Analytics.Application.Responses;
 using Analytics.Application.UseCases;
 using Analytics.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
+using Shared.Common.Bases;
 
 namespace Analytics.Application
 {
@@ -21,7 +22,9 @@ namespace Analytics.Application
   {
     private readonly ILevelRepository<TLevelEntity> _levelRepository = levelRepository;
 
-    public Task<RegisterLevelApplicationResponse> RegisterLevel(RegisterLevelCommand request)
+    public Task<Result<RegisterLevelApplicationResponse>> RegisterLevel(
+      RegisterLevelCommand request
+    )
     {
       var useCase = new RegisterLevelUseCase<TLevelEntity>(
         AggregateRoot,
@@ -32,7 +35,7 @@ namespace Analytics.Application
       return useCase.Handle(request);
     }
 
-    public Task<UpdateLevelApplicationResponse> UpdateLevel(UpdateLevelCommand request)
+    public Task<Result<UpdateLevelApplicationResponse>> UpdateLevel(UpdateLevelCommand request)
     {
       var useCase = new UpdateLevelUseCase<TLevelEntity>(
         AggregateRoot,
@@ -43,7 +46,7 @@ namespace Analytics.Application
       return useCase.Handle(request);
     }
 
-    public Task<DeleteLevelApplicationResponse> DeleteLevel(DeleteLevelCommand request)
+    public Task<Result<DeleteLevelApplicationResponse>> DeleteLevel(DeleteLevelCommand request)
     {
       var useCase = new DeleteLevelUseCase<TLevelEntity>(
         AggregateRoot,
@@ -54,7 +57,9 @@ namespace Analytics.Application
       return useCase.Handle(request);
     }
 
-    public Task<GetLevelsApplicationResponse<TLevelEntity>> GetLevels(GetLevelsCommand request)
+    public Task<Result<GetLevelsApplicationResponse<TLevelEntity>>> GetLevels(
+      GetLevelsCommand request
+    )
     {
       var useCase = new GetLevelsUseCase<TLevelEntity>(
         AggregateRoot,

@@ -8,6 +8,8 @@ using Analytics.Domain.Aggregates.Dto.Requests;
 using Analytics.Domain.Aggregates.Dto.Responses;
 using Analytics.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 
 namespace Analytics.Application.UseCases
 {
@@ -29,14 +31,27 @@ namespace Analytics.Application.UseCases
     private readonly ILevelRepository<TEntity> _levelRepository = levelRepository;
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventLevelUpdated}";
 
-    public override async Task<UpdateLevelApplicationResponse> Handle(UpdateLevelCommand request)
+    public override async Task<Result<UpdateLevelApplicationResponse>> Handle(
+      UpdateLevelCommand request
+    )
     {
       var dataUpdateLevel = MapToRequestForDomain(request);
       var level = AggregateRoot.UpdateLevel(dataUpdateLevel);
-      var response = MapToResponse(level);
+
+      if (level.IsFailure)
+      {
+        return Response<UpdateLevelApplicationResponse>.Failure(
+          level.Message,
+          level.Code,
+          level.Details
+        );
+      }
+
+      var response = MapToResponse(level.Data);
       _ = await Persistence(response);
       EmitEvent(Channel, JsonSerializer.Serialize(response));
-      return response;
+
+      return Response<UpdateLevelApplicationResponse>.Success(response);
     }
 
     private UpdateLevelDomainRequest MapToRequestForDomain(UpdateLevelCommand request)

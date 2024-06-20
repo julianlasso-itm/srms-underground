@@ -8,6 +8,8 @@ using Analytics.Domain.Aggregates.Dto.Requests;
 using Analytics.Domain.Aggregates.Dto.Responses;
 using Analytics.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 
 namespace Analytics.Application.UseCases
 {
@@ -29,16 +31,27 @@ namespace Analytics.Application.UseCases
     private readonly ILevelRepository<TEntity> _levelRepository = levelRepository;
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventLevelRegistered}";
 
-    public override async Task<RegisterLevelApplicationResponse> Handle(
+    public override async Task<Result<RegisterLevelApplicationResponse>> Handle(
       RegisterLevelCommand request
     )
     {
       var newLevel = MapToRequestForDomain(request);
       var level = AggregateRoot.RegisterLevel(newLevel);
-      var response = MapToResponse(level);
+
+      if (level.IsFailure)
+      {
+        return Response<RegisterLevelApplicationResponse>.Failure(
+          level.Message,
+          level.Code,
+          level.Details
+        );
+      }
+
+      var response = MapToResponse(level.Data);
       _ = await Persistence(response);
       EmitEvent(Channel, JsonSerializer.Serialize(response));
-      return response;
+
+      return Response<RegisterLevelApplicationResponse>.Success(response);
     }
 
     private RegisterLevelDomainRequest MapToRequestForDomain(RegisterLevelCommand request)

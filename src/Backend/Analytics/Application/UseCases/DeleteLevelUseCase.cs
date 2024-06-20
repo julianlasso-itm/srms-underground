@@ -8,6 +8,8 @@ using Analytics.Domain.Aggregates.Dto.Requests;
 using Analytics.Domain.Aggregates.Dto.Responses;
 using Analytics.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 
 namespace Analytics.Application.UseCases
 {
@@ -29,14 +31,27 @@ namespace Analytics.Application.UseCases
     private readonly ILevelRepository<TEntity> _levelRepository = levelRepository;
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventLevelDeleted}";
 
-    public override async Task<DeleteLevelApplicationResponse> Handle(DeleteLevelCommand request)
+    public override async Task<Result<DeleteLevelApplicationResponse>> Handle(
+      DeleteLevelCommand request
+    )
     {
       var dataDeleteLevel = MapToRequestForDomain(request);
       var level = AggregateRoot.DeleteLevel(dataDeleteLevel);
-      var response = MapToResponse(level);
+
+      if (level.IsFailure)
+      {
+        return Response<DeleteLevelApplicationResponse>.Failure(
+          level.Message,
+          level.Code,
+          level.Details
+        );
+      }
+
+      var response = MapToResponse(level.Data);
       _ = await Persistence(response);
       EmitEvent(Channel, JsonSerializer.Serialize(response));
-      return response;
+
+      return Response<DeleteLevelApplicationResponse>.Success(response);
     }
 
     private DeleteLevelDomainRequest MapToRequestForDomain(DeleteLevelCommand request)
