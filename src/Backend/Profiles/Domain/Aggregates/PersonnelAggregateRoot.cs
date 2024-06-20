@@ -2,6 +2,7 @@ using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Aggregates.Helpers;
 using Profiles.Domain.Aggregates.Interfaces;
+using Shared.Common.Bases;
 using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Events.Interfaces;
 
@@ -13,115 +14,119 @@ namespace Profiles.Domain.Aggregates
   {
     private AccountAggregate AccountAggregate { get; init; } = new AccountAggregate();
 
-    public RegisterCountryDomainResponse RegisterCountry(RegisterCountryDomainRequest request)
-    {
-      return AccountAggregate.RegisterCountry(request);
-    }
-
-    public UpdateCountryDomainResponse UpdateCountry(UpdateCountryDomainRequest request)
-    {
-      return AccountAggregate.UpdateCountry(request);
-    }
-
-    public DeleteCountryDomainResponse DeleteCountry(DeleteCountryDomainRequest request)
-    {
-      return AccountAggregate.DeleteCountry(request);
-    }
-
-    public RegisterProvinceDomainResponse RegisterProvince(RegisterProvinceDomainRequest request)
-    {
-      return AccountAggregate.RegisterProvince(request);
-    }
-
-    public UpdateProvinceDomainResponse UpdateProvince(UpdateProvinceDomainRequest request)
-    {
-      return AccountAggregate.UpdateProvince(request);
-    }
-
-    public DeleteProvinceDomainResponse DeleteProvince(DeleteProvinceDomainRequest request)
-    {
-      return AccountAggregate.DeleteProvince(request);
-    }
-
-    public RegisterCityDomainResponse RegisterCity(RegisterCityDomainRequest request)
-    {
-      return AccountAggregate.RegisterCity(request);
-    }
-
-    public UpdateCityDomainResponse UpdateCity(UpdateCityDomainRequest request)
-    {
-      return AccountAggregate.UpdateCity(request);
-    }
-
-    public DeleteCityDomainResponse DeleteCity(DeleteCityDomainRequest request)
+    public Result<DeleteCityDomainResponse> DeleteCity(DeleteCityDomainRequest request)
     {
       return AccountAggregate.DeleteCity(request);
     }
 
-    public RegisterRoleDomainResponse RegisterRole(RegisterRoleDomainRequest roleData)
+    public Result<DeleteCountryDomainResponse> DeleteCountry(DeleteCountryDomainRequest request)
     {
-      return RegisterRoleHelper.Execute(roleData);
+      return AccountAggregate.DeleteCountry(request);
     }
 
-    public DeleteRoleDomainResponse DeleteRole(DeleteRoleDomainRequest dataDeleteRole)
+    public Result<DeleteLevelDomainResponse> DeleteLevel(DeleteLevelDomainRequest request)
     {
-      return DeleteRoleHelper.Execute(dataDeleteRole);
+      return DeleteLevelHelper.Execute(request);
     }
 
-    public UpdateRoleDomainResponse UpdateRole(UpdateRoleDomainRequest dataUpdateRole)
-    {
-      return UpdateRoleHelper.Execute(dataUpdateRole);
-    }
-
-    public RegisterSkillDomainResponse RegisterSkill(RegisterSkillDomainRequest skillData)
-    {
-      return RegisterSkillHelper.Execute(skillData);
-    }
-
-    public DeleteSkillDomainResponse DeleteSkill(DeleteSkillDomainRequest dataDeleteRole)
-    {
-      return DeleteSkillHelper.Execute(dataDeleteRole);
-    }
-
-    public UpdateSkillDomainResponse UpdateSkill(UpdateSkillDomainRequest dataUpdateSkill)
-    {
-      return UpdateSkillHelper.Execute(dataUpdateSkill);
-    }
-
-    public RegisterProfessionalDomainResponse RegisterProfessional(
-      RegisterProfessionalDomainRequest dataRegisterProfessional
-    )
-    {
-      return RegisterProfessionalHelper.Execute(dataRegisterProfessional);
-    }
-
-    public DeleteProfessionalDomainResponse DeleteProfessional(
+    public Result<DeleteProfessionalDomainResponse> DeleteProfessional(
       DeleteProfessionalDomainRequest dataDeleteProfessional
     )
     {
       return DeleteProfessionalHelper.Execute(dataDeleteProfessional);
     }
 
-    public UpdateProfessionalDomainResponse UpdateProfessional(
+    public Result<DeleteProvinceDomainResponse> DeleteProvince(DeleteProvinceDomainRequest request)
+    {
+      return AccountAggregate.DeleteProvince(request);
+    }
+
+    public Result<DeleteRoleDomainResponse> DeleteRole(DeleteRoleDomainRequest dataDeleteRole)
+    {
+      return DeleteRoleHelper.Execute(dataDeleteRole);
+    }
+
+    public Result<DeleteSkillDomainResponse> DeleteSkill(DeleteSkillDomainRequest dataDeleteSkill)
+    {
+      return DeleteSkillHelper.Execute(dataDeleteSkill);
+    }
+
+    public Result<RegisterCityDomainResponse> RegisterCity(RegisterCityDomainRequest request)
+    {
+      return AccountAggregate.RegisterCity(request);
+    }
+
+    public Result<RegisterCountryDomainResponse> RegisterCountry(
+      RegisterCountryDomainRequest request
+    )
+    {
+      return AccountAggregate.RegisterCountry(request);
+    }
+
+    public Result<RegisterLevelDomainResponse> RegisterLevel(RegisterLevelDomainRequest request)
+    {
+      return RegisterLevelHelper.Execute(request);
+    }
+
+    public Result<RegisterProfessionalDomainResponse> RegisterProfessional(
+      RegisterProfessionalDomainRequest dataRegisterProfessional
+    )
+    {
+      return RegisterProfessionalHelper.Execute(dataRegisterProfessional);
+    }
+
+    public Result<RegisterProvinceDomainResponse> RegisterProvince(
+      RegisterProvinceDomainRequest request
+    )
+    {
+      return AccountAggregate.RegisterProvince(request);
+    }
+
+    public Result<RegisterRoleDomainResponse> RegisterRole(RegisterRoleDomainRequest roleData)
+    {
+      return RegisterRoleHelper.Execute(roleData);
+    }
+
+    public Result<RegisterSkillDomainResponse> RegisterSkill(RegisterSkillDomainRequest skillData)
+    {
+      return RegisterSkillHelper.Execute(skillData);
+    }
+
+    public Result<UpdateCityDomainResponse> UpdateCity(UpdateCityDomainRequest request)
+    {
+      return AccountAggregate.UpdateCity(request);
+    }
+
+    public Result<UpdateCountryDomainResponse> UpdateCountry(UpdateCountryDomainRequest request)
+    {
+      return AccountAggregate.UpdateCountry(request);
+    }
+
+    public Result<UpdateLevelDomainResponse> UpdateLevel(UpdateLevelDomainRequest request)
+    {
+      return UpdateLevelHelper.Execute(request);
+    }
+
+    public Result<UpdateProfessionalDomainResponse> UpdateProfessional(
       UpdateProfessionalDomainRequest dataUpdateProfessional
     )
     {
       return UpdateProfessionalHelper.Execute(dataUpdateProfessional);
     }
 
-    public RegisterLevelDomainResponse RegisterLevel(RegisterLevelDomainRequest request)
+    public Result<UpdateProvinceDomainResponse> UpdateProvince(UpdateProvinceDomainRequest request)
     {
-      return RegisterLevelHelper.Execute(request);
+      return AccountAggregate.UpdateProvince(request);
     }
 
-    public UpdateLevelDomainResponse UpdateLevel(UpdateLevelDomainRequest request)
+    public Result<UpdateRoleDomainResponse> UpdateRole(UpdateRoleDomainRequest dataUpdateRole)
     {
-      return UpdateLevelHelper.Execute(request);
+      return UpdateRoleHelper.Execute(dataUpdateRole);
     }
 
-    public DeleteLevelDomainResponse DeleteLevel(DeleteLevelDomainRequest request)
+    public Result<UpdateSkillDomainResponse> UpdateSkill(UpdateSkillDomainRequest dataUpdateSkill)
     {
-      return DeleteLevelHelper.Execute(request);
+      return UpdateSkillHelper.Execute(dataUpdateSkill);
     }
   }
 }

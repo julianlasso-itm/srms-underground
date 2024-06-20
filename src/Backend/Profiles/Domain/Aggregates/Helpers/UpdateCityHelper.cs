@@ -3,9 +3,11 @@ using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Entities;
 using Profiles.Domain.Entities.Records;
 using Profiles.Domain.ValueObjects;
-using Shared.Domain.Aggregate.Helpers;
+using Shared.Common;
+using Shared.Common.Bases;
+using Shared.Common.Enums;
+using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Aggregate.Interfaces;
-using Shared.Domain.Exceptions;
 using Shared.Domain.ValueObjects;
 
 namespace Profiles.Domain.Aggregates.Helpers
@@ -14,7 +16,7 @@ namespace Profiles.Domain.Aggregates.Helpers
     : BaseHelper,
       IHelper<UpdateCityDomainRequest, UpdateCityDomainResponse>
   {
-    public static UpdateCityDomainResponse Execute(UpdateCityDomainRequest data)
+    public static Result<UpdateCityDomainResponse> Execute(UpdateCityDomainRequest data)
     {
       var record = GetCityRecord(data);
       var city = new CityEntity(record);
@@ -47,10 +49,29 @@ namespace Profiles.Domain.Aggregates.Helpers
         response.Disabled = city.Disabled.Value;
       }
 
-      ValidateRecordFields(city);
-      ValidateAmountDataToBeUpdated(response);
+      var validateRecordFields = ValidateRecordFields(city);
 
-      return response;
+      if (validateRecordFields.IsFailure)
+      {
+        return Response<UpdateCityDomainResponse>.Failure(
+          validateRecordFields.Message,
+          validateRecordFields.Code,
+          validateRecordFields.Details
+        );
+      }
+
+      var validateAmountDataToBeUpdated = ValidateAmountDataToBeUpdated(response);
+
+      if (validateAmountDataToBeUpdated.IsFailure)
+      {
+        return Response<UpdateCityDomainResponse>.Failure(
+          validateAmountDataToBeUpdated.Message,
+          validateAmountDataToBeUpdated.Code,
+          validateAmountDataToBeUpdated.Details
+        );
+      }
+
+      return Response<UpdateCityDomainResponse>.Success(response);
     }
 
     private static CityRecord GetCityRecord(UpdateCityDomainRequest data)
@@ -59,16 +80,19 @@ namespace Profiles.Domain.Aggregates.Helpers
       return new CityRecord { CityId = id };
     }
 
-    private static void ValidateAmountDataToBeUpdated(UpdateCityDomainResponse response)
+    private static Result<bool> ValidateAmountDataToBeUpdated(UpdateCityDomainResponse response)
     {
       var count = response.GetType().GetProperties().Count(x => x.GetValue(response) != null);
       if (count == 1)
       {
-        throw new DomainException(
+        return Response<bool>.Failure(
           "No data to update",
-          [new ErrorValueObject("No field to update", "No fields to update")]
+          ErrorEnum.BAD_REQUEST,
+          new ErrorValueObject("Fields", "No fields to update")
         );
       }
+
+      return Response<bool>.Success();
     }
   }
 }

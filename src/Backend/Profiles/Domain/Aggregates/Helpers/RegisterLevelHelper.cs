@@ -3,7 +3,9 @@ using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Entities;
 using Profiles.Domain.Entities.Records;
 using Profiles.Domain.ValueObjects;
-using Shared.Domain.Aggregate.Helpers;
+using Shared.Common;
+using Shared.Common.Bases;
+using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Aggregate.Interfaces;
 
 namespace Profiles.Domain.Aggregates.Helpers
@@ -12,15 +14,24 @@ namespace Profiles.Domain.Aggregates.Helpers
     : BaseHelper,
       IHelper<RegisterLevelDomainRequest, RegisterLevelDomainResponse>
   {
-    public static RegisterLevelDomainResponse Execute(RegisterLevelDomainRequest request)
+    public static Result<RegisterLevelDomainResponse> Execute(RegisterLevelDomainRequest request)
     {
       var record = GetLevelRecord(request);
-      ValidateRecordFields(record);
+      var response = ValidateRecordFields(record);
+
+      if (response.IsFailure)
+      {
+        return Response<RegisterLevelDomainResponse>.Failure(
+          response.Message,
+          response.Code,
+          response.Details
+        );
+      }
 
       var level = new LevelEntity();
       level.Register(record.Name, record.Description, record.LevelId, record.Disabled);
 
-      return MapToResponse(level);
+      return Response<RegisterLevelDomainResponse>.Success(MapToResponse(level));
     }
 
     private static LevelRecord GetLevelRecord(RegisterLevelDomainRequest request)

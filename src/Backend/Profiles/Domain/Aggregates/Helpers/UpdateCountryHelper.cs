@@ -3,9 +3,11 @@ using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Entities;
 using Profiles.Domain.Entities.Records;
 using Profiles.Domain.ValueObjects;
-using Shared.Domain.Aggregate.Helpers;
+using Shared.Common;
+using Shared.Common.Bases;
+using Shared.Common.Enums;
+using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Aggregate.Interfaces;
-using Shared.Domain.Exceptions;
 using Shared.Domain.ValueObjects;
 
 namespace Profiles.Domain.Aggregates.Helpers
@@ -14,7 +16,7 @@ namespace Profiles.Domain.Aggregates.Helpers
     : BaseHelper,
       IHelper<UpdateCountryDomainRequest, UpdateCountryDomainResponse>
   {
-    public static UpdateCountryDomainResponse Execute(UpdateCountryDomainRequest data)
+    public static Result<UpdateCountryDomainResponse> Execute(UpdateCountryDomainRequest data)
     {
       var record = GetCountryRecord(data);
       var country = new CountryEntity(record);
@@ -43,7 +45,7 @@ namespace Profiles.Domain.Aggregates.Helpers
       ValidateRecordFields(country);
       ValidateAmountDataToBeUpdated(response);
 
-      return response;
+      return Response<UpdateCountryDomainResponse>.Success(response);
     }
 
     private static CountryRecord GetCountryRecord(UpdateCountryDomainRequest data)
@@ -52,16 +54,19 @@ namespace Profiles.Domain.Aggregates.Helpers
       return new CountryRecord { CountryId = id };
     }
 
-    private static void ValidateAmountDataToBeUpdated(UpdateCountryDomainResponse response)
+    private static Result<bool> ValidateAmountDataToBeUpdated(UpdateCountryDomainResponse response)
     {
       var count = response.GetType().GetProperties().Count(x => x.GetValue(response) != null);
       if (count == 1)
       {
-        throw new DomainException(
+        return Response<bool>.Failure(
           "No data to update",
-          [new ErrorValueObject("No field to update", "No fields to update")]
+          ErrorEnum.BAD_REQUEST,
+          new ErrorValueObject("Fields", "No fields to update")
         );
       }
+
+      return Response<bool>.Success();
     }
   }
 }

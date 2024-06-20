@@ -2,7 +2,9 @@
 using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Entities.Records;
 using Profiles.Domain.ValueObjects;
-using Shared.Domain.Aggregate.Helpers;
+using Shared.Common;
+using Shared.Common.Bases;
+using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Aggregate.Interfaces;
 
 namespace Profiles.Domain.Aggregates.Helpers
@@ -11,11 +13,25 @@ namespace Profiles.Domain.Aggregates.Helpers
     : BaseHelper,
       IHelper<DeleteProfessionalDomainRequest, DeleteProfessionalDomainResponse>
   {
-    public static DeleteProfessionalDomainResponse Execute(DeleteProfessionalDomainRequest request)
+    public static Result<DeleteProfessionalDomainResponse> Execute(
+      DeleteProfessionalDomainRequest request
+    )
     {
       var record = GetProfessionalRecord(request);
-      ValidateRecordFields(record);
-      return new DeleteProfessionalDomainResponse { ProfessionalId = record.ProfessionalId.Value };
+      var response = ValidateRecordFields(record);
+
+      if (response.IsFailure)
+      {
+        return Response<DeleteProfessionalDomainResponse>.Failure(
+          response.Message,
+          response.Code,
+          response.Details
+        );
+      }
+
+      return Response<DeleteProfessionalDomainResponse>.Success(
+        new DeleteProfessionalDomainResponse { ProfessionalId = record.ProfessionalId.Value }
+      );
     }
 
     private static ProfessionalRecord GetProfessionalRecord(DeleteProfessionalDomainRequest request)

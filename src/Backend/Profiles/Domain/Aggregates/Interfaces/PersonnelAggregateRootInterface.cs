@@ -1,28 +1,29 @@
 ﻿using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
+using Shared.Common.Bases;
 using Shared.Domain.Aggregate.Interfaces;
 
 namespace Profiles.Domain.Aggregates.Interfaces
 {
   public interface IPersonnelAggregateRoot : IAggregateRoot, IAccountAggregate
   {
-    public DeleteRoleDomainResponse DeleteRole(DeleteRoleDomainRequest dataDeleteRole);
-    public RegisterRoleDomainResponse RegisterRole(RegisterRoleDomainRequest roleData);
-    public UpdateRoleDomainResponse UpdateRole(UpdateRoleDomainRequest dataUpdateRole);
-    public DeleteSkillDomainResponse DeleteSkill(DeleteSkillDomainRequest dataDeleteSkill);
-    public RegisterSkillDomainResponse RegisterSkill(RegisterSkillDomainRequest skillData);
-    public UpdateSkillDomainResponse UpdateSkill(UpdateSkillDomainRequest dataUpdateSkill);
-    public RegisterProfessionalDomainResponse RegisterProfessional(
+    public Result<DeleteRoleDomainResponse> DeleteRole(DeleteRoleDomainRequest dataDeleteRole);
+    public Result<RegisterRoleDomainResponse> RegisterRole(RegisterRoleDomainRequest roleData);
+    public Result<UpdateRoleDomainResponse> UpdateRole(UpdateRoleDomainRequest dataUpdateRole);
+    public Result<DeleteSkillDomainResponse> DeleteSkill(DeleteSkillDomainRequest dataDeleteSkill);
+    public Result<RegisterSkillDomainResponse> RegisterSkill(RegisterSkillDomainRequest skillData);
+    public Result<UpdateSkillDomainResponse> UpdateSkill(UpdateSkillDomainRequest dataUpdateSkill);
+    public Result<RegisterProfessionalDomainResponse> RegisterProfessional(
       RegisterProfessionalDomainRequest dataRegisterProfessional
     );
-    public DeleteProfessionalDomainResponse DeleteProfessional(
+    public Result<DeleteProfessionalDomainResponse> DeleteProfessional(
       DeleteProfessionalDomainRequest dataDeleteProfessional
     );
-    public UpdateProfessionalDomainResponse UpdateProfessional(
+    public Result<UpdateProfessionalDomainResponse> UpdateProfessional(
       UpdateProfessionalDomainRequest dataUpdateProfessional
     );
-    public RegisterLevelDomainResponse RegisterLevel(RegisterLevelDomainRequest request);
-    public UpdateLevelDomainResponse UpdateLevel(UpdateLevelDomainRequest request);
-    public DeleteLevelDomainResponse DeleteLevel(DeleteLevelDomainRequest request);
+    public Result<RegisterLevelDomainResponse> RegisterLevel(RegisterLevelDomainRequest request);
+    public Result<UpdateLevelDomainResponse> UpdateLevel(UpdateLevelDomainRequest request);
+    public Result<DeleteLevelDomainResponse> DeleteLevel(DeleteLevelDomainRequest request);
   }
 }

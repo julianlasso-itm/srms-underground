@@ -3,9 +3,11 @@ using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Entities;
 using Profiles.Domain.Entities.Records;
 using Profiles.Domain.ValueObjects;
-using Shared.Domain.Aggregate.Helpers;
+using Shared.Common;
+using Shared.Common.Bases;
+using Shared.Common.Enums;
+using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Aggregate.Interfaces;
-using Shared.Domain.Exceptions;
 using Shared.Domain.ValueObjects;
 
 namespace Profiles.Domain.Aggregates.Helpers
@@ -14,7 +16,7 @@ namespace Profiles.Domain.Aggregates.Helpers
     : BaseHelper,
       IHelper<UpdateProvinceDomainRequest, UpdateProvinceDomainResponse>
   {
-    public static UpdateProvinceDomainResponse Execute(UpdateProvinceDomainRequest data)
+    public static Result<UpdateProvinceDomainResponse> Execute(UpdateProvinceDomainRequest data)
     {
       var record = GetProvinceRecord(data);
       var province = new ProvinceEntity(record);
@@ -47,10 +49,29 @@ namespace Profiles.Domain.Aggregates.Helpers
         response.Disabled = province.Disabled.Value;
       }
 
-      ValidateRecordFields(province);
-      ValidateAmountDataToBeUpdated(response);
+      var validateRecordFields = ValidateRecordFields(province);
 
-      return response;
+      if (validateRecordFields.IsFailure)
+      {
+        return Response<UpdateProvinceDomainResponse>.Failure(
+          validateRecordFields.Message,
+          validateRecordFields.Code,
+          validateRecordFields.Details
+        );
+      }
+
+      var validateAmountDataToBeUpdated = ValidateAmountDataToBeUpdated(response);
+
+      if (validateAmountDataToBeUpdated.IsFailure)
+      {
+        return Response<UpdateProvinceDomainResponse>.Failure(
+          validateAmountDataToBeUpdated.Message,
+          validateAmountDataToBeUpdated.Code,
+          validateAmountDataToBeUpdated.Details
+        );
+      }
+
+      return Response<UpdateProvinceDomainResponse>.Success(response);
     }
 
     private static ProvinceRecord GetProvinceRecord(UpdateProvinceDomainRequest data)
@@ -59,16 +80,19 @@ namespace Profiles.Domain.Aggregates.Helpers
       return new ProvinceRecord { ProvinceId = id };
     }
 
-    private static void ValidateAmountDataToBeUpdated(UpdateProvinceDomainResponse response)
+    private static Result<bool> ValidateAmountDataToBeUpdated(UpdateProvinceDomainResponse response)
     {
       var count = response.GetType().GetProperties().Count(x => x.GetValue(response) != null);
       if (count == 1)
       {
-        throw new DomainException(
+        return Response<bool>.Failure(
           "No data to update",
-          [new ErrorValueObject("No field to update", "No fields to update")]
+          ErrorEnum.BAD_REQUEST,
+          new ErrorValueObject("Fields", "No fields to update")
         );
       }
+
+      return Response<bool>.Success();
     }
   }
 }
