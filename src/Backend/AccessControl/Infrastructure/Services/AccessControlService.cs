@@ -3,6 +3,7 @@ using AccessControl.Infrastructure.Services.Helpers;
 using Infrastructure.ProtocolBuffers.AccessControl.Responses;
 using ProtoBuf.Grpc;
 using Shared.Application.Interfaces;
+using Shared.Common.Bases;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses;
@@ -19,7 +20,7 @@ namespace AccessControl.Infrastructure.Services
     private readonly IAntiCorruptionLayer _antiCorruptionLayerService = antiCorruptionLayer;
     private readonly IEnvironment _environmentService = environmentService;
 
-    public async Task<RegisterUserResponse> RegisterUserAsync(
+    public async Task<Result<RegisterUserResponse>> RegisterUserAsync(
       RegisterUserRequest request,
       CallContext context = default
     )
@@ -29,7 +30,7 @@ namespace AccessControl.Infrastructure.Services
       return await RegisterUserHelper.RegisterUserAsync(request);
     }
 
-    public async Task<RegisterRoleAccessControlResponse> RegisterRoleAsync(
+    public async Task<Result<RegisterRoleAccessControlResponse>> RegisterRoleAsync(
       RegisterRoleAccessControlRequest request,
       CallContext context = default
     )
@@ -39,7 +40,7 @@ namespace AccessControl.Infrastructure.Services
       return await RegisterRoleHelper.RegisterRoleAsync(request);
     }
 
-    public async Task<UpdateRoleAccessControlResponse> UpdateRoleAsync(
+    public async Task<Result<UpdateRoleAccessControlResponse>> UpdateRoleAsync(
       UpdateRoleAccessControlRequest request,
       CallContext context = default
     )
@@ -49,7 +50,7 @@ namespace AccessControl.Infrastructure.Services
       return await UpdateRoleHelper.UpdateRoleAsync(request);
     }
 
-    public async Task<DeleteRoleAccessControlResponse> DeleteRoleAsync(
+    public async Task<Result<DeleteRoleAccessControlResponse>> DeleteRoleAsync(
       DeleteRoleAccessControlRequest request,
       CallContext context = default
     )
@@ -59,7 +60,7 @@ namespace AccessControl.Infrastructure.Services
       return await DeleteRoleHelper.DeleteRoleAsync(request);
     }
 
-    public async Task<GetRolesAccessControlResponse> GetRolesAsync(
+    public async Task<Result<GetRolesAccessControlResponse>> GetRolesAsync(
       GetRolesAccessControlRequest request,
       CallContext context = default
     )
@@ -69,7 +70,7 @@ namespace AccessControl.Infrastructure.Services
       return await GetRolesHelper.GetRolesAsync(request);
     }
 
-    public Task<ActivationTokenAccessControlResponse> ActivateTokenAsync(
+    public Task<Result<ActivationTokenAccessControlResponse>> ActivateTokenAsync(
       ActivationTokenAccessControlRequest request,
       CallContext context = default
     )
@@ -79,7 +80,7 @@ namespace AccessControl.Infrastructure.Services
       return ActiveTokenHelper.ActivateTokenAsync(request);
     }
 
-    public Task<SignInAccessControlResponse> SignInAsync(
+    public Task<Result<SignInAccessControlResponse>> SignInAsync(
       SignInAccessControlRequest request,
       CallContext context = default
     )
@@ -90,7 +91,7 @@ namespace AccessControl.Infrastructure.Services
       return SignInHelper.SignInAsync(request);
     }
 
-    public Task<VerifyTokenAccessControlResponse> VerifyTokenAsync(
+    public Task<Result<VerifyTokenAccessControlResponse>> VerifyTokenAsync(
       VerifyTokenAccessControlRequest request,
       CallContext context = default
     )
@@ -101,7 +102,7 @@ namespace AccessControl.Infrastructure.Services
       return VerifyTokenHelper.VerifyTokenAsync(request);
     }
 
-    public Task<ChangePasswordAccessControlResponse> ChangePasswordAsync(
+    public Task<Result<ChangePasswordAccessControlResponse>> ChangePasswordAsync(
       ChangePasswordAccessControlRequest request,
       CallContext context = default
     )
@@ -111,7 +112,7 @@ namespace AccessControl.Infrastructure.Services
       return ChangePasswordHelper.ChangePasswordAsync(request);
     }
 
-    public Task<PasswordRecoveryAccessControlResponse> PasswordRecoveryAsync(
+    public Task<Result<PasswordRecoveryAccessControlResponse>> PasswordRecoveryAsync(
       PasswordRecoveryAccessControlRequest request,
       CallContext context = default
     )
@@ -121,7 +122,7 @@ namespace AccessControl.Infrastructure.Services
       return PasswordRecoveryHelper.PasswordRecoveryAsync(request);
     }
 
-    public Task<UpdateUserAccessControlResponse> UpdateUserAsync(
+    public Task<Result<UpdateUserAccessControlResponse>> UpdateUserAsync(
       UpdateUserAccessControlRequest request,
       CallContext context = default
     )
@@ -131,7 +132,7 @@ namespace AccessControl.Infrastructure.Services
       return UpdateUserHelper.UpdateUserAsync(request);
     }
 
-    public Task<ResetPasswordAccessControlResponse> ResetPasswordAsync(
+    public Task<Result<ResetPasswordAccessControlResponse>> ResetPasswordAsync(
       ResetPasswordAccessControlRequest request,
       CallContext context = default
     )

@@ -1,6 +1,7 @@
 using ApiGateway.Infrastructure.Services.Base;
 using Infrastructure.ProtocolBuffers.AccessControl.Responses;
 using ProtoBuf.Grpc;
+using Shared.Common.Bases;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses;
@@ -15,7 +16,7 @@ namespace ApiGateway.Infrastructure.Services
       CreateChannel(urlMicroservice);
     }
 
-    public Task<RegisterUserResponse> RegisterUserAsync(
+    public Task<Result<RegisterUserResponse>> RegisterUserAsync(
       RegisterUserRequest request,
       CallContext context = default
     )
@@ -23,7 +24,7 @@ namespace ApiGateway.Infrastructure.Services
       return Client.RegisterUserAsync(request, context);
     }
 
-    public Task<RegisterRoleAccessControlResponse> RegisterRoleAsync(
+    public Task<Result<RegisterRoleAccessControlResponse>> RegisterRoleAsync(
       RegisterRoleAccessControlRequest request,
       CallContext context = default
     )
@@ -31,7 +32,7 @@ namespace ApiGateway.Infrastructure.Services
       return Client.RegisterRoleAsync(request, context);
     }
 
-    public Task<UpdateRoleAccessControlResponse> UpdateRoleAsync(
+    public Task<Result<UpdateRoleAccessControlResponse>> UpdateRoleAsync(
       UpdateRoleAccessControlRequest request,
       CallContext context = default
     )
@@ -39,7 +40,7 @@ namespace ApiGateway.Infrastructure.Services
       return Client.UpdateRoleAsync(request, context);
     }
 
-    public Task<DeleteRoleAccessControlResponse> DeleteRoleAsync(
+    public Task<Result<DeleteRoleAccessControlResponse>> DeleteRoleAsync(
       DeleteRoleAccessControlRequest request,
       CallContext context = default
     )
@@ -47,7 +48,7 @@ namespace ApiGateway.Infrastructure.Services
       return Client.DeleteRoleAsync(request, context);
     }
 
-    public Task<GetRolesAccessControlResponse> GetRolesAsync(
+    public Task<Result<GetRolesAccessControlResponse>> GetRolesAsync(
       GetRolesAccessControlRequest request,
       CallContext context = default
     )
@@ -55,7 +56,7 @@ namespace ApiGateway.Infrastructure.Services
       return Client.GetRolesAsync(request, context);
     }
 
-    public Task<ActivationTokenAccessControlResponse> ActivateTokenAsync(
+    public Task<Result<ActivationTokenAccessControlResponse>> ActivateTokenAsync(
       ActivationTokenAccessControlRequest request,
       CallContext context = default
     )
@@ -63,7 +64,7 @@ namespace ApiGateway.Infrastructure.Services
       return Client.ActivateTokenAsync(request, context);
     }
 
-    public Task<SignInAccessControlResponse> SignInAsync(
+    public Task<Result<SignInAccessControlResponse>> SignInAsync(
       SignInAccessControlRequest request,
       CallContext context = default
     )
@@ -71,7 +72,7 @@ namespace ApiGateway.Infrastructure.Services
       return Client.SignInAsync(request, context);
     }
 
-    public Task<VerifyTokenAccessControlResponse> VerifyTokenAsync(
+    public Task<Result<VerifyTokenAccessControlResponse>> VerifyTokenAsync(
       VerifyTokenAccessControlRequest request,
       CallContext context = default
     )
@@ -79,7 +80,7 @@ namespace ApiGateway.Infrastructure.Services
       return Client.VerifyTokenAsync(request, context);
     }
 
-    public Task<ChangePasswordAccessControlResponse> ChangePasswordAsync(
+    public Task<Result<ChangePasswordAccessControlResponse>> ChangePasswordAsync(
       ChangePasswordAccessControlRequest request,
       CallContext context = default
     )
@@ -87,7 +88,7 @@ namespace ApiGateway.Infrastructure.Services
       return Client.ChangePasswordAsync(request, context);
     }
 
-    public Task<PasswordRecoveryAccessControlResponse> PasswordRecoveryAsync(
+    public Task<Result<PasswordRecoveryAccessControlResponse>> PasswordRecoveryAsync(
       PasswordRecoveryAccessControlRequest request,
       CallContext context = default
     )
@@ -95,7 +96,7 @@ namespace ApiGateway.Infrastructure.Services
       return Client.PasswordRecoveryAsync(request, context);
     }
 
-    public Task<UpdateUserAccessControlResponse> UpdateUserAsync(
+    public Task<Result<UpdateUserAccessControlResponse>> UpdateUserAsync(
       UpdateUserAccessControlRequest request,
       CallContext context = default
     )
@@ -103,7 +104,7 @@ namespace ApiGateway.Infrastructure.Services
       return Client.UpdateUserAsync(request, context);
     }
 
-    public Task<ResetPasswordAccessControlResponse> ResetPasswordAsync(
+    public Task<Result<ResetPasswordAccessControlResponse>> ResetPasswordAsync(
       ResetPasswordAccessControlRequest request,
       CallContext context = default
     )

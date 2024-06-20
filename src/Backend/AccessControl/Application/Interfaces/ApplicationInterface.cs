@@ -20,5 +20,6 @@ namespace AccessControl.Application.Interfaces
       PasswordRecoveryCommand request
     );
     Task<Result<UpdateUserApplicationResponse>> UpdateUser(UpdateUserCommand request);
+    Task<Result<ResetPasswordApplicationResponse>> ResetPassword(ResetPasswordCommand request);
   }
 }

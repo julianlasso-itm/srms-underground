@@ -1,8 +1,10 @@
 using System.ComponentModel;
 using System.Net;
+using System.Text.Json;
 using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Application.Interfaces;
+using Shared.Common.Bases;
 using Shared.Infrastructure.Exceptions;
 
 namespace ApiGateway.Infrastructure.Controllers.Base
@@ -11,6 +13,32 @@ namespace ApiGateway.Infrastructure.Controllers.Base
   {
     const string ContentType = "application/json";
     protected readonly ICacheService CacheService = cacheService;
+
+    [NonAction]
+    protected IActionResult Handle(Result<object> result)
+    {
+      try
+      {
+        if (result.IsFailure)
+        {
+          return HandleExceptionResponse(
+            JsonSerializer.Serialize(result.Details),
+            result.Code != null
+              ? Convert.ToInt32(result.Code)
+              : Convert.ToInt32(HttpStatusCode.InternalServerError)
+          );
+        }
+        return Ok(result.Data);
+      }
+      catch (RpcException exception)
+      {
+        return HandleRpcException(exception);
+      }
+      catch (Exception exception)
+      {
+        return HandleException(exception);
+      }
+    }
 
     [NonAction]
     protected async Task<IActionResult> HandleAsync(Func<Task<IActionResult>> action)

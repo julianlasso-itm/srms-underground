@@ -4,6 +4,7 @@ using ApiGateway.Infrastructure.Services;
 using Infrastructure.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Application.Interfaces;
+using Shared.Common;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
 
 namespace ApiGateway.Infrastructure.Controllers
@@ -36,15 +37,15 @@ namespace ApiGateway.Infrastructure.Controllers
         AvatarExtension = Path.GetExtension(request.Avatar.FileName),
       };
 
-      return await HandleAsync(
-        async () => Ok(await _accessControlService.RegisterUserAsync(newRequest))
+      return Handle(
+        Response<object>.Success(await _accessControlService.RegisterUserAsync(newRequest))
       );
     }
 
     [HttpPost("sign-in")]
     public async Task<IActionResult> SignInAsync([FromBody] SignInAccessControlRequest request)
     {
-      return await HandleAsync(async () => Ok(await _accessControlService.SignInAsync(request)));
+      return Handle(Response<object>.Success(await _accessControlService.SignInAsync(request)));
     }
 
     [Permissions]
@@ -53,8 +54,8 @@ namespace ApiGateway.Infrastructure.Controllers
       [FromBody] RegisterRoleAccessControlRequest request
     )
     {
-      return await HandleAsync(
-        async () => Ok(await _accessControlService.RegisterRoleAsync(request))
+      return Handle(
+        Response<object>.Success(await _accessControlService.RegisterRoleAsync(request))
       );
     }
 
@@ -66,9 +67,7 @@ namespace ApiGateway.Infrastructure.Controllers
     )
     {
       request.RoleId = id;
-      return await HandleAsync(
-        async () => Ok(await _accessControlService.UpdateRoleAsync(request))
-      );
+      return Handle(Response<object>.Success(await _accessControlService.UpdateRoleAsync(request)));
     }
 
     [Permissions]
@@ -76,24 +75,22 @@ namespace ApiGateway.Infrastructure.Controllers
     public async Task<IActionResult> DeleteRoleAsync(string id)
     {
       var request = new DeleteRoleAccessControlRequest { RoleId = id };
-      return await HandleAsync(
-        async () => Ok(await _accessControlService.DeleteRoleAsync(request))
-      );
+      return Handle(Response<object>.Success(await _accessControlService.DeleteRoleAsync(request)));
     }
 
     [Permissions]
     [HttpGet("roles")]
     public async Task<IActionResult> GetRolesAsync([FromQuery] GetRolesAccessControlRequest request)
     {
-      return await HandleAsync(async () => Ok(await _accessControlService.GetRolesAsync(request)));
+      return Handle(Response<object>.Success(await _accessControlService.GetRolesAsync(request)));
     }
 
     [HttpGet("activate-account/{activationToken}")]
     public async Task<IActionResult> ActivateTokenAsync(string activationToken)
     {
       var request = new ActivationTokenAccessControlRequest { ActivationToken = activationToken };
-      return await HandleAsync(
-        async () => Ok(await _accessControlService.ActivateTokenAsync(request))
+      return Handle(
+        Response<object>.Success(await _accessControlService.ActivateTokenAsync(request))
       );
     }
 
@@ -104,8 +101,8 @@ namespace ApiGateway.Infrastructure.Controllers
     )
     {
       request.UserId = HttpContext.Items["UserId"]?.ToString();
-      return await HandleAsync(
-        async () => Ok(await _accessControlService.ChangePasswordAsync(request))
+      return Handle(
+        Response<object>.Success(await _accessControlService.ChangePasswordAsync(request))
       );
     }
 
@@ -114,8 +111,8 @@ namespace ApiGateway.Infrastructure.Controllers
       [FromBody] PasswordRecoveryAccessControlRequest request
     )
     {
-      return await HandleAsync(
-        async () => Ok(await _accessControlService.PasswordRecoveryAsync(request))
+      return Handle(
+        Response<object>.Success(await _accessControlService.PasswordRecoveryAsync(request))
       );
     }
 
@@ -160,18 +157,20 @@ namespace ApiGateway.Infrastructure.Controllers
         newRequest.CityId = request.CityId;
       }
 
-      return await HandleAsync(
-        async () => Ok(await _accessControlService.UpdateUserAsync(newRequest))
+      return Handle(
+        Response<object>.Success(await _accessControlService.UpdateUserAsync(newRequest))
       );
     }
 
     [HttpPost("verify-token")]
     public async Task<IActionResult> VerifyTokenAsync([FromBody] VerifyTokeDto request)
     {
-      await _accessControlService.VerifyTokenAsync(
-        new VerifyTokenAccessControlRequest { Token = request.Token }
-      );
-      return Ok(new { message = "Token is valid" });
+      var data = new VerifyTokenAccessControlRequest { Token = request.Token };
+      return Handle(Response<object>.Success(await _accessControlService.VerifyTokenAsync(data)));
+      // await _accessControlService.VerifyTokenAsync(
+      //   new VerifyTokenAccessControlRequest { Token = request.Token }
+      // );
+      // return Ok(new { message = "Token is valid" });
     }
 
     [HttpPost("reset-password")]
@@ -179,9 +178,12 @@ namespace ApiGateway.Infrastructure.Controllers
       [FromBody] ResetPasswordAccessControlRequest request
     )
     {
-      return await HandleAsync(
-        async () => Ok(await _accessControlService.ResetPasswordAsync(request))
+      return Handle(
+        Response<object>.Success(await _accessControlService.ResetPasswordAsync(request))
       );
+      // return await HandleAsync(
+      //   async () => Ok(await _accessControlService.ResetPasswordAsync(request))
+      // );
     }
   }
 }

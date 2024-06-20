@@ -1,3 +1,4 @@
+using System.Net;
 using System.Text.Json;
 using ApiGateway.Infrastructure.Services;
 using Grpc.Core;
@@ -38,11 +39,22 @@ namespace Infrastructure.DataAnnotations
         .Replace("Bearer ", "");
       try
       {
-        var data = await accessControlServices.VerifyTokenAsync(
+        var response = await accessControlServices.VerifyTokenAsync(
           new VerifyTokenAccessControlRequest { Token = token }
         );
 
-        if (Data != null && !Data.Contains(data.Roles.FirstOrDefault()))
+        if (response.IsFailure)
+        {
+          context.Result = new ContentResult
+          {
+            Content = JsonSerializer.Serialize(new { Message = response.Details }),
+            StatusCode = response.Code != null ? (int)response.Code : (int)HttpStatusCode.InternalServerError,
+            ContentType = ContentType
+          };
+          return;
+        }
+
+        if (Data != null && !Data.Contains(response.Data.Roles.FirstOrDefault()))
         {
           context.Result = new ContentResult
           {
@@ -52,8 +64,8 @@ namespace Infrastructure.DataAnnotations
           };
           return;
         }
-        context.HttpContext.Items.Add("UserId", data.UserId);
-        context.HttpContext.Items.Add("Photo", data.Photo);
+        context.HttpContext.Items.Add("UserId", response.Data.UserId);
+        context.HttpContext.Items.Add("Photo", response.Data.Photo);
         await next();
       }
       catch (RpcException e)

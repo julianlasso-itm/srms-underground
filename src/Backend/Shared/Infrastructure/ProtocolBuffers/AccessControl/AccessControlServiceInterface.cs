@@ -1,6 +1,7 @@
 using System.ServiceModel;
 using Infrastructure.ProtocolBuffers.AccessControl.Responses;
 using ProtoBuf.Grpc;
+using Shared.Common.Bases;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses;
 
@@ -10,73 +11,73 @@ namespace Shared.Infrastructure.ProtocolBuffers.AccessControl
   public interface IAccessControlServices
   {
     [OperationContract]
-    Task<RegisterUserResponse> RegisterUserAsync(
+    Task<Result<RegisterUserResponse>> RegisterUserAsync(
       RegisterUserRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<RegisterRoleAccessControlResponse> RegisterRoleAsync(
+    Task<Result<RegisterRoleAccessControlResponse>> RegisterRoleAsync(
       RegisterRoleAccessControlRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<UpdateRoleAccessControlResponse> UpdateRoleAsync(
+    Task<Result<UpdateRoleAccessControlResponse>> UpdateRoleAsync(
       UpdateRoleAccessControlRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<DeleteRoleAccessControlResponse> DeleteRoleAsync(
+    Task<Result<DeleteRoleAccessControlResponse>> DeleteRoleAsync(
       DeleteRoleAccessControlRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<GetRolesAccessControlResponse> GetRolesAsync(
+    Task<Result<GetRolesAccessControlResponse>> GetRolesAsync(
       GetRolesAccessControlRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<ActivationTokenAccessControlResponse> ActivateTokenAsync(
+    Task<Result<ActivationTokenAccessControlResponse>> ActivateTokenAsync(
       ActivationTokenAccessControlRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<SignInAccessControlResponse> SignInAsync(
+    Task<Result<SignInAccessControlResponse>> SignInAsync(
       SignInAccessControlRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<VerifyTokenAccessControlResponse> VerifyTokenAsync(
+    Task<Result<VerifyTokenAccessControlResponse>> VerifyTokenAsync(
       VerifyTokenAccessControlRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<ChangePasswordAccessControlResponse> ChangePasswordAsync(
+    Task<Result<ChangePasswordAccessControlResponse>> ChangePasswordAsync(
       ChangePasswordAccessControlRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<PasswordRecoveryAccessControlResponse> PasswordRecoveryAsync(
+    Task<Result<PasswordRecoveryAccessControlResponse>> PasswordRecoveryAsync(
       PasswordRecoveryAccessControlRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<UpdateUserAccessControlResponse> UpdateUserAsync(
+    Task<Result<UpdateUserAccessControlResponse>> UpdateUserAsync(
       UpdateUserAccessControlRequest request,
       CallContext context = default
     );
 
     [OperationContract]
-    Task<ResetPasswordAccessControlResponse> ResetPasswordAsync(
+    Task<Result<ResetPasswordAccessControlResponse>> ResetPasswordAsync(
       ResetPasswordAccessControlRequest request,
       CallContext context = default
     );

@@ -12,7 +12,7 @@ namespace AccessControl.Infrastructure.Services
 {
   public class ApplicationService
   {
-    private readonly IApplication<UserModel, RoleModel> _application;
+    private readonly IApplication<RoleModel> _application;
 
     public ApplicationService(
       SharedEventHandler eventHandler,
@@ -38,7 +38,7 @@ namespace AccessControl.Infrastructure.Services
       };
     }
 
-    public IApplication<UserModel, RoleModel> GetApplication()
+    public IApplication<RoleModel> GetApplication()
     {
       return _application;
     }

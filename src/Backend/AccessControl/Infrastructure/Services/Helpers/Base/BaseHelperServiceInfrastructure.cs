@@ -7,12 +7,12 @@ namespace AccessControl.Infrastructure.Services.Helpers.Base
 {
   public abstract class BaseHelperServiceInfrastructure
   {
-    protected static IApplication<UserModel, RoleModel> Application;
+    protected static IApplication<RoleModel> Application;
     protected static IInfrastructureToApplication AclInputMapper;
     protected static IApplicationToInfrastructure AclOutputMapper;
     protected static IEnvironment Configuration;
 
-    public static void SetApplication(IApplication<UserModel, RoleModel> application)
+    public static void SetApplication(IApplication<RoleModel> application)
     {
       Application = application;
     }
