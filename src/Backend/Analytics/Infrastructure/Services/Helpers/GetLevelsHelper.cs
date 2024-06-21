@@ -2,6 +2,8 @@ using Analytics.Application.Commands;
 using Analytics.Application.Responses;
 using Analytics.Infrastructure.Persistence.Models;
 using Analytics.Infrastructure.Services.Helpers.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 using Shared.Infrastructure.ProtocolBuffers.Analytics.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Analytics.Responses;
 
@@ -9,13 +11,23 @@ namespace Analytics.Infrastructure.Services.Helpers
 {
   internal class GetLevelsHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<GetLevelsAnalyticsResponse> GetLevelsAsync(
+    public static async Task<Result<GetLevelsAnalyticsResponse>> GetLevelsAsync(
       GetLevelsAnalyticsRequest request
     )
     {
       var getLevelsCommand = MapToGetLevelsCommand(request);
       var data = await Application.GetLevels(getLevelsCommand);
-      return MapToGetLevelsResponse(data);
+
+      if (data.IsFailure)
+      {
+        return Response<GetLevelsAnalyticsResponse>.Failure(
+          data.Message,
+          data.Code,
+          data.Details
+        );
+      }
+
+      return Response<GetLevelsAnalyticsResponse>.Success(MapToGetLevelsResponse(data.Data));
     }
 
     private static GetLevelsCommand MapToGetLevelsCommand(GetLevelsAnalyticsRequest request)

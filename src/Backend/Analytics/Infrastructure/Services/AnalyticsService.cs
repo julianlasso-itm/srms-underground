@@ -1,5 +1,6 @@
 using Analytics.Infrastructure.Services.Helpers;
 using ProtoBuf.Grpc;
+using Shared.Common.Bases;
 using Shared.Infrastructure.ProtocolBuffers.Analytics;
 using Shared.Infrastructure.ProtocolBuffers.Analytics.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Analytics.Responses;
@@ -10,7 +11,7 @@ namespace Analytics.Infrastructure.Services
   {
     private readonly ApplicationService _applicationService = applicationService;
 
-    public async Task<RegisterLevelAnalyticsResponse> RegisterLevelAsync(
+    public async Task<Result<RegisterLevelAnalyticsResponse>> RegisterLevelAsync(
       RegisterLevelAnalyticsRequest request,
       CallContext context = default
     )
@@ -19,7 +20,7 @@ namespace Analytics.Infrastructure.Services
       return await RegisterLevelHelper.RegisterLevelAsync(request);
     }
 
-    public async Task<UpdateLevelAnalyticsResponse> UpdateLevelAsync(
+    public async Task<Result<UpdateLevelAnalyticsResponse>> UpdateLevelAsync(
       UpdateLevelAnalyticsRequest request,
       CallContext context = default
     )
@@ -28,7 +29,7 @@ namespace Analytics.Infrastructure.Services
       return await UpdateLevelHelper.UpdateLevelAsync(request);
     }
 
-    public async Task<DeleteLevelAnalyticsResponse> DeleteLevelAsync(
+    public async Task<Result<DeleteLevelAnalyticsResponse>> DeleteLevelAsync(
       DeleteLevelAnalyticsRequest request,
       CallContext context = default
     )
@@ -37,7 +38,7 @@ namespace Analytics.Infrastructure.Services
       return await DeleteLevelHelper.DeleteLevelAsync(request);
     }
 
-    public async Task<GetLevelsAnalyticsResponse> GetLevelsAsync(
+    public async Task<Result<GetLevelsAnalyticsResponse>> GetLevelsAsync(
       GetLevelsAnalyticsRequest request,
       CallContext context = default
     )

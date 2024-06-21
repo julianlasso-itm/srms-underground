@@ -1,6 +1,8 @@
 using Analytics.Application.Commands;
 using Analytics.Application.Responses;
 using Analytics.Infrastructure.Services.Helpers.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 using Shared.Infrastructure.ProtocolBuffers.Analytics.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Analytics.Responses;
 
@@ -8,13 +10,25 @@ namespace Analytics.Infrastructure.Services.Helpers
 {
   internal class RegisterLevelHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<RegisterLevelAnalyticsResponse> RegisterLevelAsync(
+    public static async Task<Result<RegisterLevelAnalyticsResponse>> RegisterLevelAsync(
       RegisterLevelAnalyticsRequest request
     )
     {
       var newLevelCommand = MapToRegisterLevelCommand(request);
       var data = await Application.RegisterLevel(newLevelCommand);
-      return MapToRegisterLevelResponse(data);
+
+      if (data.IsFailure)
+      {
+        return Response<RegisterLevelAnalyticsResponse>.Failure(
+          data.Message,
+          data.Code,
+          data.Details
+        );
+      }
+
+      return Response<RegisterLevelAnalyticsResponse>.Success(
+        MapToRegisterLevelResponse(data.Data)
+      );
     }
 
     private static RegisterLevelCommand MapToRegisterLevelCommand(
