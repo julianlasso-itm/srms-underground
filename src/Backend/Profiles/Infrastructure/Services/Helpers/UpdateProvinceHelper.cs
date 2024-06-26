@@ -1,6 +1,8 @@
 using Profiles.Application.Commands;
 using Profiles.Application.Responses;
 using Profiles.Infrastructure.Services.Helpers.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
 
@@ -8,13 +10,25 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   internal class UpdateProvinceHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<UpdateProvinceProfilesResponse> UpdateProvinceAsync(
+    public static async Task<Result<UpdateProvinceProfilesResponse>> UpdateProvinceAsync(
       UpdateProvinceProfilesRequest request
     )
     {
       var updateProvinceCommand = MapToUpdateProvinceCommand(request);
-      var data = await Application.UpdateProvince(updateProvinceCommand);
-      return MapToUpdateProvinceResponse(data);
+      var response = await Application.UpdateProvince(updateProvinceCommand);
+
+      if (response.IsFailure)
+      {
+        return Response<UpdateProvinceProfilesResponse>.Failure(
+          response.Message,
+          response.Code,
+          response.Details
+        );
+      }
+
+      return Response<UpdateProvinceProfilesResponse>.Success(
+        MapToUpdateProvinceResponse(response.Data)
+      );
     }
 
     private static UpdateProvinceCommand MapToUpdateProvinceCommand(

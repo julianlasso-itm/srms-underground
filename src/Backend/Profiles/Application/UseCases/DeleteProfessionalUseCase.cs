@@ -8,6 +8,8 @@ using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 
 namespace Profiles.Application.UseCases
 {
@@ -31,16 +33,27 @@ namespace Profiles.Application.UseCases
 
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventProfessionalDeleted}";
 
-    public override async Task<DeleteProfessionalApplicationResponse> Handle(
+    public override async Task<Result<DeleteProfessionalApplicationResponse>> Handle(
       DeleteProfessionalCommand request
     )
     {
       var dataDeleteRole = MapToRequestForDomain(request);
       var role = AggregateRoot.DeleteProfessional(dataDeleteRole);
-      var response = MapToResponse(role);
+
+      if (role.IsFailure)
+      {
+        return Response<DeleteProfessionalApplicationResponse>.Failure(
+          role.Message,
+          role.Code,
+          role.Details
+        );
+      }
+
+      var response = MapToResponse(role.Data);
       _ = await Persistence(response);
       EmitEvent(Channel, JsonSerializer.Serialize(response));
-      return response;
+
+      return Response<DeleteProfessionalApplicationResponse>.Success(response);
     }
 
     private async Task<TProfessionalEntity> Persistence(
@@ -56,12 +69,12 @@ namespace Profiles.Application.UseCases
     }
 
     private DeleteProfessionalApplicationResponse MapToResponse(
-      DeleteProfessionalDomainResponse Professional
+      DeleteProfessionalDomainResponse professional
     )
     {
       return new DeleteProfessionalApplicationResponse
       {
-        ProfessionalId = Professional.ProfessionalId
+        ProfessionalId = professional.ProfessionalId
       };
     }
   }

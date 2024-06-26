@@ -1,6 +1,8 @@
 ﻿using Profiles.Application.Commands;
 using Profiles.Application.Responses;
 using Profiles.Infrastructure.Services.Helpers.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
 
@@ -8,13 +10,25 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   internal class RegisterRoleHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<RegisterRoleProfilesResponse> RegisterRoleAsync(
+    public static async Task<Result<RegisterRoleProfilesResponse>> RegisterRoleAsync(
       RegisterRoleProfilesRequest request
     )
     {
       var newRoleCommand = MapToRegisterRoleCommand(request);
-      var data = await Application.RegisterRole(newRoleCommand);
-      return MapToRegisterRoleResponse(data);
+      var response = await Application.RegisterRole(newRoleCommand);
+
+      if (response.IsFailure)
+      {
+        return Response<RegisterRoleProfilesResponse>.Failure(
+          response.Message,
+          response.Code,
+          response.Details
+        );
+      }
+
+      return Response<RegisterRoleProfilesResponse>.Success(
+        MapToRegisterRoleResponse(response.Data)
+      );
     }
 
     private static RegisterRoleCommand MapToRegisterRoleCommand(RegisterRoleProfilesRequest request)

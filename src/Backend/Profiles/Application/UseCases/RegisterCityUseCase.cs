@@ -8,6 +8,8 @@ using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 
 namespace Profiles.Application.UseCases
 {
@@ -29,14 +31,25 @@ namespace Profiles.Application.UseCases
     private readonly ICityRepository<TEntity> _cityRepository = cityRepository;
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventCityRegistered}";
 
-    public override async Task<RegisterCityApplicationResponse> Handle(RegisterCityCommand request)
+    public override async Task<Result<RegisterCityApplicationResponse>> Handle(RegisterCityCommand request)
     {
       var newCity = MapToRequestForDomain(request);
       var city = AggregateRoot.RegisterCity(newCity);
-      var response = MapToResponse(city);
+
+      if (city.IsFailure)
+      {
+        return Response<RegisterCityApplicationResponse>.Failure(
+          city.Message,
+          city.Code,
+          city.Details
+        );
+      }
+
+      var response = MapToResponse(city.Data);
       _ = await Persistence(response);
       EmitEvent(Channel, JsonSerializer.Serialize(response));
-      return response;
+
+      return Response<RegisterCityApplicationResponse>.Success(response);
     }
 
     private static RegisterCityDomainRequest MapToRequestForDomain(RegisterCityCommand request)

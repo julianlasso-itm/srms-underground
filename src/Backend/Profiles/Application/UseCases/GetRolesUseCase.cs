@@ -4,6 +4,8 @@ using Profiles.Application.Repositories;
 using Profiles.Application.Responses;
 using Profiles.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 
 namespace Profiles.Application.UseCases
 {
@@ -24,12 +26,15 @@ namespace Profiles.Application.UseCases
   {
     private readonly IRoleRepository<TEntity> _roleRepository = roleRepository;
 
-    public override async Task<GetRolesApplicationResponse<TEntity>> Handle(GetRolesCommand request)
+    public override async Task<Result<GetRolesApplicationResponse<TEntity>>> Handle(
+      GetRolesCommand request
+    )
     {
       var data = await QueryRoles(request);
       var count = await QueryRolesCount(request);
       var response = MapToResponse(data, count);
-      return response;
+
+      return Response<GetRolesApplicationResponse<TEntity>>.Success(response);
     }
 
     private async Task<IEnumerable<TEntity>> QueryRoles(GetRolesCommand request)

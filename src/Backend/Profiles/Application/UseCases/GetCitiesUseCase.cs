@@ -4,6 +4,8 @@ using Profiles.Application.Repositories;
 using Profiles.Application.Responses;
 using Profiles.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 
 namespace Profiles.Application.UseCases
 {
@@ -24,14 +26,14 @@ namespace Profiles.Application.UseCases
   {
     private readonly ICityRepository<TEntity> _cityRepository = cityRepository;
 
-    public override async Task<GetCitiesApplicationResponse<TEntity>> Handle(
+    public override async Task<Result<GetCitiesApplicationResponse<TEntity>>> Handle(
       GetCitiesCommand request
     )
     {
       var data = await QueryCities(request);
       var count = await QueryCitiesCount(request);
       var response = MapToResponse(data, count);
-      return response;
+      return Response<GetCitiesApplicationResponse<TEntity>>.Success(response);
     }
 
     private async Task<IEnumerable<TEntity>> QueryCities(GetCitiesCommand request)

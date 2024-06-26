@@ -1,6 +1,8 @@
 ﻿using Profiles.Application.Commands;
 using Profiles.Application.Responses;
 using Profiles.Infrastructure.Services.Helpers.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
 
@@ -8,13 +10,23 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   public class DeleteSkillHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<DeleteSkillProfilesResponse> DeleteSkillAsync(
+    public static async Task<Result<DeleteSkillProfilesResponse>> DeleteSkillAsync(
       DeleteSkillProfilesRequest request
     )
     {
       var newUserCommand = MapToDeleteSkillCommand(request);
-      var data = await Application.DeleteSkill(newUserCommand);
-      return MapToDeleteSkillResponse(data);
+      var response = await Application.DeleteSkill(newUserCommand);
+
+      if (response.IsFailure)
+      {
+        return Response<DeleteSkillProfilesResponse>.Failure(
+          response.Message,
+          response.Code,
+          response.Details
+        );
+      }
+
+      return Response<DeleteSkillProfilesResponse>.Success(MapToDeleteSkillResponse(response.Data));
     }
 
     private static DeleteSkillCommand MapToDeleteSkillCommand(DeleteSkillProfilesRequest request)

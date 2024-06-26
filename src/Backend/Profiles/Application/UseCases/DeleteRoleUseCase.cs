@@ -8,6 +8,8 @@ using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 
 namespace Profiles.Application.UseCases
 {
@@ -29,14 +31,26 @@ namespace Profiles.Application.UseCases
     private readonly IRoleRepository<TEntity> _roleRepository = roleRepository;
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventRoleDeleted}";
 
-    public override async Task<DeleteRoleApplicationResponse> Handle(DeleteRoleCommand request)
+    public override async Task<Result<DeleteRoleApplicationResponse>> Handle(
+      DeleteRoleCommand request
+    )
     {
       var dataDeleteRole = MapToRequestForDomain(request);
       var role = AggregateRoot.DeleteRole(dataDeleteRole);
-      var response = MapToResponse(role);
+
+      if (role.IsFailure)
+      {
+        return Response<DeleteRoleApplicationResponse>.Failure(
+          role.Message,
+          role.Code,
+          role.Details
+        );
+      }
+      var response = MapToResponse(role.Data);
       _ = await Persistence(response);
       EmitEvent(Channel, JsonSerializer.Serialize(response));
-      return response;
+
+      return Response<DeleteRoleApplicationResponse>.Success(response);
     }
 
     private DeleteRoleDomainRequest MapToRequestForDomain(DeleteRoleCommand request)

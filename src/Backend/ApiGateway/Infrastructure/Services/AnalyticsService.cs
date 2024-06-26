@@ -1,5 +1,6 @@
 using ApiGateway.Infrastructure.Services.Base;
 using ProtoBuf.Grpc;
+using Shared.Common.Bases;
 using Shared.Infrastructure.ProtocolBuffers.Analytics;
 using Shared.Infrastructure.ProtocolBuffers.Analytics.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Analytics.Responses;
@@ -14,7 +15,7 @@ namespace ApiGateway.Infrastructure.Services
       CreateChannel(urlMicroservice);
     }
 
-    public Task<RegisterLevelAnalyticsResponse> RegisterLevelAsync(
+    public Task<Result<RegisterLevelAnalyticsResponse>> RegisterLevelAsync(
       RegisterLevelAnalyticsRequest request,
       CallContext context = default
     )
@@ -22,7 +23,7 @@ namespace ApiGateway.Infrastructure.Services
       return Client.RegisterLevelAsync(request, context);
     }
 
-    public Task<UpdateLevelAnalyticsResponse> UpdateLevelAsync(
+    public Task<Result<UpdateLevelAnalyticsResponse>> UpdateLevelAsync(
       UpdateLevelAnalyticsRequest request,
       CallContext context = default
     )
@@ -30,7 +31,7 @@ namespace ApiGateway.Infrastructure.Services
       return Client.UpdateLevelAsync(request, context);
     }
 
-    public Task<DeleteLevelAnalyticsResponse> DeleteLevelAsync(
+    public Task<Result<DeleteLevelAnalyticsResponse>> DeleteLevelAsync(
       DeleteLevelAnalyticsRequest request,
       CallContext context = default
     )
@@ -38,7 +39,7 @@ namespace ApiGateway.Infrastructure.Services
       return Client.DeleteLevelAsync(request, context);
     }
 
-    public Task<GetLevelsAnalyticsResponse> GetLevelsAsync(
+    public Task<Result<GetLevelsAnalyticsResponse>> GetLevelsAsync(
       GetLevelsAnalyticsRequest request,
       CallContext context = default
     )

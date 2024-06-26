@@ -1,6 +1,8 @@
 using Profiles.Application.Commands;
 using Profiles.Application.Responses;
 using Profiles.Infrastructure.Services.Helpers.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
 
@@ -8,13 +10,23 @@ namespace Profiles.Infrastructure.Services.Helpers;
 
 internal class UpdateCityHelper : BaseHelperServiceInfrastructure
 {
-  public static async Task<UpdateCityProfilesResponse> UpdateCityAsync(
+  public static async Task<Result<UpdateCityProfilesResponse>> UpdateCityAsync(
     UpdateCityProfilesRequest request
   )
   {
     var updateCityCommand = MapToUpdateCityCommand(request);
-    var data = await Application.UpdateCity(updateCityCommand);
-    return MapToUpdateCityResponse(data);
+    var response = await Application.UpdateCity(updateCityCommand);
+
+    if (response.IsFailure)
+    {
+      return Response<UpdateCityProfilesResponse>.Failure(
+        response.Message,
+        response.Code,
+        response.Details
+      );
+    }
+
+    return Response<UpdateCityProfilesResponse>.Success(MapToUpdateCityResponse(response.Data));
   }
 
   private static UpdateCityCommand MapToUpdateCityCommand(UpdateCityProfilesRequest request)

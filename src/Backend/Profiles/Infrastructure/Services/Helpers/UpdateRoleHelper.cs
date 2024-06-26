@@ -1,6 +1,8 @@
 ﻿using Profiles.Application.Commands;
 using Profiles.Application.Responses;
 using Profiles.Infrastructure.Services.Helpers.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
 
@@ -8,13 +10,23 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   internal class UpdateRoleHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<UpdateRoleProfilesResponse> UpdateRoleAsync(
+    public static async Task<Result<UpdateRoleProfilesResponse>> UpdateRoleAsync(
       UpdateRoleProfilesRequest request
     )
     {
       var updateRoleCommand = MapToUpdateRoleCommand(request);
-      var data = await Application.UpdateRole(updateRoleCommand);
-      return MapToUpdateRoleResponse(data);
+      var response = await Application.UpdateRole(updateRoleCommand);
+
+      if (response.IsFailure)
+      {
+        return Response<UpdateRoleProfilesResponse>.Failure(
+          response.Message,
+          response.Code,
+          response.Details
+        );
+      }
+
+      return Response<UpdateRoleProfilesResponse>.Success(MapToUpdateRoleResponse(response.Data));
     }
 
     private static UpdateRoleCommand MapToUpdateRoleCommand(UpdateRoleProfilesRequest request)

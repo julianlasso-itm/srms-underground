@@ -5,6 +5,7 @@ using QueryBank.Application.Responses;
 using QueryBank.Application.UseCases;
 using QueryBank.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
+using Shared.Common.Bases;
 
 namespace QueryBank.Application
 {
@@ -21,7 +22,9 @@ namespace QueryBank.Application
   {
     private readonly ISkillRepository<TSkillEntity> _skillRepository = skillRepository;
 
-    public Task<RegisterSkillApplicationResponse> RegisterSkill(RegisterSkillCommand request)
+    public Task<Result<RegisterSkillApplicationResponse>> RegisterSkill(
+      RegisterSkillCommand request
+    )
     {
       var useCase = new RegisterSkillUseCase<TSkillEntity>(
         AggregateRoot,
@@ -32,7 +35,7 @@ namespace QueryBank.Application
       return useCase.Handle(request);
     }
 
-    public Task<DeleteSkillApplicationResponse> DeleteSkill(DeleteSkillCommand request)
+    public Task<Result<DeleteSkillApplicationResponse>> DeleteSkill(DeleteSkillCommand request)
     {
       var useCase = new DeleteSkillUseCase<TSkillEntity>(
         AggregateRoot,
@@ -43,7 +46,9 @@ namespace QueryBank.Application
       return useCase.Handle(request);
     }
 
-    public Task<GetSkillsApplicationResponse<TSkillEntity>> GetSkills(GetSkillsCommand request)
+    public Task<Result<GetSkillsApplicationResponse<TSkillEntity>>> GetSkills(
+      GetSkillsCommand request
+    )
     {
       var useCase = new GetSkillsUseCase<TSkillEntity>(
         AggregateRoot,
@@ -54,7 +59,7 @@ namespace QueryBank.Application
       return useCase.Handle(request);
     }
 
-    public Task<UpdateSkillApplicationResponse> UpdateSkill(UpdateSkillCommand request)
+    public Task<Result<UpdateSkillApplicationResponse>> UpdateSkill(UpdateSkillCommand request)
     {
       var useCase = new UpdateSkillUseCase<TSkillEntity>(
         AggregateRoot,

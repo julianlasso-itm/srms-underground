@@ -1,6 +1,7 @@
 using ApiGateway.Infrastructure.Controllers.Base;
 using ApiGateway.Infrastructure.Dto;
 using ApiGateway.Infrastructure.Services;
+using Grpc.Core;
 using Infrastructure.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Application.Interfaces;

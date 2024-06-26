@@ -6,6 +6,8 @@ using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 
 namespace Profiles.Application.UseCases
 {
@@ -26,13 +28,26 @@ namespace Profiles.Application.UseCases
   {
     private readonly ILevelRepository<TEntity> _levelRepository = levelRepository;
 
-    public override async Task<DeleteLevelApplicationResponse> Handle(DeleteLevelCommand request)
+    public override async Task<Result<DeleteLevelApplicationResponse>> Handle(
+      DeleteLevelCommand request
+    )
     {
       var dataDeleteLevel = MapToRequestForDomain(request);
       var level = AggregateRoot.DeleteLevel(dataDeleteLevel);
-      var response = MapToResponse(level);
+
+      if (level.IsFailure)
+      {
+        return Response<DeleteLevelApplicationResponse>.Failure(
+          level.Message,
+          level.Code,
+          level.Details
+        );
+      }
+
+      var response = MapToResponse(level.Data);
       _ = await Persistence(response);
-      return response;
+
+      return Response<DeleteLevelApplicationResponse>.Success(response);
     }
 
     private DeleteLevelDomainRequest MapToRequestForDomain(DeleteLevelCommand request)

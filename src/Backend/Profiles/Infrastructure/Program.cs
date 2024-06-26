@@ -27,7 +27,6 @@ builder
     reloadOnChange: true
   )
   .AddEnvironmentVariables();
-
 // =====================================
 
 // == Configure connection to the database ==
@@ -38,7 +37,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(
   },
   ServiceLifetime.Scoped
 );
-
 // ==========================================
 
 // == Configure connection to Redis ==
@@ -46,7 +44,6 @@ var multiplexer = ConnectionMultiplexer.Connect(
   builder.Configuration.GetConnectionString("RedisConnection")!
 );
 builder.Services.AddSingleton<IConnectionMultiplexer>(multiplexer);
-
 // ===================================
 
 // == Configure repositories ==
@@ -61,7 +58,6 @@ builder.Services.AddScoped<IProfessionalRepository<ProfessionalModel>, Professio
 builder.Services.AddScoped<IAssessmentRepository<AssessmentModel>, AssessmentRepository>();
 builder.Services.AddScoped<ILevelRepository<LevelModel>, LevelRepository>();
 builder.Services.AddScoped<IPodiumRepository<PodiumModel>, PodiumRepository>();
-
 // ============================
 
 // == Configure dependency injection for services ==
@@ -69,12 +65,10 @@ builder.Services.AddScoped<SharedEventHandler>();
 builder.Services.AddScoped<ApplicationService>();
 builder.Services.AddScoped<IAntiCorruptionLayer, AntiCorruptionLayer>();
 builder.Services.AddScoped<AntiCorruptionLayerService<AntiCorruptionLayer>>();
-
 // =================================================
 
 // == Configure interceptors for gRPC services ==
 builder.Services.AddSingleton<ErrorHandlingInterceptor>();
-
 // ==============================================
 
 // == Configure gRPC services ==
@@ -82,8 +76,7 @@ builder.Services.AddCodeFirstGrpc(options =>
 {
   options.Interceptors.Add<ErrorHandlingInterceptor>();
 });
-
-// ========================================
+// =============================
 
 var app = builder.Build();
 
@@ -94,12 +87,10 @@ using (var scope = app.Services.CreateScope())
   var context = services.GetRequiredService<ApplicationDbContext>();
   context.Database.Migrate();
 }
-
 // ================================================================================
 
 // == Configure gRPC services ==
 app.MapGrpcService<ProfilesService>();
-
 // =============================
 
 app.MapGet(

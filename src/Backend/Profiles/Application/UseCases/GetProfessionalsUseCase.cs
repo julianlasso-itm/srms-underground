@@ -4,6 +4,8 @@ using Profiles.Application.Repositories;
 using Profiles.Application.Responses;
 using Profiles.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 
 namespace Profiles.Application.UseCases
 {
@@ -25,14 +27,15 @@ namespace Profiles.Application.UseCases
     private readonly IProfessionalRepository<TProfessionalEntity> _professionalRepository =
       professionalRepository;
 
-    public override async Task<GetProfessionalsApplicationResponse<TProfessionalEntity>> Handle(
-      GetProfessionalsCommand request
-    )
+    public override async Task<
+      Result<GetProfessionalsApplicationResponse<TProfessionalEntity>>
+    > Handle(GetProfessionalsCommand request)
     {
       var data = await QueryProfessionals(request);
       var count = await QueryProfessionalsCount(request);
       var response = MapToResponse(data, count);
-      return response;
+
+      return Response<GetProfessionalsApplicationResponse<TProfessionalEntity>>.Success(response);
     }
 
     private GetProfessionalsApplicationResponse<TProfessionalEntity> MapToResponse(

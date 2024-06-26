@@ -3,6 +3,8 @@ using Profiles.Application.Responses;
 using Profiles.Infrastructure.Persistence.Models;
 using Profiles.Infrastructure.Services.Helpers;
 using ProtoBuf.Grpc;
+using Shared.Common;
+using Shared.Common.Bases;
 using Shared.Infrastructure.ProtocolBuffers.Profiles;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
@@ -24,7 +26,7 @@ namespace Profiles.Infrastructure.Services
       assessmentRepository;
     private readonly IPodiumRepository<PodiumModel> _podiumRepository = podiumRepository;
 
-    public Task<DeleteCityProfilesResponse> DeleteCityAsync(
+    public Task<Result<DeleteCityProfilesResponse>> DeleteCityAsync(
       DeleteCityProfilesRequest request,
       CallContext context = default
     )
@@ -33,7 +35,7 @@ namespace Profiles.Infrastructure.Services
       return DeleteCityHelper.DeleteCityAsync(request);
     }
 
-    public Task<DeleteCountryProfilesResponse> DeleteCountryAsync(
+    public Task<Result<DeleteCountryProfilesResponse>> DeleteCountryAsync(
       DeleteCountryProfilesRequest request,
       CallContext context = default
     )
@@ -42,7 +44,7 @@ namespace Profiles.Infrastructure.Services
       return DeleteCountryHelper.DeleteCountryAsync(request);
     }
 
-    public Task<DeleteProvinceProfilesResponse> DeleteProvinceAsync(
+    public Task<Result<DeleteProvinceProfilesResponse>> DeleteProvinceAsync(
       DeleteProvinceProfilesRequest request,
       CallContext context = default
     )
@@ -51,7 +53,7 @@ namespace Profiles.Infrastructure.Services
       return DeleteProvinceHelper.DeleteProvinceAsync(request);
     }
 
-    public Task<GetCitiesProfilesResponse> GetCitiesAsync(
+    public Task<Result<GetCitiesProfilesResponse>> GetCitiesAsync(
       GetCitiesProfilesRequest request,
       CallContext context = default
     )
@@ -60,7 +62,7 @@ namespace Profiles.Infrastructure.Services
       return GetCitiesHelper.GetCitiesAsync(request);
     }
 
-    public Task<GetCountriesProfilesResponse> GetCountriesAsync(
+    public Task<Result<GetCountriesProfilesResponse>> GetCountriesAsync(
       GetCountriesProfilesRequest request,
       CallContext context = default
     )
@@ -69,7 +71,7 @@ namespace Profiles.Infrastructure.Services
       return GetCountriesHelper.GetCountriesAsync(request);
     }
 
-    public Task<GetProvincesProfilesResponse> GetProvincesAsync(
+    public Task<Result<GetProvincesProfilesResponse>> GetProvincesAsync(
       GetProvincesProfilesRequest request,
       CallContext context = default
     )
@@ -78,7 +80,7 @@ namespace Profiles.Infrastructure.Services
       return GetProvincesHelper.GetProvincesAsync(request);
     }
 
-    public Task<RegisterCityProfilesResponse> RegisterCityAsync(
+    public Task<Result<RegisterCityProfilesResponse>> RegisterCityAsync(
       RegisterCityProfilesRequest request,
       CallContext context = default
     )
@@ -87,7 +89,7 @@ namespace Profiles.Infrastructure.Services
       return RegisterCityHelper.RegisterCityAsync(request);
     }
 
-    public Task<RegisterCountryProfilesResponse> RegisterCountryAsync(
+    public Task<Result<RegisterCountryProfilesResponse>> RegisterCountryAsync(
       RegisterCountryProfilesRequest request,
       CallContext context = default
     )
@@ -96,7 +98,7 @@ namespace Profiles.Infrastructure.Services
       return RegisterCountryHelper.RegisterCountryAsync(request);
     }
 
-    public Task<RegisterProvinceProfilesResponse> RegisterProvinceAsync(
+    public Task<Result<RegisterProvinceProfilesResponse>> RegisterProvinceAsync(
       RegisterProvinceProfilesRequest request,
       CallContext context = default
     )
@@ -105,7 +107,7 @@ namespace Profiles.Infrastructure.Services
       return RegisterProvinceHelper.RegisterProvinceAsync(request);
     }
 
-    public Task<UpdateCityProfilesResponse> UpdateCityAsync(
+    public Task<Result<UpdateCityProfilesResponse>> UpdateCityAsync(
       UpdateCityProfilesRequest request,
       CallContext context = default
     )
@@ -114,7 +116,7 @@ namespace Profiles.Infrastructure.Services
       return UpdateCityHelper.UpdateCityAsync(request);
     }
 
-    public Task<UpdateCountryProfilesResponse> UpdateCountryAsync(
+    public Task<Result<UpdateCountryProfilesResponse>> UpdateCountryAsync(
       UpdateCountryProfilesRequest request,
       CallContext context = default
     )
@@ -123,7 +125,7 @@ namespace Profiles.Infrastructure.Services
       return UpdateCountryHelper.UpdateCountryAsync(request);
     }
 
-    public Task<UpdateProvinceProfilesResponse> UpdateProvinceAsync(
+    public Task<Result<UpdateProvinceProfilesResponse>> UpdateProvinceAsync(
       UpdateProvinceProfilesRequest request,
       CallContext context = default
     )
@@ -132,7 +134,7 @@ namespace Profiles.Infrastructure.Services
       return UpdateProvinceHelper.UpdateProvinceAsync(request);
     }
 
-    public Task<DeleteRoleProfilesResponse> DeleteRoleAsync(
+    public Task<Result<DeleteRoleProfilesResponse>> DeleteRoleAsync(
       DeleteRoleProfilesRequest request,
       CallContext context = default
     )
@@ -141,7 +143,7 @@ namespace Profiles.Infrastructure.Services
       return DeleteRoleHelper.DeleteRoleAsync(request);
     }
 
-    public Task<GetRolesProfilesResponse> GetRolesAsync(
+    public Task<Result<GetRolesProfilesResponse>> GetRolesAsync(
       GetRolesProfilesRequest request,
       CallContext context = default
     )
@@ -150,7 +152,7 @@ namespace Profiles.Infrastructure.Services
       return GetRolesHelper.GetRolesAsync(request);
     }
 
-    public Task<RegisterRoleProfilesResponse> RegisterRoleAsync(
+    public Task<Result<RegisterRoleProfilesResponse>> RegisterRoleAsync(
       RegisterRoleProfilesRequest request,
       CallContext context = default
     )
@@ -159,7 +161,7 @@ namespace Profiles.Infrastructure.Services
       return RegisterRoleHelper.RegisterRoleAsync(request);
     }
 
-    public Task<UpdateRoleProfilesResponse> UpdateRoleAsync(
+    public Task<Result<UpdateRoleProfilesResponse>> UpdateRoleAsync(
       UpdateRoleProfilesRequest request,
       CallContext context = default
     )
@@ -168,7 +170,7 @@ namespace Profiles.Infrastructure.Services
       return UpdateRoleHelper.UpdateRoleAsync(request);
     }
 
-    public async Task<DeleteProfessionalProfilesResponse> DeleteProfessionalAsync(
+    public async Task<Result<DeleteProfessionalProfilesResponse>> DeleteProfessionalAsync(
       DeleteProfessionalProfilesRequest request,
       CallContext context = default
     )
@@ -177,7 +179,7 @@ namespace Profiles.Infrastructure.Services
       return await DeleteProfessionalHelper.DeleteProfessionalAsync(request);
     }
 
-    public async Task<DeleteSkillProfilesResponse> DeleteSkillAsync(
+    public async Task<Result<DeleteSkillProfilesResponse>> DeleteSkillAsync(
       DeleteSkillProfilesRequest request,
       CallContext context = default
     )
@@ -186,7 +188,7 @@ namespace Profiles.Infrastructure.Services
       return await DeleteSkillHelper.DeleteSkillAsync(request);
     }
 
-    public async Task<GetProfessionalProfilesResponse> GetProfessionalAsync(
+    public async Task<Result<GetProfessionalProfilesResponse>> GetProfessionalAsync(
       GetProfessionalsProfilesRequest request,
       CallContext context = default
     )
@@ -195,7 +197,7 @@ namespace Profiles.Infrastructure.Services
       return await GetProfessionalHelper.GetProfessionalsAsync(request);
     }
 
-    public async Task<GetSkillsProfilesResponse> GetSkillAsync(
+    public async Task<Result<GetSkillsProfilesResponse>> GetSkillAsync(
       GetSkillsProfilesRequest request,
       CallContext context = default
     )
@@ -204,7 +206,7 @@ namespace Profiles.Infrastructure.Services
       return await GetSkillsHelper.GetSkillsAsync(request);
     }
 
-    public async Task<RegisterProfessionalProfilesResponse> RegisterProfessionalAsync(
+    public async Task<Result<RegisterProfessionalProfilesResponse>> RegisterProfessionalAsync(
       RegisterProfessionalProfilesRequest request,
       CallContext context = default
     )
@@ -213,7 +215,7 @@ namespace Profiles.Infrastructure.Services
       return await RegisterProfessionalHelper.RegisterProfessionalAsync(request);
     }
 
-    public async Task<RegisterSkillProfilesResponse> RegisterSkillAsync(
+    public async Task<Result<RegisterSkillProfilesResponse>> RegisterSkillAsync(
       RegisterSkillProfilesRequest request,
       CallContext context = default
     )
@@ -222,7 +224,7 @@ namespace Profiles.Infrastructure.Services
       return await RegisterSkillHelper.RegisterSkillAsync(request);
     }
 
-    public async Task<UpdateProfessionalProfilesResponse> UpdateProfessionalAsync(
+    public async Task<Result<UpdateProfessionalProfilesResponse>> UpdateProfessionalAsync(
       UpdateProfessionalProfilesRequest request,
       CallContext context = default
     )
@@ -231,7 +233,7 @@ namespace Profiles.Infrastructure.Services
       return await UpdateProfessionalHelper.UpdateProfessionalAsync(request);
     }
 
-    public async Task<UpdateSkillProfilesResponse> UpdateSkillRoleAsync(
+    public async Task<Result<UpdateSkillProfilesResponse>> UpdateSkillRoleAsync(
       UpdateSkillProfilesRequest request,
       CallContext context = default
     )
@@ -240,7 +242,7 @@ namespace Profiles.Infrastructure.Services
       return await UpdateSkillHelper.UpdateSkillAsync(request);
     }
 
-    public async Task<RegisterSubSkillProfilesResponse> RegisterSubSkillAsync(
+    public async Task<Result<RegisterSubSkillProfilesResponse>> RegisterSubSkillAsync(
       RegisterSubSkillProfilesRequest request,
       CallContext context = default
     )
@@ -253,16 +255,18 @@ namespace Profiles.Infrastructure.Services
         Disabled = false,
       };
       var result = await _subSkillRepository.AddAsync(subskill);
-      return new RegisterSubSkillProfilesResponse
-      {
-        SubSkillId = result.SubSkillId.ToString(),
-        SkillId = result.SkillId.ToString(),
-        Name = result.Name,
-        Disabled = result.Disabled,
-      };
+      return Response<RegisterSubSkillProfilesResponse>.Success(
+        new RegisterSubSkillProfilesResponse
+        {
+          SubSkillId = result.SubSkillId.ToString(),
+          SkillId = result.SkillId.ToString(),
+          Name = result.Name,
+          Disabled = result.Disabled,
+        }
+      );
     }
 
-    public async Task<UpdateSubSkillProfilesResponse> UpdateSubSkillAsync(
+    public async Task<Result<UpdateSubSkillProfilesResponse>> UpdateSubSkillAsync(
       UpdateSubSkillProfilesRequest request,
       CallContext context = default
     )
@@ -275,25 +279,29 @@ namespace Profiles.Infrastructure.Services
         Disabled = !request.Disable,
       };
       var result = await _subSkillRepository.UpdateAsync(Guid.Parse(request.SubSkillId!), subskill);
-      return new UpdateSubSkillProfilesResponse
-      {
-        SubSkillId = result.SubSkillId.ToString(),
-        SkillId = result.SkillId.ToString(),
-        Name = result.Name,
-        Disabled = result.Disabled,
-      };
+      return Response<UpdateSubSkillProfilesResponse>.Success(
+        new UpdateSubSkillProfilesResponse
+        {
+          SubSkillId = result.SubSkillId.ToString(),
+          SkillId = result.SkillId.ToString(),
+          Name = result.Name,
+          Disabled = result.Disabled,
+        }
+      );
     }
 
-    public async Task<DeleteSubSkillProfilesResponse> DeleteSubSkillAsync(
+    public async Task<Result<DeleteSubSkillProfilesResponse>> DeleteSubSkillAsync(
       DeleteSubSkillProfilesRequest request,
       CallContext context = default
     )
     {
       var result = await _subSkillRepository.DeleteAsync(Guid.Parse(request.SubSkillId));
-      return new DeleteSubSkillProfilesResponse { SubSkillId = result.SubSkillId.ToString() };
+      return Response<DeleteSubSkillProfilesResponse>.Success(
+        new DeleteSubSkillProfilesResponse { SubSkillId = result.SubSkillId.ToString() }
+      );
     }
 
-    public async Task<GetSubSkillsProfilesResponse> GetSubSkillsAsync(
+    public async Task<Result<GetSubSkillsProfilesResponse>> GetSubSkillsAsync(
       GetSubSkillsProfilesRequest request,
       CallContext context = default
     )
@@ -307,22 +315,24 @@ namespace Profiles.Infrastructure.Services
         request.FilterBy
       );
       var total = await _subSkillRepository.GetCountAsync(request.Filter, request.FilterBy);
-      return new GetSubSkillsProfilesResponse
-      {
-        SubSkills = results
-          .Select(subskill => new SubSkillProfiles
-          {
-            SubSkillId = subskill.SubSkillId.ToString(),
-            SkillId = subskill.SkillId.ToString(),
-            Name = subskill.Name,
-            Disabled = subskill.Disabled,
-          })
-          .ToList(),
-        Total = total,
-      };
+      return Response<GetSubSkillsProfilesResponse>.Success(
+        new GetSubSkillsProfilesResponse
+        {
+          SubSkills = results
+            .Select(subskill => new SubSkillProfiles
+            {
+              SubSkillId = subskill.SubSkillId.ToString(),
+              SkillId = subskill.SkillId.ToString(),
+              Name = subskill.Name,
+              Disabled = subskill.Disabled,
+            })
+            .ToList(),
+          Total = total,
+        }
+      );
     }
 
-    public async Task<RegisterSquadProfilesResponse> RegisterSquadAsync(
+    public async Task<Result<RegisterSquadProfilesResponse>> RegisterSquadAsync(
       RegisterSquadProfilesRequest request,
       CallContext context = default
     )
@@ -334,15 +344,17 @@ namespace Profiles.Infrastructure.Services
         Disabled = false,
       };
       var result = await _squadRepository.AddAsync(squad);
-      return new RegisterSquadProfilesResponse
-      {
-        SquadId = result.SquadId.ToString(),
-        Name = result.Name,
-        Disabled = result.Disabled,
-      };
+      return Response<RegisterSquadProfilesResponse>.Success(
+        new RegisterSquadProfilesResponse
+        {
+          SquadId = result.SquadId.ToString(),
+          Name = result.Name,
+          Disabled = result.Disabled,
+        }
+      );
     }
 
-    public async Task<UpdateSquadProfilesResponse> UpdateSquadAsync(
+    public async Task<Result<UpdateSquadProfilesResponse>> UpdateSquadAsync(
       UpdateSquadProfilesRequest request,
       CallContext context = default
     )
@@ -354,24 +366,28 @@ namespace Profiles.Infrastructure.Services
         Disabled = !request.Disable,
       };
       var result = await _squadRepository.UpdateAsync(Guid.Parse(request.SquadId!), squad);
-      return new UpdateSquadProfilesResponse
-      {
-        SquadId = result.SquadId.ToString(),
-        Name = result.Name,
-        Disabled = result.Disabled,
-      };
+      return Response<UpdateSquadProfilesResponse>.Success(
+        new UpdateSquadProfilesResponse
+        {
+          SquadId = result.SquadId.ToString(),
+          Name = result.Name,
+          Disabled = result.Disabled,
+        }
+      );
     }
 
-    public async Task<DeleteSquadProfilesResponse> DeleteSquadAsync(
+    public async Task<Result<DeleteSquadProfilesResponse>> DeleteSquadAsync(
       DeleteSquadProfilesRequest request,
       CallContext context = default
     )
     {
       var result = await _squadRepository.DeleteAsync(Guid.Parse(request.SquadId));
-      return new DeleteSquadProfilesResponse { SquadId = result.SquadId.ToString() };
+      return Response<DeleteSquadProfilesResponse>.Success(
+        new DeleteSquadProfilesResponse { SquadId = result.SquadId.ToString() }
+      );
     }
 
-    public async Task<GetSquadsProfilesResponse> GetSquadsAsync(
+    public async Task<Result<GetSquadsProfilesResponse>> GetSquadsAsync(
       GetSquadsProfilesRequest request,
       CallContext context = default
     )
@@ -385,21 +401,23 @@ namespace Profiles.Infrastructure.Services
         request.FilterBy
       );
       var total = await _squadRepository.GetCountAsync(request.Filter, request.FilterBy);
-      return new GetSquadsProfilesResponse
-      {
-        Squads = results
-          .Select(squad => new SquadProfiles
-          {
-            SquadId = squad.SquadId.ToString(),
-            Name = squad.Name,
-            Disabled = squad.Disabled,
-          })
-          .ToList(),
-        Total = total,
-      };
+      return Response<GetSquadsProfilesResponse>.Success(
+        new GetSquadsProfilesResponse
+        {
+          Squads = results
+            .Select(squad => new SquadProfiles
+            {
+              SquadId = squad.SquadId.ToString(),
+              Name = squad.Name,
+              Disabled = squad.Disabled,
+            })
+            .ToList(),
+          Total = total,
+        }
+      );
     }
 
-    public async Task<RegisterAssessmentProfilesResponse> RegisterAssessmentAsync(
+    public async Task<Result<RegisterAssessmentProfilesResponse>> RegisterAssessmentAsync(
       RegisterAssessmentProfilesRequest request,
       CallContext context = default
     )
@@ -412,16 +430,18 @@ namespace Profiles.Infrastructure.Services
         SquadId = request.SquadId,
       };
       var result = await _assessmentRepository.AddAsync(assessment);
-      return new RegisterAssessmentProfilesResponse
-      {
-        AssessmentId = result.AssessmentId.ToString(),
-        ProfessionalId = result.ProfessionalId.ToString(),
-        RoleId = result.RoleId.ToString(),
-        SquadId = result.SquadId.ToString(),
-      };
+      return Response<RegisterAssessmentProfilesResponse>.Success(
+        new RegisterAssessmentProfilesResponse
+        {
+          AssessmentId = result.AssessmentId.ToString(),
+          ProfessionalId = result.ProfessionalId.ToString(),
+          RoleId = result.RoleId.ToString(),
+          SquadId = result.SquadId.ToString(),
+        }
+      );
     }
 
-    public async Task<UpdateAssessmentProfilesResponse> UpdateAssessmentAsync(
+    public async Task<Result<UpdateAssessmentProfilesResponse>> UpdateAssessmentAsync(
       UpdateAssessmentProfilesRequest request,
       CallContext context = default
     )
@@ -436,25 +456,29 @@ namespace Profiles.Infrastructure.Services
         Guid.Parse(request.AssessmentId!),
         assessment
       );
-      return new UpdateAssessmentProfilesResponse
-      {
-        AssessmentId = result.AssessmentId.ToString(),
-        ProfessionalId = result.ProfessionalId.ToString(),
-        RoleId = result.RoleId.ToString(),
-        SquadId = result.SquadId.ToString(),
-      };
+      return Response<UpdateAssessmentProfilesResponse>.Success(
+        new UpdateAssessmentProfilesResponse
+        {
+          AssessmentId = result.AssessmentId.ToString(),
+          ProfessionalId = result.ProfessionalId.ToString(),
+          RoleId = result.RoleId.ToString(),
+          SquadId = result.SquadId.ToString(),
+        }
+      );
     }
 
-    public async Task<DeleteAssessmentProfilesResponse> DeleteAssessmentAsync(
+    public async Task<Result<DeleteAssessmentProfilesResponse>> DeleteAssessmentAsync(
       DeleteAssessmentProfilesRequest request,
       CallContext context = default
     )
     {
       var result = await _assessmentRepository.DeleteAsync(Guid.Parse(request.AssessmentId));
-      return new DeleteAssessmentProfilesResponse { AssessmentId = result.AssessmentId.ToString() };
+      return Response<DeleteAssessmentProfilesResponse>.Success(
+        new DeleteAssessmentProfilesResponse { AssessmentId = result.AssessmentId.ToString() }
+      );
     }
 
-    public async Task<GetAssessmentsProfilesResponse> GetAssessmentsAsync(
+    public async Task<Result<GetAssessmentsProfilesResponse>> GetAssessmentsAsync(
       GetAssessmentsProfilesRequest request,
       CallContext context = default
     )
@@ -540,85 +564,12 @@ namespace Profiles.Infrastructure.Services
         })
         .ToList();
 
-      return new GetAssessmentsProfilesResponse { Assessments = assessments, Total = total, };
+      return Response<GetAssessmentsProfilesResponse>.Success(
+        new GetAssessmentsProfilesResponse { Assessments = assessments, Total = total, }
+      );
     }
 
-    // public async Task<GetAssessmentsProfilesResponse> GetAssessmentsAsync(
-    //   GetAssessmentsProfilesRequest request,
-    //   CallContext context = default
-    // )
-    // {
-    //   var results = await _assessmentRepository.GetWithPaginationAsync(
-    //     request.Page,
-    //     request.Limit,
-    //     request.Sort,
-    //     request.Order ?? "asc",
-    //     request.Filter,
-    //     request.FilterBy
-    //   );
-    //   var total = await _assessmentRepository.GetCountAsync(request.Filter, request.FilterBy);
-    //   return new GetAssessmentsProfilesResponse
-    //   {
-    //     Assessments = results
-    //       .Select(assessment => new AssessmentProfiles
-    //       {
-    //         AssessmentId = assessment.AssessmentId.ToString(),
-    //         ProfessionalId = assessment.ProfessionalId.ToString(),
-    //         RoleId = assessment.RoleId.ToString(),
-    //         SquadId = assessment.SquadId.ToString(),
-    //         Professional = new ProfessionalProfiles
-    //         {
-    //           ProfessionalId = assessment.Professional.ProfessionalId.ToString(),
-    //           Name = assessment.Professional.Name,
-    //           Email = assessment.Professional.Email,
-    //           Disabled = assessment.Professional.Disabled,
-    //         },
-    //         Role = new RoleProfiles
-    //         {
-    //           RoleId = assessment.Role.RoleId.ToString(),
-    //           Name = assessment.Role.Name,
-    //           Description = assessment.Role.Description,
-    //           Disabled = assessment.Role.Disabled,
-    //         },
-    //         Squad = new SquadProfiles
-    //         {
-    //           SquadId = assessment.Squad.SquadId.ToString(),
-    //           Name = assessment.Squad.Name,
-    //           Disabled = assessment.Squad.Disabled,
-    //         },
-    //         Skills = assessment
-    //           .Role.RolePerSkills.Select(rolePerSkill => new SkillWithSubSkillsProfiles
-    //           {
-    //             SkillId = rolePerSkill.Skill.SkillId.ToString(),
-    //             Name = rolePerSkill.Skill.Name,
-    //             Disabled = rolePerSkill.Skill.Disabled,
-    //             SubSkills = rolePerSkill
-    //               .Skill.SubSkills.Select(subskill => new SubSkillWithResultProfiles
-    //               {
-    //                 SubSkillId = subskill.SubSkillId.ToString(),
-    //                 SkillId = subskill.SkillId.ToString(),
-    //                 Name = subskill.Name,
-    //                 Disabled = subskill.Disabled,
-    //                 Results = subskill.Results.Select(result => new ResultProfiles
-    //                 {
-    //                   ResultId = result.ResultId.ToString(),
-    //                   AssessmentId = result.AssessmentId.ToString(),
-    //                   SubSkillId = result.SubSkillId.ToString(),
-    //                   Result = result.Result,
-    //                   Comment = result.Comment,
-    //                   DateTime = result.DateTime ?? DateTime.UtcNow,
-    //                 })
-    //               })
-    //               .ToList(),
-    //           })
-    //           .ToList(),
-    //       })
-    //       .ToList(),
-    //     Total = total,
-    //   };
-    // }
-
-    public async Task<GetPodiumProfilesResponse> GetPodiumsAsync(
+    public async Task<Result<GetPodiumProfilesResponse>> GetPodiumsAsync(
       GetPodiumProfilesRequest request,
       CallContext context = default
     )
@@ -632,19 +583,21 @@ namespace Profiles.Infrastructure.Services
         request.FilterBy
       );
       var total = await _podiumRepository.GetCountAsync(request.Filter, request.FilterBy);
-      return new GetPodiumProfilesResponse
-      {
-        Podium = podiums
-          .Select(podium => new PodiumProfiles
-          {
-            PodiumId = podium.PodiumId.ToString(),
-            Name = podium.Name,
-            Email = podium.Email,
-            Photo = podium.Photo,
-          })
-          .ToList(),
-        Total = total,
-      };
+      return Response<GetPodiumProfilesResponse>.Success(
+        new GetPodiumProfilesResponse
+        {
+          Podium = podiums
+            .Select(podium => new PodiumProfiles
+            {
+              PodiumId = podium.PodiumId.ToString(),
+              Name = podium.Name,
+              Email = podium.Email,
+              Photo = podium.Photo,
+            })
+            .ToList(),
+          Total = total,
+        }
+      );
     }
   }
 }

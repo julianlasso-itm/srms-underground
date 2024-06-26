@@ -3,7 +3,9 @@ using QueryBank.Domain.Aggregates.Dto.Responses;
 using QueryBank.Domain.Entities;
 using QueryBank.Domain.Entities.Records;
 using QueryBank.Domain.ValueObjects;
-using Shared.Domain.Aggregate.Helpers;
+using Shared.Common;
+using Shared.Common.Bases;
+using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Aggregate.Interfaces;
 
 namespace QueryBank.Domain.Aggregates.Helpers
@@ -12,15 +14,24 @@ namespace QueryBank.Domain.Aggregates.Helpers
     : BaseHelper,
       IHelper<RegisterSkillDomainRequest, RegisterSkillDomainResponse>
   {
-    public static RegisterSkillDomainResponse Execute(RegisterSkillDomainRequest data)
+    public static Result<RegisterSkillDomainResponse> Execute(RegisterSkillDomainRequest data)
     {
       var record = GetSkillRole(data);
-      ValidateRecordFields(record);
+      var result = ValidateRecordFields(record);
+
+      if (result.IsFailure)
+      {
+        return Response<RegisterSkillDomainResponse>.Failure(
+          result.Message,
+          result.Code,
+          result.Details
+        );
+      }
 
       var skill = new SkillEntity();
       skill.Register(record.Name, record.SkillId, record.SubSkillId, record.Disabled);
 
-      return MapToResponse(skill);
+      return Response<RegisterSkillDomainResponse>.Success(MapToResponse(skill));
     }
 
     private static SkillRecord GetSkillRole(RegisterSkillDomainRequest data)

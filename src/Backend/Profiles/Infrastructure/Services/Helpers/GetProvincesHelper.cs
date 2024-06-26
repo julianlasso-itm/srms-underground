@@ -2,6 +2,8 @@ using Profiles.Application.Commands;
 using Profiles.Application.Responses;
 using Profiles.Infrastructure.Persistence.Models;
 using Profiles.Infrastructure.Services.Helpers.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
 
@@ -9,13 +11,25 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   internal class GetProvincesHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<GetProvincesProfilesResponse> GetProvincesAsync(
+    public static async Task<Result<GetProvincesProfilesResponse>> GetProvincesAsync(
       GetProvincesProfilesRequest request
     )
     {
       var getProvincesCommand = MapToGetProvincesCommand(request);
-      var data = await Application.GetProvinces(getProvincesCommand);
-      return MapToGetProvincesResponse(data);
+      var response = await Application.GetProvinces(getProvincesCommand);
+
+      if (response.IsFailure)
+      {
+        return Response<GetProvincesProfilesResponse>.Failure(
+          response.Message,
+          response.Code,
+          response.Details
+        );
+      }
+
+      return Response<GetProvincesProfilesResponse>.Success(
+        MapToGetProvincesResponse(response.Data)
+      );
     }
 
     private static GetProvincesCommand MapToGetProvincesCommand(GetProvincesProfilesRequest request)

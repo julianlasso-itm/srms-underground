@@ -71,10 +71,33 @@ namespace AccessControl.Application.UseCases
       data.Photo = await StoreAvatar(data.Avatar, data.AvatarExtension);
       var result = AclOutputMapper.ToRegisterUserApplicationResponse(data, request.CityId);
       _ = await Persist(result);
-      SendConfirmationEmail(result);
-      EmitEvent(Channel, JsonSerializer.Serialize(result));
 
-      return Response<RegisterUserApplicationResponse>.Success(result);
+      try
+      {
+        SendConfirmationEmail(result);
+      }
+      catch (Exception ex)
+      {
+        return Response<RegisterUserApplicationResponse>.Failure(
+          ex.Message,
+          ErrorEnum.INTERNAL_SERVER_ERROR
+        );
+      }
+
+      try
+      {
+        EmitEvent(Channel, JsonSerializer.Serialize(result));
+      }
+      catch (Exception ex)
+      {
+        return Response<RegisterUserApplicationResponse>.Failure(
+          ex.Message,
+          ErrorEnum.INTERNAL_SERVER_ERROR
+        );
+      }
+
+      var answer = Response<RegisterUserApplicationResponse>.Success(result);
+      return answer;
     }
 
     private Result<RegisterUserCommand> AssignAvatarBlobAndDeleteFromCache(

@@ -1,6 +1,8 @@
 ﻿using Profiles.Application.Commands;
 using Profiles.Application.Responses;
 using Profiles.Infrastructure.Services.Helpers.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
 
@@ -8,13 +10,25 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   public class RegisterProfessionalHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<RegisterProfessionalProfilesResponse> RegisterProfessionalAsync(
-      RegisterProfessionalProfilesRequest request
-    )
+    public static async Task<
+      Result<RegisterProfessionalProfilesResponse>
+    > RegisterProfessionalAsync(RegisterProfessionalProfilesRequest request)
     {
       var newUserCommand = MapToNewUserCommand(request);
-      var data = await Application.RegisterProfessional(newUserCommand);
-      return MapToRegisterProfessionalResponse(data);
+      var response = await Application.RegisterProfessional(newUserCommand);
+
+      if (response.IsFailure)
+      {
+        return Response<RegisterProfessionalProfilesResponse>.Failure(
+          response.Message,
+          response.Code,
+          response.Details
+        );
+      }
+
+      return Response<RegisterProfessionalProfilesResponse>.Success(
+        MapToRegisterProfessionalResponse(response.Data)
+      );
     }
 
     private static RegisterProfessionalCommand MapToNewUserCommand(

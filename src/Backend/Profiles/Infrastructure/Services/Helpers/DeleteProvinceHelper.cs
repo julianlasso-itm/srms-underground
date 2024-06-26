@@ -1,6 +1,8 @@
 using Profiles.Application.Commands;
 using Profiles.Application.Responses;
 using Profiles.Infrastructure.Services.Helpers.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
 
@@ -8,13 +10,25 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   internal class DeleteProvinceHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<DeleteProvinceProfilesResponse> DeleteProvinceAsync(
+    public static async Task<Result<DeleteProvinceProfilesResponse>> DeleteProvinceAsync(
       DeleteProvinceProfilesRequest request
     )
     {
       var deleteProvinceCommand = MapToDeleteProvinceCommand(request);
-      var data = await Application.DeleteProvince(deleteProvinceCommand);
-      return MapToDeleteProvinceResponse(data);
+      var response = await Application.DeleteProvince(deleteProvinceCommand);
+
+      if (response.IsFailure)
+      {
+        return Response<DeleteProvinceProfilesResponse>.Failure(
+          response.Message,
+          response.Code,
+          response.Details
+        );
+      }
+
+      return Response<DeleteProvinceProfilesResponse>.Success(
+        MapToDeleteProvinceResponse(response.Data)
+      );
     }
 
     private static DeleteProvinceCommand MapToDeleteProvinceCommand(

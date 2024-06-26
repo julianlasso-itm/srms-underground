@@ -2,6 +2,8 @@ using Profiles.Application.Commands;
 using Profiles.Application.Responses;
 using Profiles.Infrastructure.Persistence.Models;
 using Profiles.Infrastructure.Services.Helpers.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
 
@@ -9,13 +11,23 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   internal class GetCitiesHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<GetCitiesProfilesResponse> GetCitiesAsync(
+    public static async Task<Result<GetCitiesProfilesResponse>> GetCitiesAsync(
       GetCitiesProfilesRequest request
     )
     {
       var getCitiesCommand = MapToGetCitiesCommand(request);
-      var data = await Application.GetCities(getCitiesCommand);
-      return MapToGetCitiesResponse(data);
+      var response = await Application.GetCities(getCitiesCommand);
+
+      if (response.IsFailure)
+      {
+        return Response<GetCitiesProfilesResponse>.Failure(
+          response.Message,
+          response.Code,
+          response.Details
+        );
+      }
+
+      return Response<GetCitiesProfilesResponse>.Success(MapToGetCitiesResponse(response.Data));
     }
 
     private static GetCitiesCommand MapToGetCitiesCommand(GetCitiesProfilesRequest request)

@@ -7,6 +7,8 @@ using Profiles.Domain.Aggregates.Constants;
 using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 
 namespace Profiles.Application.UseCases
 {
@@ -29,16 +31,27 @@ namespace Profiles.Application.UseCases
 
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventProfessionalUpdated}";
 
-    public override async Task<UpdateProfessionalApplicationResponse> Handle(
+    public override async Task<Result<UpdateProfessionalApplicationResponse>> Handle(
       UpdateProfessionalCommand request
     )
     {
       var dataUpdateProfessional = MapToRequestForDomain(request);
       var professional = AggregateRoot.UpdateProfessional(dataUpdateProfessional);
-      var response = MapToResponse(professional);
+
+      if (professional.IsFailure)
+      {
+        return Response<UpdateProfessionalApplicationResponse>.Failure(
+          professional.Message,
+          professional.Code,
+          professional.Details
+        );
+      }
+
+      var response = MapToResponse(professional.Data);
       _ = await Persistence(response);
       EmitEvent(Channel, JsonSerializer.Serialize(response));
-      return response;
+
+      return Response<UpdateProfessionalApplicationResponse>.Success(response);
     }
 
     private UpdateProfessionalDomainRequest MapToRequestForDomain(UpdateProfessionalCommand request)

@@ -1,13 +1,14 @@
 ﻿using QueryBank.Domain.Aggregates.Dto.Requests;
 using QueryBank.Domain.Aggregates.Dto.Responses;
+using Shared.Common.Bases;
 using Shared.Domain.Aggregate.Interfaces;
 
 namespace QueryBank.Domain.Aggregates.Interfaces
 {
   public interface ICatalogAggregateRoot : IAggregateRoot
   {
-    public DeleteSkillDomainResponse DeleteSkill(DeleteSkillDomainRequest dataDeleteSkill);
-    public RegisterSkillDomainResponse RegisterSkill(RegisterSkillDomainRequest skillData);
-    public UpdateSkillDomainResponse UpdateSkill(UpdateSkillDomainRequest dataUpdateSkill);
+    public Result<DeleteSkillDomainResponse> DeleteSkill(DeleteSkillDomainRequest dataDeleteSkill);
+    public Result<RegisterSkillDomainResponse> RegisterSkill(RegisterSkillDomainRequest skillData);
+    public Result<UpdateSkillDomainResponse> UpdateSkill(UpdateSkillDomainRequest dataUpdateSkill);
   }
 }

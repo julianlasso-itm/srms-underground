@@ -1,6 +1,8 @@
 using Profiles.Application.Commands;
 using Profiles.Application.Responses;
 using Profiles.Infrastructure.Services.Helpers.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
 
@@ -8,13 +10,25 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   internal class RegisterProvinceHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<RegisterProvinceProfilesResponse> RegisterProvinceAsync(
+    public static async Task<Result<RegisterProvinceProfilesResponse>> RegisterProvinceAsync(
       RegisterProvinceProfilesRequest request
     )
     {
       var provinceCommand = MapToRegisterProvinceCommand(request);
-      var data = await Application.RegisterProvince(provinceCommand);
-      return MapToRegisterProvinceResponse(data);
+      var response = await Application.RegisterProvince(provinceCommand);
+
+      if (response.IsFailure)
+      {
+        return Response<RegisterProvinceProfilesResponse>.Failure(
+          response.Message,
+          response.Code,
+          response.Details
+        );
+      }
+
+      return Response<RegisterProvinceProfilesResponse>.Success(
+        MapToRegisterProvinceResponse(response.Data)
+      );
     }
 
     private static RegisterProvinceCommand MapToRegisterProvinceCommand(

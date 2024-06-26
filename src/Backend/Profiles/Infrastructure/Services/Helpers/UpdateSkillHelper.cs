@@ -1,6 +1,8 @@
 ﻿using Profiles.Application.Commands;
 using Profiles.Application.Responses;
 using Profiles.Infrastructure.Services.Helpers.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
 
@@ -8,13 +10,23 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   public class UpdateSkillHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<UpdateSkillProfilesResponse> UpdateSkillAsync(
+    public static async Task<Result<UpdateSkillProfilesResponse>> UpdateSkillAsync(
       UpdateSkillProfilesRequest request
     )
     {
       var newUserCommand = MapToUpdateSkillCommand(request);
-      var data = await Application.UpdateSkill(newUserCommand);
-      return MapToUpdateSkillResponse(data);
+      var response = await Application.UpdateSkill(newUserCommand);
+
+      if (response.IsFailure)
+      {
+        return Response<UpdateSkillProfilesResponse>.Failure(
+          response.Message,
+          response.Code,
+          response.Details
+        );
+      }
+
+      return Response<UpdateSkillProfilesResponse>.Success(MapToUpdateSkillResponse(response.Data));
     }
 
     private static UpdateSkillCommand MapToUpdateSkillCommand(UpdateSkillProfilesRequest request)

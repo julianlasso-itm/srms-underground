@@ -1,6 +1,8 @@
 ﻿using Profiles.Application.Commands;
 using Profiles.Application.Responses;
 using Profiles.Infrastructure.Services.Helpers.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
 
@@ -8,13 +10,25 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   public class UpdateProfessionalHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<UpdateProfessionalProfilesResponse> UpdateProfessionalAsync(
+    public static async Task<Result<UpdateProfessionalProfilesResponse>> UpdateProfessionalAsync(
       UpdateProfessionalProfilesRequest request
     )
     {
       var newUserCommand = MapToUpdateProfessionalCommand(request);
-      var data = await Application.UpdateProfessional(newUserCommand);
-      return MapToUpdateProfessionalResponse(data);
+      var response = await Application.UpdateProfessional(newUserCommand);
+
+      if (response.IsFailure)
+      {
+        return Response<UpdateProfessionalProfilesResponse>.Failure(
+          response.Message,
+          response.Code,
+          response.Details
+        );
+      }
+
+      return Response<UpdateProfessionalProfilesResponse>.Success(
+        MapToUpdateProfessionalResponse(response.Data)
+      );
     }
 
     private static UpdateProfessionalCommand MapToUpdateProfessionalCommand(

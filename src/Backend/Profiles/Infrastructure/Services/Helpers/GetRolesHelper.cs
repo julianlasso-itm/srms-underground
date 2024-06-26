@@ -2,6 +2,8 @@
 using Profiles.Application.Responses;
 using Profiles.Infrastructure.Persistence.Models;
 using Profiles.Infrastructure.Services.Helpers.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
 
@@ -9,13 +11,23 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   internal class GetRolesHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<GetRolesProfilesResponse> GetRolesAsync(
+    public static async Task<Result<GetRolesProfilesResponse>> GetRolesAsync(
       GetRolesProfilesRequest request
     )
     {
       var getRolesCommand = MapToGetRolesCommand(request);
-      var data = await Application.GetRoles(getRolesCommand);
-      return MapToGetRolesResponse(data);
+      var response = await Application.GetRoles(getRolesCommand);
+
+      if (response.IsFailure)
+      {
+        return Response<GetRolesProfilesResponse>.Failure(
+          response.Message,
+          response.Code,
+          response.Details
+        );
+      }
+
+      return Response<GetRolesProfilesResponse>.Success(MapToGetRolesResponse(response.Data));
     }
 
     private static GetRolesCommand MapToGetRolesCommand(GetRolesProfilesRequest request)

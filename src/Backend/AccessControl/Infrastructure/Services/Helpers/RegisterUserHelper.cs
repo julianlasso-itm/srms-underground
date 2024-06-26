@@ -20,9 +20,10 @@ namespace AccessControl.Infrastructure.Services.Helpers
         return Response<RegisterUserResponse>.Failure(data.Message, data.Code, data.Details);
       }
 
-      return Response<RegisterUserResponse>.Success(
+      var answer = Response<RegisterUserResponse>.Success(
         AclOutputMapper.ToRegisterUserResponse(data.Data)
       );
+      return answer;
     }
   }
 }

@@ -8,6 +8,8 @@ using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 
 namespace Profiles.Application.UseCases
 {
@@ -29,16 +31,27 @@ namespace Profiles.Application.UseCases
     private readonly IProvinceRepository<TEntity> _provinceRepository = provinceRepository;
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventProvinceRegistered}";
 
-    public override async Task<RegisterProvinceApplicationResponse> Handle(
+    public override async Task<Result<RegisterProvinceApplicationResponse>> Handle(
       RegisterProvinceCommand request
     )
     {
       var newProvince = MapToRequestForDomain(request);
       var province = AggregateRoot.RegisterProvince(newProvince);
-      var response = MapToResponse(province);
+
+      if (province.IsFailure)
+      {
+        return Response<RegisterProvinceApplicationResponse>.Failure(
+          province.Message,
+          province.Code,
+          province.Details
+        );
+      }
+
+      var response = MapToResponse(province.Data);
       _ = await Persistence(response);
       EmitEvent(Channel, JsonSerializer.Serialize(response));
-      return response;
+
+      return Response<RegisterProvinceApplicationResponse>.Success(response);
     }
 
     private static RegisterProvinceDomainRequest MapToRequestForDomain(

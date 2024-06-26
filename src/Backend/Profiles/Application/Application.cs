@@ -5,6 +5,7 @@ using Profiles.Application.Responses;
 using Profiles.Application.UseCases;
 using Profiles.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
+using Shared.Common.Bases;
 
 namespace Profiles.Application
 {
@@ -48,7 +49,7 @@ namespace Profiles.Application
       professionalRepository;
     private readonly ILevelRepository<TLevelEntity> _levelRepository = levelRepository;
 
-    public Task<GetCountriesApplicationResponse<TCountryEntity>> GetCountries(
+    public Task<Result<GetCountriesApplicationResponse<TCountryEntity>>> GetCountries(
       GetCountriesCommand request
     )
     {
@@ -61,7 +62,9 @@ namespace Profiles.Application
       return useCase.Handle(request);
     }
 
-    public Task<RegisterCountryApplicationResponse> RegisterCountry(RegisterCountryCommand request)
+    public Task<Result<RegisterCountryApplicationResponse>> RegisterCountry(
+      RegisterCountryCommand request
+    )
     {
       var useCase = new RegisterCountryUseCase<TCountryEntity>(
         AggregateRoot,
@@ -72,7 +75,9 @@ namespace Profiles.Application
       return useCase.Handle(request);
     }
 
-    public Task<UpdateCountryApplicationResponse> UpdateCountry(UpdateCountryCommand request)
+    public Task<Result<UpdateCountryApplicationResponse>> UpdateCountry(
+      UpdateCountryCommand request
+    )
     {
       var useCase = new UpdateCountryUseCase<TCountryEntity>(
         AggregateRoot,
@@ -83,7 +88,9 @@ namespace Profiles.Application
       return useCase.Handle(request);
     }
 
-    public Task<DeleteCountryApplicationResponse> DeleteCountry(DeleteCountryCommand request)
+    public Task<Result<DeleteCountryApplicationResponse>> DeleteCountry(
+      DeleteCountryCommand request
+    )
     {
       var useCase = new DeleteCountryUseCase<TCountryEntity>(
         AggregateRoot,
@@ -94,7 +101,7 @@ namespace Profiles.Application
       return useCase.Handle(request);
     }
 
-    public Task<GetProvincesApplicationResponse<TProvinceEntity>> GetProvinces(
+    public Task<Result<GetProvincesApplicationResponse<TProvinceEntity>>> GetProvinces(
       GetProvincesCommand request
     )
     {
@@ -107,7 +114,7 @@ namespace Profiles.Application
       return useCase.Handle(request);
     }
 
-    public Task<RegisterProvinceApplicationResponse> RegisterProvince(
+    public Task<Result<RegisterProvinceApplicationResponse>> RegisterProvince(
       RegisterProvinceCommand request
     )
     {
@@ -120,7 +127,9 @@ namespace Profiles.Application
       return useCase.Handle(request);
     }
 
-    public Task<UpdateProvinceApplicationResponse> UpdateProvince(UpdateProvinceCommand request)
+    public Task<Result<UpdateProvinceApplicationResponse>> UpdateProvince(
+      UpdateProvinceCommand request
+    )
     {
       var useCase = new UpdateProvinceUseCase<TProvinceEntity>(
         AggregateRoot,
@@ -131,7 +140,9 @@ namespace Profiles.Application
       return useCase.Handle(request);
     }
 
-    public Task<DeleteProvinceApplicationResponse> DeleteProvince(DeleteProvinceCommand request)
+    public Task<Result<DeleteProvinceApplicationResponse>> DeleteProvince(
+      DeleteProvinceCommand request
+    )
     {
       var useCase = new DeleteProvinceUseCase<TProvinceEntity>(
         AggregateRoot,
@@ -142,7 +153,9 @@ namespace Profiles.Application
       return useCase.Handle(request);
     }
 
-    public Task<GetCitiesApplicationResponse<TCityEntity>> GetCities(GetCitiesCommand request)
+    public Task<Result<GetCitiesApplicationResponse<TCityEntity>>> GetCities(
+      GetCitiesCommand request
+    )
     {
       var useCase = new GetCitiesUseCase<TCityEntity>(
         AggregateRoot,
@@ -153,7 +166,7 @@ namespace Profiles.Application
       return useCase.Handle(request);
     }
 
-    public Task<RegisterCityApplicationResponse> RegisterCity(RegisterCityCommand request)
+    public Task<Result<RegisterCityApplicationResponse>> RegisterCity(RegisterCityCommand request)
     {
       var useCase = new RegisterCityUseCase<TCityEntity>(
         AggregateRoot,
@@ -164,7 +177,7 @@ namespace Profiles.Application
       return useCase.Handle(request);
     }
 
-    public Task<UpdateCityApplicationResponse> UpdateCity(UpdateCityCommand request)
+    public Task<Result<UpdateCityApplicationResponse>> UpdateCity(UpdateCityCommand request)
     {
       var useCase = new UpdateCityUseCase<TCityEntity>(
         AggregateRoot,
@@ -175,7 +188,7 @@ namespace Profiles.Application
       return useCase.Handle(request);
     }
 
-    public Task<DeleteCityApplicationResponse> DeleteCity(DeleteCityCommand request)
+    public Task<Result<DeleteCityApplicationResponse>> DeleteCity(DeleteCityCommand request)
     {
       var useCase = new DeleteCityUseCase<TCityEntity>(
         AggregateRoot,
@@ -186,7 +199,7 @@ namespace Profiles.Application
       return useCase.Handle(request);
     }
 
-    public Task<RegisterRoleApplicationResponse> RegisterRole(RegisterRoleCommand request)
+    public Task<Result<RegisterRoleApplicationResponse>> RegisterRole(RegisterRoleCommand request)
     {
       var useCase = new RegisterRoleUseCase<TRoleEntity>(
         AggregateRoot,
@@ -197,7 +210,7 @@ namespace Profiles.Application
       return useCase.Handle(request);
     }
 
-    public Task<UpdateRoleApplicationResponse> UpdateRole(UpdateRoleCommand request)
+    public Task<Result<UpdateRoleApplicationResponse>> UpdateRole(UpdateRoleCommand request)
     {
       var useCase = new UpdateRoleUseCase<TRoleEntity>(
         AggregateRoot,
@@ -208,7 +221,7 @@ namespace Profiles.Application
       return useCase.Handle(request);
     }
 
-    public Task<DeleteRoleApplicationResponse> DeleteRole(DeleteRoleCommand request)
+    public Task<Result<DeleteRoleApplicationResponse>> DeleteRole(DeleteRoleCommand request)
     {
       var useCase = new DeleteRoleUseCase<TRoleEntity>(
         AggregateRoot,
@@ -219,7 +232,7 @@ namespace Profiles.Application
       return useCase.Handle(request);
     }
 
-    public Task<GetRolesApplicationResponse<TRoleEntity>> GetRoles(GetRolesCommand request)
+    public Task<Result<GetRolesApplicationResponse<TRoleEntity>>> GetRoles(GetRolesCommand request)
     {
       var useCase = new GetRolesUseCase<TRoleEntity>(
         AggregateRoot,
@@ -230,7 +243,9 @@ namespace Profiles.Application
       return useCase.Handle(request);
     }
 
-    public Task<RegisterSkillApplicationResponse> RegisterSkill(RegisterSkillCommand request)
+    public Task<Result<RegisterSkillApplicationResponse>> RegisterSkill(
+      RegisterSkillCommand request
+    )
     {
       var useCase = new RegisterSkillUseCase<TSkillEntity>(
         AggregateRoot,
@@ -241,7 +256,7 @@ namespace Profiles.Application
       return useCase.Handle(request);
     }
 
-    public Task<DeleteSkillApplicationResponse> DeleteSkill(DeleteSkillCommand request)
+    public Task<Result<DeleteSkillApplicationResponse>> DeleteSkill(DeleteSkillCommand request)
     {
       var useCase = new DeleteSkillUseCase<TSkillEntity>(
         AggregateRoot,
@@ -252,7 +267,9 @@ namespace Profiles.Application
       return useCase.Handle(request);
     }
 
-    public Task<GetSkillsApplicationResponse<TSkillEntity>> GetSkills(GetSkillsCommand request)
+    public Task<Result<GetSkillsApplicationResponse<TSkillEntity>>> GetSkills(
+      GetSkillsCommand request
+    )
     {
       var useCase = new GetSkillsUseCase<TSkillEntity>(
         AggregateRoot,
@@ -263,7 +280,7 @@ namespace Profiles.Application
       return useCase.Handle(request);
     }
 
-    public Task<UpdateSkillApplicationResponse> UpdateSkill(UpdateSkillCommand request)
+    public Task<Result<UpdateSkillApplicationResponse>> UpdateSkill(UpdateSkillCommand request)
     {
       var useCase = new UpdateSkillUseCase<TSkillEntity>(
         AggregateRoot,
@@ -274,7 +291,7 @@ namespace Profiles.Application
       return useCase.Handle(request);
     }
 
-    public Task<RegisterProfessionalApplicationResponse> RegisterProfessional(
+    public Task<Result<RegisterProfessionalApplicationResponse>> RegisterProfessional(
       RegisterProfessionalCommand request
     )
     {
@@ -287,7 +304,7 @@ namespace Profiles.Application
       return useCase.Handle(request);
     }
 
-    public Task<DeleteProfessionalApplicationResponse> DeleteProfessional(
+    public Task<Result<DeleteProfessionalApplicationResponse>> DeleteProfessional(
       DeleteProfessionalCommand request
     )
     {
@@ -300,7 +317,7 @@ namespace Profiles.Application
       return useCase.Handle(request);
     }
 
-    public Task<GetProfessionalsApplicationResponse<TProfessionalEntity>> GetProfessional(
+    public Task<Result<GetProfessionalsApplicationResponse<TProfessionalEntity>>> GetProfessional(
       GetProfessionalsCommand request
     )
     {
@@ -313,7 +330,7 @@ namespace Profiles.Application
       return useCase.Handle(request);
     }
 
-    public Task<UpdateProfessionalApplicationResponse> UpdateProfessional(
+    public Task<Result<UpdateProfessionalApplicationResponse>> UpdateProfessional(
       UpdateProfessionalCommand request
     )
     {
@@ -326,7 +343,9 @@ namespace Profiles.Application
       return useCase.Handle(request);
     }
 
-    public Task<RegisterLevelApplicationResponse> RegisterLevel(RegisterLevelCommand request)
+    public Task<Result<RegisterLevelApplicationResponse>> RegisterLevel(
+      RegisterLevelCommand request
+    )
     {
       var useCase = new RegisterLevelUseCase<TLevelEntity>(
         AggregateRoot,
@@ -337,7 +356,7 @@ namespace Profiles.Application
       return useCase.Handle(request);
     }
 
-    public Task<UpdateLevelApplicationResponse> UpdateLevel(UpdateLevelCommand request)
+    public Task<Result<UpdateLevelApplicationResponse>> UpdateLevel(UpdateLevelCommand request)
     {
       var useCase = new UpdateLevelUseCase<TLevelEntity>(
         AggregateRoot,
@@ -348,7 +367,7 @@ namespace Profiles.Application
       return useCase.Handle(request);
     }
 
-    public Task<DeleteLevelApplicationResponse> DeleteLevel(DeleteLevelCommand request)
+    public Task<Result<DeleteLevelApplicationResponse>> DeleteLevel(DeleteLevelCommand request)
     {
       var useCase = new DeleteLevelUseCase<TLevelEntity>(
         AggregateRoot,

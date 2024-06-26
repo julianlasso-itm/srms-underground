@@ -8,6 +8,8 @@ using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 
 namespace Profiles.Application.UseCases
 {
@@ -37,14 +39,27 @@ namespace Profiles.Application.UseCases
       }
     }
 
-    public override async Task<DeleteSkillApplicationResponse> Handle(DeleteSkillCommand request)
+    public override async Task<Result<DeleteSkillApplicationResponse>> Handle(
+      DeleteSkillCommand request
+    )
     {
       var dataDeleteRole = MapToRequestForDomain(request);
       var role = AggregateRoot.DeleteSkill(dataDeleteRole);
-      var response = MapToResponse(role);
+
+      if (role.IsFailure)
+      {
+        return Response<DeleteSkillApplicationResponse>.Failure(
+          role.Message,
+          role.Code,
+          role.Details
+        );
+      }
+
+      var response = MapToResponse(role.Data);
       _ = await Persistence(response);
       EmitEvent(Channel, JsonSerializer.Serialize(response));
-      return response;
+
+      return Response<DeleteSkillApplicationResponse>.Success(response);
     }
 
     private async Task<TSkillEntity> Persistence(DeleteSkillApplicationResponse response)

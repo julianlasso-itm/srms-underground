@@ -2,6 +2,8 @@
 using Profiles.Application.Responses;
 using Profiles.Infrastructure.Persistence.Models;
 using Profiles.Infrastructure.Services.Helpers.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Profiles.Responses;
 
@@ -9,13 +11,25 @@ namespace Profiles.Infrastructure.Services.Helpers
 {
   public class GetProfessionalHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<GetProfessionalProfilesResponse> GetProfessionalsAsync(
+    public static async Task<Result<GetProfessionalProfilesResponse>> GetProfessionalsAsync(
       GetProfessionalsProfilesRequest request
     )
     {
       var newUserCommand = MapToGetProfessionalsCommand(request);
-      var data = await Application.GetProfessional(newUserCommand);
-      return MapToGetProfessionalsResponse(data);
+      var response = await Application.GetProfessional(newUserCommand);
+
+      if (response.IsFailure)
+      {
+        return Response<GetProfessionalProfilesResponse>.Failure(
+          response.Message,
+          response.Code,
+          response.Details
+        );
+      }
+
+      return Response<GetProfessionalProfilesResponse>.Success(
+        MapToGetProfessionalsResponse(response.Data)
+      );
     }
 
     private static GetProfessionalsCommand MapToGetProfessionalsCommand(

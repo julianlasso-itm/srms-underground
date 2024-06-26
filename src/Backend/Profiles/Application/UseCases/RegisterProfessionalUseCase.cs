@@ -8,6 +8,8 @@ using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 
 namespace Profiles.Application.UseCases
 {
@@ -32,16 +34,27 @@ namespace Profiles.Application.UseCases
     private const string Channel =
       $"{EventsConst.Prefix}.{EventsConst.EventProfessionalRegistered}";
 
-    public override async Task<RegisterProfessionalApplicationResponse> Handle(
+    public override async Task<Result<RegisterProfessionalApplicationResponse>> Handle(
       RegisterProfessionalCommand request
     )
     {
       var newProfessional = MapToRequestForDomain(request);
       var professional = AggregateRoot.RegisterProfessional(newProfessional);
-      var response = MapToResponse(professional);
+
+      if (professional.IsFailure)
+      {
+        return Response<RegisterProfessionalApplicationResponse>.Failure(
+          professional.Message,
+          professional.Code,
+          professional.Details
+        );
+      }
+
+      var response = MapToResponse(professional.Data);
       _ = await Persistence(response);
       EmitEvent(Channel, JsonSerializer.Serialize(response));
-      return response;
+
+      return Response<RegisterProfessionalApplicationResponse>.Success(response);
     }
 
     private RegisterProfessionalDomainRequest MapToRequestForDomain(

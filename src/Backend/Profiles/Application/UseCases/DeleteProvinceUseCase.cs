@@ -8,6 +8,8 @@ using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 
 namespace Profiles.Application.UseCases
 {
@@ -29,16 +31,26 @@ namespace Profiles.Application.UseCases
     private readonly IProvinceRepository<TEntity> _provinceRepository = provinceRepository;
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventProvinceDeleted}";
 
-    public override async Task<DeleteProvinceApplicationResponse> Handle(
+    public override async Task<Result<DeleteProvinceApplicationResponse>> Handle(
       DeleteProvinceCommand request
     )
     {
       var dataDeleteProvince = MapToRequestForDomain(request);
       var province = AggregateRoot.DeleteProvince(dataDeleteProvince);
-      var response = MapToResponse(province);
+
+      if (province.IsFailure)
+      {
+        return Response<DeleteProvinceApplicationResponse>.Failure(
+          province.Message,
+          province.Code,
+          province.Details
+        );
+      }
+      var response = MapToResponse(province.Data);
       _ = await Persistence(response);
       EmitEvent(Channel, JsonSerializer.Serialize(response));
-      return response;
+
+      return Response<DeleteProvinceApplicationResponse>.Success(response);
     }
 
     private static DeleteProvinceDomainRequest MapToRequestForDomain(DeleteProvinceCommand request)

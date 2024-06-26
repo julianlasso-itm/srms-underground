@@ -4,6 +4,8 @@ using QueryBank.Application.Repositories;
 using QueryBank.Application.Responses;
 using QueryBank.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 
 namespace QueryBank.Application.UseCases
 {
@@ -24,14 +26,14 @@ namespace QueryBank.Application.UseCases
   {
     private readonly ISkillRepository<TSkillEntity> _skillRepository = skillRepository;
 
-    public override async Task<GetSkillsApplicationResponse<TSkillEntity>> Handle(
+    public override async Task<Result<GetSkillsApplicationResponse<TSkillEntity>>> Handle(
       GetSkillsCommand request
     )
     {
       var data = await QuerySkills(request);
       var count = await QuerySkillsCount(request);
       var response = MapToResponse(data, count);
-      return response;
+      return Response<GetSkillsApplicationResponse<TSkillEntity>>.Success(response);
     }
 
     private GetSkillsApplicationResponse<TSkillEntity> MapToResponse(

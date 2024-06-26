@@ -3,6 +3,7 @@ using ApiGateway.Infrastructure.Services;
 using Infrastructure.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Application.Interfaces;
+using Shared.Common;
 using Shared.Infrastructure.ProtocolBuffers.Analytics.Requests;
 
 namespace ApiGateway.Infrastructure.Controllers
@@ -20,7 +21,7 @@ namespace ApiGateway.Infrastructure.Controllers
       [FromBody] RegisterLevelAnalyticsRequest request
     )
     {
-      return await HandleAsync(async () => Ok(await _analyticsService.RegisterLevelAsync(request)));
+      return Handle(Response<object>.Success(await _analyticsService.RegisterLevelAsync(request)));
     }
 
     [Permissions]
@@ -31,7 +32,7 @@ namespace ApiGateway.Infrastructure.Controllers
     )
     {
       request.LevelId = id;
-      return await HandleAsync(async () => Ok(await _analyticsService.UpdateLevelAsync(request)));
+      return Handle(Response<object>.Success(await _analyticsService.UpdateLevelAsync(request)));
     }
 
     [Permissions]
@@ -39,14 +40,14 @@ namespace ApiGateway.Infrastructure.Controllers
     public async Task<IActionResult> DeleteLevelAsync(string id)
     {
       var request = new DeleteLevelAnalyticsRequest { LevelId = id };
-      return await HandleAsync(async () => Ok(await _analyticsService.DeleteLevelAsync(request)));
+      return Handle(Response<object>.Success(await _analyticsService.DeleteLevelAsync(request)));
     }
 
     [Permissions]
     [HttpGet("levels")]
     public async Task<IActionResult> GetLevelsAsync([FromQuery] GetLevelsAnalyticsRequest request)
     {
-      return await HandleAsync(async () => Ok(await _analyticsService.GetLevelsAsync(request)));
+      return Handle(Response<object>.Success(await _analyticsService.GetLevelsAsync(request)));
     }
   }
 }

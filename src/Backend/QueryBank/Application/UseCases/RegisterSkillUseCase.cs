@@ -8,6 +8,8 @@ using QueryBank.Domain.Aggregates.Dto.Requests;
 using QueryBank.Domain.Aggregates.Dto.Responses;
 using QueryBank.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
+using Shared.Common;
+using Shared.Common.Bases;
 
 namespace QueryBank.Application.UseCases
 {
@@ -30,16 +32,27 @@ namespace QueryBank.Application.UseCases
 
     private const string Channel = $"{EventsConst.Prefix}.{EventsConst.EventSkillRegistered}";
 
-    public override async Task<RegisterSkillApplicationResponse> Handle(
+    public override async Task<Result<RegisterSkillApplicationResponse>> Handle(
       RegisterSkillCommand request
     )
     {
       var newSkill = MapToRequestForDomain(request);
       var skill = AggregateRoot.RegisterSkill(newSkill);
-      var response = MapToResponse(skill);
+
+      if (skill.IsFailure)
+      {
+        return Response<RegisterSkillApplicationResponse>.Failure(
+          skill.Message,
+          skill.Code,
+          skill.Details
+        );
+      }
+
+      var response = MapToResponse(skill.Data);
       _ = await Persistence(response);
       EmitEvent(Channel, JsonSerializer.Serialize(response));
-      return response;
+
+      return Response<RegisterSkillApplicationResponse>.Success(response);
     }
 
     private RegisterSkillDomainRequest MapToRequestForDomain(RegisterSkillCommand request)
