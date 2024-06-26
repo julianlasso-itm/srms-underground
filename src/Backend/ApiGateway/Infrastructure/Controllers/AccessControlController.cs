@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Shared.Application.Interfaces;
 using Shared.Common;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
+using Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses;
+using StackExchange.Redis;
 
 namespace ApiGateway.Infrastructure.Controllers
 {
@@ -39,7 +41,7 @@ namespace ApiGateway.Infrastructure.Controllers
       };
 
       return Handle(
-        Response<object>.Success(await _accessControlService.RegisterUserAsync(newRequest))
+        await _accessControlService.RegisterUserAsync(newRequest)
       );
     }
 
