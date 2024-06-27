@@ -1,13 +1,13 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 
-using System.Runtime.Serialization;
+using ProtoBuf;
 
 namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Responses
 {
-  [DataContract]
+  [ProtoContract]
   public class DeleteProfessionalProfilesResponse
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public required string ProfessionalId { get; set; }
   }
 }

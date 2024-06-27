@@ -1,17 +1,17 @@
-using System.Runtime.Serialization;
+using ProtoBuf;
 
 namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Requests
 {
-  [DataContract]
+  [ProtoContract]
   public class RegisterRoleProfilesRequest
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public required string Name { get; set; }
 
-    [DataMember(Order = 2, IsRequired = false)]
+    [ProtoMember(2, IsRequired = false)]
     public string? Description { get; set; }
 
-    [DataMember(Order = 3, IsRequired = false)]
+    [ProtoMember(3, IsRequired = false)]
     public IEnumerable<string>? Skills { get; set; }
   }
 }

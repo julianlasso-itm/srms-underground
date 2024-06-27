@@ -1,17 +1,17 @@
-using System.Runtime.Serialization;
+using ProtoBuf;
 
 namespace Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests
 {
-  [DataContract]
+  [ProtoContract]
   public class VerifyTokenAccessControlRequest
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public required string Token { get; set; }
 
-    [DataMember(Order = 2, IsRequired = false)]
+    [ProtoMember(2, IsRequired = false)]
     public string? PrivateKeyPath { get; set; }
 
-    [DataMember(Order = 3, IsRequired = false)]
+    [ProtoMember(3, IsRequired = false)]
     public string? PublicKeyPath { get; set; }
   }
 }

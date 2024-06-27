@@ -1,30 +1,30 @@
-using System.Runtime.Serialization;
+using ProtoBuf;
 
 namespace Shared.Infrastructure.ProtocolBuffers.Analytics.Responses
 {
-  [DataContract]
+  [ProtoContract]
   public class GetLevelsAnalyticsResponse
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public required IEnumerable<LevelAnalytics> Levels { get; set; }
 
-    [DataMember(Order = 2)]
+    [ProtoMember(2)]
     public required int Total { get; set; }
   }
 
-  [DataContract]
+  [ProtoContract]
   public class LevelAnalytics
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public required string LevelId { get; set; }
 
-    [DataMember(Order = 2)]
+    [ProtoMember(2)]
     public required string Name { get; set; }
 
-    [DataMember(Order = 3, IsRequired = false)]
+    [ProtoMember(3, IsRequired = false)]
     public string? Description { get; set; }
 
-    [DataMember(Order = 4)]
+    [ProtoMember(4)]
     public required bool Disabled { get; set; }
   }
 }

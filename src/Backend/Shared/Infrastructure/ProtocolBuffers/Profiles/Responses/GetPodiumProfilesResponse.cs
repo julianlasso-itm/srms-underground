@@ -1,30 +1,30 @@
-using System.Runtime.Serialization;
+using ProtoBuf;
 
 namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Responses
 {
-  [DataContract]
+  [ProtoContract]
   public class GetPodiumProfilesResponse
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public required IEnumerable<PodiumProfiles> Podium { get; set; }
 
-    [DataMember(Order = 2)]
+    [ProtoMember(2)]
     public required int Total { get; set; }
   }
 
-  [DataContract]
+  [ProtoContract]
   public class PodiumProfiles
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public required string PodiumId { get; set; }
 
-    [DataMember(Order = 2)]
+    [ProtoMember(2)]
     public required string Name { get; set; }
 
-    [DataMember(Order = 3)]
+    [ProtoMember(3)]
     public required string Email { get; set; }
 
-    [DataMember(Order = 4)]
+    [ProtoMember(4)]
     public required string Photo { get; set; }
   }
 }

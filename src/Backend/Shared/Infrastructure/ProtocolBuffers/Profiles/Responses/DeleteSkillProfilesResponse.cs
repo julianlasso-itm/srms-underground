@@ -1,11 +1,11 @@
-﻿using System.Runtime.Serialization;
+﻿using ProtoBuf;
 
 namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Responses
 {
-  [DataContract]
+  [ProtoContract]
   public class DeleteSkillProfilesResponse
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public required string SkillId { get; set; }
   }
 }

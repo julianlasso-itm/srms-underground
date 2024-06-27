@@ -1,11 +1,11 @@
-using System.Runtime.Serialization;
+using ProtoBuf;
 
 namespace Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests
 {
-  [DataContract]
+  [ProtoContract]
   public class ActivationTokenAccessControlRequest
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public required string ActivationToken { get; set; }
   }
 }

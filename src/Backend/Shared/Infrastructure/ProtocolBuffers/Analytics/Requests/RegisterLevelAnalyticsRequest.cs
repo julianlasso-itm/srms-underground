@@ -1,14 +1,14 @@
-using System.Runtime.Serialization;
+using ProtoBuf;
 
 namespace Shared.Infrastructure.ProtocolBuffers.Analytics.Requests
 {
-  [DataContract]
+  [ProtoContract]
   public class RegisterLevelAnalyticsRequest
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public required string Name { get; set; }
 
-    [DataMember(Order = 2, IsRequired = false)]
+    [ProtoMember(2, IsRequired = false)]
     public string? Description { get; set; }
   }
 }

@@ -1,20 +1,20 @@
-using System.Runtime.Serialization;
+using ProtoBuf;
 
 namespace Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests
 {
-  [DataContract]
+  [ProtoContract]
   public class SignInAccessControlRequest
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public required string Email { get; set; }
 
-    [DataMember(Order = 2)]
+    [ProtoMember(2)]
     public required string Password { get; set; }
 
-    [DataMember(Order = 3, IsRequired = false)]
+    [ProtoMember(3, IsRequired = false)]
     public string? PrivateKeyPath { get; set; }
 
-    [DataMember(Order = 4, IsRequired = false)]
+    [ProtoMember(4, IsRequired = false)]
     public string? PublicKeyPath { get; set; }
   }
 }

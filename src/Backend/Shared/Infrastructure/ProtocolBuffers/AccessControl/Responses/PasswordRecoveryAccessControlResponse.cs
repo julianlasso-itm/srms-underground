@@ -1,11 +1,11 @@
-using System.Runtime.Serialization;
+using ProtoBuf;
 
 namespace Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses
 {
-  [DataContract]
+  [ProtoContract]
   public class PasswordRecoveryAccessControlResponse
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public bool Success { get; set; }
   }
 }

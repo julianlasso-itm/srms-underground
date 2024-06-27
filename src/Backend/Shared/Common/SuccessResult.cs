@@ -1,9 +1,9 @@
-using System.Runtime.Serialization;
+using ProtoBuf;
 using Shared.Common.Bases;
 
 namespace Shared.Common
 {
-  [DataContract]
+  [ProtoContract]
   public class SuccessResult<Type> : Result<Type>
   {
     public SuccessResult(Type data)

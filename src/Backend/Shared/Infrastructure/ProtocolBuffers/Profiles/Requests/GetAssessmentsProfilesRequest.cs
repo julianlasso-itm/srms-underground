@@ -1,26 +1,26 @@
-﻿using System.Runtime.Serialization;
+﻿using ProtoBuf;
 
 namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Requests
 {
-  [DataContract]
+  [ProtoContract]
   public class GetAssessmentsProfilesRequest
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public int Page { get; set; }
 
-    [DataMember(Order = 2)]
+    [ProtoMember(2)]
     public int Limit { get; set; }
 
-    [DataMember(Order = 3, IsRequired = false)]
+    [ProtoMember(3, IsRequired = false)]
     public string? Filter { get; set; }
 
-    [DataMember(Order = 4, IsRequired = false)]
+    [ProtoMember(4, IsRequired = false)]
     public string? FilterBy { get; set; }
 
-    [DataMember(Order = 5, IsRequired = false)]
+    [ProtoMember(5, IsRequired = false)]
     public string? Sort { get; set; }
 
-    [DataMember(Order = 6, IsRequired = false)]
+    [ProtoMember(6, IsRequired = false)]
     public string? Order { get; set; } = "asc";
   }
 }

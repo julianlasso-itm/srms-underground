@@ -1,20 +1,20 @@
-using System.Runtime.Serialization;
+using ProtoBuf;
 
 namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Responses
 {
-  [DataContract]
+  [ProtoContract]
   public class UpdateProvinceProfilesResponse
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public required string ProvinceId { get; set; }
 
-    [DataMember(Order = 2)]
+    [ProtoMember(2)]
     public string? CountryId { get; set; }
 
-    [DataMember(Order = 3)]
+    [ProtoMember(3)]
     public string? Name { get; set; }
 
-    [DataMember(Order = 4)]
+    [ProtoMember(4)]
     public bool? Disabled { get; set; }
   }
 }

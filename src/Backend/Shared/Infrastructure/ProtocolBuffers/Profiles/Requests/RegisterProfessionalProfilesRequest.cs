@@ -1,17 +1,17 @@
-﻿using System.Runtime.Serialization;
+﻿using ProtoBuf;
 
 namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Requests
 {
-  [DataContract]
+  [ProtoContract]
   public class RegisterProfessionalProfilesRequest
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public string Name { get; set; }
 
-    [DataMember(Order = 2)]
+    [ProtoMember(2)]
     public string Email { get; set; }
 
-    [DataMember(Order = 3)]
+    [ProtoMember(3)]
     public bool Disabled { get; set; }
   }
 }

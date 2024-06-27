@@ -1,17 +1,17 @@
-﻿using System.Runtime.Serialization;
+﻿using ProtoBuf;
 
 namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Requests
 {
-  [DataContract]
+  [ProtoContract]
   public class UpdateSkillProfilesRequest
   {
-    [DataMember(Order = 1, IsRequired = false)]
+    [ProtoMember(1, IsRequired = false)]
     public string? SkillId { get; set; }
 
-    [DataMember(Order = 2, IsRequired = false)]
+    [ProtoMember(2, IsRequired = false)]
     public string? Name { get; set; }
 
-    [DataMember(Order = 3, IsRequired = false)]
+    [ProtoMember(3, IsRequired = false)]
     public bool? Disable { get; set; }
   }
 }

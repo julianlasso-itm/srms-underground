@@ -1,20 +1,20 @@
-using System.Runtime.Serialization;
+using ProtoBuf;
 
 namespace Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses
 {
-  [DataContract]
+  [ProtoContract]
   public class VerifyTokenAccessControlResponse
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public required string UserId { get; set; }
 
-    [DataMember(Order = 2)]
+    [ProtoMember(2)]
     public required string Email { get; set; }
 
-    [DataMember(Order = 3)]
+    [ProtoMember(3)]
     public required string Photo { get; set; }
 
-    [DataMember(Order = 4)]
+    [ProtoMember(4)]
     public required List<string> Roles { get; set; }
   }
 }

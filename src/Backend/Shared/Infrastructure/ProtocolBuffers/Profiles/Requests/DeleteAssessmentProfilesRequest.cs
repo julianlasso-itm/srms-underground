@@ -1,11 +1,11 @@
-﻿using System.Runtime.Serialization;
+﻿using ProtoBuf;
 
 namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Requests
 {
-  [DataContract]
+  [ProtoContract]
   public class DeleteAssessmentProfilesRequest
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public required string AssessmentId { get; set; }
   }
 }

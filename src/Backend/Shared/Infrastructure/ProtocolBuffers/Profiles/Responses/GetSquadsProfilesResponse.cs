@@ -1,27 +1,27 @@
-﻿using System.Runtime.Serialization;
+﻿using ProtoBuf;
 
 namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Responses
 {
-  [DataContract]
+  [ProtoContract]
   public class GetSquadsProfilesResponse
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public required IEnumerable<SquadProfiles> Squads { get; set; }
 
-    [DataMember(Order = 2)]
+    [ProtoMember(2)]
     public required int Total { get; set; }
   }
 
-  [DataContract]
+  [ProtoContract]
   public class SquadProfiles
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public string SquadId { get; set; }
 
-    [DataMember(Order = 2)]
+    [ProtoMember(2)]
     public string Name { get; set; }
 
-    [DataMember(Order = 3)]
+    [ProtoMember(3)]
     public bool Disabled { get; set; }
   }
 }

@@ -1,31 +1,31 @@
-using System.Runtime.Serialization;
+using ProtoBuf;
 using Shared.Common.Enums;
 
 namespace Shared.Common.Bases
 {
-  [DataContract]
+  [ProtoContract]
   public class ResultBase
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public bool IsSuccess { get; set; }
 
-    [DataMember(Order = 2)]
+    [ProtoMember(2)]
     public bool IsFailure => !IsSuccess;
 
-    [DataMember(Order = 3)]
+    [ProtoMember(3, IsRequired = false)]
     public string? Message { get; set; }
 
-    [DataMember(Order = 4)]
+    [ProtoMember(4, IsRequired = false)]
     public ErrorEnum? Code { get; set; }
 
-    [DataMember(Order = 5)]
+    [ProtoMember(5, IsRequired = false)]
     public object? Details { get; set; }
   }
 
-  [DataContract]
+  [ProtoContract]
   public class Result<Type> : ResultBase
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public Type Data { get; set; }
   }
 }

@@ -1,10 +1,10 @@
-using System.Runtime.Serialization;
+using ProtoBuf;
 using Shared.Common.Bases;
 using Shared.Common.Enums;
 
 namespace Shared.Common
 {
-  [DataContract]
+  [ProtoContract]
   public class ErrorResult<Type> : Result<Type>
   {
     public ErrorResult(string message, ErrorEnum code)

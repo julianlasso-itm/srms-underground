@@ -1,30 +1,30 @@
-﻿using System.Runtime.Serialization;
+﻿using ProtoBuf;
 
 namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Responses
 {
-  [DataContract]
+  [ProtoContract]
   public class GetSubSkillsProfilesResponse
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public required IEnumerable<SubSkillProfiles> SubSkills { get; set; }
 
-    [DataMember(Order = 2)]
+    [ProtoMember(2)]
     public required int Total { get; set; }
   }
 
-  [DataContract]
+  [ProtoContract]
   public class SubSkillProfiles
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public required string SubSkillId { get; set; }
 
-    [DataMember(Order = 2)]
+    [ProtoMember(2)]
     public required string SkillId { get; set; }
 
-    [DataMember(Order = 3)]
+    [ProtoMember(3)]
     public required string Name { get; set; }
 
-    [DataMember(Order = 4)]
+    [ProtoMember(4)]
     public required bool Disabled { get; set; }
   }
 }

@@ -1,17 +1,17 @@
-using System.Runtime.Serialization;
+using ProtoBuf;
 
 namespace Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests
 {
-  [DataContract]
+  [ProtoContract]
   public class ChangePasswordAccessControlRequest
   {
-    [DataMember(Order = 1, IsRequired = false)]
+    [ProtoMember(1, IsRequired = false)]
     public string? UserId { get; set; }
 
-    [DataMember(Order = 2)]
+    [ProtoMember(2)]
     public required string OldPassword { get; set; }
 
-    [DataMember(Order = 3)]
+    [ProtoMember(3)]
     public required string NewPassword { get; set; }
   }
 }

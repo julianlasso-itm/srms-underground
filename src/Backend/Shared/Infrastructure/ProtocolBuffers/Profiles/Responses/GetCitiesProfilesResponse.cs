@@ -1,33 +1,33 @@
-using System.Runtime.Serialization;
+using ProtoBuf;
 
 namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Responses
 {
-  [DataContract]
+  [ProtoContract]
   public class GetCitiesProfilesResponse
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public required IEnumerable<CityProfiles> Cities { get; set; }
 
-    [DataMember(Order = 2)]
+    [ProtoMember(2)]
     public required int Total { get; set; }
   }
 
-  [DataContract]
+  [ProtoContract]
   public class CityProfiles
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public required string CityId { get; set; }
 
-    [DataMember(Order = 2)]
+    [ProtoMember(2)]
     public required string Name { get; set; }
 
-    [DataMember(Order = 3)]
+    [ProtoMember(3)]
     public required string ProvinceId { get; set; }
 
-    [DataMember(Order = 4)]
+    [ProtoMember(4)]
     public required bool Disabled { get; set; }
 
-    [DataMember(Order = 5)]
+    [ProtoMember(5)]
     public required ProvinceProfiles Province { get; set; }
   }
 }

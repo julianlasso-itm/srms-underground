@@ -1,29 +1,29 @@
-using System.Runtime.Serialization;
+using ProtoBuf;
 
 namespace Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests
 {
-  [DataContract]
+  [ProtoContract]
   public class UpdateUserAccessControlRequest
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public required string UserId { get; set; }
 
-    [DataMember(Order = 2, IsRequired = false)]
+    [ProtoMember(2, IsRequired = false)]
     public string? Name { get; set; }
 
-    [DataMember(Order = 3, IsRequired = false)]
+    [ProtoMember(3, IsRequired = false)]
     public string? Avatar { get; set; }
 
-    [DataMember(Order = 4, IsRequired = false)]
+    [ProtoMember(4, IsRequired = false)]
     public string? AvatarExtension { get; set; }
 
-    [DataMember(Order = 5, IsRequired = false)]
+    [ProtoMember(5, IsRequired = false)]
     public string? OldPhoto { get; set; }
 
-    [DataMember(Order = 6, IsRequired = false)]
+    [ProtoMember(6, IsRequired = false)]
     public bool? Disabled { get; set; }
 
-    [DataMember(Order = 7, IsRequired = false)]
+    [ProtoMember(7, IsRequired = false)]
     public string? CityId { get; set; }
   }
 }

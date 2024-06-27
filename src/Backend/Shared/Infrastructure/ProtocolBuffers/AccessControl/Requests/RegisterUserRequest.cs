@@ -1,26 +1,26 @@
-using System.Runtime.Serialization;
+using ProtoBuf;
 
 namespace Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests
 {
-  [DataContract]
+  [ProtoContract]
   public class RegisterUserRequest
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public required string Name { get; set; }
 
-    [DataMember(Order = 2)]
+    [ProtoMember(2)]
     public required string Email { get; set; }
 
-    [DataMember(Order = 3)]
+    [ProtoMember(3)]
     public required string Password { get; set; }
 
-    [DataMember(Order = 4)]
+    [ProtoMember(4)]
     public required string Avatar { get; set; }
 
-    [DataMember(Order = 5)]
+    [ProtoMember(5)]
     public required string AvatarExtension { get; set; }
 
-    [DataMember(Order = 6)]
+    [ProtoMember(6)]
     public required string CityId { get; set; }
   }
 }

@@ -1,11 +1,11 @@
-﻿using System.Runtime.Serialization;
+﻿using ProtoBuf;
 
 namespace Shared.Infrastructure.ProtocolBuffers.Profiles.Requests
 {
-  [DataContract]
+  [ProtoContract]
   public class RegisterSquadProfilesRequest
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public string Name { get; set; }
   }
 }

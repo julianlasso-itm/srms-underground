@@ -1,11 +1,11 @@
-using System.Runtime.Serialization;
+using ProtoBuf;
 
 namespace Shared.Infrastructure.ProtocolBuffers.Analytics.Responses
 {
-  [DataContract]
+  [ProtoContract]
   public class DeleteLevelAnalyticsResponse
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public required string LevelId { get; set; }
   }
 }

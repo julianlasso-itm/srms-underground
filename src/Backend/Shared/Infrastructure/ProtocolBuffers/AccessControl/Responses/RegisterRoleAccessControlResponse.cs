@@ -1,20 +1,20 @@
-using System.Runtime.Serialization;
+using ProtoBuf;
 
 namespace Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses
 {
-  [DataContract]
+  [ProtoContract]
   public class RegisterRoleAccessControlResponse
   {
-    [DataMember(Order = 1)]
+    [ProtoMember(1)]
     public required string RoleId { get; set; }
 
-    [DataMember(Order = 2)]
+    [ProtoMember(2)]
     public required string Name { get; set; }
 
-    [DataMember(Order = 3, IsRequired = false)]
+    [ProtoMember(3, IsRequired = false)]
     public string? Description { get; set; }
 
-    [DataMember(Order = 4)]
+    [ProtoMember(4)]
     public required bool Disabled { get; set; }
   }
 }
