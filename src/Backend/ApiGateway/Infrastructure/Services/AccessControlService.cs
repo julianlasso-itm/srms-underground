@@ -24,17 +24,22 @@ namespace ApiGateway.Infrastructure.Services
       CallContext context = default
     )
     {
-      // try {
-        return await Client.RegisterUserAsync(request, context);
-      // } catch (Exception ex) {
-      //   Console.WriteLine(ex.Message);
-      //   var message = ex.Message ?? string.Empty;
-      //   if (ex.StackTrace != null)
-      //   {
-      //     message += JsonSerializer.Serialize(ex.StackTrace);
-      //   }
-      //   return Response<RegisterUserResponse>.Failure(message, ErrorEnum.INTERNAL_SERVER_ERROR);
-      // }
+      try
+      {
+        var response = await Client.RegisterUserAsync(request, context);
+        Console.WriteLine($"Response: {JsonSerializer.Serialize(response)}");
+        return response;
+      }
+      catch (Exception ex)
+      {
+        Console.WriteLine($"Exception: {ex.Message}");
+        var message = ex.Message ?? string.Empty;
+        if (ex.StackTrace != null)
+        {
+          message += JsonSerializer.Serialize(ex.StackTrace);
+        }
+        return Response<RegisterUserResponse>.Failure(message, ErrorEnum.INTERNAL_SERVER_ERROR);
+      }
     }
 
     public Task<Result<RegisterRoleAccessControlResponse>> RegisterRoleAsync(
