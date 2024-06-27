@@ -18,7 +18,8 @@ namespace Shared.Infrastructure.Interceptors
     {
       try
       {
-        return await continuation(request, context);
+        var result = await continuation(request, context);
+        return result;
       }
       catch (RpcException exception)
       {

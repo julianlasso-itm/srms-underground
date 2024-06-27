@@ -40,9 +40,8 @@ namespace ApiGateway.Infrastructure.Controllers
         AvatarExtension = Path.GetExtension(request.Avatar.FileName),
       };
 
-      return Handle(
-        await _accessControlService.RegisterUserAsync(newRequest)
-      );
+      var response = await _accessControlService.RegisterUserAsync(newRequest);
+      return Handle(response);
     }
 
     [HttpPost("sign-in")]

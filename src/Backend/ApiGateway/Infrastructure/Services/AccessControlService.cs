@@ -24,17 +24,17 @@ namespace ApiGateway.Infrastructure.Services
       CallContext context = default
     )
     {
-      try {
+      // try {
         return await Client.RegisterUserAsync(request, context);
-      } catch (Exception ex) {
-        Console.WriteLine(ex.Message);
-        var message = ex.Message ?? string.Empty;
-        if (ex.StackTrace != null)
-        {
-          message += JsonSerializer.Serialize(ex.StackTrace);
-        }
-        return Response<RegisterUserResponse>.Failure(message, ErrorEnum.INTERNAL_SERVER_ERROR);
-      }
+      // } catch (Exception ex) {
+      //   Console.WriteLine(ex.Message);
+      //   var message = ex.Message ?? string.Empty;
+      //   if (ex.StackTrace != null)
+      //   {
+      //     message += JsonSerializer.Serialize(ex.StackTrace);
+      //   }
+      //   return Response<RegisterUserResponse>.Failure(message, ErrorEnum.INTERNAL_SERVER_ERROR);
+      // }
     }
 
     public Task<Result<RegisterRoleAccessControlResponse>> RegisterRoleAsync(
