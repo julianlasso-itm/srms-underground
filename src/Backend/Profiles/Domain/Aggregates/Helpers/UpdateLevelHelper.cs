@@ -8,7 +8,6 @@ using Shared.Common.Bases;
 using Shared.Common.Enums;
 using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Aggregate.Interfaces;
-using Shared.Domain.Exceptions;
 using Shared.Domain.ValueObjects;
 
 namespace Profiles.Domain.Aggregates.Helpers
