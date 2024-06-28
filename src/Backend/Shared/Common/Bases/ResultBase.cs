@@ -4,7 +4,7 @@ using Shared.Common.Enums;
 namespace Shared.Common.Bases
 {
   [ProtoContract]
-  public class ResultBase
+  public class Result<Type>
   {
     [ProtoMember(1)]
     public bool IsSuccess { get; set; }
@@ -20,12 +20,8 @@ namespace Shared.Common.Bases
 
     [ProtoMember(5, IsRequired = false)]
     public object? Details { get; set; }
-  }
 
-  [ProtoContract]
-  public class Result<Type> : ResultBase
-  {
-    [ProtoMember(1)]
+    [ProtoMember(6, IsRequired = false)]
     public Type Data { get; set; }
   }
 }

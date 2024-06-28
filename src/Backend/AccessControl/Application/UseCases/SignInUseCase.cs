@@ -90,7 +90,7 @@ namespace AccessControl.Application.UseCases
         );
       }
 
-      return new SuccessResult<SignInApplicationResponse>(
+      return Response<SignInApplicationResponse>.Success(
         AclOutputMapper.ToSignInApplicationResponse(result.Data)
       );
     }

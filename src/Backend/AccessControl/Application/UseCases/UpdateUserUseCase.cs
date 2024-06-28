@@ -71,7 +71,7 @@ namespace AccessControl.Application.UseCases
       }
       var result = AclOutputMapper.ToUpdateUserApplicationResponse(user);
       _ = await Persistence(result);
-      return new SuccessResult<UpdateUserApplicationResponse>(result);
+      return Response<UpdateUserApplicationResponse>.Success(result);
     }
 
     private Result<UpdateUserCommand> AssignAvatarBlobAndDeleteFromCache(UpdateUserCommand request)

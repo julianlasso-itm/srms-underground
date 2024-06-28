@@ -66,7 +66,7 @@ namespace AccessControl.Application.UseCases
       RemoveTokenFromCache(data.ActivationToken);
       EmitEvent(Channel, JsonSerializer.Serialize(user));
 
-      return new SuccessResult<ActivationTokenApplicationResponse>(
+      return Response<ActivationTokenApplicationResponse>.Success(
         AclOutputMapper.ToActivationTokenApplicationResponse(data)
       );
     }
