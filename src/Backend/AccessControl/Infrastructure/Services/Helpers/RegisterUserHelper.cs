@@ -1,6 +1,8 @@
 using AccessControl.Infrastructure.Services.Helpers.Base;
 using Shared.Common;
 using Shared.Common.Bases;
+using Shared.Common.Enums;
+using Shared.Infrastructure.ProtocolBuffers;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses;
 
@@ -8,7 +10,7 @@ namespace AccessControl.Infrastructure.Services.Helpers
 {
   internal class RegisterUserHelper : BaseHelperServiceInfrastructure
   {
-    public static async Task<Result<RegisterUserResponse>> RegisterUserAsync(
+    public static async Task<GrpcResult<RegisterUserResponse>> RegisterUserAsync(
       RegisterUserRequest request
     )
     {
@@ -17,10 +19,14 @@ namespace AccessControl.Infrastructure.Services.Helpers
 
       if (data.IsFailure)
       {
-        return Response<RegisterUserResponse>.Failure(data.Message, data.Code, data.Details);
+        return GrpcResult<RegisterUserResponse>.Failure(
+          data.Message ?? string.Empty,
+          data.Code ?? ErrorEnum.INTERNAL_SERVER_ERROR,
+          data.Details
+        );
       }
 
-      var answer = Response<RegisterUserResponse>.Success(
+      var answer = GrpcResult<RegisterUserResponse>.Success(
         AclOutputMapper.ToRegisterUserResponse(data.Data)
       );
       return answer;

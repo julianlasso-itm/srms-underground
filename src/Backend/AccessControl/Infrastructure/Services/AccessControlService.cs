@@ -4,6 +4,7 @@ using Infrastructure.ProtocolBuffers.AccessControl.Responses;
 using ProtoBuf.Grpc;
 using Shared.Application.Interfaces;
 using Shared.Common.Bases;
+using Shared.Infrastructure.ProtocolBuffers;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses;
@@ -20,14 +21,15 @@ namespace AccessControl.Infrastructure.Services
     private readonly IAntiCorruptionLayer _antiCorruptionLayerService = antiCorruptionLayer;
     private readonly IEnvironment _environmentService = environmentService;
 
-    public async Task<Result<RegisterUserResponse>> RegisterUserAsync(
+    public async Task<GrpcResult<RegisterUserResponse>> RegisterUserAsync(
       RegisterUserRequest request,
       CallContext context = default
     )
     {
       RegisterUserHelper.SetApplication(_applicationService.GetApplication());
       RegisterUserHelper.SetAntiCorruptionLayer(_antiCorruptionLayerService);
-      return await RegisterUserHelper.RegisterUserAsync(request);
+      var result = await RegisterUserHelper.RegisterUserAsync(request);
+      return result;
     }
 
     public async Task<Result<RegisterRoleAccessControlResponse>> RegisterRoleAsync(

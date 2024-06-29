@@ -4,24 +4,25 @@ using Shared.Common.Enums;
 namespace Shared.Common.Bases
 {
   [ProtoContract]
+  // [ProtoInclude(1, typeof(Result<RegisterUserResponse>), DataFormat = DataFormat.Group)]
   public class Result<Type>
   {
-    [ProtoMember(1)]
+    [ProtoMember(2)]
+    public Type Data { get; set; }
+
+    [ProtoMember(3)]
     public bool IsSuccess { get; set; }
 
-    [ProtoMember(2)]
+    [ProtoMember(4)]
     public bool IsFailure => !IsSuccess;
 
-    [ProtoMember(3, IsRequired = false)]
+    [ProtoMember(5, IsRequired = false)]
     public string? Message { get; set; }
 
-    [ProtoMember(4, IsRequired = false)]
+    [ProtoMember(6, IsRequired = false)]
     public ErrorEnum? Code { get; set; }
 
-    [ProtoMember(5, IsRequired = false)]
+    [ProtoMember(7, IsRequired = false)]
     public object? Details { get; set; }
-
-    [ProtoMember(6, IsRequired = false)]
-    public Type Data { get; set; }
   }
 }

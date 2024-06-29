@@ -5,6 +5,7 @@ using ProtoBuf.Grpc;
 using Shared.Common;
 using Shared.Common.Bases;
 using Shared.Common.Enums;
+using Shared.Infrastructure.ProtocolBuffers;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses;
@@ -19,7 +20,7 @@ namespace ApiGateway.Infrastructure.Services
       CreateChannel(urlMicroservice);
     }
 
-    public async Task<Result<RegisterUserResponse>> RegisterUserAsync(
+    public async Task<GrpcResult<RegisterUserResponse>> RegisterUserAsync(
       RegisterUserRequest request,
       CallContext context = default
     )
@@ -33,12 +34,15 @@ namespace ApiGateway.Infrastructure.Services
       catch (Exception ex)
       {
         Console.WriteLine($"Exception: {ex.Message}");
+
         var message = ex.Message ?? string.Empty;
         if (ex.StackTrace != null)
         {
           message += JsonSerializer.Serialize(ex.StackTrace);
         }
-        return Response<RegisterUserResponse>.Failure(message, ErrorEnum.INTERNAL_SERVER_ERROR);
+
+        return GrpcResult<RegisterUserResponse>.Failure(message, ErrorEnum.INTERNAL_SERVER_ERROR);
+        // return Response<RegisterUserResponse>.Failure(message, ErrorEnum.INTERNAL_SERVER_ERROR);
       }
     }
 

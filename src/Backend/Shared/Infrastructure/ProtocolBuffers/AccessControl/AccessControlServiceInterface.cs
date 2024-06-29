@@ -11,7 +11,7 @@ namespace Shared.Infrastructure.ProtocolBuffers.AccessControl
   public interface IAccessControlServices
   {
     [OperationContract]
-    Task<Result<RegisterUserResponse>> RegisterUserAsync(
+    Task<GrpcResult<RegisterUserResponse>> RegisterUserAsync(
       RegisterUserRequest request,
       CallContext context = default
     );

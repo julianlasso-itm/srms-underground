@@ -2,6 +2,8 @@ using System.Net;
 using System.Text.Json;
 using Grpc.Core;
 using Grpc.Core.Interceptors;
+using ProtoBuf;
+using ProtoBuf.Meta;
 using Shared.Domain.Exceptions;
 using Shared.Infrastructure.Exceptions;
 using ApplicationException = Shared.Application.Exceptions.ApplicationException;
@@ -19,6 +21,10 @@ namespace Shared.Infrastructure.Interceptors
       try
       {
         var result = await continuation(request, context);
+        var clone = Serializer.DeepClone(result);
+
+        Console.WriteLine(ReferenceEquals(result, clone)); // expect false
+        Console.WriteLine($"{clone}");
         return result;
       }
       catch (RpcException exception)

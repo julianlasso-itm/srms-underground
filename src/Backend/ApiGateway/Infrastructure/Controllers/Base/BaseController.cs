@@ -4,8 +4,8 @@ using System.Text.Json;
 using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Application.Interfaces;
-using Shared.Common.Bases;
 using Shared.Infrastructure.Exceptions;
+using Shared.Infrastructure.ProtocolBuffers;
 
 namespace ApiGateway.Infrastructure.Controllers.Base
 {
@@ -15,7 +15,7 @@ namespace ApiGateway.Infrastructure.Controllers.Base
     protected readonly ICacheService CacheService = cacheService;
 
     [NonAction]
-    protected IActionResult Handle<ResultType>(Result<ResultType> result)
+    protected IActionResult Handle<Type>(GrpcResult<Type> result)
     {
       if (result.IsSuccess)
       {
