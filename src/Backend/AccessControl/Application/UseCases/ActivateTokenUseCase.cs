@@ -8,7 +8,6 @@ using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 using Shared.Application.Interfaces;
 using Shared.Common;
-using Shared.Common;
 using Shared.Common.Enums;
 
 namespace AccessControl.Application.UseCases
@@ -66,7 +65,7 @@ namespace AccessControl.Application.UseCases
       RemoveTokenFromCache(data.ActivationToken);
       EmitEvent(Channel, JsonSerializer.Serialize(user));
 
-      return new SuccessResult<ActivationTokenApplicationResponse>(
+      return Response<ActivationTokenApplicationResponse>.Success(
         AclOutputMapper.ToActivationTokenApplicationResponse(data)
       );
     }

@@ -9,7 +9,6 @@ using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 using Shared.Common;
-using Shared.Common;
 
 namespace Profiles.Application.UseCases
 {

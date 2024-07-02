@@ -4,11 +4,9 @@ using Analytics.Domain.Entities;
 using Analytics.Domain.Entities.Records;
 using Analytics.Domain.ValueObjects;
 using Shared.Common;
-using Shared.Common;
 using Shared.Common.Enums;
 using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Aggregate.Interfaces;
-using Shared.Domain.Exceptions;
 using Shared.Domain.ValueObjects;
 
 namespace Analytics.Domain.Aggregates.Helpers

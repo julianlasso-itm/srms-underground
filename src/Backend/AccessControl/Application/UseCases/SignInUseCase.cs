@@ -8,7 +8,6 @@ using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 using Shared.Application.Interfaces;
 using Shared.Common;
-using Shared.Common;
 using Shared.Common.Enums;
 using ApplicationException = Shared.Application.Exceptions.ApplicationException;
 
@@ -90,7 +89,7 @@ namespace AccessControl.Application.UseCases
         );
       }
 
-      return new SuccessResult<SignInApplicationResponse>(
+      return Response<SignInApplicationResponse>.Success(
         AclOutputMapper.ToSignInApplicationResponse(result.Data)
       );
     }

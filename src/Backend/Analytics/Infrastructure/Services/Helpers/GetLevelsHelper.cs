@@ -3,7 +3,6 @@ using Analytics.Application.Responses;
 using Analytics.Infrastructure.Persistence.Models;
 using Analytics.Infrastructure.Services.Helpers.Base;
 using Shared.Common;
-using Shared.Common;
 using Shared.Infrastructure.ProtocolBuffers.Analytics.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Analytics.Responses;
 

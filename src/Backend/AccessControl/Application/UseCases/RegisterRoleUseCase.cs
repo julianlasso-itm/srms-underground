@@ -8,7 +8,6 @@ using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 using Shared.Common;
-using Shared.Common;
 
 namespace AccessControl.Application.UseCases
 {

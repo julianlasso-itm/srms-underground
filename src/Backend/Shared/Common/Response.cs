@@ -1,4 +1,3 @@
-using Shared.Common;
 using Shared.Common.Enums;
 
 namespace Shared.Common

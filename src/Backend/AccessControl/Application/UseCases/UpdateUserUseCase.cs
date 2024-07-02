@@ -6,7 +6,6 @@ using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 using Shared.Application.Interfaces;
 using Shared.Common;
-using Shared.Common;
 using Shared.Common.Enums;
 
 namespace AccessControl.Application.UseCases
@@ -71,7 +70,7 @@ namespace AccessControl.Application.UseCases
       }
       var result = AclOutputMapper.ToUpdateUserApplicationResponse(user);
       _ = await Persistence(result);
-      return new SuccessResult<UpdateUserApplicationResponse>(result);
+      return Response<UpdateUserApplicationResponse>.Success(result);
     }
 
     private Result<UpdateUserCommand> AssignAvatarBlobAndDeleteFromCache(UpdateUserCommand request)

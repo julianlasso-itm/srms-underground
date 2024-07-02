@@ -3,7 +3,6 @@ using QueryBank.Domain.Aggregates.Dto.Responses;
 using QueryBank.Domain.Entities.Records;
 using QueryBank.Domain.ValueObjects;
 using Shared.Common;
-using Shared.Common;
 using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Aggregate.Interfaces;
 

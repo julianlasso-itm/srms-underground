@@ -1,7 +1,6 @@
 using AccessControl.Infrastructure.Services.Helpers.Base;
 using Infrastructure.ProtocolBuffers.AccessControl.Responses;
 using Shared.Common;
-using Shared.Common;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
 
 namespace AccessControl.Infrastructure.Services.Helpers

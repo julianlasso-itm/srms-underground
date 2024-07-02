@@ -3,7 +3,6 @@ using ApiGateway.Infrastructure.Services.Base;
 using Infrastructure.ProtocolBuffers.AccessControl.Responses;
 using ProtoBuf.Grpc;
 using Shared.Common;
-using Shared.Common;
 using Shared.Common.Enums;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
