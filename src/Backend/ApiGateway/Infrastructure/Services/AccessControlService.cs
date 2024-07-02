@@ -1,9 +1,7 @@
-using System.Text.Json;
 using ApiGateway.Infrastructure.Services.Base;
 using Infrastructure.ProtocolBuffers.AccessControl.Responses;
 using ProtoBuf.Grpc;
 using Shared.Common;
-using Shared.Common.Enums;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses;
@@ -18,7 +16,7 @@ namespace ApiGateway.Infrastructure.Services
       CreateChannel(urlMicroservice);
     }
 
-    public async Task<Result<RegisterUserResponse>> RegisterUserAsync(
+    public async Task<ResultRegisterUser> RegisterUserAsync(
       RegisterUserRequest request,
       CallContext context = default
     )
@@ -27,15 +25,9 @@ namespace ApiGateway.Infrastructure.Services
       {
         return await Client.RegisterUserAsync(request, context);
       }
-      catch (Exception ex)
+      catch (Exception)
       {
-        Console.WriteLine(ex.Message);
-        var message = ex.Message ?? string.Empty;
-        if (ex.StackTrace != null)
-        {
-          message += JsonSerializer.Serialize(ex.StackTrace);
-        }
-        return Response<RegisterUserResponse>.Failure(message, ErrorEnum.INTERNAL_SERVER_ERROR);
+        throw;
       }
     }
 

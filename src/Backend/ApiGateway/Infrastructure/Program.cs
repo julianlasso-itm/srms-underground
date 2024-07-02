@@ -1,5 +1,7 @@
 using ApiGateway.Infrastructure.Services;
+using ProtoBuf.Meta;
 using Shared.Application.Interfaces;
+using Shared.Infrastructure.ProtocolBuffers.Interfaces;
 using Shared.Infrastructure.Services;
 using StackExchange.Redis;
 

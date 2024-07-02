@@ -29,7 +29,6 @@ builder
     reloadOnChange: true
   )
   .AddEnvironmentVariables();
-
 // =====================================
 
 // == Configure connection to the database ==
@@ -37,7 +36,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
   options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionDataBase"));
 });
-
 // ==========================================
 
 // == Configure connection to Azure Blob Storage ==
@@ -45,7 +43,6 @@ var blobServiceClient = new BlobServiceClient(
   builder.Configuration.GetConnectionString("AzureStorageConnection")!
 );
 builder.Services.AddSingleton(blobServiceClient);
-
 // ================================================
 
 // == Configure connection to Redis ==
@@ -53,7 +50,6 @@ var multiplexer = ConnectionMultiplexer.Connect(
   builder.Configuration.GetConnectionString("RedisConnection")!
 );
 builder.Services.AddSingleton<IConnectionMultiplexer>(multiplexer);
-
 // ===================================
 
 // == Configure repositories ==
@@ -72,12 +68,10 @@ builder.Services.AddScoped<IStoreService, StoreService>();
 builder.Services.AddScoped<IAntiCorruptionLayer, AntiCorruptionLayer>();
 builder.Services.AddScoped<AntiCorruptionLayerService<AntiCorruptionLayer>>();
 builder.Services.AddScoped<IEnvironment, EnvironmentService>();
-
 // =================================================
 
 // == Configure interceptors for gRPC services ==
 builder.Services.AddSingleton<ErrorHandlingInterceptor>();
-
 // ==============================================
 
 // == Configure gRPC services ==
@@ -85,7 +79,6 @@ builder.Services.AddCodeFirstGrpc(options =>
 {
   options.Interceptors.Add<ErrorHandlingInterceptor>();
 });
-
 // ========================================
 
 var app = builder.Build();
@@ -97,12 +90,10 @@ using (var scope = app.Services.CreateScope())
   var context = services.GetRequiredService<ApplicationDbContext>();
   context.Database.Migrate();
 }
-
 // ================================================================================
 
 // == Configure gRPC services ==
 app.MapGrpcService<AccessControlService>();
-
 // =============================
 
 app.MapGet(

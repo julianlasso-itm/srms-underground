@@ -20,7 +20,7 @@ namespace AccessControl.Infrastructure.Services
     private readonly IAntiCorruptionLayer _antiCorruptionLayerService = antiCorruptionLayer;
     private readonly IEnvironment _environmentService = environmentService;
 
-    public async Task<Result<RegisterUserResponse>> RegisterUserAsync(
+    public async Task<ResultRegisterUser> RegisterUserAsync(
       RegisterUserRequest request,
       CallContext context = default
     )

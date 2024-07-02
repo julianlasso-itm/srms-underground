@@ -4,8 +4,8 @@ using System.Text.Json;
 using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Application.Interfaces;
-using Shared.Common;
 using Shared.Infrastructure.Exceptions;
+using Shared.Infrastructure.ProtocolBuffers.Interfaces;
 
 namespace ApiGateway.Infrastructure.Controllers.Base
 {
@@ -15,25 +15,26 @@ namespace ApiGateway.Infrastructure.Controllers.Base
     protected readonly ICacheService CacheService = cacheService;
 
     [NonAction]
-    protected IActionResult Handle<ResultType>(Result<ResultType> result)
+    protected IActionResult Handle<Type>(Type result)
     {
       try
       {
-        if (result.IsFailure)
-        {
-          var message = result.Message ?? string.Empty;
-          if (result.Details != null)
-          {
-            message += JsonSerializer.Serialize(result.Details);
-          }
-          return HandleExceptionResponse(
-            message,
-            result.Code != null
-              ? Convert.ToInt32(result.Code)
-              : Convert.ToInt32(HttpStatusCode.InternalServerError)
-          );
-        }
-        return Ok(result.Data);
+        return Ok(result);
+        // if (result.IsFailure)
+        // {
+        //   var message = result.ErrorMessage ?? string.Empty;
+        //   if (result.ErrorDetails != null)
+        //   {
+        //     message += JsonSerializer.Serialize(result.ErrorDetails);
+        //   }
+        //   return HandleExceptionResponse(
+        //     message,
+        //     result.ErrorCode != null
+        //       ? Convert.ToInt32(result.ErrorCode)
+        //       : Convert.ToInt32(HttpStatusCode.InternalServerError)
+        //   );
+        // }
+        // return Ok(result.Data);
       }
       catch (RpcException exception)
       {
