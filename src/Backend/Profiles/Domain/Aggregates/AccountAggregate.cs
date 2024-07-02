@@ -1,7 +1,7 @@
 using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
 using Profiles.Domain.Aggregates.Helpers;
-using Shared.Common.Bases;
+using Shared.Common;
 
 namespace Profiles.Domain.Aggregates.Interfaces
 {

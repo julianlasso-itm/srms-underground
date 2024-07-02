@@ -1,6 +1,6 @@
 ﻿using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Dto.Responses;
-using Shared.Common.Bases;
+using Shared.Common;
 using Shared.Domain.Aggregate.Interfaces;
 
 namespace Profiles.Domain.Aggregates.Interfaces

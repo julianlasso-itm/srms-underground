@@ -4,7 +4,7 @@ using Analytics.Domain.Entities;
 using Analytics.Domain.Entities.Records;
 using Analytics.Domain.ValueObjects;
 using Shared.Common;
-using Shared.Common.Bases;
+using Shared.Common;
 using Shared.Common.Enums;
 using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Aggregate.Interfaces;
@@ -89,7 +89,10 @@ namespace Analytics.Domain.Aggregates.Helpers
         return Response<bool>.Failure(
           "No data to update",
           ErrorEnum.BAD_REQUEST,
-          new List<ErrorValueObject> { new ErrorValueObject("No fields to update", "No fields to update") }
+          new List<ErrorValueObject>
+          {
+            new ErrorValueObject("No fields to update", "No fields to update")
+          }
         );
       }
 

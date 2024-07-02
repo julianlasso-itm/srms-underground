@@ -1,6 +1,6 @@
 using AccessControl.Application.Commands;
 using AccessControl.Application.Responses;
-using Shared.Common.Bases;
+using Shared.Common;
 
 namespace AccessControl.Application.Interfaces
 {

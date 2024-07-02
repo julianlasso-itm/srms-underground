@@ -3,7 +3,7 @@ using Analytics.Application.Responses;
 using Analytics.Infrastructure.Persistence.Models;
 using Analytics.Infrastructure.Services.Helpers.Base;
 using Shared.Common;
-using Shared.Common.Bases;
+using Shared.Common;
 using Shared.Infrastructure.ProtocolBuffers.Analytics.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Analytics.Responses;
 
@@ -20,11 +20,7 @@ namespace Analytics.Infrastructure.Services.Helpers
 
       if (data.IsFailure)
       {
-        return Response<GetLevelsAnalyticsResponse>.Failure(
-          data.Message,
-          data.Code,
-          data.Details
-        );
+        return Response<GetLevelsAnalyticsResponse>.Failure(data.Message, data.Code, data.Details);
       }
 
       return Response<GetLevelsAnalyticsResponse>.Success(MapToGetLevelsResponse(data.Data));

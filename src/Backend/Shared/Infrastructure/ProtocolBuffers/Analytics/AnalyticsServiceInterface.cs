@@ -1,6 +1,6 @@
 using System.ServiceModel;
 using ProtoBuf.Grpc;
-using Shared.Common.Bases;
+using Shared.Common;
 using Shared.Infrastructure.ProtocolBuffers.Analytics.Requests;
 using Shared.Infrastructure.ProtocolBuffers.Analytics.Responses;
 

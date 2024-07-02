@@ -1,7 +1,7 @@
 using System.ServiceModel;
 using Infrastructure.ProtocolBuffers.AccessControl.Responses;
 using ProtoBuf.Grpc;
-using Shared.Common.Bases;
+using Shared.Common;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses;
 

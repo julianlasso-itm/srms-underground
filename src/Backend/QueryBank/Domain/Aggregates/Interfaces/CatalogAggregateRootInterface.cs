@@ -1,6 +1,6 @@
 ﻿using QueryBank.Domain.Aggregates.Dto.Requests;
 using QueryBank.Domain.Aggregates.Dto.Responses;
-using Shared.Common.Bases;
+using Shared.Common;
 using Shared.Domain.Aggregate.Interfaces;
 
 namespace QueryBank.Domain.Aggregates.Interfaces

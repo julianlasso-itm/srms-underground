@@ -2,7 +2,7 @@ using Analytics.Domain.Aggregates.Dto.Requests;
 using Analytics.Domain.Aggregates.Dto.Responses;
 using Analytics.Domain.Aggregates.Helpers;
 using Analytics.Domain.Aggregates.Interfaces;
-using Shared.Common.Bases;
+using Shared.Common;
 using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Events.Interfaces;
 

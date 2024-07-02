@@ -2,7 +2,7 @@ using AccessControl.Domain.Aggregates.Dto.Requests;
 using AccessControl.Domain.Aggregates.Dto.Responses;
 using AccessControl.Domain.Aggregates.Helpers;
 using AccessControl.Domain.Aggregates.Interfaces;
-using Shared.Common.Bases;
+using Shared.Common;
 using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Events.Interfaces;
 

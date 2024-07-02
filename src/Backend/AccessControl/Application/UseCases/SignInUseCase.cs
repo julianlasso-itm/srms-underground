@@ -8,7 +8,7 @@ using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 using Shared.Application.Interfaces;
 using Shared.Common;
-using Shared.Common.Bases;
+using Shared.Common;
 using Shared.Common.Enums;
 using ApplicationException = Shared.Application.Exceptions.ApplicationException;
 

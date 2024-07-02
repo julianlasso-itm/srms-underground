@@ -2,7 +2,7 @@ using QueryBank.Domain.Aggregates.Dto.Requests;
 using QueryBank.Domain.Aggregates.Dto.Responses;
 using QueryBank.Domain.Aggregates.Helpers;
 using QueryBank.Domain.Aggregates.Interfaces;
-using Shared.Common.Bases;
+using Shared.Common;
 using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Events.Interfaces;
 

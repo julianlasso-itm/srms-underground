@@ -5,7 +5,7 @@ using Profiles.Application.Responses;
 using Profiles.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 using Shared.Common;
-using Shared.Common.Bases;
+using Shared.Common;
 
 namespace Profiles.Application.UseCases
 {

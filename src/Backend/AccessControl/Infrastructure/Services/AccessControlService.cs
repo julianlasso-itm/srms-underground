@@ -3,7 +3,7 @@ using AccessControl.Infrastructure.Services.Helpers;
 using Infrastructure.ProtocolBuffers.AccessControl.Responses;
 using ProtoBuf.Grpc;
 using Shared.Application.Interfaces;
-using Shared.Common.Bases;
+using Shared.Common;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Requests;
 using Shared.Infrastructure.ProtocolBuffers.AccessControl.Responses;

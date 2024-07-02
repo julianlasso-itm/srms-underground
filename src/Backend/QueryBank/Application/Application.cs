@@ -5,7 +5,7 @@ using QueryBank.Application.Responses;
 using QueryBank.Application.UseCases;
 using QueryBank.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
-using Shared.Common.Bases;
+using Shared.Common;
 
 namespace QueryBank.Application
 {

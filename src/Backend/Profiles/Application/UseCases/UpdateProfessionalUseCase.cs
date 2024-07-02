@@ -8,7 +8,7 @@ using Profiles.Domain.Aggregates.Dto.Requests;
 using Profiles.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 using Shared.Common;
-using Shared.Common.Bases;
+using Shared.Common;
 
 namespace Profiles.Application.UseCases
 {

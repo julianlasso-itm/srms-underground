@@ -1,4 +1,4 @@
-using Shared.Common.Bases;
+using Shared.Common;
 using Shared.Domain.Aggregate.Interfaces;
 
 namespace Shared.Application.Base

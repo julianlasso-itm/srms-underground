@@ -7,7 +7,7 @@ using AccessControl.Application.UseCases;
 using AccessControl.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 using Shared.Application.Interfaces;
-using Shared.Common.Bases;
+using Shared.Common;
 
 namespace AccessControl.Application
 {

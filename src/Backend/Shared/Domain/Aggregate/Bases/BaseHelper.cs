@@ -1,5 +1,5 @@
 using Shared.Common;
-using Shared.Common.Bases;
+using Shared.Common;
 using Shared.Common.Enums;
 using Shared.Domain.ValueObjects;
 using Shared.Domain.ValueObjects.Base;

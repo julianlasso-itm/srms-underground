@@ -4,7 +4,7 @@ using Analytics.Domain.Entities;
 using Analytics.Domain.Entities.Records;
 using Analytics.Domain.ValueObjects;
 using Shared.Common;
-using Shared.Common.Bases;
+using Shared.Common;
 using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Aggregate.Interfaces;
 

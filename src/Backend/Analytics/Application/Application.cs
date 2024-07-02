@@ -5,7 +5,7 @@ using Analytics.Application.Responses;
 using Analytics.Application.UseCases;
 using Analytics.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
-using Shared.Common.Bases;
+using Shared.Common;
 
 namespace Analytics.Application
 {

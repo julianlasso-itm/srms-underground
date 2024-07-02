@@ -1,6 +1,6 @@
 using Analytics.Domain.Aggregates.Dto.Requests;
 using Analytics.Domain.Aggregates.Dto.Responses;
-using Shared.Common.Bases;
+using Shared.Common;
 
 namespace Analytics.Domain.Aggregates.Interfaces
 {

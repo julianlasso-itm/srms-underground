@@ -4,7 +4,7 @@ using AccessControl.Domain.Entities;
 using AccessControl.Domain.Entities.Records;
 using AccessControl.Domain.ValueObjects;
 using Shared.Common;
-using Shared.Common.Bases;
+using Shared.Common;
 using Shared.Domain.Aggregate.Bases;
 using Shared.Domain.Aggregate.Interfaces;
 using Shared.Domain.ValueObjects;

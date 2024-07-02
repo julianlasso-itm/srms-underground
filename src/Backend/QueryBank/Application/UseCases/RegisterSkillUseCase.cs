@@ -9,7 +9,7 @@ using QueryBank.Domain.Aggregates.Dto.Responses;
 using QueryBank.Domain.Aggregates.Interfaces;
 using Shared.Application.Base;
 using Shared.Common;
-using Shared.Common.Bases;
+using Shared.Common;
 
 namespace QueryBank.Application.UseCases
 {
