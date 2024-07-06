@@ -5,6 +5,7 @@
     "Basico",
     "Carregando",
     "crosshairs",
+    "devkit",
     "Dont",
     "Encapsulamiento",
     "identifícate",
@@ -18,5 +19,8 @@
     "subskill",
     "subskills",
     "tagname"
+  ],
+  "conventionalCommits.scopes": [
+    "frontend"
   ]
 }
