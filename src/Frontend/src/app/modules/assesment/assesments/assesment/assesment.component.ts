@@ -23,8 +23,8 @@ import { AssesmentDialogComponent } from '../assesment-dialog/assesment-dialog.c
 import { FormType } from '../assesment-dialog/dialog.type';
 import { IAssesment, IAssesments } from './assesment.interface';
 
-const URL_GET_ASSESMENTS = `${Constant.URL_BASE}${Constant.URL_GET_ASSESMENTS}`;
-const URL_ASSESMENT = `${Constant.URL_BASE}${Constant.URL_ASSESMENT}`;
+const URL_GET_ASSESMENTS = `${Constant.URL_BASE}${Constant.URL_GET_ASSESSMENTS}`;
+const URL_ASSESMENT = `${Constant.URL_BASE}${Constant.URL_GET_ASSESSMENT}`;
 const MIN_LENGTH = 10;
 
 @Component({
