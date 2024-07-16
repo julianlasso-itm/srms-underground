@@ -1,0 +1,43 @@
+.menu-icons {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  background-color: #e2e8f0;
+  width: fit-content;
+  padding: 16px;
+  height: calc(100vh - 32px);
+
+  button {
+    margin-bottom: 16px;
+  }
+
+  button:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.float-button {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+}
+
+.float-menu-icons {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: start;
+  align-items: center;
+  width: fit-content;
+  position: fixed;
+  bottom: 100px;
+  right: 32px;
+
+  button {
+    margin-top: 16px;
+  }
+
+  button:last-child {
+    margin-top: 0;
+  }
+}
