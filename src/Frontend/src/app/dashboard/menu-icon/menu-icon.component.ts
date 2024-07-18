@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -7,19 +7,16 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 @Component({
   selector: 'srms-menu-icon',
   standalone: true,
-  imports: [
-    CommonModule,
-    MatIconModule,
-    MatButtonModule,
-    MatTooltipModule,
-  ],
+  imports: [CommonModule, MatIconModule, MatButtonModule, MatTooltipModule],
   templateUrl: './menu-icon.component.html',
   styleUrl: './menu-icon.component.scss',
 })
 export class MenuIconComponent {
-  menuHidden = false;
+  @HostBinding('class.menu-visible') isMenuVisible = true;
+  @HostBinding('class.menu-hidden') isMenuHidden = false;
 
   menuToggle() {
-    this.menuHidden = !this.menuHidden;
+    this.isMenuVisible = !this.isMenuVisible;
+    this.isMenuHidden = !this.isMenuHidden;
   }
 }

@@ -1,53 +1,40 @@
-@if (menuHidden) {
-  <button mat-fab color="primary" class="float-button" (click)="menuToggle()">
-    <mat-icon>menu</mat-icon>
+<div
+  class="menu-icons"
+  ngClass="{{ isMenuVisible ? 'menu-visible' : 'menu-hidden' }}"
+>
+  <button
+    mat-icon-button
+    (click)="menuToggle()"
+    matTooltip="Ocultar menú"
+    matTooltipPosition="after"
+  >
+    <mat-icon>menu_open</mat-icon>
   </button>
-  <div class="float-menu-icons">
-    <button
-      mat-mini-fab
-      (click)="(true)"
-      matTooltip="Inicio"
-      matTooltipPosition="after"
-      color="primary"
-    >
-      <mat-icon>home</mat-icon>
-    </button>
-    <button
-      mat-mini-fab
-      (click)="(true)"
-      matTooltip="Configurar el sistema"
-      matTooltipPosition="after"
-      color="primary"
-    >
-      <mat-icon>settings</mat-icon>
-    </button>
-  </div>
-}
-@else {
-  <div class="menu-icons">
-    <button
-      mat-icon-button
-      (click)="menuToggle()"
-      matTooltip="Ocultar menú"
-      matTooltipPosition="after"
-    >
-      <mat-icon>menu_open</mat-icon>
-    </button>
-    <button
-      mat-icon-button
-      (click)="(true)"
-      matTooltip="Inicio"
-      matTooltipPosition="after"
-    >
-      <mat-icon>home</mat-icon>
-    </button>
-    <button
-      mat-icon-button
-      (click)="(true)"
-      matTooltip="Configurar el sistema"
-      matTooltipPosition="after"
-    >
-      <mat-icon>settings</mat-icon>
-    </button>
-  </div>
-}
+  <button
+    mat-icon-button
+    (click)="(true)"
+    matTooltip="Inicio"
+    matTooltipPosition="after"
+  >
+    <mat-icon>home</mat-icon>
+  </button>
+  <button
+    mat-icon-button
+    (click)="(true)"
+    matTooltip="Configurar el sistema"
+    matTooltipPosition="after"
+  >
+    <mat-icon>settings</mat-icon>
+  </button>
+</div>
+
+<div
+  class="float-button"
+  ngClass="{{ isMenuVisible ? 'float-button-hidden' : 'float-button-visible' }}"
+>
+  <a (click)="menuToggle()">
+    <mat-icon matTooltip="Mostrar menú" matTooltipPosition="after">
+      chevron_right
+    </mat-icon>
+  </a>
+</div>
