@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { LoginComponent } from './login/login.component';
 import { AppComponent } from './template/app.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { AppComponent } from './template/app.component';
     AppRoutingModule,
     MatButtonModule,
     MatIconModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     provideHttpClient(),

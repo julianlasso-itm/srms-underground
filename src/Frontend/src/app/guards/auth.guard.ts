@@ -8,6 +8,7 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { AuthService } from '../services/auth-google.service';
+import { AuthStorageService } from '../services/auth-storage.service';
 
 export const authGuard: CanActivateFn = (
   route: ActivatedRouteSnapshot,
@@ -21,6 +22,7 @@ export const authGuard: CanActivateFn = (
       if (authService.isAuthenticated()) {
         resolve(true);
       } else {
+        AuthStorageService.clear();
         router.navigate(['/login']);
         resolve(false);
       }
