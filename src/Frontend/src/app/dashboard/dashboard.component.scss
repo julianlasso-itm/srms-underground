@@ -29,8 +29,9 @@
 
         .content {
           width: 100%;
-          height: calc(100vh - 154px);
+          height: calc(100vh - (154px + 16px));
           overflow: auto;
+          padding-top: 16px;
         }
       }
     }
