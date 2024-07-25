@@ -1,0 +1,16 @@
+<div class="body">
+  <srms-menu-icon></srms-menu-icon>
+  <srms-menu></srms-menu>
+  <div class="main-content">
+    <srms-header [logOut]="logOut.bind(this)"></srms-header>
+    <div class="container">
+      <div class="main">
+        <h1>Dashboard</h1>
+        <mat-divider></mat-divider>
+        <div class="content">
+          <router-outlet />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
