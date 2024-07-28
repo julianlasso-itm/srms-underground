@@ -3,15 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { authGuard } from './guards/auth.guard';
 
-import { routesDashboard } from './dashboard/dashboard.routing';
-import { LoginComponent } from './login/login.component';
+import { routesDashboard } from './components/dashboard/dashboard.routing';
+import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
-    path: 'dashboard',
+    path: '',
     loadComponent: () =>
-      import('./dashboard/dashboard.component').then(
+      import('./components/dashboard/dashboard.component').then(
         (m) => m.DashboardComponent
       ),
     canActivate: [authGuard],

@@ -5,7 +5,7 @@
     <srms-header [logOut]="logOut.bind(this)"></srms-header>
     <div class="container">
       <div class="main">
-        <h1>Dashboard</h1>
+        <h1>{{title()}}</h1>
         <mat-divider></mat-divider>
         <div class="content">
           <router-outlet />

@@ -1,4 +1,24 @@
-export const menuStruct = [
+export interface MenuItem {
+  title: string;
+  titleWindow?: string;
+  icon: string;
+  path: string;
+  children?: MenuItem[];
+  loadComponent?: () => Promise<any>;
+}
+
+export interface MenuStruct {
+  title: string;
+  icon: string;
+  path: string;
+  children: MenuElement[];
+}
+
+export interface MenuSeparator {}
+
+export type MenuElement = MenuItem | MenuSeparator;
+
+export const menuStruct: MenuStruct[] = [
   {
     title: 'Inicio',
     icon: 'home',
@@ -6,6 +26,7 @@ export const menuStruct = [
     children: [
       {
         title: 'Dashboard',
+        titleWindow: 'SRMS :: Skills Ranking and Monitoring System',
         path: 'dashboard',
         icon: 'dashboard',
         loadComponent: () =>
@@ -116,7 +137,7 @@ export const menuStruct = [
     children: [
       {
         title: 'Usuarios',
-        path: 'users',
+        path: 'settings/users',
         icon: 'people',
         loadComponent: () =>
           import('./modules/security/users/users.component').then(
@@ -125,7 +146,7 @@ export const menuStruct = [
       },
       {
         title: 'Roles',
-        path: 'roles',
+        path: 'settings/roles',
         icon: 'lock',
         loadComponent: () =>
           import('./modules/security/roles/roles.component').then(

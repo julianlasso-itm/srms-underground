@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal, Signal } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -8,6 +8,7 @@ import { AuthStorageService } from '../../services/auth-storage.service';
 
 import { MatDividerModule } from '@angular/material/divider';
 
+import { MenuService } from '../../services/menu.service';
 import { HeaderComponent } from './header/header.component';
 import { MenuIconComponent } from './menu-icon/menu-icon.component';
 import { MenuComponent } from './menu/menu.component';
@@ -28,15 +29,23 @@ import { MenuComponent } from './menu/menu.component';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   public profile: Record<string, unknown> = {};
+  public title: Signal<string>;
   private storageService: Subscription = new Subscription();
+  private titleService: Subscription = new Subscription();
 
   constructor(
     private authService: AuthService,
     private router: Router,
-    private authStorageService: AuthStorageService
-  ) {}
+    private authStorageService: AuthStorageService,
+    private menuService: MenuService
+  ) {
+    this.title = signal('');
+  }
 
   ngOnInit(): void {
+    this.titleService = this.menuService.title$.subscribe((title) => {
+      this.title = signal(title);
+    });
     this.storageService = this.authStorageService
       .getItemObservable()
       .subscribe({
@@ -51,6 +60,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.storageService.unsubscribe();
+    this.titleService.unsubscribe();
   }
 
   showData(): void {
