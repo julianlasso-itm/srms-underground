@@ -6,7 +6,9 @@ import { Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth-google.service';
 import { AuthStorageService } from '../../services/auth-storage.service';
 
+import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
 
 import { MenuService } from '../../services/menu.service';
 import { HeaderComponent } from './header/header.component';
@@ -22,6 +24,8 @@ import { MenuComponent } from './menu/menu.component';
     MenuIconComponent,
     MenuComponent,
     HeaderComponent,
+    MatButtonModule,
+    MatIconModule,
   ],
   selector: 'srms-dashboard',
   templateUrl: './dashboard.component.html',

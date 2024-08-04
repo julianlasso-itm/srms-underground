@@ -20,11 +20,19 @@
         width: 100%;
         padding: 16px;
 
-        h1 {
-          font-size: 24px;
-          font-weight: 500;
-          margin: 0;
-          margin-bottom: 16px;
+        .header {
+          display: flex;
+
+          h1 {
+            font-size: 24px;
+            font-weight: 500;
+            margin: 0;
+            margin-bottom: 16px;
+          }
+
+          .spacer {
+            flex-grow: 1;
+          }
         }
 
         .content {

@@ -1,1 +1,5 @@
-<p>customers works!</p>
+<srms-table
+  [dataSource]="dataSource"
+  [columns]="displayedColumns"
+  (pageEvent)="pageEvent($event)"
+></srms-table>
