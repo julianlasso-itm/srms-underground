@@ -1,3 +1,5 @@
+import { IAction } from '../../../components/table/action.interface';
+
 export interface ICustomer {
   id: string;
   name: string;
@@ -11,6 +13,7 @@ export interface ICustomer {
   status: string;
   created: string;
   updated: string;
+  actions?: IAction[];
 }
 
 export const customers: ICustomer[] = [
