@@ -58,7 +58,6 @@ export class MenuComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.menuObserver = this.menuService.menu$.subscribe(
       (menu: MenuElement[]) => {
-        console.log(menu);
         this.menu = signal(menu);
       }
     );

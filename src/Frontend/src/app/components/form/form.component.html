@@ -1,0 +1,35 @@
+<form autocomplete="off" [formGroup]="form()">
+  @for (field of info(); track $index) { @switch (field.type) { @case
+  (type.HIDDEN) {
+  <input type="hidden" name="{{ field.field }}" [formGroupName]="field.field" />
+  } @case (type.SELECT) {
+  <mat-form-field class="width-100">
+    <mat-label>{{ field.label }}</mat-label>
+    <mat-select formControlName="{{ field.field }}">
+      @for (option of getOptions(field); track $index) {
+      <mat-option [value]="getOptionValue(option)">{{
+        getOptionLabel(option)
+      }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  } @case(type.SLIDE_TOGGLE) {
+  <div class="width-100">
+    <mat-slide-toggle labelPosition="before" [formControlName]="field.field">{{
+      field.label
+    }}</mat-slide-toggle>
+  </div>
+  } @default {
+  <mat-form-field class="width-100">
+    <mat-label>{{ field.label }}</mat-label>
+    <input
+      matInput
+      type="{{ field.type }}"
+      name="{{ field.field }}"
+      [formControlName]="field.field"
+      placeholder="{{ field.placeholder }}"
+    />
+    <mat-icon matSuffix>{{ field.icon }}</mat-icon>
+  </mat-form-field>
+  } } }
+</form>

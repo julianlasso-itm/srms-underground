@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>{{ data.title }}</h2>
+<mat-dialog-content>
+  <srms-form [form]="data.form" [data]="data.data"></srms-form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button type="button" mat-dialog-close>Cancel</button>
+  <button mat-flat-button type="button" color="primary">
+    {{ data.action }}
+  </button>
+</mat-dialog-actions>

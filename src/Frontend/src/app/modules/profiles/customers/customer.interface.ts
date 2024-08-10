@@ -1,3 +1,4 @@
+import { FormControl } from '@angular/forms';
 import { IAction } from '../../../components/table/action.interface';
 
 export interface ICustomer {
@@ -14,6 +15,18 @@ export interface ICustomer {
   created: string;
   updated: string;
   actions?: IAction[];
+}
+
+export interface IFormCustomer {
+  id: FormControl<string>;
+  name: FormControl<string>;
+  email: FormControl<string>;
+  phone: FormControl<string>;
+  address: FormControl<string>;
+  city: FormControl<string>;
+  state: FormControl<string>;
+  country: FormControl<string>;
+  status: FormControl<string>;
 }
 
 export const customers: ICustomer[] = [
